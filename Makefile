@@ -1,6 +1,6 @@
 documents = interim.pdf
 
-.PHONY: all clean cleanaux
+.PHONY: all clean cleanaux spell
 
 all: $(documents)
 
@@ -12,3 +12,6 @@ cleanaux:
 
 clean:
 	latexmk -C $(documents)
+
+spell:
+	hunspell -l -d en_GB -t *.tex
