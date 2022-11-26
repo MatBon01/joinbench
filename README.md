@@ -1,2 +1,5 @@
-# a-deeper-dive-into-relational-algebra-by-way-of-adjunctions
-Imperial 4th year Mathematics and Computer Science MEng project
+# A Deeper Dive into Relational Algebra by Way of Adjunctions
+In their distinguished paper "Relational Algebra by Way of Adjunctions" it was noted that the monadic structure of bulk types can help explain most of relational algebra. It was found that some operations, such as selections and projections, are more easily reasoned about; this paper completes the rigorous mathematical description of others such as relational join or grouping. The paper takes the novel stance of having a more broad view of adjunctions when dealing with the bulk types in order to make this extension. A theoretically more efficient implementation of joins is an immediate consequence of this approach and the first goal of the project is to benchmark the differences.
+The project can also be taken into the direction of using this reasoning to mathematically explain other known database query optimisations and potentially invent others.
+
+Jeremy Gibbons, Fritz Henglein, Ralf Hinze, and Nicolas Wu. 2018. Relational algebra by way of adjunctions. Proc. ACM Program. Lang. 2, ICFP, Article 86 (September 2018), 28 pages. https://doi.org/10.1145/3236781
