@@ -6,6 +6,13 @@ jobs:
     name: Spell checker
     runs-on: ubuntu-latest
     steps:
+      - name: Set spell status to pending
+        uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{secrets.GITHUB_TOKEN}}
+          context: "cli"
+          description: "Spell check"
+          state: "pending"
       - uses: actions/checkout@v3
       - name: Update packages
         run: sudo apt-get update
@@ -18,8 +25,24 @@ jobs:
       - name: Report no errors
         run: echo "::notice title=Spell report::No spelling errors detected"
         if: steps.spellcheck.outputs.numSpellingErrors == 0
+      - name: Set spell status to passed if no spelling errors
+        uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{secrets.GITHUB_TOKEN}}
+          context: "cli"
+          description: "Spell check"
+          state: "success"
+        if: steps.spellcheck.output.numSpellingErrors == 0
       - name: Report errors
         run: echo "::warning title=Spell report::$(steps.spellcheck.outputs.numSpellingErrors) spelling errors detected"
+        if: steps.spellcheck.output.numSpellingErrors > 0
+      - name: Set spell status to failure if there are spelling errors
+        uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{secrets.GITHUB_TOKEN}}
+          context: "cli"
+          description: "Spell check"
+          state: "failure"
         if: steps.spellcheck.output.numSpellingErrors > 0
   lint:
     name: Linter
