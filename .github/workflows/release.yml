@@ -1,0 +1,68 @@
+name: release
+on:
+  push:
+    tags:
+      "v*"
+  workflow_dispatch:
+
+jobs:
+  compile-interim-report:
+    name: Compile interim report
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set report compilation to pending
+        uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{secrets.GITHUB_TOKEN}}
+          context: "Interim report compilation"
+          description: "Interim report compiling"
+          state: "pending"
+      - name: Install latex dependencies
+        run: sudo apt-get install -y latexmk
+      - uses: actions/checkout@v3
+      - name: Compile interim report
+        run: make interim.pdf
+      - name: Show compilation failed on status
+        uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{secrets.GITHUB_TOKEN}}
+          context: "Interim report compilation"
+          description: "Compilation failed"
+          state: "failure"
+        if: ${{ failure() }}
+      - name: Warn that compilation failed
+        run: echo "::warning title=Interim report compilation report::Compilation failed"
+        if: ${{ failure() }}
+      - name: Show compilation succeeded on status
+        uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{secrets.GITHUB_TOKEN}}
+          context: "Interim report compilation"
+          description: "Interim report compiled"
+          state: "success"
+        if: ${{ success () }}
+      - name: Notice that compilation succeeded
+        run: echo "::notice title=Interim report compilation report::Compilation succeeded"
+        if: ${{ success () }}
+      - name: Upload report as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: interim
+          path: interim.pdf
+  
+  create-release:
+    name: Create release
+    needs: [compile-interim-report]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download interim report artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: interim
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          files: |
+            interim.pdf
+          pre-release: true
+

@@ -1,0 +1,95 @@
+name: checks
+on: push
+
+jobs:
+  spell:
+    name: Spell checker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set spell status to pending
+        uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{secrets.GITHUB_TOKEN}}
+          context: "Spell checker"
+          description: "Spell checking in progress"
+          state: "pending"
+      - uses: actions/checkout@v3
+      - name: Update packages
+        run: sudo apt-get update
+      - name: Install spellchecker and dictionary
+        run: sudo apt-get install -y hunspell hunspell-en-gb
+      - name: Check spelling
+        id: spellcheck
+        run: |
+          echo "numSpellingErrors="$(make -s spell | wc -l) >> $GITHUB_OUTPUT
+          echo "spellingErrorList<<EOF" >> $GITHUB_OUTPUT
+          make -s spell >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+      - name: Report no errors
+        run: echo "::notice title=Spell report::No spelling errors detected"
+        if: steps.spellcheck.outputs.numSpellingErrors == 0
+      - name: Set spell status to passed if no spelling errors
+        uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{secrets.GITHUB_TOKEN}}
+          context: "Spell checker"
+          description: "No spelling mistakes detected"
+          state: "success"
+        if: steps.spellcheck.outputs.numSpellingErrors == 0
+      - name: Report errors
+        run: echo -e "::warning title=Spell report::${{ steps.spellcheck.outputs.numSpellingErrors }} spelling errors were found\n${{ steps.spellcheck.outputs.spellingErrorList }}"
+        if: steps.spellcheck.outputs.numSpellingErrors > 0
+      - name: Set spell status to failure if there are spelling errors
+        uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{secrets.GITHUB_TOKEN}}
+          context: "Spell checker"
+          description: "${{ steps.spellcheck.outputs.numSpellingErrors }} spelling errors were found"
+          state: "failure"
+        if: steps.spellcheck.outputs.numSpellingErrors > 0
+  lint:
+    name: Linter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set linting status to pending
+        uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{secrets.GITHUB_TOKEN}}
+          context: "Linter"
+          description: "Linting in progress"
+          state: "pending"
+      - uses: actions/checkout@v3
+      - name: Update packages
+        run: sudo apt-get update
+      - name: Install linter
+        run: sudo apt-get install -y chktex
+      - name: Run linter
+        id: linting
+        run: |
+          echo "numLintingErrorDescriptionLines=$(make -s lint | wc -l)" >> $GITHUB_OUTPUT
+          echo "lintingErrorList<<EOF" >> $GITHUB_OUTPUT
+          make -s lint >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+      - name: Report no errors
+        run: echo "::notice title=Linting report::No Linting errors detected"
+        if: steps.linting.outputs.numLintingErrorDescriptionLines == 0
+      - name: Set linting status to passed if no linting errors
+        uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{secrets.GITHUB_TOKEN}}
+          context: "Linter"
+          description: "No linting errors were found"
+          state: "success"
+        if: steps.linting.outputs.numLintingErrorDescriptionLines == 0
+      - name: Report errors
+        run: echo -e "::warning title=Linting report::Linting errors were found\n${{ steps.linting.outputs.lintingErrorList }}"
+        if: steps.linting.outputs.numLintingErrorDescriptionLines > 0
+      - name: Set linting status to failure if there are linting errors
+        uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{secrets.GITHUB_TOKEN}}
+          context: "Linter"
+          description: "Linting errors were found"
+          state: "failure"
+        if: steps.linting.outputs.numLintingErrorDescriptionLines > 0
+        
