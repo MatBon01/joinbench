@@ -12,7 +12,15 @@ jobs:
       - name: Install spellchecker and dictionary
         run: sudo apt-get install -y hunspell hunspell-en-gb
       - name: Check spelling
-        run: make spell
+        id: spellcheck
+        run: |
+          echo "numSpellingErrors="$(make -s spell | wc -l) >> $GITHUB_OUTPUT
+      - name: Report no errors
+        run: echo "::notice title=Spell report::No spelling errors detected"
+        if: steps.spellcheck.outputs.numSpellingErrors == 0
+      - name: Report errors
+        run: echo "::warning title=Spell report::$(steps.spellcheck.outputs.numSpellingErrors) spelling errors detected"
+        if: steps.spellcheck.output.numSpellingErrors > 0
   lint:
     name: Linter
     runs-on: ubuntu-latest
