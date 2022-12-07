@@ -37,7 +37,7 @@ jobs:
           state: "success"
         if: steps.spellcheck.outputs.numSpellingErrors == 0
       - name: Report errors
-        run: echo "::warning title=Spell report::$(format('{0} spelling errors detected{1} {2}', steps.spellcheck.outputs.numSpellingErrors, ':', steps.spellcheck.outputs.spellingErrorList))"
+        run: echo -e "::warning title=Spell report::${{ steps.spellcheck.outputs.numSpellingErrors }} spelling errors were found:\n${{ steps.spellcheck.outputs.spellingErrorList }}"
         if: steps.spellcheck.outputs.numSpellingErrors > 0
       - name: Set spell status to failure if there are spelling errors
         uses: Sibz/github-status-action@v1
