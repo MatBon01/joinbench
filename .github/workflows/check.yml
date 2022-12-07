@@ -1,0 +1,14 @@
+name: checks
+on: push
+
+jobs:
+  spell:
+    name: Spell checker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update packages
+        run: sudo apt-get update
+      - name: Install spellchecker and dictionary
+        run: sudo apt-get install -y hunspell hunspell-en-gb
+      - name: Check spelling
+        run: make spell
