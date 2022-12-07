@@ -13,3 +13,14 @@ jobs:
         run: sudo apt-get install -y hunspell hunspell-en-gb
       - name: Check spelling
         run: make spell
+  lint:
+    name: Linter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Update packages
+        run: sudo apt-get update
+      - name: Install linter
+        run: sudo apt-get install -y chktex
+      - name: Run linter
+        run: make lint
