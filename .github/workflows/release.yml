@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Compile interim report
         run: make interim.pdf
-      - name: Show compilation failed
+      - name: Show compilation failed on status
         uses: Sibz/github-status-action@v1
         with:
           authToken: ${{secrets.GITHUB_TOKEN}}
@@ -30,13 +30,19 @@ jobs:
           description: "Compilation failed"
           state: "failure"
         if: ${{ failure() }}
-      - name: Show compilation succeeded
+      - name: Warn that compilation failed
+        run: echo "::warning title=Interim report compilation report::Compilation failed"
+        if: ${{ failure() }}
+      - name: Show compilation succeeded on status
         uses: Sibz/github-status-action@v1
         with:
           authToken: ${{secrets.GITHUB_TOKEN}}
           context: "Interim report compilation"
           description: "Interim report compiled"
           state: "success"
+        if: ${{ success () }}
+      - name: Notice that compilation succeeded
+        run: echo "::notice title=Interim report compilation report::Compilation succeeded"
         if: ${{ success () }}
       - name: Upload report as artifact
         uses: actions/upload-artifact@v3
