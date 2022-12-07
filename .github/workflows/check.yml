@@ -6,6 +6,7 @@ jobs:
     name: Spell checker
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Update packages
         run: sudo apt-get update
       - name: Install spellchecker and dictionary
