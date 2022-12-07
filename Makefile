@@ -17,4 +17,4 @@ spell:
 	hunspell -l -d en_GB -t *.tex
 
 lint:
-	chktex -q *.tex
+	-chktex -q *.tex
