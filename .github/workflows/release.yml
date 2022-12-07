@@ -17,6 +17,8 @@ jobs:
           context: "Interim report compilation"
           description: "Interim report compiling"
           state: "pending"
+      - name: Install latex dependencies
+        run: sudo apt-get install -y latexmk
       - uses: actions/checkout@v3
       - name: Compile interim report
         run: make interim.pdf
