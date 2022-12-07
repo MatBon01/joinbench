@@ -51,10 +51,45 @@ jobs:
     name: Linter
     runs-on: ubuntu-latest
     steps:
+      - name: Set linting status to pending
+        uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{secrets.GITHUB_TOKEN}}
+          context: "cli"
+          description: "Linting"
+          state: "pending"
       - uses: actions/checkout@v3
       - name: Update packages
         run: sudo apt-get update
       - name: Install linter
         run: sudo apt-get install -y chktex
       - name: Run linter
-        run: make lint
+        id: linting
+        run: |
+          echo "numLintingErrors=$(make -s lint | wc -l)" >> $GITHUB_OUTPUT
+          echo "lintingErrorList<<EOF" >> $GITHUB_OUTPUT
+          make -s lint >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+      - name: Report no errors
+        run: echo "::notice title=Linting report::No Linting errors detected"
+        if: steps.linting.outputs.numLintingErrors == 0
+      - name: Set linting status to passed if no linting errors
+        uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{secrets.GITHUB_TOKEN}}
+          context: "cli"
+          description: "Linting"
+          state: "success"
+        if: steps.linting.outputs.numLintingErrors == 0
+      - name: Report errors
+        run: echo -e "::warning title=Linting report::${{ steps.linting.outputs.numLintingErrors }} linting errors were found:\n${{ steps.linting.outputs.lintingErrorList }}"
+        if: steps.linting.outputs.numLintingErrors > 0
+      - name: Set linting status to failure if there are linting errors
+        uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{secrets.GITHUB_TOKEN}}
+          context: "cli"
+          description: "linting"
+          state: "failure"
+        if: steps.linting.outputs.numLintingErrors > 0
+        
