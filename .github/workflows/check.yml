@@ -6,7 +6,7 @@ jobs:
     name: Spell checker
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Update packages
         run: sudo apt-get update
       - name: Install spellchecker and dictionary
@@ -17,7 +17,7 @@ jobs:
     name: Linter
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Update packages
         run: sudo apt-get update
       - name: Install linter
