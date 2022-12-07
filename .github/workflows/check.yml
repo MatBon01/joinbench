@@ -23,7 +23,7 @@ jobs:
         run: |
           echo "numSpellingErrors="$(make -s spell | wc -l) >> $GITHUB_OUTPUT
           echo "spellingErrorList<<EOF" >> $GITHUB_OUTPUT
-          make spell >> $GITHUB_OUTPUT
+          make -s spell >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
       - name: Report no errors
         run: echo "::notice title=Spell report::No spelling errors detected"
