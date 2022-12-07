@@ -22,6 +22,9 @@ jobs:
         id: spellcheck
         run: |
           echo "numSpellingErrors="$(make -s spell | wc -l) >> $GITHUB_OUTPUT
+          echo "spellingErrorList<<EOF" >> $GITHUB_OUTPUT
+          make spell >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
       - name: Report no errors
         run: echo "::notice title=Spell report::No spelling errors detected"
         if: steps.spellcheck.outputs.numSpellingErrors == 0
@@ -34,7 +37,7 @@ jobs:
           state: "success"
         if: steps.spellcheck.output.numSpellingErrors == 0
       - name: Report errors
-        run: echo "::warning title=Spell report::$(steps.spellcheck.outputs.numSpellingErrors) spelling errors detected"
+        run: echo "::warning title=Spell report::$(format('{0} spelling errors detected{1} {2}', steps.spellcheck.outputs.numSpellingErrors, ':', steps.spellcheck.outputs.spellingErrorList))"
         if: steps.spellcheck.output.numSpellingErrors > 0
       - name: Set spell status to failure if there are spelling errors
         uses: Sibz/github-status-action@v1
