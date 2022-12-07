@@ -10,8 +10,8 @@ jobs:
         uses: Sibz/github-status-action@v1
         with:
           authToken: ${{secrets.GITHUB_TOKEN}}
-          context: "cli"
-          description: "Spell check"
+          context: "Spell checker"
+          description: "Spell checking in progress"
           state: "pending"
       - uses: actions/checkout@v3
       - name: Update packages
@@ -32,8 +32,8 @@ jobs:
         uses: Sibz/github-status-action@v1
         with:
           authToken: ${{secrets.GITHUB_TOKEN}}
-          context: "cli"
-          description: "Spell check"
+          context: "Spell checker"
+          description: "No spelling mistakes detected"
           state: "success"
         if: steps.spellcheck.outputs.numSpellingErrors == 0
       - name: Report errors
@@ -43,8 +43,8 @@ jobs:
         uses: Sibz/github-status-action@v1
         with:
           authToken: ${{secrets.GITHUB_TOKEN}}
-          context: "cli"
-          description: "Spell check"
+          context: "Spell checker"
+          description: "${{ steps.spellcheck.outputs.numSpellingErrors }} spelling errors were found"
           state: "failure"
         if: steps.spellcheck.outputs.numSpellingErrors > 0
   lint:
@@ -55,8 +55,8 @@ jobs:
         uses: Sibz/github-status-action@v1
         with:
           authToken: ${{secrets.GITHUB_TOKEN}}
-          context: "cli"
-          description: "Linting"
+          context: "Linter"
+          description: "Linting in progress"
           state: "pending"
       - uses: actions/checkout@v3
       - name: Update packages
@@ -77,8 +77,8 @@ jobs:
         uses: Sibz/github-status-action@v1
         with:
           authToken: ${{secrets.GITHUB_TOKEN}}
-          context: "cli"
-          description: "Linting"
+          context: "Linter"
+          description: "No linting errors were found"
           state: "success"
         if: steps.linting.outputs.numLintingErrors == 0
       - name: Report errors
@@ -88,8 +88,8 @@ jobs:
         uses: Sibz/github-status-action@v1
         with:
           authToken: ${{secrets.GITHUB_TOKEN}}
-          context: "cli"
-          description: "linting"
+          context: "Linter"
+          description: "${{ steps.linting.outputs.numLintingErrors }} linting errors were found"
           state: "failure"
         if: steps.linting.outputs.numLintingErrors > 0
         
