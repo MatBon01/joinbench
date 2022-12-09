@@ -14,7 +14,7 @@ clean:
 	latexmk -C $(documents)
 
 spell:
-	hunspell -l -d en_GB -t *.tex
+	hunspell -l -d en_GB -t *.tex */*.tex
 
 lint:
 	-chktex -q *.tex

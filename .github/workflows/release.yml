@@ -18,7 +18,7 @@ jobs:
           description: "Interim report compiling"
           state: "pending"
       - name: Install latex dependencies
-        run: sudo apt-get install -y latexmk
+        run: sudo apt-get install -y latexmk texlive-font-utils
       - uses: actions/checkout@v3
       - name: Compile interim report
         run: make interim.pdf
