@@ -1,10 +1,68 @@
-\documentclass{article}
+\documentclass[a4paper, twoside]{report}
 
-\title{A Deeper Dive into Relational Algebra by Way of Adjunctions Interim Report} 
+%% Language and font encodings
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+
+%% Sets page size and margins
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{comment}
+
+\usepackage{report/title/titlestructure}
+
+\title{A Deeper Dive into Relational Algebra by Way of Adjunctions}
 \author{Matteo Bongiovanni}
 \date{January 2023}
+\supervisor{Dr.\ Nicolas Wu}
+\documenttype{MEng Interim Report}
+\university{Imperial College London}
+\department{Department of Computing}
+\degree{Joint Mathematics and Computing}
 
 \begin{document}
-\maketitle
+\input{report/title/title.tex}
+
+\begin{abstract}
+\todo{Add abstract here}
+\end{abstract}
+
+\begin{comment}
+The aim of the project interim report is multi-fold:
+
+  1. To provide a document that your second marker can use as a basis for discussion on your project plan and progress to date.
+  2. To show that you have considered the ethical implications of your project.
+  3. To provide a substantial body of text, primarily the project background and related work, that you can use in your final report. 
+
+By the time the interim report is due you should have a clearly defined project, understand well the motivation and issues to be addressed, know the background work in detail, have the main ideas for how to tackle the problem and have started the development. You should also have a plan for the remainder of the project and, importantly, how to evaluate the project.
+
+The interim report should contain the following sections. An approximate page count is suggested for each section, but there are no hard limits either way:
+
+
+You are free to write up any additional material that will appear in the final report, for example a section or chapter describing a significant component of the design/implementation that you have already completed.  Avoid any additional material that is not re-usable in the final report.
+
+As always, use diagrams and examples (e.g. code) wherever appropriate.
+
+If you need inspiration, take a look at the Distinguished Projects from previous years, focusing in particular at this stage on the introduction, background and evaluation sections.
+\end{comment}
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\input{report/introduction/introduction.tex}
+\input{report/background/background.tex}
+\input{report/project/projectplan.tex}
+\input{report/evaluation/evaluationplan.tex}
+\input{report/ethics/ethicalissues.tex}
+
+\bibliographystyle{alpha}
+% DoC uses the Vancouver Referencing Format.
+\bibliography{bibs/interim}
 
 \end{document}
