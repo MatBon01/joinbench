@@ -64,8 +64,13 @@ We now have the mathematical tools required to define a map. In its finite form 
 
 Let $\keyset$ be a set and $\valset$ a pointed set. To those already familiar with maps, it may help to think of $\keyset$ as keys and $\valset$ as values.
 \begin{mapdef}
-  A map of type $\map{\keyset}{\valset}$ is a total 
+  A map of type $\map{\keyset}{\valset}$ is a total function from K to V.
 \end{mapdef}
+\begin{finitemapdef}
+  A finite map of type \finitemap{\keyset}{\valset} is a map where only a finite number of keys are mapped to $null_\valset$ (where $null_\valset$ is the distinguished element of \valset). 
+\end{finitemapdef}
+The advantage of using a finite map in a database is to allow aggregation.
+\todo{Understand why only semimonoidal}
 \todo{Introduced indexed tables}
 
 \section{Literature Review}
