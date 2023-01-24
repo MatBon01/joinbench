@@ -1,12 +1,12 @@
-\subsection{Evolution of database representation}
-\subsubsection{Bags}
+\section{Evolution of database representation}
+\subsection{Bags}
 \todo{Understand and distinguish between bags being the bulk type}
 \paragraph{Characteristics of a database}We expect our database approximation to not be ordered and admit multiplicities and a finite bag of values is one of the simplest constructions that does so. Like a finite set, a bag contains a collection of unordered values. However, unlike a set, bags can contain duplicate elements. \cite{RelationalAlgebraByWayOfAdjunctions} This multiplicity is key for processing non-idempotent aggregations. For instance, if summing up the ages of a database of people, without admitting multiplicity we would only sum each unique age once.
 \subparagraph{Generalisation}Furthermore, going forward we generalise to bags of any types instead of the classical ``bags of records''. This also allows us to deal with intermediate tables that contain non-record values.
 \todo{Add the mathematical parts about bags}
 \todo{When reading about finite maps it says that it's better for databases as non finite maps cannot be aggregated, can non finite bags be aggregates - is this why they are finite?}
 
-\subsubsection{Indexed tables}
+\subsection{Indexed tables}
 We want to move towards an indexed representation of our table in order to equijoin by indexing. \todo{Understand if this is right and equijoin by indexing}. So in this section we introduce the mathematical concepts required to define such an implementation.
 \theoremstyle{definition}\newtheorem*{psetdef}{Pointed set}
 \theoremstyle{definition}\newtheorem*{ppfuncdef}{Point-preserving function}
