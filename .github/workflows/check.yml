@@ -82,7 +82,9 @@ jobs:
           state: "success"
         if: steps.linting.outputs.numLintingErrorDescriptionLines == 0
       - name: Report errors
-        run: echo -e "::warning title=Linting report::Linting errors were found\n${{ steps.linting.outputs.lintingErrorList }}"
+        run: |
+          echo -e "::warning title=Linting report::Linting errors were found"
+          make -s lint
         if: steps.linting.outputs.numLintingErrorDescriptionLines > 0
       - name: Set linting status to failure if there are linting errors
         uses: Sibz/github-status-action@v1
