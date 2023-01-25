@@ -31,6 +31,26 @@ An empty table showing the relation can be found on \fref{tab:peopleRelationHead
 \end{table}
 \todo{Add verb to People in the caption}
 
+A row of the table\footnote{Excluding the row with the headings.} is called a \emph{tuple} and it consists of \emph{components}, one per attribute. A tuple is simply denoted by a comma separated list of its components within parentheses. For instance a tuple for the \verb|People| relation would be:
+\begin{figure}[!h]
+  \centering
+  (\verb|Jim|, \verb|Smith|, 32).
+\end{figure}
+
+In the relational model the constraint that each each component of a tuple must be an of an atomic type; meaning the component should reasonably not be a compound data type such as records, lists or sets. Furthermore, each attribute has its own associated \emph{domain}, specifying an elementary type that all components belonging to that column must take. The domain can be specified in the the schema using a colon as follows:
+\begin{figure}[!h]
+  \begin{verbatim}
+    People(firstName: string, surname: string, age: integer).
+  \end{verbatim}
+\end{figure}
+
+It is natural now to see a relation as a set of tuples, and a database as one or more relations. The \emph{(relational) database schema} is the set of schemas the relations in the database adhere to.\cite{DatabaseSystems}
+\todo{Do I need to talk about tuples being built up and a final mention of attributes}
+
+Finally, we call a set of tuples for a relation an \emph{instance} of that relation as by the nature of database systems, it will eventually change. The current set of tuples is called the \emph{current instance}.\cite{DatabaseSystems}
+
+\paragraph{A note on ordering} The distinction between lists and sets here is very important and has consequences. Firstly, note that a schema consists of a \textbf{set} of attributes, though in this case we do assign a ``standard'' ordering to them, typically following the ordering in the schema. Also note that when giving a tuple of a relation we do not also give the headings and thus some indication to which schema it belongs is necessary. Secondly, we introduced a relation as a \textbf{set} of tuples, in this case there is no standard ordering and thus invites many equivalent representations of the same relation.\cite{DatabaseSystems} In generality, the order of columns and rows do not matter, so long as they are consistent.
+
 \subsection{Relational Algebra}
 \subsubsection{Projections}
 \subsubsection{Selections}
