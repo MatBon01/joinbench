@@ -59,3 +59,5 @@ The sections below describe some of the more interesting, specialised operations
 \subsubsection{Selections}
 \subsubsection{Products}
 \subsubsection{Joins}
+\subsubsection{Note on permutations}
+Permutations is another specialist operation in relational algebra, though not important to the scope of the project. For completion, despite the fact that relations are domain--unordered, their internal representation in computers is not and so permutation may be done for performance benefits despite no logical difference storing a relation and its permutations.\todo{Make sure I worded the performance benefits thing correctly}\cite{RelationalModel} Furthermore, permutation can be used (and is usually implied) to ensure that tuples with identical schemas differing only in ordering can have the normal set operations applied to them. \cite{DatabaseSystems}
