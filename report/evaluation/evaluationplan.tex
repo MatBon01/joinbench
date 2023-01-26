@@ -2,4 +2,18 @@
 \begin{comment}
 Project evaluation is very important, so it's important to think now about how you plan to measure success. For example, what functionality do you need to demonstrate?  What experiments to you need to undertake and what outcome(s) would constitute success?  What benchmarks should you use? How has your project extended the state of the art?  How do you measure qualitative aspects, such as ease of use?  These are the sort of questions that your project evaluation should address; this section should outline your plan.
 \end{comment}
-\section{During implementation}\label{sec:evaluationduringimplementation}
+Evaluation of this project is important as the analyses need to be founded in order to have any sort of real benefit.
+
+We split the evaluation of the implementation into two halves, the evaluation of the correctness and the evaluation of the analysis.
+
+\section{Correctness}\label{sec:correctnessevaluation}
+In order to evaluate the correctness it is vital to keep good coding practice throughout the project. It is not possible to analyse the performance of something incorrectly implemented, to justify the benefits of a different system entirely.
+
+In order to do this, unit tests should be written during production, to ensure no developer error or mistake occurs by accident.
+
+In order to further reduce mistakes, both bugs and theoretical misunderstandings if there are any the results of the two equijoin operations should be compared to ensure that the results are the same and thus they are being judged on the query interpreted in the same way.
+
+\section{Analysis}
+Evaluating the analysis is more difficult. Of course, as per usual benchmarking standards, each test would be run multiple times, changing whether in succession or not (in order to let any potential cache optimisations and ideal memory conditions occur). However these repeat results are conducted, the deviation should be closely monitored to ensure they are consistent.
+
+It is difficult to suggest comparing deviations of other database systems to the one implemented, even of atomic operations, to ensure they follow a similar distribution of relative performance as databases are so mainstream that query optimisation is commonplace and may affect results in a way that cannot be predicted.
