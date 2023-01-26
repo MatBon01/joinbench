@@ -117,7 +117,7 @@ As an example, we show the resulting relation of the selection \select{\attribut
   \label{tab:peopleRelationSelection}
 \end{table}
 b
-\subsubsection{Products}
+\subsubsection{Products}\label{sec:products}
 The product of two relations \relation{R} and \relation{S} is simply the Cartesian product of the set of tuples of each relation, where instead of a binary tuple of tuples, the result is a single longer tuple. Typically, the result of $\relation{R} \times \relation{S}$ has the elements of tuples in $R$ before those in $S$. \cite{DatabaseSystems}
 
 Clearly, the schema of the resulting relation $\relation{R} \times \relation{S}$ is altered. It takes the form of the union of the schemas of \relation{R} and \relation{S}. Of course in some instances there may be common attributes among \relation{R} and \relation{S}, say \attribute{a}, but in this case the headings associated with the attributes are set to \attribute{\relation{R}.a} and \attribute{\relation{S}.a} respectively.\cite{DatabaseSystems}
@@ -213,5 +213,7 @@ In this example we call the tuple \verb|(1, 2, 4)| a \emph{dangling tuple} as it
   \caption{The result of the natural join \natjoin{R}{S}}
   \label{tab:naturalJoinResult}
 \end{table}
+
+\paragraph{Theta-Join} The \emph{theta-join} is a generalisation of a join, where whether a record is kept is determined by some condition $\theta$. Given such a $\theta$, a theta-join between relations \relation{R} and \relation{S} is written as \thetajoin{\theta}{R}{S}. To determine the tuples of the new relation \thetajoin{\theta}{R}{S} we first must take the product $\relation{R} \times \relation{S}$ (as seen in \fref{sec:products}), then we filter out rows that return false in respect to the predicate $\theta$.\cite{DatabaseSystems}
 \subsubsection{Note on permutations}
 Permutations is another specialist operation in relational algebra, though not important to the scope of the project. For completion, despite the fact that relations are domain--unordered, their internal representation in computers is not and so permutation may be done for performance benefits despite no logical difference storing a relation and its permutations.\todo{Make sure I worded the performance benefits thing correctly}\cite{RelationalModel} Furthermore, permutation can be used (and is usually implied) to ensure that tuples with identical schemas differing only in ordering can have the normal set operations applied to them. \cite{DatabaseSystems}
