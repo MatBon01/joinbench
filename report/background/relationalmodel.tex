@@ -116,8 +116,64 @@ As an example, we show the resulting relation of the selection \select{\attribut
   \caption[Example of selection on \relation{People} relation]{People relation with the selection \select{\attribute{age}\:>\:30}{People} applied to it.}
   \label{tab:peopleRelationSelection}
 \end{table}
-
+b
 \subsubsection{Products}
+The product of two relations \relation{R} and \relation{S} is simply the Cartesian product of the set of tuples of each relation, where instead of a binary tuple of tuples, the result is a single longer tuple. Typically, the result of $\relation{R} \times \relation{S}$ has the elements of tuples in $R$ before those in $S$. \cite{DatabaseSystems}
+
+Clearly, the schema of the resulting relation $\relation{R} \times \relation{S}$ is altered. It takes the form of the union of the schemas of \relation{R} and \relation{S}. Of course in some instances there may be common attributes among \relation{R} and \relation{S}, say \attribute{a}, but in this case the headings associated with the attributes are set to \attribute{\relation{R}.a} and \attribute{\relation{S}.a} respectively.\cite{DatabaseSystems}
+
+For instance, given the relations \relation{R} and \relation{S} as in \fref{tab:productRelationR} and \fref{tab:productRelationS}, we can calculate the product $\relation{R} \times \relation{S}$ is as in \fref{tab:productResult}.
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l|l|l}
+    \attribute{a} & \attribute{b} & \attribute{c} \\
+    \hline\hline
+    1 & 2 & 3\\
+    4 & 5 & 6\\
+    7 & 8 & 9\\
+  \end{tabular}
+  \caption{Relation \relation{R} as example for the Cartesian product.}
+  \label{tab:productRelationR}
+\end{table}
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l|l}
+  \attribute{c} & \attribute{d} \\
+  \hline\hline
+  10 & 11\\
+  12 & 13\\
+  \end{tabular}
+  \caption{Relation \relation{S} as example for the Cartesian product.}
+  \label{tab:productRelationS}
+\end{table}
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l|l|l|l|l}
+    \attribute{a} & \attribute{b} & \attribute{\relation{R}.c} & \attribute{\relation{S}.c} & \attribute{d} \\
+    \hline\hline
+    1 & 2 & 3 & 10 & 11\\
+    1 & 2 & 3 & 12 & 13\\
+    4 & 5 & 6 & 10 & 11\\
+    4 & 5 & 6 & 12 & 13\\
+    7 & 8 & 9 & 10 & 11\\
+    7 & 8 & 9 & 12 & 13\\
+  \end{tabular}
+  \caption{The product relation $\relation{R} \times \relation{S}$.}
+  \label{tab:productResult}
+\end{table}
+
+We note that a tuple in the product relation $\relation{R} \times \relation{S}$ is of the form
+\begin{verbatim}
+  (1, 2, 3, 10, 11)
+\end{verbatim}
+and not
+\begin{verbatim}
+  ((1, 2, 3), (10, 11))
+\end{verbatim}
+as one might expect from an ordinary Cartesian product on sets. Furthermore, we also draw attention to the new schema as seen in the headings of \fref{tab:productResult}.
+
 \subsubsection{Joins}
 \subsubsection{Note on permutations}
 Permutations is another specialist operation in relational algebra, though not important to the scope of the project. For completion, despite the fact that relations are domain--unordered, their internal representation in computers is not and so permutation may be done for performance benefits despite no logical difference storing a relation and its permutations.\todo{Make sure I worded the performance benefits thing correctly}\cite{RelationalModel} Furthermore, permutation can be used (and is usually implied) to ensure that tuples with identical schemas differing only in ordering can have the normal set operations applied to them. \cite{DatabaseSystems}
