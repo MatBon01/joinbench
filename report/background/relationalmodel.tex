@@ -9,29 +9,28 @@ The relational model represents data through two dimensional tables, called \emp
   R(a1, a2,..., an)
 \end{verbatim}
 \end{center}
-is a relation \verb|R| with $n$ attributes \verb|a1|, \verb|a2|, \ldots, \verb|an|. A more practical example is the schema
+is a relation \relation{R} with $n$ attributes \attribute{a1}, \attribute{a2}, \ldots, \attribute{an}. A more practical example is the schema
 \begin{figure}[!h]
 \begin{verbatim}
   People(firstName, surname, age)
 \end{verbatim}
-\caption[Schema for the People relation]{Example of a schema for the relation People}
+\caption[Schema for the \relation{People} relation]{Example of a schema for the relation \relation{People}}
 \label{fig:peopleSchema}
 \end{figure}
-This describes a schema for the relation \verb|People| and the attributes \verb|firstName|, \verb|surname| and \verb|age|.
+This describes a schema for the relation \relation{People} and the attributes \attribute{firstName}, \attribute{surname} and \attribute{age}.
 An empty table showing the relation can be found on \fref{tab:peopleRelationHeadings}.
 \begin{table}[h]
   \centering
   \begin{tabular}{l|l|l}
-    \verb|firstName| & \verb|surname| & \verb|age| \\
+    \attribute{firstName} & \attribute{surname} & \attribute{age} \\
     \hline\hline
     & &\\
   \end{tabular}
-  \caption[People relation's headings]{A tabular representation of the People relation's attributes.}
+  \caption[\relation{People} relation's headings]{A tabular representation of the \relation{People} relation's attributes.}
   \label{tab:peopleRelationHeadings}
 \end{table}
-\todo{Add verb to People in the caption}
 
-A row of the table\footnote{Excluding the row with the headings.} is called a \emph{tuple} and it consists of \emph{components}, one per attribute. A tuple is simply denoted by a comma separated list of its components within parentheses. For instance a tuple for the \verb|People| relation would be:
+A row of the table\footnote{Excluding the row with the headings.} is called a \emph{tuple} and it consists of \emph{components}, one per attribute. A tuple is simply denoted by a comma separated list of its components within parentheses. For instance a tuple for the \relation{People} relation would be:
 \begin{figure}[!h]
   \centering
   (\verb|Jim|, \verb|Smith|, 32).
@@ -41,20 +40,16 @@ With this table we can now represent the \relation{People} in a tabular form in 
 \begin{table}[h]
   \centering
   \begin{tabular}{l|l|l}
-    \verb|firstName| & \verb|surname| & \verb|age| \\
+    \attribute{firstName} & \attribute{surname} & \attribute{age} \\
     \hline\hline
     Jim & Smith & 32\\
   \end{tabular}
-  \caption[People relation with tuple]{A tabular representation of the People relation and its associated tuple.}
+  \caption[\relation{People} relation with tuple]{A tabular representation of the \relation{People} relation and its associated tuple.}
   \label{tab:peopleRelationWithTuple}
 \end{table}
-\todo{Add verb to People in the caption}
 
 In the relational model the constraint that each each component of a tuple must be an of an atomic type; meaning the component should reasonably not be a compound data type such as records, lists or sets. Furthermore, each attribute has its own associated \emph{domain}, specifying an elementary type that all components belonging to that column must take. The domain can be specified in the the schema using a colon as follows:
 \begin{figure}[!h]
-  \begin{verbatim}
-    People(firstName: string, surname: string, age: integer).
-  \end{verbatim}
 \end{figure}
 
 It is natural now to see a relation as a set of tuples, and a database as one or more relations. The \emph{(relational) database schema} is the set of schemas the relations in the database adhere to.\cite{DatabaseSystems}
@@ -74,33 +69,34 @@ For ease of demonstration we use a more populated instance of the \relation{Peop
 \begin{table}[h]
   \centering
   \begin{tabular}{l|l|l}
-    \verb|firstName| & \verb|surname| & \verb|age| \\
+    \attribute{firstName} & \attribute{surname} & \attribute{age} \\
     \hline\hline
     Jim & Smith & 32\\
     Herbert & Green & 34\\
     Emma & Smith & 23\\
   \end{tabular}
-  \caption{Populated instance of the People relation.}
+  \caption{Populated instance of the \relation{People} relation.}
   \label{tab:peopleRelationPopulated}
 \end{table}
 \subsubsection{Projections}
 Projections select certain attributes of a relation, removing the others and collapsing duplicates \todo{I thought we needed multiplicty, check this}.\cite{RelationalModel} This can be visualised as only keeping certain columns in the table.
 
-Given a list of $k$ attributes $L = i_1, i_2, \ldots, i_k$, we can specify a projection on an $n$-ary (containing $n$ attributes) relation \relation{R} as \proj{L}{R}. The result is a $k$-ary relation whose attributes are specified by $L$ \cite{RelationalModel} and by convention the ``standard order'' of attributes is also determined by the order of attributed in $L$.\cite{DatabaseSystems}
+Given a list of $k$ attributes $L = \attribute{i_1}, \attribute{i_2}, \ldots, \attribute{i_k}$, we can specify a projection on an $n$-ary (containing $n$ attributes) relation \relation{R} as \proj{L}{R}. The result is a $k$-ary relation whose attributes are specified by $L$ \cite{RelationalModel} and by convention the ``standard order'' of attributes is also determined by the order of attributed in $L$.\cite{DatabaseSystems}
 
-We can see a demonstration of the projection $\proj{\mathrm{firstName,\:age}}{People}$ in \fref{tab:peopleRelationProjection}:
+We can see a demonstration of the projection $\proj{\attribute{firstName},\:\attribute{age}}{People}$ in \fref{tab:peopleRelationProjection}:
 \begin{table}[h]
   \centering
   \begin{tabular}{l|l}
-    \verb|firstName| & \verb|age| \\
+    \attribute{firstName} & \attribute{age} \\
     \hline\hline
     Jim & 32\\
     Herbert & 34\\
     Emma & 23\\
   \end{tabular}
-  \caption[Projection example on People relation.]{An example projection of the people relation where the surname attribute has been removed.}
+  \caption[Projection example on \relation{People} relation.]{An example projection of the people relation where the surname attribute has been removed.}
   \label{tab:peopleRelationProjection}
 \end{table}
+\todo{Fix how attributes are shown this whole section}
 \subsubsection{Selections}
 \subsubsection{Products}
 \subsubsection{Joins}
