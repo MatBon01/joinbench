@@ -104,6 +104,19 @@ Given a predicate $P$ and a relation \relation{R}, we denote the selection of \r
 
 \paragraph{Contents of the predicate} The predicate is comparable to any boolean expression or condition in a programming language with the exception that the underlying atoms of its expressions can be either attributes of the table \relation{R} or constants. Then, for each tuple $t$ of \relation{R}, in order to evaluate $P$ for each attribute \attribute{a_i} appearing in $P$, we replace it with the corresponding component of $t$.\cite{DatabaseSystems} We can see that the schema remains unchanged as the domains of each attribute are not altered and all attributes of selected tuples (those which return true for the predicate) are present in the result.
 
+As an example, we show the resulting relation of the selection \select{\attribute{age}\:>\:30}{People} in \fref{tab:peopleRelationSelection}. Of course it is accepted and commonplace for the predicate to be a compound boolean expression using keywords such as \verb|AND|, \verb|OR| and \verb|NOT|.\cite{DatabaseSystems}
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l|l|l}
+    \attribute{firstName} & \attribute{surname} & \attribute{age} \\
+    \hline\hline
+    Jim & Smith & 32\\
+    Herbert & Green & 34\\
+  \end{tabular}
+  \caption[Example of selection on \relation{People} relation]{People relation with the selection \select{\attribute{age}\:>\:30}{People} applied to it.}
+  \label{tab:peopleRelationSelection}
+\end{table}
+
 \subsubsection{Products}
 \subsubsection{Joins}
 \subsubsection{Note on permutations}
