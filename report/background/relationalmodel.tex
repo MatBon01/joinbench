@@ -81,7 +81,7 @@ For ease of demonstration we use a more populated instance of the \relation{Peop
 \subsubsection{Projections}
 Projections select certain attributes of a relation, removing the others and collapsing duplicates \todo{I thought we needed multiplicity, check this}.\cite{RelationalModel} This can be visualised as only keeping certain columns in the table.
 
-Given a list of $k$ attributes $L = \attribute{i_1}, \attribute{i_2}, \ldots, \attribute{i_k}$, we can specify a projection on an $n$-ary (containing $n$ attributes) relation \relation{R} as \proj{L}{R}. The result is a $k$-ary relation whose attributes are specified by $L$ \cite{RelationalModel} and by convention the ``standard order'' of attributes is also determined by the order of attributed in $L$.\cite{DatabaseSystems}
+Given a list of $k$ attributes $L = \attribute{a_1}, \attribute{a_2}, \ldots, \attribute{a_k}$, we can specify a projection on an $n$-ary (containing $n$ attributes) relation \relation{R} as \proj{L}{R}. The result is a $k$-ary relation whose attributes are specified by $L$ \cite{RelationalModel} and by convention the ``standard order'' of attributes is also determined by the order of attributed in $L$.\cite{DatabaseSystems}
 
 We can see a demonstration of the projection $\proj{\attribute{firstName},\;\attribute{age}}{People}$ in \fref{tab:peopleRelationProjection}:
 \begin{table}[h]
@@ -98,6 +98,12 @@ We can see a demonstration of the projection $\proj{\attribute{firstName},\;\att
 \end{table}
 
 \subsubsection{Selections}
+Just as projections select certain columns of a table, selections can be seen as selecting certain rows. This corresponds to filtering out tuples of a relation that do not satisfy a certain condition.
+
+Given a predicate $P$ and a relation \relation{R}, we denote the selection of \relation{R} by $P$ as \select{P}{R}. Just as with projections, the result is a relation; however, unlike projections we guarantee that the schema of the given resulting relation of \select{P}{R} is identical to the schema of \relation{R}.\cite{DatabaseSystems}
+
+\paragraph{Contents of the predicate} The predicate is comparable to any boolean expression or condition in a programming language with the exception that the underlying atoms of its expressions can be either attributes of the table \relation{R} or constants. Then, for each tuple $t$ of \relation{R}, in order to evaluate $P$ for each attribute \attribute{a_i} appearing in $P$, we replace it with the corresponding component of $t$.\cite{DatabaseSystems} We can see that the schema remains unchanged as the domains of each attribute are not altered and all attributes of selected tuples (those which return true for the predicate) are present in the result.
+
 \subsubsection{Products}
 \subsubsection{Joins}
 \subsubsection{Note on permutations}
