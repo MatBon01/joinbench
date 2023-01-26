@@ -2,3 +2,23 @@
 \begin{comment}
 It’s a good idea to *try* to write the introduction to your final report early on in the project. However, you will find it hard, as you won’t yet have a complete story and you won’t know what your main contributions are going to be. However, the exercise is useful as it will tell you what you *don’t* yet know and thus what questions your project should aim to answer. For the interim report this section should be a short, succinct, summary of the project’s main objectives. Some of this material may be re-usable in your final report, but the chances are that your final introduction will be quite different.  You are therefore advised to keep this part of the interim report short, focusing on the following questions: What is the problem, why is it interesting and what’s your main idea for solving it?  (DON'T use those three questions as subheadings however!  The answers should emerge from what you write.)
 \end{comment}
+
+Databases are absolutely vital to modern day society and contain domain specific knowledge about anything from specialised images of eyes \todo{add citation here} to the structure of crystals \cite{CambridgeStructuralDatabase}. Since its conception many different data models describing how to hold the data in databases have emerged, including the relational model \cite{RelationalModel} and the semi-structured model\cite{DatabaseSystems}.
+
+In this project we concern ourselves with the relational model (to be introduced in \fref{sec:relationalmodel}) as a way of modelling the database. This rich model has many methods of expressing queries, especially relational algebra and relational calculus, both with their strengths and weaknesses \cite{RelationalCalculus,RelationalModel}. \todo{they are equivalent though?} However, the favoured specification of the authors of \cite{RelationalAlgebraByWayOfAdjunctions} seemed to be through list comprehensions, a beautiful feature that ``provide for a concise and expressive notation for writing list-processing code''. \cite{MonadComprehensions} They eventually propose using GHC's extended list comprehension syntax specifically designed to help bridge the already close relationship between relational calculus and list comprehensions \cite{GHCListComprehension,ComprehensiveComprehensions} in order to avoid the significant theoretical performance hit.
+
+It is widely noted that \emph{joins}, an integral operation in relational algebra are associated with inefficient implementations \cite{JoinProcessing}. It is easy to see why when considering the most general joins. However in their paper \cite{RelationalAlgebraByWayOfAdjunctions} they concern themselves with a specialised join called an \emph{equijoin}. As described in \fref{sec:joins} an equijoin is a specialised \emph{theta-join} -- a way of combining two relations based off of an arbitrary condition depending on the attributes of both relations. An integral part to the calculation of a theta-join is calculating the Cartesian product (all possible combinations of tuples of both relationships, as described in \fref{sec:products}). The algorithm must then filter every single tuple individually to check for equality of attributes! It is clear that this is wasteful for such an specialised join. As a more practical example consider the SQL program:
+\begin{lstlisting}
+  SELECT *
+  FROM R, S
+  WHERE R.a = S.b
+\end{lstlisting}
+This could be naively converted into a list comprehension with the following:
+\[
+  \left[\,(r, s)\;|\;r \leftarrow R,\;s \leftarrow S,\;r.a = s.b\,\right]
+\]
+where $(r, s)$ is seen as a single tuple whose attributes \attribute{\relation{R}.a} and \attribute{\relation{R}.b} are merged.
+
+ With this naive list comprehension implementation we effectively convert \equijoin{R}{\attribute{a}}{S}{\attribute{b}} to \select{\attribute{a} = \attribute{b}}{\relation{R} \times \relation{S}}, generating a relation with $|R||S|$ tuples in the process then filtering through each.
+
+ This can much be much more efficiently implemented by viewing databases as indexed tables. We can index each relation by its associated attribute in the equijoin and merge the results -- localising the data required to in a cartesian product. This approach admits a linear time equijoin, if careful about comparison and projection functions. \cite{RelationalAlgebraByWayOfAdjunctions} With some mathematical tools explained in \fref{sec:gradedmonads} we can describe give these operations a monadic structure and therefore a comprehension syntax using the extended syntax discussed above.
