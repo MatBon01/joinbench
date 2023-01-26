@@ -17,8 +17,12 @@ This could be naively converted into a list comprehension with the following:
 \[
   \left[\,(r, s)\;|\;r \leftarrow R,\;s \leftarrow S,\;r.a = s.b\,\right]
 \]
-where $(r, s)$ is seen as a single tuple whose attributes \attribute{\relation{R}.a} and \attribute{\relation{R}.b} are merged.
+where $(r, s)$ is seen as a single tuple whose attributes \attribute{\relation{R}.a} and \attribute{\relation{R}.b} are merged. \todo{fix example so that you do not need to see things}
 
  With this naive list comprehension implementation we effectively convert \equijoin{R}{\attribute{a}}{S}{\attribute{b}} to \select{\attribute{a} = \attribute{b}}{\relation{R} \times \relation{S}}, generating a relation with $|R||S|$ tuples in the process then filtering through each.
 
  This can much be much more efficiently implemented by viewing databases as indexed tables. We can index each relation by its associated attribute in the equijoin and merge the results -- localising the data required to in a cartesian product. This approach admits a linear time equijoin, if careful about comparison and projection functions. \cite{RelationalAlgebraByWayOfAdjunctions} With some mathematical tools explained in \fref{sec:gradedmonads} we can describe give these operations a monadic structure and therefore a comprehension syntax using the extended syntax discussed above.
+
+ What this project adds to this story is a concrete demonstration of the improvement this solution offers.
+ We will use the \emph{Haskell} and the list comprehensions and functions described above to implement a simple database querying software taking into account these key changes. Along with real world pragmatic data sources, benchmarking techniques found in \fref{sec:benchmarking} will be used to accurately measure and compare the efficiency difference between the two approaches -- with the new equijoin and without. This evidence would be very important to justify the use of these methods and the claims made in the paper \cite{RelationalAlgebraByWayOfAdjunctions}.
+ With a concrete implementation, it could also provide insights into the downfall of remaining operations as well as those mentioned in the paper, potentially using profiling techniques to further analyse the performance bottlenecks, in order to inspire a theoretical approach at determining the issue as shown in \cite{RelationalAlgebraByWayOfAdjunctions} instead of an efficiency-driven optimisation approach.
