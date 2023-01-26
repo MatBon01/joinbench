@@ -68,10 +68,39 @@ Finally, we call a set of tuples for a relation an \emph{instance} of that relat
 Equipped with the information above we can now introduce the domain of the project, relational algebra. Relational algebra views queries as the creation of a relation by operating on other relations.\cite{RelationalCalculus}
 
 The sections below describe some of the more interesting, specialised operations on this algebra but it is definitely worth noting that as relations are sets \todo{bags?} of tuples, given matching schemas between relations, set operations are also valid operations and produce relations.\cite{RelationalModel} More specifically, you can find the union, intersection and differences of two relations just as you would with sets. \cite{DatabaseSystems}
+
+For ease of demonstration we use a more populated instance of the \relation{People} relation as in \fref{tab:peopleRelationPopulated}.
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l|l|l}
+    \verb|firstName| & \verb|surname| & \verb|age| \\
+    \hline\hline
+    Jim & Smith & 32\\
+    Herbert & Green & 34\\
+    Emma & Smith & 23\\
+  \end{tabular}
+  \caption{Populated instance of the People relation.}
+  \label{tab:peopleRelationPopulated}
+\end{table}
 \subsubsection{Projections}
 Projections select certain attributes of a relation, removing the others and collapsing duplicates \todo{I thought we needed multiplicty, check this}.\cite{RelationalModel} This can be visualised as only keeping certain columns in the table.
 
 Given a list of $k$ attributes $L = i_1, i_2, \ldots, i_k$, we can specify a projection on an $n$-ary (containing $n$ attributes) relation \relation{R} as \proj{L}{R}. The result is a $k$-ary relation whose attributes are specified by $L$ \cite{RelationalModel} and by convention the ``standard order'' of attributes is also determined by the order of attributed in $L$.\cite{DatabaseSystems}
+
+We can see a demonstration of the projection $\proj{\mathrm{firstName,\:age}}{People}$ in \fref{tab:peopleRelationProjection}:
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l|l}
+    \verb|firstName| & \verb|age| \\
+    \hline\hline
+    Jim & 32\\
+    Herbert & 34\\
+    Emma & 23\\
+  \end{tabular}
+  \caption[Projection example on People relation.]{An example projection of the people relation where the surname attribute has been removed.}
+  \label{tab:peopleRelationProjection}
+\end{table}
 \subsubsection{Selections}
 \subsubsection{Products}
 \subsubsection{Joins}
