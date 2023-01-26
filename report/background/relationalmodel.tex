@@ -26,7 +26,7 @@ An empty table showing the relation can be found on \fref{tab:peopleRelationHead
     \hline\hline
     & &\\
   \end{tabular}
-  \caption{A tabular representation of the People relation.}
+  \caption[People relation's headings]{A tabular representation of the People relation's attributes.}
   \label{tab:peopleRelationHeadings}
 \end{table}
 \todo{Add verb to People in the caption}
@@ -36,6 +36,19 @@ A row of the table\footnote{Excluding the row with the headings.} is called a \e
   \centering
   (\verb|Jim|, \verb|Smith|, 32).
 \end{figure}
+
+With this table we can now represent the \relation{People} in a tabular form in \fref{tab:peopleRelationWithTuple}:
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l|l|l}
+    \verb|firstName| & \verb|surname| & \verb|age| \\
+    \hline\hline
+    Jim & Smith & 32\\
+  \end{tabular}
+  \caption[People relation with tuple]{A tabular representation of the People relation and its associated tuple.}
+  \label{tab:peopleRelationWithTuple}
+\end{table}
+\todo{Add verb to People in the caption}
 
 In the relational model the constraint that each each component of a tuple must be an of an atomic type; meaning the component should reasonably not be a compound data type such as records, lists or sets. Furthermore, each attribute has its own associated \emph{domain}, specifying an elementary type that all components belonging to that column must take. The domain can be specified in the the schema using a colon as follows:
 \begin{figure}[!h]
