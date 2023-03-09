@@ -43,7 +43,8 @@ executable bags-test
     -- other-extensions:
     build-depends:
         base ^>=4.16.4.0,
-        a-deeper-dive-to-relational-algebra-by-way-of-adjunctions
+        a-deeper-dive-to-relational-algebra-by-way-of-adjunctions,
+        multiset ^>=0.3.4
 
     hs-source-dirs:   app
     default-language: Haskell2010

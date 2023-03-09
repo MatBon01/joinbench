@@ -1,4 +1,7 @@
 module Main where
+
+import qualified Data.MultiSet as MultiSet
+
 type Name = String
 
 type Age = Int
@@ -11,3 +14,4 @@ data TestDatabaseRecord = TestDatabaseRecord {name :: Name, age :: Age, birthCou
 main :: IO ()
 main = do
   putStrLn "This is a database bags test"
+  putStrLn (show (MultiSet.insertMany 12 3 MultiSet.empty))
