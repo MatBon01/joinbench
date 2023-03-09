@@ -20,3 +20,6 @@ main = do
 
 newTable :: Table Record
 newTable = MultiSet.empty
+
+singletonTable :: Record -> Table Record
+singletonTable = MultiSet.singleton
