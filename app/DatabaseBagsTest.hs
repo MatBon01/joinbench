@@ -10,10 +10,13 @@ type Table = MultiSet.MultiSet
 
 type BirthCountry = String
 
-data TestDatabaseRecord = TestDatabaseRecord {name :: Name, age :: Age, birthCountry :: BirthCountry}
+data Record = Record {name :: Name, age :: Age, birthCountry :: BirthCountry}
   deriving (Show)
 
 main :: IO ()
 main = do
   putStrLn "This is a database bags test"
   putStrLn (show (MultiSet.insertMany 12 3 MultiSet.empty))
+
+newTable :: Table Record
+newTable = MultiSet.empty
