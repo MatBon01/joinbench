@@ -6,6 +6,8 @@ type Name = String
 
 type Age = Int
 
+type Table = MultiSet.MultiSet
+
 type BirthCountry = String
 
 data TestDatabaseRecord = TestDatabaseRecord {name :: Name, age :: Age, birthCountry :: BirthCountry}
