@@ -11,7 +11,7 @@ type Table = MultiSet.MultiSet
 type BirthCountry = String
 
 data Record = Record {name :: Name, age :: Age, birthCountry :: BirthCountry}
-  deriving (Show)
+  deriving (Show, Eq, Ord)
 
 main :: IO ()
 main = do
@@ -23,3 +23,6 @@ newTable = MultiSet.empty
 
 singletonTable :: Record -> Table Record
 singletonTable = MultiSet.singleton
+
+union :: Table Record -> Table Record -> Table Record
+union = MultiSet.union
