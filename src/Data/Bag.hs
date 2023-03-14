@@ -1,4 +1,3 @@
-{-# LANGUAGE InstanceSigs #-}
 module Data.Bag where
 
 newtype Bag a = Bag { elements :: [a]}
