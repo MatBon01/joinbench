@@ -10,3 +10,6 @@ instance Functor Bag where
 instance Applicative Bag where
   pure x = Bag [x]
   (<*>) b1 b2 = Bag $ (<*>) (elements b1) (elements b2)
+
+instance Monad Bag where
+  Bag xs >>= k = Bag (xs >>= (elements . k))
