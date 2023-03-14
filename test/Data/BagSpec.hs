@@ -12,6 +12,19 @@ addOneOrTwo x = Bag.Bag [x + 1, x + 2]
 
 spec :: Spec
 spec = do
+  describe "Data.Bag Eq" $ do
+    it "ordering does not matter" $ do
+      Bag.Bag [1, 2, 3, 4, 5] `shouldBe` Bag.Bag [3, 2, 5, 1, 4]
+
+    it "length and repetitions matter" $ do
+      Bag.Bag [1, 2, 3, 3] `shouldNotBe` Bag.Bag [1, 2, 3]
+    
+    it "repetitions of specific elements matter" $ do
+      Bag.Bag [1, 1, 2] `shouldNotBe` Bag.Bag [1, 2, 2]
+
+    it "repetitions matter" $ do
+      Bag.Bag [1, 2, 2, 3, 3, 3] `shouldBe` Bag.Bag [1, 2, 3, 2, 3, 3]
+
   describe "Data.Bag fmap" $ do
     it "maps over the underlying list" $ do
       fmap (5 +) (Bag.Bag [0, 10, 20, 30]) `shouldBe` Bag.Bag [5, 15, 25, 35]
@@ -35,4 +48,8 @@ spec = do
   describe "Data.Bag.empty" $ do
     it "returns a bag with an empty list" $ do
       (Bag.empty :: Bag.Bag Int) `shouldBe` Bag.Bag []
+  
+  describe "Data.Bag.union" $ do
+    it "returns the union of both bags" $ do
+      (Bag.Bag ['a', 'c', 'a'] `Bag.union` Bag.Bag ['c', 'd']) `shouldBe` Bag.Bag ['a', 'c', 'a', 'c', 'd']
 
