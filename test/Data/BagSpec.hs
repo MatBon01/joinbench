@@ -1,4 +1,4 @@
-module BagSpec (spec) where
+module Data.BagSpec (spec) where
 
 import Test.Hspec
 
