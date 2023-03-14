@@ -1,4 +1,4 @@
-module Bag where
+module Data.Bag where
 
 data Bag a = Empty | Bag [a]
 

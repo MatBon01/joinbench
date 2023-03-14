@@ -22,7 +22,7 @@ extra-source-files:
     README.md
 
 library
-    exposed-modules: Data.BagSpec
+    exposed-modules: Data.Bag
 
     -- Modules included in this library but not exported.
     -- other-modules:
@@ -55,5 +55,5 @@ test-suite spec
     hs-source-dirs:     test
     main-is:            Spec.hs
     other-modules:      Data.BagSpec
-    build-depends:      base ^>=4.16.4.0, hspec ^>=2.10
+    build-depends:      base ^>=4.16.4.0, hspec ^>=2.10, a-deeper-dive-to-relational-algebra-by-way-of-adjunctions
     build-tool-depends: hspec-discover:hspec-discover == 2.*

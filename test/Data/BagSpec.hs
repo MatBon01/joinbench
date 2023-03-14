@@ -1,6 +1,7 @@
 module Data.BagSpec (spec) where
 
 import Test.Hspec
+import Data.Bag
 
 spec :: Spec
 spec = do
