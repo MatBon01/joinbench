@@ -31,4 +31,8 @@ spec = do
   describe "Data.Bag >>=" $ do
     it "should be the same as in lists" $ do
       (Bag.Bag [11, 15] >>= addOneOrTwo) `shouldBe` Bag.Bag [12, 13, 16, 17]
+    
+  describe "Data.Bag.empty" $ do
+    it "returns a bag with an empty list" $ do
+      (Bag.empty :: Bag.Bag Int) `shouldBe` Bag.Bag []
 

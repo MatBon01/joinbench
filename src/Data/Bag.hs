@@ -13,3 +13,6 @@ instance Applicative Bag where
 instance Monad Bag where
   Bag xs >>= k = Bag (xs >>= (elements . k))
 
+
+empty :: Bag a
+empty = Bag []
