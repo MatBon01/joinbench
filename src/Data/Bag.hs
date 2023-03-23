@@ -25,6 +25,9 @@ instance Applicative Bag where
 instance Monad Bag where
   Bag xs >>= k = Bag (xs >>= (elements . k))
 
+instance Semigroup (Bag a) where
+  (<>) = Data.Bag.union
+
 empty :: Bag a
 empty = Bag []
 
