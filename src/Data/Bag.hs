@@ -2,11 +2,18 @@ module Data.Bag where
 
 import Data.List
 
-newtype Bag a = Bag { elements :: [a]}
+newtype Bag a = Bag {elements :: [a]}
   deriving (Show)
 
 instance (Eq a) => Eq (Bag a) where
-  Bag xs == Bag ys = xs `elem` permutations ys
+  b1 == b2 = eq' (elements b1) (elements b2)
+    where
+      eq' :: (Eq a) => [a] -> [a] -> Bool
+      eq' (x : xs) ys = not (null ys2) && eq' xs (ys1 ++ tail ys2)
+        where
+          (ys1, ys2) = break (== x) ys
+      eq' [] [] = True
+      eq' _ _ = False
 
 instance Functor Bag where
   fmap f (Bag xs) = Bag (fmap f xs)
