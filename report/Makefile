@@ -14,7 +14,10 @@ clean:
 	latexmk -C $(documents)
 
 spell:
-	hunspell -l -d en_GB -t *.tex */*/*.tex
+	hunspell -d en_GB -p ./.hunspell -t *.tex */*.tex
+
+spellcheck:
+	hunspell -l -d en_GB -p ./.hunspell -t *.tex */*.tex
 
 lint:
 	-chktex -q *.tex

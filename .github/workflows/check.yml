@@ -21,9 +21,9 @@ jobs:
       - name: Check spelling
         id: spellcheck
         run: |
-          echo "numSpellingErrors="$(make -C report -s spell | wc -l) >> $GITHUB_OUTPUT
+          echo "numSpellingErrors="$(make -C report -s spellcheck | wc -l) >> $GITHUB_OUTPUT
           echo "spellingErrorList<<EOF" >> $GITHUB_OUTPUT
-          make -C report -s spell >> $GITHUB_OUTPUT
+          make -C report -s spellcheck >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
       - name: Report no errors
         run: echo "::notice title=Spell report::No spelling errors detected"
