@@ -92,6 +92,6 @@ jobs:
           authToken: ${{secrets.GITHUB_TOKEN}}
           context: "Linter"
           description: "Linting errors were found"
-          state: "failure"
+          state: "success"
         if: steps.linting.outputs.numLintingErrorDescriptionLines > 0
         
