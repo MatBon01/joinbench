@@ -66,13 +66,13 @@ jobs:
       - name: Run linter
         id: linting
         run: |
-          echo "numLintingErrorDescriptionLines=$(make -C report -s lint | wc -l)" >> $GITHUB_OUTPUT
+          echo "numLintingWarnings=$(make -C report -s lintcheck | wc -l)" >> $GITHUB_OUTPUT
           echo "lintingErrorList<<EOF" >> $GITHUB_OUTPUT
           make -C report -s lint >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
       - name: Report no errors
-        run: echo "::notice title=Linting report::No Linting errors detected"
-        if: steps.linting.outputs.numLintingErrorDescriptionLines == 0
+        run: echo "::notice title=Linting report::No Linting warnings detected"
+        if: steps.linting.outputs.numLintingWarnings == 0
       - name: Set linting status to passed if no linting errors
         uses: Sibz/github-status-action@v1
         with:
@@ -80,18 +80,18 @@ jobs:
           context: "Linter"
           description: "No linting errors were found"
           state: "success"
-        if: steps.linting.outputs.numLintingErrorDescriptionLines == 0
+        if: steps.linting.outputs.numLintingWarnings == 0
       - name: Report errors
         run: |
-          echo -e "::warning title=Linting report::Linting errors were found"
+          echo -e "::warning title=Linting report::${{ steps.linting.outputs.numLintingWarnings }} linting errors were found"
           make -C report -s lint
-        if: steps.linting.outputs.numLintingErrorDescriptionLines > 0
-      - name: Set linting status to failure if there are linting errors
+        if: steps.linting.outputs.numLintingWarnings > 0
+      - name: Set linting status to success if there are linting warnings
         uses: Sibz/github-status-action@v1
         with:
           authToken: ${{secrets.GITHUB_TOKEN}}
           context: "Linter"
-          description: "Linting errors were found"
+          description: "${{ steps.linting.outputs.numLintingWarnings }} linting errors were found"
           state: "success"
-        if: steps.linting.outputs.numLintingErrorDescriptionLines > 0
+        if: steps.linting.outputs.numLintingWarnings > 0
         
