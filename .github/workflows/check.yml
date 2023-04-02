@@ -86,12 +86,12 @@ jobs:
           echo -e "::warning title=Linting report::${{ steps.linting.outputs.numLintingWarnings }} linting errors were found"
           make -C report -s lint
         if: steps.linting.outputs.numLintingWarnings > 0
-      - name: Set linting status to failure if there are linting errors
+      - name: Set linting status to success if there are linting warnings
         uses: Sibz/github-status-action@v1
         with:
           authToken: ${{secrets.GITHUB_TOKEN}}
           context: "Linter"
-          description: "Linting errors were found"
+          description: "${{ steps.linting.outputs.numLintingWarnings }} linting errors were found"
           state: "success"
-        if: steps.linting.outputs.numLintingErrorDescriptionLines > 0
+        if: steps.linting.outputs.numLintingWarnings > 0
         
