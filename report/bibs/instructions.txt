@@ -1,0 +1,16 @@
+This consists of a list of all the books, articles, manuals etc. used in the project and referred to in the report. You should provide enough information to allow the reader to find the source. In particular references must contain all the information regarding the publication of the paper and must be consistently formatted. Usually this means:
+
+For journals: Authors, Title, Journal, volume number, issue number, page number, publisher, month, year.
+For conferences: Authors, Title, Conference name, Place where held, publisher, page number, month, year.
+For technical reports: Authors, Title, institution, Technical report number, month, year.
+For web references: Authors, Title, Web-reference, date accessed.
+URLs and DOIs are optional for published work but preferred.
+A weakness of many reports is inadequate citation of a source of information. It's easy to get this right so there are no excuses. Each entry in the bibliography should list the author(s) and title of the piece of work and should give full details of where it can be found. For example:
+
+[5] Kiss, C., Field, A.J., Eisenbach, S. and Peyton Jones, S., Higher-order Type-level Programming in Haskell, Proc. 24th ACM SIGPLAN International Conference on Functional Programming (ICFP 2019), Berlin, July 2019. pp 102:1-102:26. 
+
+Using a reference management programme can make your life simpler (but it is still important to know how to reference manually). See for example Bibdesk , JabRef , RefWorks, etc.
+
+The Department usually uses the Vancouver referencing format.
+
+A student supplied biblatex style for Vancouver Referencing is available on Piazza.
