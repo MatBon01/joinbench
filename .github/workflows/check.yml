@@ -66,9 +66,9 @@ jobs:
       - name: Run linter
         id: linting
         run: |
-          echo "numLintingErrorDescriptionLines=$(make -C -s lint | wc -l)" >> $GITHUB_OUTPUT
+          echo "numLintingErrorDescriptionLines=$(make -C report -s lint | wc -l)" >> $GITHUB_OUTPUT
           echo "lintingErrorList<<EOF" >> $GITHUB_OUTPUT
-          make -C -s lint >> $GITHUB_OUTPUT
+          make -C report -s lint >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
       - name: Report no errors
         run: echo "::notice title=Linting report::No Linting errors detected"
@@ -84,7 +84,7 @@ jobs:
       - name: Report errors
         run: |
           echo -e "::warning title=Linting report::Linting errors were found"
-          make -C -s lint
+          make -C report -s lint
         if: steps.linting.outputs.numLintingErrorDescriptionLines > 0
       - name: Set linting status to failure if there are linting errors
         uses: Sibz/github-status-action@v1
