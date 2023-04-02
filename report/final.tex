@@ -1,6 +1,6 @@
 \documentclass[a4paper, twoside]{report}
 
-\input{report/packages.tex}
+\input{packages.tex}
 
 \title{A Deeper Dive into Relational Algebra by Way of Adjunctions}
 \author{Matteo Bongiovanni}
@@ -58,8 +58,8 @@ Projects will usually contain all of the following elements, although these may 
 \end{comment}
 
 % Front matter
-\include{report/title/title}
-\include{report/title/abstract}
+\include{title/title}
+\include{title/abstract}
 \begin{comment}
 Table of contents:
 This should list the main chapters, sections and subsections of your report. Choose self-explanatory chapter and section titles and use double spacing for clarity. If possible you should include page numbers indicating where each chapter/section begins. 
@@ -67,16 +67,16 @@ This should list the main chapters, sections and subsections of your report. Cho
 \tableofcontents
 
 % Main matter 
-\include{report/introduction/final}
-\include{report/background/final}
-\include{report/project/project}
-\include{report/evaluation/evaluation}
-\include{report/ethics/final}
-\include{report/conclusion/conclusion}
+\include{introduction/final}
+\include{background/final}
+\include{project/project}
+\include{evaluation/evaluation}
+\include{ethics/final}
+\include{conclusion/conclusion}
 
 % Back matter
 \bibliographystyle{unsrtnat}
 % DoC uses the Vancouver Referencing Format.
-\bibliography{report/bibs/combined}
+\bibliography{bibs/combined}
 
 \end{document}

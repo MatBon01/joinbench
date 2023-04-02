@@ -21,7 +21,7 @@ jobs:
         run: sudo apt-get install -y latexmk texlive-font-utils texlive-latex-extra
       - uses: actions/checkout@v3
       - name: Compile interim report
-        run: make interim.pdf
+        run: make -C report interim.pdf
       - name: Show compilation failed on status
         uses: Sibz/github-status-action@v1
         with:
@@ -48,7 +48,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: interim
-          path: interim.pdf
+          path: report/interim.pdf
   
   create-release:
     name: Create release
