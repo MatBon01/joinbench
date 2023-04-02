@@ -19,5 +19,8 @@ spell:
 spellcheck:
 	hunspell -l -d en_GB -p ./.hunspell -t *.tex */*.tex
 
+lintcheck:
+	-chktex -q -v0 *.tex
+
 lint:
-	-chktex -q *.tex
+	-chktex *.tex
