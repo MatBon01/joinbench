@@ -1,0 +1,77 @@
+\documentclass[a4paper, twoside]{report}
+
+\input{report/packages.tex}
+
+\title{A Deeper Dive into Relational Algebra by Way of Adjunctions}
+\author{Matteo Bongiovanni}
+\date{January 2023}
+\supervisor{Dr.\ Nicolas Wu}
+\secondmarker{Dr.\ Steffen van Bakel}
+\documenttype{MEng Individual Project}
+\university{Imperial College London}
+\department{Department of Computing}
+\degree{Joint Mathematics and Computing}
+
+\begin{document}
+\begin{comment}
+General Information
+The project report (occasionally referred to as a thesis) is an extremely important aspect of the project. It serves to show what you have achieved and should demonstrate that:
+
+You understand the wider context of computing by relating your choice of project, and the approach you take, to existing products or research.
+You can apply the theoretical and practical techniques taught in the course to the problem you are addressing and that you understand their relevance to the wider world of computing.
+You are capable of objectively criticising your own work and making constructive suggestions for improvements or further work based on your experiences so far.
+As a computing professional, you operate ethically and can explain your thinking and working processes clearly and concisely to third parties who may not be experts in the field in which you are working.
+Most of the project assessors will not have followed the project throughout and will only have a short time to listen to a presentation or see a demonstration. For this reason they will rely heavily on the report to judge the project.
+
+Many students underestimate the importance of the report and make the mistake of thinking that top marks can be achieved simply for producing a good product. This is fundamentally not the case and many projects have been graded well below their potential because of an indifferent or poor write-up. In order to get the balance right you should consider that the aim of the project is to produce a good report and that software, hardware, theory etc. that you developed during the project are merely a means to this end. Don't make the mistake of leaving the write-up to the last minute. Ideally you should produce the bulk of the report as you go along and use the last week or two to bring it together into a coherent document.
+
+It is helpful to get feedback from your supervisor about your project report, but supervisors cannot be expected to look at documents written at the last minute or at more than one chapter at a time. Allow plenty of time for this.
+
+Project Report Length
+The nominal maximum report length is 60 pages, plus appendices. Shorter reports may be appropriate for many projects and longer reports can be submitted with prior approval (see below).
+
+The page count includes:
+
+title page
+abstract
+dedications
+table of contents
+The page count does not include:
+
+bibliography
+appendices (but the report should make sense without the appendices)
+When writing up your work be reminded of the fact that a 60-page report isn't necessarily better than a 30-page report, in the same way that a 10,000 line implementation isn't necessarily better 5,000 line one. Conciseness, clarity and elegance are invaluable qualities in report writing, just as they are in programming. Indeed, you will lose credit if it is evident to the assessors that the report has been padded with superfluous content in order to make it appear more substantial than the work justifies. The assessors greatly value quality over quantity.
+
+It is important to understand that the report is assessed on the quality of the technical writing. Here this means your ability to document your ideas, design, implementation, evaluation, conclusions etc. succinctly, using appropriate scientific language, as might a researcher when writing up their findings in an technical magazine, academic journal or conference proceedings.
+
+If you have good reason to use more than 60 pages you should consult your supervisor and second marker and obtain their approval in advance - they will be required to read and assess the whole report, whereas other assessment team members may only scan key sections.
+
+Project Layout
+The physical layout and formatting of the report is also important. A tidy, well laid out and consistently formatted document makes for easier reading and is suggestive of a careful and professional attitude towards its preparation. Both LaTeX and MS Word will allow you to produce a cleanly formatted document. Many supervisors will advise you to use LaTeX as this solves most of the formatting problems for you. If your report is to contain a substantial number of mathematical formulae you are strongly advised to use LaTeX.
+
+Project Report Structure
+The exact structure of your project (the chapter titles etc) is up to you. Discuss with your supervisor what structure works best for your project.
+
+A project report will usually contain a number of chapters (Chapter 1, Chapter 2 etc). Each chapter contains Sections (2.1, 2.2 etc) and may also contain subsections (2.1.1, 2.1.2) etc. Try to avoid too many levels of subheading - three is usually sufficient.
+
+Projects will usually contain all of the following elements, although these may not exactly map to chapters.
+\end{comment}
+
+% Front matter
+\include{report/title/title}
+\include{report/title/abstract}
+\tableofcontents
+
+% Main matter 
+\include{report/introduction/introduction}
+\include{report/background/background}
+\include{report/project/projectplan}
+\include{report/evaluation/evaluationplan}
+\include{report/ethics/ethicalissues}
+
+% Back matter
+\bibliographystyle{unsrtnat}
+% DoC uses the Vancouver Referencing Format.
+\bibliography{report/bibs/interim}
+
+\end{document}
