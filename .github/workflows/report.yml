@@ -1,4 +1,4 @@
-name: checks
+name: Report Checks
 on: push
 
 jobs:
