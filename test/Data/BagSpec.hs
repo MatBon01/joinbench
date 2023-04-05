@@ -60,9 +60,10 @@ spec = do
   describe "Data.Bag Semigroup" $ do
     it "has an associative operator <>" $ do
       (b1 <> b2) <> b3 `shouldBe` b1 <> (b2 <> b3)
-      where
-        b1 = Bag.Bag ['a', 'b', 'c']
-        b2 = Bag.Bag ['b', 'c', 'd']
-        b3 = Bag.Bag ['c', 'd', 'e']
-
-
+  describe "Data.Bag Monoid" $ do
+    it "has an identity, mempty" $ do
+      (b1 <> mempty :: Bag.Bag Char) `shouldBe` b1
+    where
+      b1 = Bag.Bag ['a', 'b', 'c']
+      b2 = Bag.Bag ['b', 'c', 'd']
+      b3 = Bag.Bag ['c', 'd', 'e']

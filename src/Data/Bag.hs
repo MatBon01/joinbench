@@ -28,6 +28,9 @@ instance Monad Bag where
 instance Semigroup (Bag a) where
   (<>) = Data.Bag.union
 
+instance Monoid (Bag a) where
+  mempty = Data.Bag.empty
+
 empty :: Bag a
 empty = Bag []
 
