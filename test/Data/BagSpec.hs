@@ -63,6 +63,9 @@ spec = do
   describe "Data.Bag Monoid" $ do
     it "has an identity, mempty" $ do
       (b1 <> mempty :: Bag.Bag Char) `shouldBe` b1
+  describe "Data.Bag CMonoid" $ do
+    it "has a commutative operator <>" $ do
+      (b1 <> b2) `shouldBe` (b2 <> b1)
     where
       b1 = Bag.Bag ['a', 'b', 'c']
       b2 = Bag.Bag ['b', 'c', 'd']

@@ -1,6 +1,7 @@
 module Data.Bag where
 
 import Data.List
+import Data.CMonoid
 
 newtype Bag a = Bag {elements :: [a]}
   deriving (Show)
@@ -30,6 +31,8 @@ instance Semigroup (Bag a) where
 
 instance Monoid (Bag a) where
   mempty = Data.Bag.empty
+
+instance CMonoid (Bag a)
 
 empty :: Bag a
 empty = Bag []
