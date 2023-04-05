@@ -25,7 +25,7 @@ library
     exposed-modules: Data.Bag
 
     -- Modules included in this library but not exported.
-    other-modules: Data.CMonoid
+    other-modules: Data.CMonoid, Data.PointedSet
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
