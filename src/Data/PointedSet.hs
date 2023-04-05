@@ -1,4 +1,4 @@
-module PointedSet where
+module Data.PointedSet where
 
 class PointedSet a where
   null :: a
