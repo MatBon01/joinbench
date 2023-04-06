@@ -22,10 +22,10 @@ extra-source-files:
     README.md
 
 library
-    exposed-modules: Data.Bag
+    exposed-modules: Data.Bag, Data.PointedSet, Data.CMonoid
 
     -- Modules included in this library but not exported.
-    other-modules: Data.CMonoid
+    -- other-modules:
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:

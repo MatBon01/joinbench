@@ -2,6 +2,7 @@ module Data.BagSpec (spec) where
 
 import Test.Hspec
 import qualified Data.Bag as Bag
+import qualified Data.PointedSet as Pointed
 
 import Control.Applicative
 
@@ -66,6 +67,15 @@ spec = do
   describe "Data.Bag CMonoid" $ do
     it "has a commutative operator <>" $ do
       (b1 <> b2) `shouldBe` (b2 <> b1)
+  describe "Data.Bag Pointed Set" $ do
+    it "has empty as its null" $ do
+      (Pointed.null :: Bag.Bag Int) `shouldBe` (Bag.empty :: Bag.Bag Int)
+    it "has mempty as its null" $ do
+      (Pointed.null :: Bag.Bag Char) `shouldBe` (mempty :: Bag.Bag Char)
+    it "correctly identifies null" $ do
+      Pointed.isNull (Bag.empty :: Bag.Bag Int) `shouldBe` True
+    it "does not identify a non-empty Bag as null" $ do
+      Pointed.isNull (Bag.Bag [1, 2, 4]) `shouldBe` False
     where
       b1 = Bag.Bag ['a', 'b', 'c']
       b2 = Bag.Bag ['b', 'c', 'd']

@@ -1,7 +1,9 @@
+{-# LANGUAGE InstanceSigs #-}
 module Data.Bag where
 
 import Data.List
 import Data.CMonoid
+import qualified Data.PointedSet as Pointed
 
 newtype Bag a = Bag {elements :: [a]}
   deriving (Show)
@@ -33,6 +35,13 @@ instance Monoid (Bag a) where
   mempty = Data.Bag.empty
 
 instance CMonoid (Bag a)
+
+instance Pointed.PointedSet (Bag a) where
+  null = empty
+  isNull :: Bag a -> Bool
+  -- Implement isNull with pattern matching to not require Eq a
+  isNull (Bag []) = True
+  isNull _ = False
 
 empty :: Bag a
 empty = Bag []
