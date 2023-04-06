@@ -18,7 +18,7 @@ We will first take the purely mathematical introduction to category theory. We s
 \subsection{Functors}
 \theoremstyle{definition}\newtheorem*{covfunctordef}{Functor}
 
-Similar to the arrows we have within categories, we can transform categoies to other categories. This is the notion of a functor.
+Similar to the arrows we have within categories, we can transform categories to other categories. This is the notion of a functor.
 \begin{covfunctordef}
   Given two categories \cat{C} and \cat{D}, a (covariant) functor $\functor{F}: \cat{C} \to \cat{D}$ is two related functions, an \emph{object function} and an \emph{arrow function} (both written as \functor{F}). The object function $\functor{F}: \objs{C} \to \objs{D}$ maps an object $a$ in \cat{C} to $\functorobj{F}{a}$ in \cat{D}. Given an arrow $\morph{f}: \obj{a} \to \obj{b}$ in \cat{C}, the arrow function maps \morph{f} to $\functormorph{F}{f}: \functorobj{F}{a} \to \functorobj{F}{b}$. The functor must obey the following properties: \todo{Should I say the arrow is in the cat or the morphs of the cat}
   \begin{itemize}
