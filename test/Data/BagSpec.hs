@@ -79,9 +79,9 @@ spec = do
       Pointed.isNull (Bag.Bag [1, 2, 4]) `shouldBe` False
   describe "Data.Bag.reduceBag" $ do
     it "correctly reduces a bag using sum" $ do
-      (getSum . Bag.reduce) (Bag.Bag [1, 2, 3, 4] :: Bag.Bag (Sum Int)) `shouldBe` 10
+      (getSum . Bag.reduceBag) (Bag.Bag [1, 2, 3, 4] :: Bag.Bag (Sum Int)) `shouldBe` 10
     it "correctly reduces a bag using product" $ do
-      (getProduct . Bag.reduce) (Bag.Bag [1, 2, 3, 4] :: Bag.Bag (Product Int)) `shouldBe` 24
+      (getProduct . Bag.reduceBag) (Bag.Bag [1, 2, 3, 4] :: Bag.Bag (Product Int)) `shouldBe` 24
     where
       b1 = Bag.Bag ['a', 'b', 'c']
       b2 = Bag.Bag ['b', 'c', 'd']
