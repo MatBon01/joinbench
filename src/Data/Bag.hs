@@ -48,3 +48,6 @@ empty = Bag []
 
 union :: Bag a -> Bag a -> Bag a
 b1 `union` b2 = Bag (elements b1 ++ elements b2)
+
+reduce :: CMonoid m => Bag m -> m
+reduce = mconcat . elements
