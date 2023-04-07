@@ -31,7 +31,7 @@ Intuitively, it should be obvious that categories and functors themselves form a
 
 \subsection{Natural transformations}
 \theoremstyle{definition}\newtheorem*{nattransdef}{Natural Transformation}
-We now can explore a way of relating two functors in an intuitive way, this can be seen as a projection of a diagram to the other functor's space. \todo{Fix this sentence makes no sense}
+We now can explore an intuitive way of relating two functors, called an \emph{natural transformation}. A natural transformation can be seen as a projection of one functor space to another and is in essence a family of arrows that describes this translation.
 \begin{nattransdef}
 Given two functors $\functor{F}, \functor{G} : \cat{C} \to \cat{D}$ a \emph{natural transformation} \nattrans{\tau} from \functor{F} to \functor{G} associates to each element $\obj{a} \in \objs{C}$ an arrow $\nattransapply{\tau}{a} \in \morphs{D}$ such that $\nattransapply{\tau}{a}: \functorobj{F}{(a)} \to \functorobj{G}{(a)}$. Additionally, for $\obj{b} \in \cat{C}$ and \explicitmorph{f}{a}{b} a morphism in \cat{C}, we also require that $\nattransapply{\tau}{b} \circ \functormorph{F}{(f)} = \functormorph{G}{(f)} \circ \nattransapply{\tau}{a}$.
 
