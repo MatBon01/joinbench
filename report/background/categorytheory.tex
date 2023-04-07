@@ -6,11 +6,11 @@ We will first take the purely mathematical introduction to category theory. We s
 \begin{categorydef}
   A \emph{category} \cat{C} is a set\footnote{In more rigorous definitions one must be careful of defining the collections of objects as a set lest Russell's paradox comes into play}\todo{Make sure that this is correct.} of \emph{objects} \objs{C}, such as \obj{a}, \obj{b}, \obj{c}, and \emph{morphisms} (or \emph{arrows}) \morphs{C} between them, such as \morph{f}, \morph{g}. We require that:
   \begin{itemize}
-    \item There are two operations; \emph{domain} which associates with every arrow \morph{f} an object $\obj{a} = \domain{f}$ and \emph{codomain} which associates with every arrow \morph{f} an object $\obj{b} = \codomain{f}$. We can now express this information as $\morph{f}: \obj{a} \to \obj{b}$.\footnote{Though we emphasise the distinction between a function and a morphism.}
-    \item There is a composition rule between morphisms such that given $\morph{f}: \obj{a} \to \obj{b}$ and $\morph{g}: \obj{b} \to \obj{c}$, there is another arrow $\morph{g} \circ \morph{f}: \obj{a} \to \obj{c}$ in \morphs{C}.
-    \item Composition of arrows is associative. That is, for an additional object \obj{d} and arrow $\morph{h}: \obj{c} \to \obj{d}$ the resulting morphisms $\morph{h} \circ \left(\morph{g} \circ \morph{f}\right)$ and $\left(\morph{h} \circ \morph{g}\right) \circ \morph{f}$ coincide in \morphs{C}.
+    \item There are two operations; \emph{domain} which associates with every arrow \morph{f} an object $\obj{a} = \domain{f}$ and \emph{codomain} which associates with every arrow \morph{f} an object $\obj{b} = \codomain{f}$. We can now express this information as \explicitmorph{f}{a}{b}.\footnote{Though we emphasise the distinction between a function and a morphism.}
+    \item There is a composition rule between morphisms such that given \explicitmorph{f}{a}{b} and \explicitmorph{g}{b}{c}, there is another arrow \explicitmorph{\morph{g} \circ \morph{f}}{a}{c} in \morphs{C}.
+    \item Composition of arrows is associative. That is, for an additional object \obj{d} and arrow \explicitmorph{h}{c}{d} the resulting morphisms $\morph{h} \circ \left(\morph{g} \circ \morph{f}\right)$ and $\left(\morph{h} \circ \morph{g}\right) \circ \morph{f}$ coincide in \morphs{C}.
     \item Every object \obj{a} is assigned an arrow $\id{a}: \obj{a} \to \obj{a}$ in \morphs{C}, called the \emph{identity morphism}.
-    \item Composition with the identity morphism is the identity on morphisms. Explicitly, given the arrow $\morph{f}: \obj{a} \to \obj{b}$, we have $\morph{f} \circ \id{a} = \id{b} \circ \morph{f} = \morph{f}$.
+    \item Composition with the identity morphism is the identity on morphisms. Explicitly, given the arrow \explicitmorph{f}{a}{b}, we have $\morph{f} \circ \id{a} = \id{b} \circ \morph{f} = \morph{f}$.
   \end{itemize}
 \end{categorydef}
 \todo{introduce hom-set}
@@ -30,6 +30,12 @@ Similar to the arrows we have within categories, we can transform categories to 
 Intuitively, it should be obvious that categories and functors themselves form a category, \commoncatname{Cat}.\\
 
 \subsection{Natural transformations}
+\theoremstyle{definition}\newtheorem*{nattransdef}{Natural Transformation}
+We now can explore an intuitive way of relating two functors, called an \emph{natural transformation}. A natural transformation can be seen as a projection of one functor space to another and is in essence a family of arrows that describes this translation.
+\begin{nattransdef}
+Given two functors $\functor{F}, \functor{G} : \cat{C} \to \cat{D}$ a \emph{natural transformation} $\nattrans{\tau}: \functor{F} \to \functor{G}$ associates to each element $\obj{a} \in \objs{C}$ an arrow $\nattransapply{\tau}{a} \in \morphs{D}$ such that $\nattransapply{\tau}{a}: \functorobj{F}{a} \to \functorobj{G}{a}$. Additionally, for $\obj{b} \in \cat{C}$ and \explicitmorph{f}{a}{b} a morphism in \cat{C}, we also require that $\nattransapply{\tau}{b} \circ \functormorph{F}{f} = \functormorph{G}{f} \circ \nattransapply{\tau}{a}$.
+
+\end{nattransdef}
 \subsection{Adjunctions}
 \todo{Describe why adjunctions are such a key character in this paper}
 \todo{Add more information between here}
