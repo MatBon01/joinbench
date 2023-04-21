@@ -33,7 +33,8 @@ Intuitively, it should be obvious that categories and functors themselves form a
 \theoremstyle{definition}\newtheorem*{nattransdef}{Natural Transformation}
 We now can explore an intuitive way of relating two functors, called an \emph{natural transformation}. A natural transformation can be seen as a projection of one functor space to another and is in essence a family of arrows that describes this translation.
 \begin{nattransdef}
-Given two functors $\functor{F}, \functor{G} : \cat{C} \to \cat{D}$ a \emph{natural transformation} $\nattrans{\tau}: \functor{F} \to \functor{G}$ associates to each element $\obj{a} \in \objs{C}$ an arrow $\nattransapply{\tau}{a} \in \morphs{D}$ such that $\nattransapply{\tau}{a}: \functorobj{F}{a} \to \functorobj{G}{a}$. Additionally, for $\obj{b} \in \cat{C}$ and \explicitmorph{f}{a}{b} a morphism in \cat{C}, we also require that $\nattransapply{\tau}{b} \circ \functormorph{F}{f} = \functormorph{G}{f} \circ \nattransapply{\tau}{a}$.
+Given two functors $\functor{F}, \functor{G} : \cat{C} \to \cat{D}$ a
+\emph{natural transformation} $\explicitnattrans{\tau}{F}{G}$ associates to each element $\obj{a} \in \objs{C}$ an arrow $\nattransapply{\tau}{a} \in \morphs{D}$ such that $\nattransapply{\tau}{a}: \functorobj{F}{a} \to \functorobj{G}{a}$. Additionally, for $\obj{b} \in \cat{C}$ and \explicitmorph{f}{a}{b} a morphism in \cat{C}, we also require that $\nattransapply{\tau}{b} \circ \functormorph{F}{f} = \functormorph{G}{f} \circ \nattransapply{\tau}{a}$.
 
 \end{nattransdef}
 \subsection{Adjunctions}
