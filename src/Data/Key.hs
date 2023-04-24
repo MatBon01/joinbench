@@ -1,5 +1,6 @@
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE FlexibleInstances #-}
 
 module Data.Key where
 
@@ -23,3 +24,19 @@ class (Functor (Map k)) => Key k where
   unindex :: Map k (Bag v) -> Bag (k, v)
   reduce :: (PointedSet v, CMonoid v) => Map k v -> v
   reduce = reduceBag . cod
+
+instance Key () where
+  newtype Map () v = Lone v deriving (Show, Eq)
+
+  empty = Lone Data.PointedSet.null
+  isEmpty (Lone v) = isNull v
+  single ((), v) = Lone v
+  merge (Lone v1, Lone v2) = Lone (v1, v2)
+  dom map = if isEmpty map then Data.Bag.empty else pure ()
+  cod (Lone v) = if isEmpty (Lone v) then Data.Bag.empty else pure v 
+  lookup (Lone v) () = v
+  index kvps = Lone (fmap snd kvps)
+  unindex (Lone vs) = fmap (\v -> ((), v)) vs
+
+instance Functor (Map ()) where
+  fmap f (Lone v) = Lone (f v)
