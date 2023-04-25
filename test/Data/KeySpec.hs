@@ -28,11 +28,11 @@ spec = do
       dom (Lone (Nothing :: Maybe Int)) `shouldBe` Bag.empty
     it "can correctly identify the codomain of a non-empty map" $ do
       cod (Lone (Just 'e')) `shouldBe` Bag.Bag [Just 'e']
-    it "can correclty identify the codomain of an empty map" $ do
+    it "can correctly identify the codomain of an empty map" $ do
       cod (Lone (Nothing :: Maybe Bool)) `shouldBe` Bag.empty
     it "can lookup elements" $ do
       Data.Key.lookup (Lone (Just True)) () `shouldBe` Just True
-    it "can index a bag of pairs without multiplicty of keys" $ do
+    it "can index a bag of pairs without multiplicity of keys" $ do
       index (Bag.Bag [((), Just 'r')]) `shouldBe` Lone (Bag.Bag [Just 'r'])
     it "can index an empty bag, with PointedSet null value as the null bag" $ do
       index (Bag.empty :: Bag.Bag ((), Int)) `shouldBe` Lone (Pointed.null :: Bag.Bag Int)
