@@ -44,3 +44,5 @@ spec = do
       unindex (Lone (Pointed.null :: Bag.Bag Char)) `shouldBe` (Bag.empty :: Bag.Bag ((), Char))
     it "can unindex a map with multiplicities" $ do
       unindex (Lone (Bag.Bag [True, True, False])) `shouldBe` Bag.Bag [((), True), ((), True), ((), False)]
+    it "can reduce a map correctly" $ do
+      reduce (Lone (Bag.Bag ['a'])) `shouldBe` Bag.Bag ['a']
