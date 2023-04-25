@@ -33,7 +33,7 @@ spec = do
       Data.Key.lookup (Lone (Just True)) () `shouldBe` Just True
     it "can index a bag of pairs without multiplicty of keys" $ do
       index (Bag.Bag [((), Just 'r')]) `shouldBe` Lone (Bag.Bag [Just 'r'])
-    it "can index an empty bag" $ do
-      index (Bag.empty :: Bag.Bag ((), Maybe Int)) `shouldBe` Lone (Bag.Bag []) -- TODO:: Understand this
+    it "can index an empty bag, with PointedSet null value as the null bag" $ do
+      index (Bag.empty :: Bag.Bag ((), Int)) `shouldBe` Lone (Pointed.null :: Bag.Bag Int)
     it "can index a bag of pairs with multiplicity" $ do
       index (Bag.Bag [((), Just 'a'), ((), Just 'b'), ((), Just 'c')]) `shouldBe` Lone (Bag.Bag [Just 'a', Just 'b', Just 'c'])
