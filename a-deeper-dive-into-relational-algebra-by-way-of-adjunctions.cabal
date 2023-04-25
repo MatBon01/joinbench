@@ -22,10 +22,10 @@ extra-source-files:
     README.md
 
 library
-    exposed-modules: Data.Bag, Data.PointedSet, Data.CMonoid
+    exposed-modules: Data.Bag, Data.PointedSet, Data.CMonoid, Data.Key
 
     -- Modules included in this library but not exported.
-    -- other-modules:
+    -- other-modules: 
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
@@ -54,6 +54,6 @@ test-suite spec
     type:               exitcode-stdio-1.0
     hs-source-dirs:     test
     main-is:            Spec.hs
-    other-modules:      Data.BagSpec
+    other-modules:      Data.BagSpec, Data.CMonoidSpec, Data.PointedSetSpec, Data.KeySpec
     build-depends:      base >=4.16.4.0, hspec ^>=2.10, a-deeper-dive-into-relational-algebra-by-way-of-adjunctions
     build-tool-depends: hspec-discover:hspec-discover == 2.*
