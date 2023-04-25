@@ -3,6 +3,7 @@ module Data.KeySpec (spec) where
 import Test.Hspec
 import Data.Key
 import qualified Data.Bag as Bag
+import qualified Data.PointedSet as Pointed
 
 spec :: Spec
 spec = do
@@ -36,4 +37,10 @@ spec = do
     it "can index an empty bag, with PointedSet null value as the null bag" $ do
       index (Bag.empty :: Bag.Bag ((), Int)) `shouldBe` Lone (Pointed.null :: Bag.Bag Int)
     it "can index a bag of pairs with multiplicity" $ do
-      index (Bag.Bag [((), Just 'a'), ((), Just 'b'), ((), Just 'c')]) `shouldBe` Lone (Bag.Bag [Just 'a', Just 'b', Just 'c'])
+      index (Bag.Bag [((), 'a'), ((), 'b'), ((), 'c')]) `shouldBe` Lone (Bag.Bag ['a', 'b', 'c'])
+    it "can unindex a map with no multiplicities" $ do
+      unindex (Lone (Bag.Bag [1])) `shouldBe` Bag.Bag [((), 1)]
+    it "can unindex an empty map" $ do
+      unindex (Lone (Pointed.null :: Bag.Bag Char)) `shouldBe` (Bag.empty :: Bag.Bag ((), Char))
+    it "can unindex a map with multiplicities" $ do
+      unindex (Lone (Bag.Bag [True, True, False])) `shouldBe` Bag.Bag [((), True), ((), True), ((), False)]
