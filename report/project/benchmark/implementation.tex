@@ -1,1 +1,9 @@
 \section{Implementation}
+\subsection{Pointed sets}
+This section describes the types that declare instances of the
+\texttt{PointedSet} type class.
+
+For testing purposes, the most useful type to declare an instance of
+\texttt{PointedSet} was the \texttt{Maybe} type. This fits very well as it can
+easily raise any existing type to one with a distinguished element (null),
+namely \texttt{Nothing}.
