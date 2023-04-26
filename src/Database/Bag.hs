@@ -6,3 +6,6 @@ type Table = Bag.Bag
 
 empty :: Table a
 empty = Bag.empty
+
+single :: a -> Table a
+single = Bag.single
