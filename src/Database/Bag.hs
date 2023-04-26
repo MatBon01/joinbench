@@ -19,3 +19,6 @@ cp = Bag.cp
 -- TODO:: check
 neutral :: Table ()
 neutral = single ()
+
+projection :: (a -> b) -> Table a -> Table b
+projection = fmap

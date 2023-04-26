@@ -4,6 +4,11 @@ import Test.Hspec
 import qualified Database.Bag as DB
 import qualified Data.Bag as Bag
 
+type Name = String
+data Person = Person {firstName :: Name, lastName :: Name} deriving (Show, Eq)
+
+people = Bag.Bag [Person "John" "Doe", Person "Jane" "Doe", Person "John" "Smith"]
+
 spec :: Spec
 spec = do
   describe "Database.Bag empty" $ do
@@ -29,3 +34,6 @@ spec = do
   describe "Database.Bag neutral" $ do -- TODO:: add more tests when understood
     it "returns a bag with the unit element" $ do
       DB.neutral `shouldBe` Bag.Bag [()]
+  describe "Database.Bag projection" $ do
+    it "can select a certain column from a record" $ do
+      DB.projection lastName people `shouldBe` Bag.Bag ["Doe", "Doe", "Smith"]
