@@ -9,3 +9,6 @@ empty = Bag.empty
 
 single :: a -> Table a
 single = Bag.single
+
+union :: Table a -> Table a -> Table a
+union = Bag.union
