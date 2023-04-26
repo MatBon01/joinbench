@@ -26,3 +26,6 @@ spec = do
       Bag.Bag [1, 2] `DB.cp` (DB.empty :: DB.Table Char) `shouldBe` (DB.empty :: DB.Table (Int, Char))
     it "returns an empty table when both tables are empty" $ do
       (DB.empty :: DB.Table Bool) `DB.cp` (DB.empty :: DB.Table Char) `shouldBe` (DB.empty :: DB.Table (Bool, Char))
+  describe "Database.Bag neutral" $ do -- TODO:: add more tests when understood
+    it "returns a bag with the unit element" $ do
+      DB.neutral `shouldBe` Bag.Bag [()]

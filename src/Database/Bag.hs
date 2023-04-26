@@ -15,3 +15,7 @@ union = Bag.union
 
 cp :: Table a -> Table b -> Table (a, b)
 cp = Bag.cp
+
+-- TODO:: check
+neutral :: Table ()
+neutral = single ()
