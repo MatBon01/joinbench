@@ -82,6 +82,7 @@ spec = do
       (getSum . Bag.reduceBag) (Bag.Bag [1, 2, 3, 4] :: Bag.Bag (Sum Int)) `shouldBe` 10
     it "correctly reduces a bag using product" $ do
       (getProduct . Bag.reduceBag) (Bag.Bag [1, 2, 3, 4] :: Bag.Bag (Product Int)) `shouldBe` 24
+  describe "Data.Bag.cp" $ do
     it "correctly can calculate the cartesian product of two bags" $ do
       Bag.cp b1 b2 `shouldBe` Bag.Bag [('a', 'b'), ('a', 'c'), ('a', 'd'), ('b', 'b'), ('b', 'c'), ('b', 'd'), ('c', 'b'), ('c', 'c'), ('c', 'd')]
     it "correctly deals with the empty bag in a cartesian product" $ do
