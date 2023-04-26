@@ -87,6 +87,9 @@ spec = do
       Bag.cp b1 b2 `shouldBe` Bag.Bag [('a', 'b'), ('a', 'c'), ('a', 'd'), ('b', 'b'), ('b', 'c'), ('b', 'd'), ('c', 'b'), ('c', 'c'), ('c', 'd')]
     it "correctly deals with the empty bag in a cartesian product" $ do
       Bag.cp b1 (Bag.empty :: Bag.Bag Int) `shouldBe` (Bag.empty :: Bag.Bag (Char, Int))
+  describe "Data.Bag.single" $ do
+    it "creates a singleton bag" $ do
+      Bag.single 'a' `shouldBe` Bag.Bag ['a']
     where
       b1 = Bag.Bag ['a', 'b', 'c']
       b2 = Bag.Bag ['b', 'c', 'd']
