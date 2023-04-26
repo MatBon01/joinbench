@@ -12,3 +12,6 @@ single = Bag.single
 
 union :: Table a -> Table a -> Table a
 union = Bag.union
+
+cp :: Table a -> Table b -> Table (a, b)
+cp = Bag.cp

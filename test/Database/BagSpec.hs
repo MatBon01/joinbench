@@ -19,3 +19,10 @@ spec = do
       Bag.Bag [1, 2, 3] `DB.union` DB.empty `shouldBe` Bag.Bag [1, 2, 3]
     it "can find the union of two empty tables" $ do
       (DB.empty :: DB.Table Char) `DB.union` DB.empty `shouldBe` (DB.empty :: DB.Table Char)
+  describe "Database.Bag cp" $ do
+    it "correctly can calculate the cartesian product of two tables" $ do
+      Bag.Bag [1, 2] `DB.cp` Bag.Bag [3, 4] `shouldBe` Bag.Bag [(1, 3), (1, 4), (2, 3), (2, 4)]
+    it "returns an empty table when one table is empty" $ do
+      Bag.Bag [1, 2] `DB.cp` (DB.empty :: DB.Table Char) `shouldBe` (DB.empty :: DB.Table (Int, Char))
+    it "returns an empty table when both tables are empty" $ do
+      (DB.empty :: DB.Table Bool) `DB.cp` (DB.empty :: DB.Table Char) `shouldBe` (DB.empty :: DB.Table (Bool, Char))
