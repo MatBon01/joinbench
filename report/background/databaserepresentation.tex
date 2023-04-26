@@ -6,6 +6,27 @@
 \todo{Add the mathematical parts about bags}
 \todo{When reading about finite maps it says that it's better for databases as non finite maps cannot be aggregated, can non finite bags be aggregates - is this why they are finite?}
 
+\todo{Write rest of section}
+
+In \fref{tab:BagRelAlgOps} we summarise the implementation of relational algebra operators with bags
+as their bulk type\cite{RelationalAlgebraByWayOfAdjunctions}.
+\begin{table}[h]
+    \centering
+    \begin{tabular}{r|l}
+        table of $V$ values & \bag{V} \\
+        empty table & \emptybag \\
+        singleton table & \singletonbag \\
+        union of tables & $\bagunion{}{}$ \\
+        cartesian product of tables & $\times$ \\
+        neutral element & $\lbag () \rbag$ \\
+        projection $\projsymb{f}$ & $\bag{f}$ \\
+        selection $\selectsymb{p}$ & $filter\ p$ \\
+        aggregation in monoid $\monoid{M}$ & $reduce\ \monoid{M}$\\
+    \end{tabular}
+    \caption{Relational algebra operators implemented for bags}
+    \label{tab:BagRelAlgOps}
+\end{table}
+
 \subsection{Indexed tables}
 We want to move towards an indexed representation of our table in order to equijoin by indexing. \todo{Understand if this is right and equijoin by indexing}. So in this section we introduce the mathematical concepts required to define such an implementation.
 \theoremstyle{definition}\newtheorem*{psetdef}{Pointed set}
