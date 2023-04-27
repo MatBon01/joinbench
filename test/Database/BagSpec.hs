@@ -4,11 +4,66 @@ import Test.Hspec
 import qualified Database.Bag as DB
 import qualified Data.Bag as Bag
 import Data.Monoid
+import Database.Bag (equijoinWithCp)
 
 type Name = String
 data Person = Person {firstName :: Name, lastName :: Name} deriving (Show, Eq)
-
 people = Bag.Bag [Person "John" "Doe", Person "Jane" "Doe", Person "John" "Smith"]
+lastNameJoin = Bag.Bag 
+  [ (Person "John" "Doe", Person "John" "Doe")
+  , (Person "John" "Doe", Person "Jane" "Doe")
+  , (Person "Jane" "Doe", Person "Jane" "Doe")
+  , (Person "Jane" "Doe", Person "John" "Doe")
+  , (Person "John" "Smith", Person "John" "Smith") ]
+
+type OrderId = Int
+type OrderPrice = Float
+type Item = String
+type ItemQuantity = Int
+data OrderInvoice = OrderInvoice {invoiceId :: OrderId, orderPrice :: OrderPrice} deriving (Show, Eq)
+-- Purposefully different id name from invoice for testing variation
+data OrderItem = OrderItem {item :: Item, orderId :: OrderId, quantity :: ItemQuantity} deriving (Show, Eq)
+
+-- Tests join when there is at most one matching element per id
+orderPrices1 = Bag.Bag 
+  [ OrderInvoice 1 25.50
+  , OrderInvoice 2 15.20
+  , OrderInvoice 3 12.12 ]
+orderItems1 = Bag.Bag
+  [ OrderItem "Apple" 1 23
+  , OrderItem "Banana" 2 12 ]
+orderJoin1 = Bag.Bag  -- orderPrices join OrderItems by id
+  [ (OrderInvoice 1 25.50, OrderItem "Apple" 1 23)
+  , (OrderInvoice 2 15.20, OrderItem "Banana" 2 12)]
+
+-- Tests join when there are no matching elements per id
+orderPrices2 = Bag.Bag 
+  [ OrderInvoice 1 25.50
+  , OrderInvoice 2 15.20
+  , OrderInvoice 3 12.12 ]
+orderItems2 = Bag.Bag
+  [ OrderItem "Apple" 4 23
+  , OrderItem "Banana" 5 12 ]
+
+-- Tests join when there are multiple records in a single table with the same Id
+orderPrices3 = Bag.Bag 
+  [ OrderInvoice 1 25.50
+  , OrderInvoice 2 15.20
+  , OrderInvoice 3 12.12 ]
+orderItems3 = Bag.Bag
+  [ OrderItem "Apple" 1 11
+  , OrderItem "Orange" 1 5
+  , OrderItem "Peach" 1 12
+  , OrderItem "Milk" 2 2
+  , OrderItem "Banana" 2 12 
+  , OrderItem "Chocolate" 3 5]
+orderJoin3 = Bag.Bag  -- orderPrices join OrderItems by id
+  [ (OrderInvoice 1 25.50, OrderItem "Apple" 1 11)
+  , (OrderInvoice 1 25.50, OrderItem "Orange" 1 5)
+  , (OrderInvoice 1 25.50, OrderItem "Peach" 1 12)
+  , (OrderInvoice 2 15.20, OrderItem "Banana" 2 12)
+  , (OrderInvoice 2 15.20, OrderItem "Milk" 2 2)
+  , (OrderInvoice 3 12.12, OrderItem "Chocolate" 3 5)]
 
 spec :: Spec
 spec = do
@@ -50,3 +105,13 @@ spec = do
       (getAny . DB.aggregate) (Bag.Bag [Any True, Any False]) `shouldBe` True
     it "can correctly aggregate a table with multiplicities" $ do
       DB.aggregate (Bag.Bag [1, 1, 1, 1, 2] :: Bag.Bag (Sum Int)) `shouldBe` 6
+  describe "Database.Bag equijoinWithCp" $ do
+    it "can join two tables with at most one matching element" $ do
+      equijoinWithCp invoiceId orderId orderPrices1 orderItems1 `shouldBe` orderJoin1
+    it "can join two tables with more than one matching elements,\
+        \ only multiple in one table" $ do
+      equijoinWithCp invoiceId orderId orderPrices3 orderItems3 `shouldBe` orderJoin3
+    it "can join two tables with no matching elements" $ do
+      equijoinWithCp invoiceId orderId orderPrices2 orderItems2 `shouldBe` Bag.empty
+    it "can join two tables with multiple elements in both tables" $ do
+      equijoinWithCp lastName lastName people people `shouldBe` lastNameJoin

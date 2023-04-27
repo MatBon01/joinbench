@@ -29,3 +29,10 @@ select p = Bag.Bag . filter p . Bag.elements
 
 aggregate :: CMonoid a => Table a -> a
 aggregate = Bag.reduceBag
+
+equijoinWithCp :: Eq c => (a -> c) -> (b -> c) ->  Table a -> Table b -> Table (a, b)
+equijoinWithCp fa fb as bs = select equality (cp as bs)
+  where 
+    equality (a, b) = fa a == fb b
+
+
