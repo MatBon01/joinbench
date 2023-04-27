@@ -1,6 +1,7 @@
 module Database.Bag where
 
 import qualified Data.Bag as Bag
+import Data.CMonoid
 
 type Table = Bag.Bag
 
@@ -25,3 +26,6 @@ projection = fmap
 
 selection :: (a -> Bool) -> Table a -> Table a
 selection p = Bag.Bag . filter p . Bag.elements
+
+aggregate :: CMonoid a => Table a -> a
+aggregate = Bag.reduceBag

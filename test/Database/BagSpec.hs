@@ -3,6 +3,7 @@ module Database.BagSpec (spec) where
 import Test.Hspec
 import qualified Database.Bag as DB
 import qualified Data.Bag as Bag
+import Data.Monoid
 
 type Name = String
 data Person = Person {firstName :: Name, lastName :: Name} deriving (Show, Eq)
@@ -44,3 +45,8 @@ spec = do
       DB.selection (const False) people `shouldBe` Bag.Bag []
     it "can select the whole table" $ do
       DB.selection (const True) people `shouldBe` people
+  describe "Database.Bag aggregate" $ do
+    it "can correctly aggregate a table without multiplicities" $ do
+      (getAny . DB.aggregate) (Bag.Bag [Any True, Any False]) `shouldBe` True
+    it "can correctly aggregate a table with multiplicities" $ do
+      DB.aggregate (Bag.Bag [1, 1, 1, 1, 2] :: Bag.Bag (Sum Int)) `shouldBe` 6

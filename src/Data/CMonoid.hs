@@ -7,3 +7,5 @@ class Monoid a => CMonoid a
 
 instance Num k => CMonoid (Sum k)
 instance Num k => CMonoid (Product k)
+instance CMonoid All
+instance CMonoid Any
