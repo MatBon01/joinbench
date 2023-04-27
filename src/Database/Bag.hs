@@ -24,8 +24,8 @@ neutral = single ()
 projection :: (a -> b) -> Table a -> Table b
 projection = fmap
 
-selection :: (a -> Bool) -> Table a -> Table a
-selection p = Bag.Bag . filter p . Bag.elements
+select :: (a -> Bool) -> Table a -> Table a
+select p = Bag.Bag . filter p . Bag.elements
 
 aggregate :: CMonoid a => Table a -> a
 aggregate = Bag.reduceBag
