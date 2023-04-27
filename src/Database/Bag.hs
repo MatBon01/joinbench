@@ -22,3 +22,6 @@ neutral = single ()
 
 projection :: (a -> b) -> Table a -> Table b
 projection = fmap
+
+selection :: (a -> Bool) -> Table a -> Table a
+selection p = Bag.Bag . filter p . Bag.elements

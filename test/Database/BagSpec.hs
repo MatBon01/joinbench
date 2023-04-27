@@ -37,3 +37,10 @@ spec = do
   describe "Database.Bag projection" $ do
     it "can select a certain column from a record" $ do
       DB.projection lastName people `shouldBe` Bag.Bag ["Doe", "Doe", "Smith"]
+  describe "Database.Bag selection" $ do
+    it "can select a subset of the table" $ do
+      DB.selection (\p -> lastName p == "Doe") people `shouldBe` Bag.Bag [Person "John" "Doe", Person "Jane" "Doe"]
+    it "can empty a whole table if necessary" $ do
+      DB.selection (const False) people `shouldBe` Bag.Bag []
+    it "can select the whole table" $ do
+      DB.selection (const True) people `shouldBe` people

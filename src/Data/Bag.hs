@@ -60,3 +60,7 @@ cp (Bag xs) (Bag ys) = Bag [(x, y) | x <- xs, y <- ys]
 -- Create singleton bag
 single :: a -> Bag a
 single = pure
+
+-- Filter
+filter :: (a -> Bool) -> Bag a -> Bag a
+filter p = Bag . Prelude.filter p . elements
