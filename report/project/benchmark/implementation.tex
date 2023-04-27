@@ -24,3 +24,17 @@ for the indexing operation $ix$. The function $ix$ has a type $ix ::
 important to note that when indexing the bag of key-value pairs, if a key has no
 value, it is the "null" value for \texttt{Bag} that is used and not for $v$
 (given that $v$ is even a \texttt{PointedSet} which is not required).
+
+\subsection{Commutative Monoids}
+You will see an implementation of \texttt{CMonoid} which is a `logical'
+implementation of a commutative monoid. You will see in
+\cite{RelationalAlgebraByWayOfAdjunctions} it is stated that there is no way to
+enforce the commutativity of the monoid structure in Haskell and they give an
+empty class definition with a comment. I have chosen to also include a
+\texttt{CMonoid} type class in the supplied library as I feel it forces anyone
+writing future implementations to think about the properties their monoid has.
+The commutativity requirement is key for aggregations of tables as implemented
+by bags because by definition bags do not have an order and therefore the
+outcome of the aggregation should not depend on the internal representation of
+the bag as would happen given a non-commutative monoid. 
+\todo{Write implementation of CMonoid}
