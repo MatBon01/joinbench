@@ -20,7 +20,7 @@ using pattern matching in order to avoid the \texttt{Eq} constraint on the
 container type of the Bag (i.e. \texttt{Eq a => Bag a}). This instance is key
 for the indexing operation $ix$. The function $ix$ has a type $ix ::
 \bag{(k, v)} \to \map{k}{(\bag{v})}$, coupled with the requirement $(Pointed v)
-=> \map{k}{v}$ the necessity of the implementaion becomes clear and it is
+=> \map{k}{v}$ the necessity of the implementation becomes clear and it is
 important to note that when indexing the bag of key-value pairs, if a key has no
 value, it is the "null" value for \texttt{Bag} that is used and not for $v$
 (given that $v$ is even a \texttt{PointedSet} which is not required).
