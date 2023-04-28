@@ -1,7 +1,10 @@
 module Database.IndexedTable where
 
-import Data.Bag (Bag)
-import Data.Key
+import qualified Data.Bag as Bag
+import qualified Data.Key as Map
 
-empty :: (Key k) => Map k (Bag v)
-empty = Data.Key.empty
+empty :: (Map.Key k) => Map.Map k (Bag.Bag v)
+empty = Map.empty
+
+singleton :: (Map.Key k) => (k, v) -> Map.Map k (Bag.Bag v)
+singleton (k, v) = Map.single (k, Bag.single v)
