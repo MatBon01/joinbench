@@ -44,3 +44,6 @@ spec = do
   describe "aggregation" $ do
     it "can correctly aggregate a table in general" $ do
       Table.aggregation (Map.Lone (Bag.Bag [Any True, Any True, Any False])) `shouldBe` Map.Lone (Any True)
+  describe "natural join" $ do
+    it "is a local cartesian product" $ do
+      Table.naturalJoin (Map.Lone (Bag.Bag [1, 2])) (Map.Lone (Bag.Bag [2, 3])) `shouldBe` Map.Lone (Bag.Bag [(1, 2), (1, 3), (2, 2), (2, 3)])
