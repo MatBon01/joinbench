@@ -26,7 +26,8 @@ library
         Data.Bag,
         Data.PointedSet,
         Data.Key,
-        Database.Bag
+        Database.Bag,
+        Database.IndexedTable
 
     -- Modules included in this library but not exported.
     other-modules: 
@@ -66,6 +67,7 @@ test-suite spec
         Data.CMonoidSpec,
         Data.PointedSetSpec,
         Data.KeySpec,
-        Database.BagSpec
+        Database.BagSpec,
+        Database.IndexedTableSpec
     build-depends:      base >=4.16.4.0, hspec ^>=2.10, a-deeper-dive-into-relational-algebra-by-way-of-adjunctions
     build-tool-depends: hspec-discover:hspec-discover == 2.*
