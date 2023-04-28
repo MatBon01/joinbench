@@ -33,3 +33,10 @@ spec = do
       Table.projection lastName (Table.empty :: Map.Map () (Bag.Bag Person)) `shouldBe` Map.empty
     it "can correctly use the identity projection" $ do
       Table.projection id people `shouldBe` people
+  describe "selection" $ do
+    it "can correctly select in general" $ do
+      Table.selection ((== "John") . firstName) people `shouldBe` Map.Lone (Bag.Bag [Person "John" "Smith", Person "John" "Doe"])
+    it "can correctly select all elements of a table" $ do
+      Table.selection (const True) people `shouldBe` people
+    it "can correctly select no elements of a table" $ do
+      Table.selection (const False) people `shouldBe` Map.empty

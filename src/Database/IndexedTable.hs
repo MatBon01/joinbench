@@ -14,3 +14,6 @@ union t1 t2 = (fmap (uncurry Bag.union) . Map.merge) (t1, t2)
 
 projection :: (Map.Key k) => (v -> w) -> Map.Map k (Bag.Bag v) -> Map.Map k (Bag.Bag w)
 projection = fmap . fmap
+
+selection :: (Map.Key k) => (v -> Bool) -> Map.Map k (Bag.Bag v) -> Map.Map k (Bag.Bag v)
+selection p = fmap (Bag.filter p)
