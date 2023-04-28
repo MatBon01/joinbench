@@ -4,6 +4,7 @@ import Test.Hspec
 import qualified Database.IndexedTable as Table
 import qualified Data.Key as Map
 import qualified Data.Bag as Bag
+import Data.Monoid
 
 type Name = String
 data Person = Person { firstName :: Name, lastName :: Name} deriving (Show, Eq)
@@ -40,3 +41,6 @@ spec = do
       Table.selection (const True) people `shouldBe` people
     it "can correctly select no elements of a table" $ do
       Table.selection (const False) people `shouldBe` Map.empty
+  describe "aggregation" $ do
+    it "can correctly aggregate a table in general" $ do
+      Table.aggregation (Map.Lone (Bag.Bag [Any True, Any True, Any False])) `shouldBe` Map.Lone (Any True)

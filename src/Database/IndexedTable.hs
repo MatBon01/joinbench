@@ -2,6 +2,7 @@ module Database.IndexedTable where
 
 import qualified Data.Bag as Bag
 import qualified Data.Key as Map
+import Data.CMonoid
 
 empty :: (Map.Key k) => Map.Map k (Bag.Bag v)
 empty = Map.empty
@@ -17,3 +18,6 @@ projection = fmap . fmap
 
 selection :: (Map.Key k) => (v -> Bool) -> Map.Map k (Bag.Bag v) -> Map.Map k (Bag.Bag v)
 selection p = fmap (Bag.filter p)
+
+aggregation :: (Map.Key k, CMonoid m) => Map.Map k (Bag.Bag m) -> Map.Map k m
+aggregation = fmap Bag.reduceBag
