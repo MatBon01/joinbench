@@ -12,6 +12,11 @@ import Control.Applicative
 (.+) = liftA2 (+)
 addOneOrTwo x = Bag.Bag [x + 1, x + 2]
 
+-- Some examples for the test
+b1 = Bag.Bag ['a', 'b', 'c']
+b2 = Bag.Bag ['b', 'c', 'd']
+b3 = Bag.Bag ['c', 'd', 'e']
+
 spec :: Spec
 spec = do
   describe "Data.Bag Eq" $ do
@@ -82,7 +87,16 @@ spec = do
       (getSum . Bag.reduceBag) (Bag.Bag [1, 2, 3, 4] :: Bag.Bag (Sum Int)) `shouldBe` 10
     it "correctly reduces a bag using product" $ do
       (getProduct . Bag.reduceBag) (Bag.Bag [1, 2, 3, 4] :: Bag.Bag (Product Int)) `shouldBe` 24
-    where
-      b1 = Bag.Bag ['a', 'b', 'c']
-      b2 = Bag.Bag ['b', 'c', 'd']
-      b3 = Bag.Bag ['c', 'd', 'e']
+  describe "Data.Bag.cp" $ do
+    it "correctly can calculate the cartesian product of two bags" $ do
+      Bag.cp b1 b2 `shouldBe` Bag.Bag [('a', 'b'), ('a', 'c'), ('a', 'd'), ('b', 'b'), ('b', 'c'), ('b', 'd'), ('c', 'b'), ('c', 'c'), ('c', 'd')]
+    it "correctly deals with the empty bag in a cartesian product" $ do
+      Bag.cp b1 (Bag.empty :: Bag.Bag Int) `shouldBe` (Bag.empty :: Bag.Bag (Char, Int))
+  describe "Data.Bag.single" $ do
+    it "creates a singleton bag" $ do
+      Bag.single 'a' `shouldBe` Bag.Bag ['a']
+  describe "Data.Bag.filter" $ do
+    it "can filter a bag without multiplicities" $ do
+      Bag.filter (== 'a') b1 `shouldBe` Bag.Bag ['a']
+    it "can filter a bag and maintain multiplicities" $ do
+      Bag.filter even (Bag.Bag [1, 2, 4, 2, 3, 4, 4, 6]) `shouldBe` Bag.Bag [2, 2, 4, 4, 4, 6]

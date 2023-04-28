@@ -18,6 +18,11 @@
 
 % Bag
 \newcommand{\bag}[1]{\ensuremath{\mathrm{Bag}\ #1}}
+\newcommand{\emptybag}{\ensuremath{\emptyset}}
+\newcommand{\singletonbag}{\ensuremath{single}}
+\newcommand{\bagunion}[2]{\ensuremath{#1 \uplus #2}}
+% TODO:: get the correct letter from bags section of original paper
+\newcommand{\monoid}[1]{\ensuremath{\mathrm{\textbf{M}}}}
 
 % Pointed set
 \newcommand{\pset}[2]{\ensuremath{\left(#1,\,#2\right)}}
@@ -31,8 +36,10 @@
 % Relational model
 \newcommand{\relation}[1]{\ensuremath{\mathrm{#1}}}
 \newcommand{\attribute}[1]{\ensuremath{\mathnormal{#1}}}
-\newcommand{\proj}[2]{\ensuremath{\pi_{#1}\!\left(\relation{#2}\right)}}
-\newcommand{\select}[2]{\ensuremath{\sigma_{#1}\!\left(\relation{#2}\right)}}
+\newcommand{\projsymb}[1]{\ensuremath{\pi_{#1}}}
+\newcommand{\proj}[2]{\ensuremath{\projsymb{#1}\!\left(\relation{#2}\right)}}
+\newcommand{\selectsymb}[1]{\ensuremath{\sigma_{#1}}}
+\newcommand{\select}[2]{\ensuremath{\selectsymb{#1}\!\left(\relation{#2}\right)}}
 \newcommand{\natjoin}[2]{\ensuremath{\relation{#1}\bowtie\relation{#2}}}
 \newcommand{\thetajoin}[3]{\ensuremath{\relation{#2}\bowtie_{#1}\relation{#3}}}
 \newcommand{\equijoin}[4]{\ensuremath{\relation{#1}\,{}_{#2}\!\bowtie_{\:#4}\relation{#3}}}

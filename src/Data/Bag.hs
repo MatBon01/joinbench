@@ -52,3 +52,15 @@ b1 `union` b2 = Bag (elements b1 ++ elements b2)
 reduceBag :: CMonoid m => Bag m -> m
 -- Reduce a bag of ms into an m (e.g. a bag of bags into a bag)
 reduceBag = mconcat . elements
+
+-- Cartesian product
+cp :: Bag a -> Bag b -> Bag (a, b)
+cp (Bag xs) (Bag ys) = Bag [(x, y) | x <- xs, y <- ys]
+
+-- Create singleton bag
+single :: a -> Bag a
+single = pure
+
+-- Filter
+filter :: (a -> Bool) -> Bag a -> Bag a
+filter p = Bag . Prelude.filter p . elements
