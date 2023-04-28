@@ -199,7 +199,7 @@ A join is a way of creating a new relation by combining relations with common at
   \caption{Relation \relation{S} as example for joins.}
   \label{tab:joinRelationS}
 \end{table}
-\paragraph{Natural join} The natural join is the first way to combine relations. Given that relations \relation{R} and \relation{S} have common attributes \attribute{a_1}, \ldots, \attribute{a_k}, tuples in \relation{R} and \relation{S} are combined if the component of all attributes are equal. This join is expressed as \natjoin{R}{S}.\cite{DatabaseSystems}
+\paragraph{Natural join}\label{sec:natjoin} The natural join is the first way to combine relations. Given that relations \relation{R} and \relation{S} have common attributes \attribute{a_1}, \ldots, \attribute{a_k}, tuples in \relation{R} and \relation{S} are combined if the component of all attributes are equal. This join is expressed as \natjoin{R}{S}.\cite{DatabaseSystems}
 \subparagraph*{Example of the natural join} Given the relations \relation{R} and \relation{S} in \fref{tab:joinRelationR} and \fref{tab:joinRelationS} respectively, the natural join $\natjoin{R}{S}$ is as in \fref{tab:naturalJoinResult}.\cite{RelationalModel}
 In this example we call the tuple \verb|(1, 2, 4)| a \emph{dangling tuple} as it failed to pair with any other tuple in relation \relation{S}.\cite{DatabaseSystems}
 \begin{table}[h]

@@ -38,3 +38,12 @@ by bags because by definition bags do not have an order and therefore the
 outcome of the aggregation should not depend on the internal representation of
 the bag as would happen given a non-commutative monoid. 
 \todo{Write implementation of CMonoid}
+
+\subsection{Indexed Tables}
+\paragraph{Natural Joins} In the implementation given, a natural join is defined
+by \todo{Add code and mathematical description here} merging two indexed tables
+then applying the raised Cartesian product on them. This translates to a local
+Cartesian product on the keys indexed by the table. In \fref{sec:natjoin} we
+define the natural join as a join that pairs all common indices, and then it is
+clear that our implementation defines all common attributes as the key to the
+finite map.
