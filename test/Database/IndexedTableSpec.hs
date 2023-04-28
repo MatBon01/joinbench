@@ -13,4 +13,10 @@ spec = do
   describe "singleton" $ do
     it "returns a single table" $ do
       Table.singleton ((), 3) `shouldBe` Map.Lone (Bag.Bag [3])
-
+  describe "union" $ do
+    it "can correctly handle union of singletons" $ do
+      Table.union (Table.singleton ((), 3)) (Table.singleton ((), 4)) `shouldBe` Map.Lone (Bag.Bag [3, 4])
+    it "can correctly deal with first element empty" $ do
+      Table.union (Table.empty :: Map.Map () (Bag.Bag Char)) (Table.singleton ((), 'a')) `shouldBe` Map.Lone (Bag.Bag ['a'])
+    it "can correctly deal with second element empty" $ do
+      Table.union (Table.singleton ((), 'a')) (Table.empty :: Map.Map () (Bag.Bag Char)) `shouldBe` Map.Lone (Bag.Bag ['a'])
