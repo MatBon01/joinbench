@@ -24,4 +24,4 @@ aggregation = fmap Bag.reduceBag
 
 -- Joins on common keys
 naturalJoin :: (Map.Key k) => Map.Map k (Bag.Bag v) -> Map.Map k (Bag.Bag w) -> Map.Map k (Bag.Bag (v, w))
-naturalJoin t1 t2 = fmap (uncurry Bag.cp) (Map.merge (t1 , t2))
+naturalJoin t1 t2 = fmap Bag.cp (Map.merge (t1 , t2))

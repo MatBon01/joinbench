@@ -54,8 +54,8 @@ reduceBag :: CMonoid m => Bag m -> m
 reduceBag = mconcat . elements
 
 -- Cartesian product
-cp :: Bag a -> Bag b -> Bag (a, b)
-cp (Bag xs) (Bag ys) = Bag [(x, y) | x <- xs, y <- ys]
+cp :: (Bag a, Bag b) -> Bag (a, b)
+cp (Bag xs, Bag ys) = Bag [(x, y) | x <- xs, y <- ys]
 
 -- Create singleton bag
 single :: a -> Bag a
