@@ -90,9 +90,9 @@ spec = do
   describe "Database.Bag neutral" $ do -- TODO:: add more tests when understood
     it "returns a bag with the unit element" $ do
       DB.neutral `shouldBe` Bag.Bag [()]
-  describe "Database.Bag projection" $ do
+  describe "Database.Bag project" $ do
     it "can select a certain column from a record" $ do
-      DB.projection lastName people `shouldBe` Bag.Bag ["Doe", "Doe", "Smith"]
+      DB.project lastName people `shouldBe` Bag.Bag ["Doe", "Doe", "Smith"]
   describe "Database.Bag select" $ do
     it "can select a subset of the table" $ do
       DB.select (\p -> lastName p == "Doe") people `shouldBe` Bag.Bag [Person "John" "Doe", Person "Jane" "Doe"]

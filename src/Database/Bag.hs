@@ -21,8 +21,8 @@ cp = Bag.cp
 neutral :: Table ()
 neutral = single ()
 
-projection :: (a -> b) -> Table a -> Table b
-projection = fmap
+project :: (a -> b) -> Table a -> Table b
+project = fmap
 
 select :: (a -> Bool) -> Table a -> Table a
 select p = Bag.Bag . filter p . Bag.elements
