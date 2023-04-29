@@ -5,6 +5,22 @@ implementation given in
 \cite{RelationalAlgebraByWayOfAdjunctionsPrototypeImplementation}.
 \todo{Write what I contributed}
 
+\subsection{Interface design}
+Sharing many similarities with \cite{RelationalAlgebraByWayOfAdjunctions}, there
+is a considerable design decision that most functions are uncurried. Although
+seeming unintuitive, it follows more strictly the mathematical definitions of
+the operations, for instance the Cartesian Product on bags $(\times): \bag{a}
+\times \bag{b} \to \bag{\left(a \times b\right)}$.
+
+In an implementation perspective, however, it helps unify many of the other
+functions. You will notice that the \mathcodefunc{merge} function in
+\cite{RelationalAlgebraByWayOfAdjunctions} as seen in \fref{sec:finitemapfuncs}
+\todo{Actually write this section} has the final type \bag{\left(a \times
+    b\right)} and so by writing these other operations to work on pairs allows
+greater synergy between the interface. This could easily be allowed using
+Haskell's built in functions\cite{Prelude} such as \texttt{uncurry} but I felt
+as though it created a clunkier interface.
+
 \subsection{Pointed sets}
 This section describes the types that declare instances of the
 \texttt{PointedSet} type class.
