@@ -1,6 +1,7 @@
 module Main where
 
 import Data.Bag
+import qualified Database.Bag as BDB
 
 -- Define types used in example
 type Identifier = String
@@ -16,8 +17,13 @@ data Invoice = I
   , amount :: Amount} deriving (Show, Eq)
 
 -- Cartesian product of both databases
-exampleWithCP :: Bag Customer -> Bag Invoice -> Bag (Customer, Invoice)
-exampleWithCP cs is = cp cs is
+exampleWithCP :: (Bag Customer, Bag Invoice) -> Bag (Name, Amount)
+exampleWithCP = BDB.project transformation . BDB.select cond . BDB.equijoinWithCp cid cust
+  where
+    cond (c, i) = due i < today
+    transformation (c, i) = (name c, amount i)
+    today = "0"
+
 
 main :: IO ()
 main = do
