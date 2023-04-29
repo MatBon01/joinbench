@@ -4,10 +4,10 @@ import Data.Bag
 import qualified Database.Bag as BDB
 
 -- Define types used in example
-type Identifier = String
+type Identifier = Int
 type Name = String
 type Date = Int
-type Amount = Float
+type Amount = Int
 
 data Customer = C { cid :: Identifier, name :: Name} deriving (Show, Eq)
 data Invoice = I 
@@ -18,6 +18,18 @@ data Invoice = I
 
 today :: Date
 today = 20160919
+
+customers :: Bag Customer
+customers = Bag 
+  [ C 101 "sam"
+  , C 102 "max"
+  , C 103 "pat" ]
+
+invoices :: Bag Invoice
+invoices = Bag
+  [ I 201 101 20160921 20
+  , I 202 101 20160316 15
+  , I 203 103 20160520 10 ]
 
 -- Cartesian product of both databases
 exampleWithCP :: (Bag Customer, Bag Invoice) -> Bag (Name, Amount)
@@ -32,3 +44,5 @@ exampleWithCP = BDB.project transformation . BDB.select cond . BDB.equijoinWithC
 main :: IO ()
 main = do
   putStrLn "Example from appendix"
+  putStrLn "Using bags and Cartesian products:"
+  print (exampleWithCP (customers, invoices))
