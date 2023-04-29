@@ -75,11 +75,11 @@ spec = do
       DB.single 5 `shouldBe` Bag.Bag [5]
   describe "Database.Bag union" $ do
     it "uses the bag union to calculate the union" $ do
-      Bag.Bag [1, 2, 3] `DB.union` Bag.Bag [3, 4, 5] `shouldBe` Bag.Bag [1, 2, 3, 3, 4, 5]
+      DB.union (Bag.Bag [1, 2, 3], Bag.Bag [3, 4, 5]) `shouldBe` Bag.Bag [1, 2, 3, 3, 4, 5]
     it "can correctly deal with one empty table in the union" $ do
-      Bag.Bag [1, 2, 3] `DB.union` DB.empty `shouldBe` Bag.Bag [1, 2, 3]
+      DB.union (Bag.Bag [1, 2, 3], DB.empty) `shouldBe` Bag.Bag [1, 2, 3]
     it "can find the union of two empty tables" $ do
-      (DB.empty :: DB.Table Char) `DB.union` DB.empty `shouldBe` (DB.empty :: DB.Table Char)
+      DB.union ((DB.empty :: DB.Table Char), DB.empty) `shouldBe` (DB.empty :: DB.Table Char)
   describe "Database.Bag cp" $ do
     it "correctly can calculate the cartesian product of two tables" $ do
       Bag.Bag [1, 2] `DB.cp` Bag.Bag [3, 4] `shouldBe` Bag.Bag [(1, 3), (1, 4), (2, 3), (2, 4)]

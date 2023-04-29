@@ -62,7 +62,7 @@ spec = do
   
   describe "Data.Bag.union" $ do
     it "returns the union of both bags" $ do
-      (Bag.Bag ['a', 'c', 'a'] `Bag.union` Bag.Bag ['c', 'd']) `shouldBe` Bag.Bag ['a', 'c', 'a', 'c', 'd']
+      Bag.union (Bag.Bag ['a', 'c', 'a'], Bag.Bag ['c', 'd']) `shouldBe` Bag.Bag ['a', 'c', 'a', 'c', 'd']
   
   describe "Data.Bag Semigroup" $ do
     it "has an associative operator <>" $ do
