@@ -11,10 +11,10 @@ empty = Bag.empty
 single :: a -> Table a
 single = Bag.single
 
-union :: Table a -> Table a -> Table a
+union :: (Table a, Table a) -> Table a
 union = Bag.union
 
-cp :: Table a -> Table b -> Table (a, b)
+cp :: (Table a, Table b) -> Table (a, b)
 cp = Bag.cp
 
 -- TODO:: check
@@ -30,8 +30,8 @@ select p = Bag.Bag . filter p . Bag.elements
 aggregate :: CMonoid a => Table a -> a
 aggregate = Bag.reduceBag
 
-equijoinWithCp :: Eq c => (a -> c) -> (b -> c) ->  Table a -> Table b -> Table (a, b)
-equijoinWithCp fa fb as bs = select equality (cp as bs)
+equijoinWithCp :: Eq c => (a -> c) -> (b -> c) ->  (Table a, Table b) -> Table (a, b)
+equijoinWithCp fa fb = select equality . cp
   where 
     equality (a, b) = fa a == fb b
 

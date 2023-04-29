@@ -26,6 +26,7 @@
 
 % Pointed set
 \newcommand{\pset}[2]{\ensuremath{\left(#1,\,#2\right)}}
+\newcommand{\pointed}[1]{\ensuremath{\mathit{Pointed}\ #1}} % For code
 
 % Maps
 \newcommand{\keyset}{\ensuremath{\mathrm{K}}}
@@ -43,3 +44,7 @@
 \newcommand{\natjoin}[2]{\ensuremath{\relation{#1}\bowtie\relation{#2}}}
 \newcommand{\thetajoin}[3]{\ensuremath{\relation{#2}\bowtie_{#1}\relation{#3}}}
 \newcommand{\equijoin}[4]{\ensuremath{\relation{#1}\,{}_{#2}\!\bowtie_{\:#4}\relation{#3}}}
+
+% Temporary function to show italicised code similar to maths
+% TODO: Change
+\newcommand{\mathcodefunc}[1]{\ensuremath{\mathit{#1}}}

@@ -29,7 +29,7 @@ instance Monad Bag where
   Bag xs >>= k = Bag (xs >>= (elements . k))
 
 instance Semigroup (Bag a) where
-  (<>) = Data.Bag.union
+  (<>) = curry Data.Bag.union
 
 instance Monoid (Bag a) where
   mempty = Data.Bag.empty
@@ -46,16 +46,16 @@ instance Pointed.PointedSet (Bag a) where
 empty :: Bag a
 empty = Bag []
 
-union :: Bag a -> Bag a -> Bag a
-b1 `union` b2 = Bag (elements b1 ++ elements b2)
+union :: (Bag a, Bag a) -> Bag a
+union (b1, b2) = Bag (elements b1 ++ elements b2)
 
 reduceBag :: CMonoid m => Bag m -> m
 -- Reduce a bag of ms into an m (e.g. a bag of bags into a bag)
 reduceBag = mconcat . elements
 
 -- Cartesian product
-cp :: Bag a -> Bag b -> Bag (a, b)
-cp (Bag xs) (Bag ys) = Bag [(x, y) | x <- xs, y <- ys]
+cp :: (Bag a, Bag b) -> Bag (a, b)
+cp (Bag xs, Bag ys) = Bag [(x, y) | x <- xs, y <- ys]
 
 -- Create singleton bag
 single :: a -> Bag a
