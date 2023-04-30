@@ -7,6 +7,8 @@ module Data.Key where
 import Data.PointedSet
 import Data.Bag
 import Data.CMonoid
+import Data.Word
+import Data.Array
 
 class (Functor (Map k)) => Key k where
   data Map k :: * -> *
@@ -40,3 +42,15 @@ instance Key () where -- unit type
 
 instance Functor (Map ()) where
   fmap f (Lone v) = Lone (f v)
+
+instance Key Word16 where -- constant type (array indexed by 16 bit word)
+  newtype Map Word16 v = A (Array Word16 v) deriving (Eq, Show)
+  empty = A (accumArray (curry snd) Data.PointedSet.null (0, 2^16-1) [])
+  isEmpty (A a) = all isNull (elems a)
+  single (k, v) = A (accumArray (curry snd) Data.PointedSet.null (0, 2^16-1) [(k, v)])
+  merge (A a1, A a2) = A (listArray (0, 2^16 - 1) (zip (elems a1) (elems a2)))
+  dom (A a) = Bag [ k | (k, v) <- assocs a, not (isNull v) ]
+  cod (A a) = Bag [ v | (k, v) <- assocs a, not (isNull v) ]
+
+instance Functor (Map Word16) where
+  fmap f (A a) = A (fmap f a)
