@@ -95,3 +95,10 @@ spec = do
       Data.Key.index (Bag.Bag [(1, Just '1'), (2, Just '2'), (1, Just '3'), (2, Just '4')]) `shouldBe` A (accumArray (curry snd) (Bag.empty :: Bag.Bag (Maybe Char)) (0, 2^16 - 1) [(1, Bag.Bag [Just '1', Just '3']), (2, Bag.Bag [Just '2', Just '4'])])
     it "can index an empty bag" $ do
       Data.Key.index (Bag.empty :: Bag.Bag (Word16, Maybe Char)) `shouldBe` (empty :: Map Word16 (Bag.Bag (Maybe Char)))
+    --
+    it "can unindex a map with singleton bag values" $ do
+      Data.Key.unindex (A (accumArray (curry snd) (Bag.empty :: Bag.Bag (Maybe Char)) (0, 2^16 - 1) [(1, Bag.single (Just '1')), (2, Bag.single (Just '2'))])) `shouldBe` Bag.Bag [(1, Just '1'), (2, Just '2')] 
+    it "can unindex a map with bags with multiple values" $ do
+      Data.Key.unindex (A (accumArray (curry snd) (Bag.empty :: Bag.Bag (Maybe Char)) (0, 2^16 - 1) [(1, Bag.Bag [Just '1', Just '1']), (2, Bag.Bag [Just '2', Just '4'])])) `shouldBe` (Bag.Bag [(1, Just '1'), (2, Just '2'), (1, Just '1'), (2, Just '4')]) 
+    it "can index unindex an empty map" $ do
+      Data.Key.unindex (empty :: Map Word16 (Bag.Bag (Maybe Char))) `shouldBe` (Bag.empty :: Bag.Bag (Word16, Maybe Char))

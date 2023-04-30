@@ -53,10 +53,10 @@ instance Key Word16 where -- constant type (array indexed by 16 bit word)
   dom (A a) = Bag [ k | (k, v) <- assocs a, not (isNull v) ]
   cod (A a) = Bag [ v | (k, v) <- assocs a, not (isNull v) ]
   lookup (A a) = (!) a
-  -- index :: Bag (k, v) -> Map k (Bag v)
   index kvps = A (accumArray (curry Data.Bag.union) Data.Bag.empty (0, 2^16-1) vals)
     where
       vals = (elements . fmap (Bifunctor.second Data.Bag.single)) kvps
+  unindex (A a) = Bag [ (k, v) | (k, vs) <- assocs a, v <- elements vs ]
   -- unindex :: Map k (Bag v) -> Bag (k, v)
   -- reduce :: (PointedSet v, CMonoid v) => Map k v -> v
   -- reduce = reduceBag . cod
