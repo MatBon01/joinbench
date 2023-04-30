@@ -5,6 +5,7 @@ import qualified Database.Bag as DB
 import qualified Data.Bag as Bag
 import Data.Monoid
 import Database.Bag (equijoinWithCp)
+import Data.Key as Map
 
 type Name = String
 data Person = Person {firstName :: Name, lastName :: Name} deriving (Show, Eq)
@@ -115,3 +116,10 @@ spec = do
       equijoinWithCp invoiceId orderId (orderPrices2, orderItems2) `shouldBe` Bag.empty
     it "can join two tables with multiple elements in both tables" $ do
       equijoinWithCp lastName lastName (people, people) `shouldBe` lastNameJoin
+  describe "indexBy" $ do
+    it "can correctly index with trivial key" $ do
+      DB.indexBy (const ()) people `shouldBe` Map.Lone people
+    it "can correctly index an empty bag" $ do
+      DB.indexBy (const ()) (DB.empty :: DB.Table Int) `shouldBe` (Map.empty :: Map () (Bag.Bag Int))
+    it "can index with a complicated key" $ do
+      False `shouldBe` True

@@ -1,7 +1,9 @@
 module Database.Bag where
 
 import qualified Data.Bag as Bag
+import Database.IndexedTable
 import Data.CMonoid
+import Data.Key
 
 type Table = Bag.Bag
 
@@ -19,7 +21,7 @@ cp = Bag.cp
 
 -- TODO:: check
 neutral :: Table ()
-neutral = single ()
+neutral = Database.Bag.single ()
 
 project :: (a -> b) -> Table a -> Table b
 project = fmap
@@ -35,4 +37,5 @@ equijoinWithCp fa fb = select equality . cp
   where 
     equality (a, b) = fa a == fb b
 
-
+indexBy :: (Key k) => (a -> k) -> Table a -> Map k (Table a)
+indexBy keyProj = index . fmap (\x -> (keyProj x, x))
