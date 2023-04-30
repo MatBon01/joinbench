@@ -102,3 +102,9 @@ spec = do
       Data.Key.unindex (A (accumArray (curry snd) (Bag.empty :: Bag.Bag (Maybe Char)) (0, 2^16 - 1) [(1, Bag.Bag [Just '1', Just '1']), (2, Bag.Bag [Just '2', Just '4'])])) `shouldBe` (Bag.Bag [(1, Just '1'), (2, Just '2'), (1, Just '1'), (2, Just '4')]) 
     it "can index unindex an empty map" $ do
       Data.Key.unindex (empty :: Map Word16 (Bag.Bag (Maybe Char))) `shouldBe` (Bag.empty :: Bag.Bag (Word16, Maybe Char))
+    it "can reduce a map with singleton bags" $ do
+      Data.Key.reduce (A (accumArray (curry snd) (Bag.empty :: Bag.Bag Bool) (0, 2^16 - 1) [(1, Bag.single (True)), (2, Bag.single (False))])) `shouldBe` Bag.Bag [True, False]
+    it "can reduce a map with multiple value bags bags" $ do
+      Data.Key.reduce (A (accumArray (curry snd) (Bag.empty :: Bag.Bag Int) (0, 2^16 - 1) [(1, Bag.Bag [1, 2]), (2, Bag.Bag [2, 5, 6])])) `shouldBe` Bag.Bag [1, 2, 2, 5, 6]
+    it "can reduce an empty map" $ do
+      (Data.Key.empty :: Map Word16 (Bag.Bag Int)) `shouldBe` (empty :: Map Word16 (Bag.Bag Int))

@@ -57,9 +57,6 @@ instance Key Word16 where -- constant type (array indexed by 16 bit word)
     where
       vals = (elements . fmap (Bifunctor.second Data.Bag.single)) kvps
   unindex (A a) = Bag [ (k, v) | (k, vs) <- assocs a, v <- elements vs ]
-  -- unindex :: Map k (Bag v) -> Bag (k, v)
-  -- reduce :: (PointedSet v, CMonoid v) => Map k v -> v
-  -- reduce = reduceBag . cod
 
 instance Functor (Map Word16) where
   fmap f (A a) = A (fmap f a)
