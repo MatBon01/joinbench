@@ -83,3 +83,9 @@ spec = do
       cod (empty :: Map Word16 (Maybe Bool)) `shouldBe` (Bag.empty :: Bag.Bag (Maybe Bool))
     it "can correctly find the codomain of a map with only null elements" $ do
       cod (single ((5 :: Word16), (Nothing :: Maybe Int))) `shouldBe` (Bag.empty :: Bag.Bag (Maybe Int))
+    it "can lookup a singleton with a present key" $ do
+      Data.Key.lookup (single (5 :: Word16, Just 3)) 5 `shouldBe` Just 3
+    it "can lookup a singleton with a key not present" $ do
+      Data.Key.lookup (single (5 :: Word16, Just 3)) 4 `shouldBe` (Pointed.null :: Maybe Int)
+    it "can lookup an empty map" $ do
+      Data.Key.lookup (empty :: Map Word16 (Bag.Bag Int)) 2 `shouldBe` (Pointed.null :: Bag.Bag Int)
