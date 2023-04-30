@@ -89,3 +89,9 @@ spec = do
       Data.Key.lookup (single (5 :: Word16, Just 3)) 4 `shouldBe` (Pointed.null :: Maybe Int)
     it "can lookup an empty map" $ do
       Data.Key.lookup (empty :: Map Word16 (Bag.Bag Int)) 2 `shouldBe` (Pointed.null :: Bag.Bag Int)
+    it "can create a map from a bag of key value pairs with distinct indices" $ do
+      Data.Key.index (Bag.Bag [(1, Just '1'), (2, Just '2')]) `shouldBe` A (accumArray (curry snd) (Bag.empty :: Bag.Bag (Maybe Char)) (0, 2^16 - 1) [(1, Bag.single (Just '1')), (2, Bag.single (Just '2'))])
+    it "can create a map from a bag of key value pairs with shared indices" $ do
+      Data.Key.index (Bag.Bag [(1, Just '1'), (2, Just '2'), (1, Just '3'), (2, Just '4')]) `shouldBe` A (accumArray (curry snd) (Bag.empty :: Bag.Bag (Maybe Char)) (0, 2^16 - 1) [(1, Bag.Bag [Just '1', Just '3']), (2, Bag.Bag [Just '2', Just '4'])])
+    it "can index an empty bag" $ do
+      Data.Key.index (Bag.empty :: Bag.Bag (Word16, Maybe Char)) `shouldBe` (empty :: Map Word16 (Bag.Bag (Maybe Char)))

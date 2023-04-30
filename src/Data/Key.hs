@@ -9,6 +9,7 @@ import Data.Bag
 import Data.CMonoid
 import Data.Word
 import Data.Array
+import qualified Data.Bifunctor as Bifunctor
 
 class (Functor (Map k)) => Key k where
   data Map k :: * -> *
@@ -51,9 +52,11 @@ instance Key Word16 where -- constant type (array indexed by 16 bit word)
   merge (A a1, A a2) = A (listArray (0, 2^16 - 1) (zip (elems a1) (elems a2)))
   dom (A a) = Bag [ k | (k, v) <- assocs a, not (isNull v) ]
   cod (A a) = Bag [ v | (k, v) <- assocs a, not (isNull v) ]
-  -- lookup :: Map k v -> (k -> v)
   lookup (A a) = (!) a
   -- index :: Bag (k, v) -> Map k (Bag v)
+  index kvps = A (accumArray (curry Data.Bag.union) Data.Bag.empty (0, 2^16-1) vals)
+    where
+      vals = (elements . fmap (Bifunctor.second Data.Bag.single)) kvps
   -- unindex :: Map k (Bag v) -> Bag (k, v)
   -- reduce :: (PointedSet v, CMonoid v) => Map k v -> v
   -- reduce = reduceBag . cod
