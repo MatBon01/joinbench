@@ -6,6 +6,8 @@ import qualified Data.Bag as Bag
 import Data.Monoid
 import Database.Bag (equijoinWithCp)
 import Data.Key as Map
+import Data.Array
+import Data.Word
 
 type Name = String
 data Person = Person {firstName :: Name, lastName :: Name} deriving (Show, Eq)
@@ -58,6 +60,12 @@ orderItems3 = Bag.Bag
   , OrderItem "Milk" 2 2
   , OrderItem "Banana" 2 12 
   , OrderItem "Chocolate" 3 5]
+orderItems3kvps =
+  [ (1, Bag.Bag [OrderItem "Apple" 1 11, OrderItem "Orange" 1 5, OrderItem "Peach" 1 12])
+  , (2, Bag.Bag [OrderItem "Milk" 2 2, OrderItem "Banana" 2 12])
+  , (3, Bag.Bag [OrderItem "Chocolate" 3 5])
+  ]
+orderItems3Array = A (accumArray (curry Bag.union) (Bag.empty :: Bag.Bag OrderItem) (0, 2^16 - 1) orderItems3kvps)
 orderJoin3 = Bag.Bag  -- orderPrices join OrderItems by id
   [ (OrderInvoice 1 25.50, OrderItem "Apple" 1 11)
   , (OrderInvoice 1 25.50, OrderItem "Orange" 1 5)
@@ -121,4 +129,5 @@ spec = do
       DB.indexBy (const ()) people `shouldBe` Map.Lone people
     it "can correctly index an empty bag" $ do
       DB.indexBy (const ()) (DB.empty :: DB.Table Int) `shouldBe` (Map.empty :: Map () (Bag.Bag Int))
-    -- TODO:: Test mapping with more complex keys
+    it "can correctly index a bag with a repeated index" $ do
+      (DB.indexBy (fromIntegral . orderId) orderItems3 :: Map.Map Word16 (Bag.Bag OrderItem)) `shouldBe` orderItems3Array
