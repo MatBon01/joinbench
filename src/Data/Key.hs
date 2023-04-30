@@ -25,7 +25,7 @@ class (Functor (Map k)) => Key k where
   reduce :: (PointedSet v, CMonoid v) => Map k v -> v
   reduce = reduceBag . cod
 
-instance Key () where
+instance Key () where -- unit type
   newtype Map () v = Lone v deriving (Show, Eq)
 
   empty = Lone Data.PointedSet.null
