@@ -56,6 +56,7 @@ than most compositions, however, and have two different kinds.
     object $\obj{A} \in \cat{C}$. Explicitly, the components
     $\nattransapply{\left(\verticalcomposition{\tau}{\nu}\right)}{A} =
     \morphcomp{\nattransapply{\tau}{A}}{\nattransapply{\nu}{A}}$
+\label{sec:verticalcomposition}
 \end{verticalcompositiondef}
 
 \todo{Add horizontal composition definition}
@@ -100,6 +101,12 @@ Motivated by this example, we give a formal definition of an adjunction.
 We see that the unit $\eta$ is a mapping between elements in \cat{D}, noting
 especially the difference between the functor \functor{\mathrm{Id}} and the
 morphism \id{\functorobj{L}{A}}.
+In trying to understand the triangle inequalities it is worth remembering the
+definition of vertical composition in \fref{sec:verticalcomposition}, namely
+that
+$\nattransapply{\left(\verticalcomposition{\eta}{\epsilon})\right)}{\obj{A}} =
+\morphcomp{\nattransapply{\eta}{\obj{A}}}{\nattransapply{\epsilon}{\obj{A}}}$
+where the right hand side is simple the composition of arrows.
 \todo{Description very similar to the paper so make sure it is not plagiaris}
 
 \todo{Describe why adjunctions are such a key character in this paper}
