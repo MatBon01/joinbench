@@ -33,10 +33,105 @@ Intuitively, it should be obvious that categories and functors themselves form a
 \theoremstyle{definition}\newtheorem*{nattransdef}{Natural Transformation}
 We now can explore an intuitive way of relating two functors, called an \emph{natural transformation}. A natural transformation can be seen as a projection of one functor space to another and is in essence a family of arrows that describes this translation.
 \begin{nattransdef}
-Given two functors $\functor{F}, \functor{G} : \cat{C} \to \cat{D}$ a \emph{natural transformation} $\nattrans{\tau}: \functor{F} \to \functor{G}$ associates to each element $\obj{a} \in \objs{C}$ an arrow $\nattransapply{\tau}{a} \in \morphs{D}$ such that $\nattransapply{\tau}{a}: \functorobj{F}{a} \to \functorobj{G}{a}$. Additionally, for $\obj{b} \in \cat{C}$ and \explicitmorph{f}{a}{b} a morphism in \cat{C}, we also require that $\nattransapply{\tau}{b} \circ \functormorph{F}{f} = \functormorph{G}{f} \circ \nattransapply{\tau}{a}$.
+Given two functors $\functor{F}, \functor{G} : \cat{C} \to \cat{D}$ a
+\emph{natural transformation} $\explicitnattrans{\tau}{F}{G}$ associates to each element $\obj{a} \in \objs{C}$ an arrow $\nattransapply{\tau}{a} \in \morphs{D}$ such that $\nattransapply{\tau}{a}: \functorobj{F}{a} \to \functorobj{G}{a}$. Additionally, for $\obj{b} \in \cat{C}$ and \explicitmorph{f}{a}{b} a morphism in \cat{C}, we also require that $\nattransapply{\tau}{b} \circ \functormorph{F}{f} = \functormorph{G}{f} \circ \nattransapply{\tau}{a}$.
 
 \end{nattransdef}
+
+\subsubsection{Compositions}
+As you might expect from the denotation of a natural transformation with an
+arrow, there are composition laws for them. They are slightly more complicated
+than most compositions, however, and have two different kinds.
+\theoremstyle{definition}\newtheorem*{verticalcompositiondef}{Vertical Composition}
+\theoremstyle{definition}\newtheorem*{horizontalcompositiondef}{Horizontal Composition}
+
+\cite{RelationalAlgebraByWayOfAdjunctions}
+\begin{verticalcompositiondef}
+    Given two natural transformations
+    \explicitnattrans{\tau}{E}{F} and
+    \explicitnattrans{\nu}{F}{G} where $\functor{E, F, G}: \cat{C} \to
+    \cat{D}$ are functors. The vertical composition
+    $\explicitnattrans{\verticalcomposition{\tau}{\nu}}{E}{G}$
+    is defined by the composition of the underlying arrows for every
+    object $\obj{A} \in \cat{C}$. Explicitly, the components
+    $\nattransapply{\left(\verticalcomposition{\tau}{\nu}\right)}{A} =
+    \morphcomp{\nattransapply{\tau}{A}}{\nattransapply{\nu}{A}}$
+\label{sec:verticalcomposition}
+\end{verticalcompositiondef}
+
+\todo{Add horizontal composition definition}
+
+
 \subsection{Adjunctions}
+An adjunction expresses an intersection of arrows of two different functions. For instance Say you have the category \commoncatname{Set} of sets \cite{RelationalAlgebraByWayOfAdjunctions} and two functions $\morph{f}, \morph{g}$ with signatures \explicitmorph{f}{X}{A} and \explicitmorph{g}{X}{B} with $\obj{X}, \obj{A}, \obj{B} \in \commoncatname{Set}$.
+in \commoncatname{Set} with a common domain $\domain{f} = \domain{g} = \obj{A}
+\in \commoncatname{Set}$, how might we interpret the application of both
+functions on one element. We could create a new function \explicitmorph{h}{X}{A
+\times B} which for all $a \in \obj{A}$ maps $a \mapsto (\morph{f}(a),
+\morph{g}(a))$. Note that both \obj{X} and $\obj{A} \times \obj{B}$ are sets
+(where $\times$ denotes the Cartesian product of two sets, i.e. the set of all
+such pairings of elements of \obj{A} and \obj{B}). This is not a very natural
+way of writing this however. Consider now the product category
+$\commoncatname{Set}^2$ such that the elements are just pairs of sets and
+functions, pairs of functions $(\morph{i}, \morph{j}): (\domain{i}, \domain{j})
+\to (\codomain{i}, \codomain{j})$. It is clear that \commoncatname{Set} and
+$\commoncatname{Set}^2$ are distinct, i.e. a pair of a set is not a set nor is a
+pair of set. However, interestingly $h$ can quite easily be expressed within
+$\commoncatname{Set}^2$ as the function $(f, g)$ that maps $(\obj{A}, \obj{A})$
+to $(\obj{X}, \obj{Y})$ and links back to the situation in $\commoncatname{Set}$
+become clear. We introduce the diagonal functor $\functor{\Delta}:
+\commoncatname{Set} \to \commoncatname{Set}^2$, s.t. $\functorobj{\Delta}{A} =
+(\obj{A}, \obj{A})$ and $\functormorph{\Delta}{f} = (\morph{f}, \morph{f})$.
+Furthermore, the Cartesian product can also be seen view the lens of a functor $\functor{\times}: \commoncatname{Set}^2 \to \commoncatname{Set}$ that takes the pair of elements $(\obj{A}, \obj{B})$ and maps it to the set $\obj{A} \times \obj{B}$ and a pair of functions $(\morph{i}, \morph{j})$ to a function $k: \left(\domain{i} \times \domain{j}\right) \to \left(\codomain{i} \times \codomain{j}\right)$.
+Considering the above problem again, we can see very clear links between the two
+functors. We can work our problem in \commoncatname{Set} in the domain of
+$\commoncatname{Set}^2$ by considering $\functorobj{\Delta}{A} = (\obj{A},
+\obj{A})$. We can then easily apply $(\morph{f}, \morph{g})$. Similarly, given
+the problem in $\commoncatname{Set}^2$ we see that we are left with a pair of
+sets that can easily be considered a Cartesian product $\obj{X} \times \obj{Y}$. It should be clear that there is a bijection between the arrows $\functorobj{\Delta}{A} \to (\obj{X}, \obj{Y})$ in $\commoncatname{Set}^2$ and the arrows $\obj{A} \to \functorobj{(\times)}{(X, Y)}$.
+
+\theoremstyle{definition}\newtheorem*{adjunctiondef}{Adjuction}
+Motivated by this example, we give a formal definition of an adjunction.
+\begin{adjunctiondef}
+    Given two functors $\functor{L}: \cat{D} \to \cat{C}$ and $\functor{R}:
+    \cat{C} \to \cat{D}$, we define an adjunction $\adunction{L}{R}$ \todo{has a
+    domain and codomain} such that there is a natural isomorphism between the
+    hom-sets as follows:\cite{RelationalAlgebraByWayOfAdjunctions}
+    \[
+        \lfloor - \rfloor: \homset{C}{\functorobj{L}{A}}{B} \cong
+        \homset{D}{A}{\functorobj{R}{B}} :\lceil - \rceil
+    \]
+    We call \functor{L} the \emph{left adjoint} and \functor{R} the \emph{right
+    adjoint}.
+    The natural transformations between the arrows of the categories are defined
+    by the \emph{unit}: \explicitnattrans{\eta}{\mathrm{Id}}{R \circ L}, $\nattransapply{\eta}{A} =
+    \lfloor \id{\functorobj{L}{A}} \rfloor$ and, symmetrically, the
+    \emph{counit}:
+    $\explicitnattrans{\epsilon}{L \circ R}{\mathrm{Id}}$ such that
+    $\nattransapply{\epsilon}{B} = \lceil \id{\functorobj{R}{A}} \rceil$. We
+    require that the unit and counit obey the `triangle identities':
+\[
+            \verticalcomposition{\nattransapply{\eta}{\functor{R}}}{\functorobj{R}{\nattrans{\epsilon}}}
+            = \id{}
+\] \todo{fix notation}
+    and
+\[
+    \verticalcomposition{\functorobj{L}{\nattrans{\eta}}}{\nattransapply{\epsilon}{\functor{L}}}
+    = \id{}
+\]
+\end{adjunctiondef}
+
+We see that the unit $\eta$ is a mapping between elements in \cat{D}, noting
+especially the difference between the functor \functor{\mathrm{Id}} and the
+morphism \id{\functorobj{L}{A}}.
+In trying to understand the triangle inequalities it is worth remembering the
+definition of vertical composition in \fref{sec:verticalcomposition}, namely
+that
+$\nattransapply{\left(\verticalcomposition{\eta}{\epsilon})\right)}{\obj{A}} =
+\morphcomp{\nattransapply{\eta}{\obj{A}}}{\nattransapply{\epsilon}{\obj{A}}}$
+where the right hand side is simple the composition of arrows.
+\todo{Description very similar to the paper so make sure it is not plagiarism}
+
 \todo{Describe why adjunctions are such a key character in this paper}
 \todo{Add more information between here}
 \subsection{Graded Monads}\label{sec:gradedmonads}

@@ -6,15 +6,23 @@
 \newcommand{\obj}[1]{\ensuremath{\mathnormal{#1}}}
 \newcommand{\morph}[1]{\ensuremath{\mathnormal{#1}}}
 \newcommand{\explicitmorph}[3]{\ensuremath{\morph{#1}: \obj{#2} \to \obj{#3}}}
+\newcommand{\morphcomp}[2]{\ensuremath{\morph{#2} \circ
+\morph{#1}}} % composition of morphisms
 \newcommand{\domain}[1]{\ensuremath{\mathrm{dom}\,\morph{#1}}}
 \newcommand{\codomain}[1]{\ensuremath{\mathrm{cod}\,\morph{#1}}} % codomain of a category
 \newcommand{\id}[1]{\ensuremath{\mathrm{id}_{\obj{#1}}}} % id arrow in a category
+\newcommand{\homset}[3]{\ensuremath{\cat{#1}\left(#2, #3\right)}} % note that
+% the objects in the homset are not wrapped and must be done manually
 \newcommand{\commoncatname}[1]{\ensuremath{\mathrm{#1}}}
 \newcommand{\functor}[1]{\ensuremath{\mathnormal{#1}}} % a functor
 \newcommand{\functorobj}[2]{\ensuremath{\functor{#1} \obj{#2}}} % a functor applied to an object
 \newcommand{\functormorph}[2]{\ensuremath{\functor{#1} \morph{#2}}} % a functor applied to a morphism
 \newcommand{\nattrans}[1]{\ensuremath{#1}} % natural transformation
+\newcommand{\verticalcomposition}[2]{\ensuremath{\nattrans{#2} \cdot
+\nattrans{#1}}} % vertical composition of natural transformations
+\newcommand{\explicitnattrans}[3]{\ensuremath{\nattrans{#1}: \functor{#2} \xrightarrow{.} \functor{#3}}}
 \newcommand{\nattransapply}[2]{\ensuremath{\nattrans{#1}_{#2}}} % application of a natural transformation
+\newcommand{\adunction}[2]{\ensuremath{\functor{#1} \dashv \functor{#2}}}
 
 % Bag
 \newcommand{\bag}[1]{\ensuremath{\mathrm{Bag}\ #1}}
