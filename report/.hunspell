@@ -1,5 +1,6 @@
 etc
 adjunctions
+adjunction
 hom
 equijoin
 monoidal
@@ -31,3 +32,5 @@ lhs2
 theoreticalanalysis
 documenttype
 secondmarker
+counit
+verticalcomposition
