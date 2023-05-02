@@ -4,7 +4,7 @@ import Test.Hspec
 import qualified Database.Bag as DB
 import qualified Data.Bag as Bag
 import Data.Monoid
-import Database.Bag (equijoinWithCp)
+import Database.Bag (productEquijoin, indexedEquijoin)
 import Data.Key as Map
 import Data.Array
 import Data.Word
@@ -18,6 +18,15 @@ lastNameJoin = Bag.Bag
   , (Person "Jane" "Doe", Person "Jane" "Doe")
   , (Person "Jane" "Doe", Person "John" "Doe")
   , (Person "John" "Smith", Person "John" "Smith") ]
+
+data NameNum = NN {name :: Name, nums :: Int} deriving (Show, Eq)
+namenums = Bag.Bag [NN "John" 12, NN "Jane" 12, NN "John" 18]
+namenumjoins = Bag.Bag 
+  [ (NN "John" 12, NN "John" 12)
+  , (NN "John" 12, NN "Jane" 12)
+  , (NN "Jane" 12, NN "Jane" 12)
+  , (NN "Jane" 12, NN "John" 12)
+  , (NN "John" 18, NN "John" 18) ]
 
 type OrderId = Int
 type OrderPrice = Float
@@ -114,16 +123,16 @@ spec = do
       (getAny . DB.aggregate) (Bag.Bag [Any True, Any False]) `shouldBe` True
     it "can correctly aggregate a table with multiplicities" $ do
       DB.aggregate (Bag.Bag [1, 1, 1, 1, 2] :: Bag.Bag (Sum Int)) `shouldBe` 6
-  describe "Database.Bag equijoinWithCp" $ do
+  describe "Database.Bag productEquijoin" $ do
     it "can join two tables with at most one matching element" $ do
-      equijoinWithCp invoiceId orderId (orderPrices1, orderItems1) `shouldBe` orderJoin1
+      productEquijoin invoiceId orderId (orderPrices1, orderItems1) `shouldBe` orderJoin1
     it "can join two tables with more than one matching elements,\
         \ only multiple in one table" $ do
-      equijoinWithCp invoiceId orderId (orderPrices3, orderItems3) `shouldBe` orderJoin3
+      productEquijoin invoiceId orderId (orderPrices3, orderItems3) `shouldBe` orderJoin3
     it "can join two tables with no matching elements" $ do
-      equijoinWithCp invoiceId orderId (orderPrices2, orderItems2) `shouldBe` Bag.empty
+      productEquijoin invoiceId orderId (orderPrices2, orderItems2) `shouldBe` Bag.empty
     it "can join two tables with multiple elements in both tables" $ do
-      equijoinWithCp lastName lastName (people, people) `shouldBe` lastNameJoin
+      productEquijoin lastName lastName (people, people) `shouldBe` lastNameJoin
   describe "indexBy" $ do
     it "can correctly index with trivial key" $ do
       DB.indexBy (const ()) people `shouldBe` Map.Lone people
@@ -131,3 +140,12 @@ spec = do
       DB.indexBy (const ()) (DB.empty :: DB.Table Int) `shouldBe` (Map.empty :: Map () (Bag.Bag Int))
     it "can correctly index a bag with a repeated index" $ do
       (DB.indexBy (fromIntegral . orderId) orderItems3 :: Map.Map Word16 (Bag.Bag OrderItem)) `shouldBe` orderItems3Array
+    it "can join two tables with at most one matching element" $ do
+       indexedEquijoin (fromIntegral . invoiceId :: OrderInvoice -> Word16) (fromIntegral . orderId) (orderPrices1, orderItems1) `shouldBe` orderJoin1
+    it "can join two tables with more than one matching elements,\
+        \ only multiple in one table" $ do
+       indexedEquijoin (fromIntegral . invoiceId :: OrderInvoice -> Word16) (fromIntegral . orderId) (orderPrices3, orderItems3) `shouldBe` orderJoin3
+    it "can join two tables with no matching elements" $ do
+       indexedEquijoin (fromIntegral . invoiceId :: OrderInvoice -> Word16) (fromIntegral . orderId) (orderPrices2, orderItems2) `shouldBe` Bag.empty
+    it "can join two tables with multiple elements in both tables" $ do
+       indexedEquijoin (fromIntegral . nums :: NameNum -> Word16) (fromIntegral . nums) (namenums, namenums) `shouldBe` namenumjoins
