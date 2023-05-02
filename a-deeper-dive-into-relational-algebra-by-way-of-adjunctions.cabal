@@ -37,7 +37,9 @@ library
     other-extensions:
         InstanceSigs, TypeFamilies, FlexibleContexts,
         FlexibleInstances
-    build-depends:    base >=4.16.4.0
+    build-depends:
+        base >=4.16.4.0,
+        array >= 0.5.4.0
     hs-source-dirs:   src
     default-language: Haskell2010
 
@@ -69,5 +71,9 @@ test-suite spec
         Data.KeySpec,
         Database.BagSpec,
         Database.IndexedTableSpec
-    build-depends:      base >=4.16.4.0, hspec ^>=2.10, a-deeper-dive-into-relational-algebra-by-way-of-adjunctions
+    build-depends:
+        base >=4.16.4.0,
+        hspec ^>=2.10,
+        a-deeper-dive-into-relational-algebra-by-way-of-adjunctions,
+        array >= 0.5.4.0
     build-tool-depends: hspec-discover:hspec-discover == 2.*

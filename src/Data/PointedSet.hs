@@ -9,3 +9,7 @@ class PointedSet a where
 instance PointedSet (Maybe a) where
   null = Nothing
   isNull = isNothing
+
+instance (PointedSet v1, PointedSet v2) => (PointedSet (v1, v2)) where
+  null = (Data.PointedSet.null, Data.PointedSet.null)
+  isNull (v1, v2) = isNull v1 && isNull v2
