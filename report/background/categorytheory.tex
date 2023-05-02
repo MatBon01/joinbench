@@ -85,7 +85,16 @@ Motivated by this example, we give a formal definition of an adjunction.
     \emph{counit}:
     $\explicitnattrans{\epsilon}{L \circ R}{\mathrm{Id}}$ such that
     $\nattransapply{\epsilon}{B} = \lceil \id{\functorobj{R}{A}} \rceil$. We
-    require that the unit and counit obey the `triangle identities' \todo{FINISH}
+    require that the unit and counit obey the `triangle identities':
+\[
+            \verticalcomposition{\nattransapply{\eta}{\functor{R}}}{\functorobj{R}{\nattrans{\epsilon}}}
+            = \id{}
+\] \todo{fix notation}
+    and
+\[
+    \verticalcomposition{\nattransapply{\eta}{\functor{L}}}{\functorobj{L}{\eta}}
+    = \id{}
+\]
 \end{adjunctiondef}
 
 We see that the unit $\eta$ is a mapping between elements in \cat{D}, noting
