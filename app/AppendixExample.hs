@@ -1,8 +1,10 @@
 module Main where
 
-import Data.Bag
+import Data.Bag as Bag
 import qualified Database.Bag as BDB
+import Database.IndexedTable as IT
 import Data.Word
+import Data.Key
 
 -- Define types used in example
 type Identifier = Int
@@ -46,6 +48,15 @@ predefinedIndexedEquijoin :: (Bag Customer, Bag Invoice) -> Bag (Name, Amount)
 predefinedIndexedEquijoin
   = BDB.project exampleProjection . BDB.select exampleSelectionCond . BDB.indexedEquijoin (fromIntegral . cid :: Customer -> Word16) (fromIntegral . cust)
 
+explicitIndexedJoin :: (Bag Customer, Bag Invoice) -> Bag (Name, Amount)
+explicitIndexedJoin (customer, invoices)= reduceBag (fmap cp (example customer invoices))
+    where
+      pair (f, g) (a, b) = (f a, g b)
+      -- Note: snd had to be added to example instead of copying from appendix
+      example cs is = fmap (pair (fmap name, fmap amount)) (cod
+          (fmap (pair (id, Bag.filter ((< today) . due ))) (merge ((fromIntegral . cid :: Customer -> Word16) `BDB.indexBy` cs , (fromIntegral . cust) `BDB.indexBy` is ))))
+
+
 main :: IO ()
 main = do
   putStrLn "Example from appendix"
@@ -56,3 +67,6 @@ main = do
 
   putStrLn "Using predefined indexed equijoin"
   print (predefinedIndexedEquijoin (customers, invoices))
+
+  putStrLn "Using explicit indexed equijoin similar to appendix"
+  print (explicitIndexedJoin (customers, invoices))
