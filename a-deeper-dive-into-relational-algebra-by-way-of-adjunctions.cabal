@@ -72,10 +72,12 @@ test-suite spec
         Data.PointedSetSpec,
         Data.KeySpec,
         Database.BagSpec,
-        Database.IndexedTableSpec
+        Database.IndexedTableSpec,
+        Text.Parser.CustomersSpec
     build-depends:
         base >=4.16.4.0,
         hspec ^>=2.10,
         a-deeper-dive-into-relational-algebra-by-way-of-adjunctions,
-        array >= 0.5.4.0
+        array >= 0.5.4.0,
+        parsec >= 0.3.1.15
     build-tool-depends: hspec-discover:hspec-discover == 2.*
