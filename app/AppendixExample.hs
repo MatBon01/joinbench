@@ -38,8 +38,8 @@ exampleProjection :: (Customer, Invoice) -> (Name, Amount)
 exampleProjection (c, i) = (name c, amount i)
 
 -- Cartesian product of both databases
-exampleWithCP :: (Bag Customer, Bag Invoice) -> Bag (Name, Amount)
-exampleWithCP = BDB.project exampleProjection . BDB.select exampleSelectionCond . BDB.productEquijoin cid cust
+productExample :: (Bag Customer, Bag Invoice) -> Bag (Name, Amount)
+productExample = BDB.project exampleProjection . BDB.select exampleSelectionCond . BDB.productEquijoin cid cust
 
 main :: IO ()
 main = do
@@ -47,4 +47,4 @@ main = do
   putStrLn "Expected result: [('sam',15),('pat',10)]"
 
   putStrLn "Using bags and Cartesian products:"
-  print (exampleWithCP (customers, invoices))
+  print (productExample (customers, invoices))
