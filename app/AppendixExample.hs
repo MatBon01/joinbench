@@ -31,15 +31,15 @@ invoices = Bag
   , I 202 101 20160316 15
   , I 203 103 20160520 10 ]
 
+exampleSelectionCond :: (Customer, Invoice) -> Bool
+exampleSelectionCond (c, i) = due i < today
+
+exampleProjection :: (Customer, Invoice) -> (Name, Amount)
+exampleProjection (c, i) = (name c, amount i)
+
 -- Cartesian product of both databases
 exampleWithCP :: (Bag Customer, Bag Invoice) -> Bag (Name, Amount)
-exampleWithCP = BDB.project transformation . BDB.select cond . BDB.equijoinWithCp cid cust
-  where
-    cond :: (Customer, Invoice) -> Bool
-    cond (c, i) = due i < today
-    transformation :: (Customer, Invoice) -> (Name, Amount)
-    transformation (c, i) = (name c, amount i)
-
+exampleWithCP = BDB.project exampleProjection . BDB.select exampleSelectionCond . BDB.productEquijoin cid cust
 
 main :: IO ()
 main = do
