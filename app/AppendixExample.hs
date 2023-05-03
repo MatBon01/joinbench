@@ -44,5 +44,7 @@ exampleWithCP = BDB.project exampleProjection . BDB.select exampleSelectionCond 
 main :: IO ()
 main = do
   putStrLn "Example from appendix"
+  putStrLn "Expected result: [('sam',15),('pat',10)]"
+
   putStrLn "Using bags and Cartesian products:"
   print (exampleWithCP (customers, invoices))
