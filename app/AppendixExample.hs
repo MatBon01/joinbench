@@ -2,6 +2,7 @@ module Main where
 
 import Data.Bag
 import qualified Database.Bag as BDB
+import Data.Word
 
 -- Define types used in example
 type Identifier = Int
@@ -41,6 +42,10 @@ exampleProjection (c, i) = (name c, amount i)
 productExample :: (Bag Customer, Bag Invoice) -> Bag (Name, Amount)
 productExample = BDB.project exampleProjection . BDB.select exampleSelectionCond . BDB.productEquijoin cid cust
 
+predefinedIndexedEquijoin :: (Bag Customer, Bag Invoice) -> Bag (Name, Amount)
+predefinedIndexedEquijoin
+  = BDB.project exampleProjection . BDB.select exampleSelectionCond . BDB.indexedEquijoin (fromIntegral . cid :: Customer -> Word16) (fromIntegral . cust)
+
 main :: IO ()
 main = do
   putStrLn "Example from appendix"
@@ -48,3 +53,6 @@ main = do
 
   putStrLn "Using bags and Cartesian products:"
   print (productExample (customers, invoices))
+
+  putStrLn "Using predefined indexed equijoin"
+  print (predefinedIndexedEquijoin (customers, invoices))
