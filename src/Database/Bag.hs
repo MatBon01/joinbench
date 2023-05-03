@@ -37,8 +37,8 @@ productEquijoin fa fb = select equality . cp
   where 
     equality (a, b) = fa a == fb b
 
-indexBy :: (Key k) => (a -> k) -> Table a -> Map k (Table a)
-indexBy keyProj = index . fmap (\x -> (keyProj x, x))
+indexBy :: (Key k) => Table a -> (a -> k) -> Map k (Table a)
+indexBy bs keyProj = (index . fmap (\x -> (keyProj x, x))) bs 
 
 indexedEquijoin :: (Key k) => (a -> k) -> (b -> k) -> (Table a, Table b) -> Table (a, b)
 -- t1, t2 Bags
@@ -46,5 +46,5 @@ indexedEquijoin :: (Key k) => (a -> k) -> (b -> k) -> (Table a, Table b) -> Tabl
 indexedEquijoin if1 if2 (t1, t2) = (reduce . fmap cp . merge) (it1, it2)
   where
     -- Indexed table 1 and 2
-    it1 = indexBy if1 t1
-    it2 = indexBy if2 t2
+    it1 = t1 `indexBy` if1
+    it2 = t2 `indexBy` if2

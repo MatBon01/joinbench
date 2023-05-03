@@ -135,11 +135,11 @@ spec = do
       productEquijoin lastName lastName (people, people) `shouldBe` lastNameJoin
   describe "indexBy" $ do
     it "can correctly index with trivial key" $ do
-      DB.indexBy (const ()) people `shouldBe` Map.Lone people
+      people `DB.indexBy` const () `shouldBe` Map.Lone people
     it "can correctly index an empty bag" $ do
-      DB.indexBy (const ()) (DB.empty :: DB.Table Int) `shouldBe` (Map.empty :: Map () (Bag.Bag Int))
+      (DB.empty :: DB.Table Int) `DB.indexBy` const ()  `shouldBe` (Map.empty :: Map () (Bag.Bag Int))
     it "can correctly index a bag with a repeated index" $ do
-      (DB.indexBy (fromIntegral . orderId) orderItems3 :: Map.Map Word16 (Bag.Bag OrderItem)) `shouldBe` orderItems3Array
+      orderItems3 `DB.indexBy` (fromIntegral . orderId :: OrderItem -> Word16) `shouldBe` orderItems3Array
     it "can join two tables with at most one matching element" $ do
        indexedEquijoin (fromIntegral . invoiceId :: OrderInvoice -> Word16) (fromIntegral . orderId) (orderPrices1, orderItems1) `shouldBe` orderJoin1
     it "can join two tables with more than one matching elements,\
