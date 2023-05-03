@@ -54,7 +54,7 @@ explicitIndexedJoin (customer, invoices)= reduceBag (fmap cp (example customer i
       pair (f, g) (a, b) = (f a, g b)
       -- Note: snd had to be added to example instead of copying from appendix
       example cs is = fmap (pair (fmap name, fmap amount)) (cod
-          (fmap (pair (id, Bag.filter ((< today) . due ))) (merge ((fromIntegral . cid :: Customer -> Word16) `BDB.indexBy` cs , (fromIntegral . cust) `BDB.indexBy` is ))))
+          (fmap (pair (id, Bag.filter ((< today) . due ))) (merge (cs `BDB.indexBy` (fromIntegral . cid :: Customer -> Word16), is `BDB.indexBy` (fromIntegral . cust)))))
 
 
 main :: IO ()
