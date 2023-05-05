@@ -28,7 +28,8 @@ library
         Data.Key,
         Database.Bag,
         Database.IndexedTable,
-        Text.Parser.Customers
+        Text.Parser.Customers,
+        Text.Parser.Invoices
 
     -- Modules included in this library but not exported.
     other-modules: 
@@ -73,7 +74,8 @@ test-suite spec
         Data.KeySpec,
         Database.BagSpec,
         Database.IndexedTableSpec,
-        Text.Parser.CustomersSpec
+        Text.Parser.CustomersSpec,
+        Text.Parser.InvoicesSpec
     build-depends:
         base >=4.16.4.0,
         hspec ^>=2.10,
