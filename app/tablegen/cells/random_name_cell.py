@@ -1,4 +1,4 @@
-from cell import Cell
+from cells.cell import Cell
 import random
 
 class RandomNameCell(Cell):
