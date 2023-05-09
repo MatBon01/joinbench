@@ -1,4 +1,4 @@
-from cells.cell import Cell
+from .cell import Cell
 import random
 from typing import List
 
