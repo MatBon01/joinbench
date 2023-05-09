@@ -18,7 +18,7 @@ class DuplicateCell(Cell):
 
     def generate(self):
         use_existing: bool = self.random.random() < self.rate
-        if not self.seen_values and use_existing:
+        if self.seen_values and use_existing:
             return self.random.choice(tuple(self.seen_values))
         else:
             new_value: str = self.cell_generator.generate()
