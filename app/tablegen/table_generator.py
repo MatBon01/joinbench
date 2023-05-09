@@ -1,9 +1,11 @@
-from .cells.cell import Cell
-from typing import List
+from .record_generator import RecordGenerator
+from typing import List, Iterable
 
-class TableGenerator:
-    def __init__(self, cells: List[Cell]):
-        self.cells: List[Cell] = cells
+class table_generator:
+    def __init__(self, record_generator: RecordGenerator, num_of_records: int):
+        self.record_generator: RecordGenerator = record_generator
+        self.num_of_records: int = num_of_records
 
-    def generate_table(self, num_of_records: int):
-        raise NotImplementedError("generate_table has not been implemented yet")
+    def generate(self, num_records: int = 1) -> Iterable[List[str]]:
+        for _ in range(num_records):
+            yield self.record_generator.generate()
