@@ -4,6 +4,7 @@ from tablegen.cells.id_cell import IdCell
 from tablegen.cells.duplicated_cell import DuplicateCell
 from tablegen.cells.random_name_cell import RandomNameCell
 from tablegen.cells.cell import Cell
+from tablegen.csv_table_generator import CSVTableGenerator
 
 def main() -> None:
     name_generator: Cell = RandomNameCell(["Matteo", "Bina", "Alice", "Bob"])
@@ -13,7 +14,8 @@ def main() -> None:
 
     table_generator: TableGenerator = TableGenerator(record_generator)
 
-    print(list(table_generator.generate(10)))
+    csv_table_generator: CSVTableGenerator = CSVTableGenerator(table_generator, "test.csv")
+    csv_table_generator.generate(10)
 
 if __name__ == "__main__":
     main()
