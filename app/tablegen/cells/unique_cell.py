@@ -5,7 +5,7 @@ class UniqueCell(Cell):
     def __init__(self, cell: Cell, max_attempts: int = -1):
         # max_attempts = -1 means no limit
         self.cell: Cell = cell
-        self.seen_values: Set[str] = set() 
+        self.seen_values: Set[str] = set()
         self.MAX_ATTEMPTS: Final[int] = max_attempts
 
     def generate(self) -> str:
