@@ -4,13 +4,17 @@ the key operators we seek to describe using category theory.
 \subsection{Introduction to the relational model}
 There are several different data models to choose from when designing a database that specify important aspects of the design such as the structure, operations and constraints on the data \cite{DatabaseSystems}. For this project we concern ourselves with the relational model and its associated algebra.
 
-The relational model represents data through two dimensional tables, called \emph{relations}. Each relation contains several \emph{attributes}, denoting the columns of the table. We call the name of the relation and the set of its attributes a \emph{schema} and they are denoted by the name of the relation followed by the set of attributes in parentheses.\cite{DatabaseSystems} For instance: 
+The relational model represents data through two dimensional tables, called
+\emph{relations}. The columns of the ``table'' are called its \emph{attributes}
+and the name of the relation with the set of its attributes is its
+\emph{schema} \cite{DatabaseSystems}. We denote the schema of a relation
+\relation{R} with attributes $\attribute{A_1}, \attribute{A_2}, \ldots,
+\attribute{A_n}$ as: 
 \begin{center}
-\begin{verbatim}
-  R(a1, a2,..., an)
-\end{verbatim}
+    \schema{\relation{R}}{\(\attribute{A_1}, \attribute{A_2}, \ldots, \attribute{A_n}\)}
 \end{center}
-is a relation \relation{R} with $n$ attributes \attribute{a1}, \attribute{a2}, \ldots, \attribute{an}. A more practical example is the schema
+
+A more practical example is the schema
 \begin{figure}[!h]
 \begin{verbatim}
   People(firstName, surname, age)

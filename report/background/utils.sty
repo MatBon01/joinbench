@@ -43,8 +43,8 @@
 \newcommand{\finitemap}[2]{\ensuremath{\mathrm{Map}_*\ #1\;#2}}
 
 % Relational model
-\newcommand{\relation}[1]{\ensuremath{\mathrm{#1}}}
-\newcommand{\attribute}[1]{\ensuremath{\mathnormal{#1}}}
+\newcommand{\relation}[1]{\ensuremath{#1}}
+\newcommand{\attribute}[1]{\ensuremath{#1}}
 \newcommand{\projsymb}[1]{\ensuremath{\pi_{#1}}}
 \newcommand{\proj}[2]{\ensuremath{\projsymb{#1}\!\left(\relation{#2}\right)}}
 \newcommand{\selectsymb}[1]{\ensuremath{\sigma_{#1}}}
@@ -52,6 +52,8 @@
 \newcommand{\natjoin}[2]{\ensuremath{\relation{#1}\bowtie\relation{#2}}}
 \newcommand{\thetajoin}[3]{\ensuremath{\relation{#2}\bowtie_{#1}\relation{#3}}}
 \newcommand{\equijoin}[4]{\ensuremath{\relation{#1}\,{}_{#2}\!\bowtie_{\:#4}\relation{#3}}}
+% note no \relation or \attribute commands
+\newcommand{\schema}[2]{\ensuremath{#1\left(#2)\right)}}
 
 % Temporary function to show italicised code similar to maths
 % TODO: Change
