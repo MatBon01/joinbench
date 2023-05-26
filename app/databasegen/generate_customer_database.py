@@ -1,5 +1,7 @@
+from random import Random
 from typing import List
 
+from tablegen.cells.amount_cell import AmountCell
 from tablegen.cells.cell import Cell
 from tablegen.cells.id_cell import IdCell
 from tablegen.cells.random_choice_cell import RandomChoiceCell
@@ -59,6 +61,8 @@ def generate_order_table(
 ) -> None:
     ids: Cell = UniqueCell(IdCell())
     cids: Cell = RandomChoiceCell(customer_ids)
+    random: Random = Random()
+    amount: Cell = AmountCell(random)
 
 
 if __name__ == "__main__":
