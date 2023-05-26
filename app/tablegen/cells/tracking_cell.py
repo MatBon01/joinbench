@@ -1,5 +1,7 @@
-from .cell import Cell
 from typing import Set
+
+from .cell import Cell
+
 
 class TrackingCell(Cell):
     def __init__(self, cell: Cell):
@@ -14,4 +16,3 @@ class TrackingCell(Cell):
     @property
     def seen(self) -> Set[str]:
         return self._seen
-

@@ -1,5 +1,7 @@
-from .cells.cell import Cell
 from typing import List
+
+from .cells.cell import Cell
+
 
 class RecordGenerator:
     def __init__(self, cells: List[Cell]):

@@ -1,5 +1,7 @@
-from .cell import Cell
 import random
+
+from .cell import Cell
+
 
 class IdCell(Cell):
     def __init__(self, lower_bound: int = 10000000, upper_bound: int = 99999999):

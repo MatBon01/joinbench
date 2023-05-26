@@ -1,5 +1,7 @@
+from typing import Iterable, List
+
 from .record_generator import RecordGenerator
-from typing import List, Iterable
+
 
 class TableGenerator:
     def __init__(self, record_generator: RecordGenerator):

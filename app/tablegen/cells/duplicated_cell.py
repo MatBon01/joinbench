@@ -1,14 +1,21 @@
-from .cell import Cell
-
 from random import Random
 from typing import Set
 
+from .cell import Cell
+
+
 class DuplicateCell(Cell):
     """A cell where we want a minimum of repeated values."""
-    def __init__(self, cell_generator: Cell, rate: float, strict: bool =
-                 False, random: Random = Random()):
+
+    def __init__(
+        self,
+        cell_generator: Cell,
+        rate: float,
+        strict: bool = False,
+        random: Random = Random(),
+    ):
         if strict:
-            raise NotImplementedError("Strict duplication has not been implemented yet") 
+            raise NotImplementedError("Strict duplication has not been implemented yet")
 
         self.cell_generator: Cell = cell_generator
         self.rate: float = rate

@@ -1,5 +1,7 @@
-from .cell import Cell
 from typing import Final, Set
+
+from .cell import Cell
+
 
 class UniqueCell(Cell):
     def __init__(self, cell: Cell, max_attempts: int = -1):
