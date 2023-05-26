@@ -4,6 +4,7 @@ from tablegen.cells.cell import Cell
 from tablegen.cells.id_cell import IdCell
 from tablegen.cells.random_choice_cell import RandomChoiceCell
 from tablegen.cells.tracking_cell import TrackingCell
+from tablegen.cells.unique_cell import UniqueCell
 from tablegen.csv_table_generator import CSVTableGenerator
 from tablegen.record_generator import RecordGenerator
 from tablegen.table_generator import TableGenerator
@@ -56,7 +57,8 @@ def generate_customer_table(
 def generate_order_table(
     num_records: int, customer_ids: List[str], table_name: str = "orders.csv"
 ) -> None:
-    pass
+    ids: Cell = UniqueCell(IdCell())
+    cids: Cell = RandomChoiceCell(customer_ids)
 
 
 if __name__ == "__main__":
