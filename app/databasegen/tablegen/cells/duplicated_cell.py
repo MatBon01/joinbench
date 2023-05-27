@@ -11,8 +11,8 @@ class DuplicateCell(Cell):
         self,
         cell_generator: Cell,
         rate: float,
+        random: Random,
         strict: bool = False,
-        random: Random = Random(),
     ):
         if strict:
             raise NotImplementedError("Strict duplication has not been implemented yet")

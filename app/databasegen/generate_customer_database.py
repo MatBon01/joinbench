@@ -15,7 +15,8 @@ from tablegen.table_generator import TableGenerator
 def main() -> None:
     first_names: List[str] = ["Matteo", "John"]
     surnames: List[str] = ["Smith", "Jones"]
-    generate_database(1000, 10000, first_names, surnames)
+    random: Random = Random()
+    generate_database(1000, 10000, first_names, surnames, random)
 
 
 def generate_database(
@@ -23,24 +24,26 @@ def generate_database(
     num_order_records: int,
     first_names: List[str],
     surnames: List[str],
+    random: Random,
     customer_table_name: str = "customers.csv",
     orders_table_name: str = "orders.csv",
 ) -> None:
     cids: List[str] = generate_customer_table(
-        num_customer_records, first_names, surnames, customer_table_name
+        num_customer_records, first_names, surnames, random, customer_table_name
     )
-    generate_order_table(num_order_records, cids, orders_table_name)
+    generate_order_table(num_order_records, cids, random, orders_table_name)
 
 
 def generate_customer_table(
     num_records: int,
     first_names: List[str],
     surnames: List[str],
+    random: Random,
     table_name: str = "customers.csv",
 ) -> List[str]:
-    first_name_generator: Cell = RandomChoiceCell(first_names)
-    surname_generator: Cell = RandomChoiceCell(surnames)
-    id_generator: TrackingCell = TrackingCell(IdCell())
+    first_name_generator: Cell = RandomChoiceCell(first_names, random)
+    surname_generator: Cell = RandomChoiceCell(surnames, random)
+    id_generator: TrackingCell = TrackingCell(IdCell(random))
 
     record_generator: RecordGenerator = RecordGenerator(
         [first_name_generator, surname_generator, id_generator]
@@ -57,11 +60,13 @@ def generate_customer_table(
 
 
 def generate_order_table(
-    num_records: int, customer_ids: List[str], table_name: str = "orders.csv"
+    num_records: int,
+    customer_ids: List[str],
+    random: Random,
+    table_name: str = "orders.csv",
 ) -> None:
-    ids: Cell = UniqueCell(IdCell())
-    cids: Cell = RandomChoiceCell(customer_ids)
-    random: Random = Random()
+    ids: Cell = UniqueCell(IdCell(random))
+    cids: Cell = RandomChoiceCell(customer_ids, random)
     amount: Cell = AmountCell(random)
 
 
