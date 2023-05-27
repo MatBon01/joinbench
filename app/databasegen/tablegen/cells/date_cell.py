@@ -19,19 +19,22 @@ class Month(IntEnum):
     DECEMBER = 12
 
 
+Year = int
+
+
 class DateCell(Cell):
-    def __init__(self, year_lower: int, year_upper: int, random: Random) -> None:
-        self.year_lower: int = year_lower
-        self.year_upper: int = year_upper
+    def __init__(self, year_lower: Year, year_upper: Year, random: Random) -> None:
+        self.year_lower: Year = year_lower
+        self.year_upper: Year = year_upper
         self.random: Random = random
 
-    def generate_year(self) -> str:
-        return str(self.random.randint(self.year_lower, self.year_upper))
+    def generate_year(self) -> Year:
+        return self.random.randint(self.year_lower, self.year_upper)
 
-    def generate_month(self) -> str:
-        return str(self.random.randint(Month.JANUARY, Month.DECEMBER))
+    def generate_month(self) -> Month:
+        return self.random.choice(list(Month))
 
-    def generate_day(self, month: int, year: int) -> str:
+    def generate_day(self, month: Month, year: Year) -> str:
         raise NotImplementedError()
 
     def generate(self) -> str:
