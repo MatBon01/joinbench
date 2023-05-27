@@ -9,5 +9,8 @@ class DateCell(Cell):
         self.year_upper: int = year_upper
         self.random: Random = random
 
+    def generate_year(self) -> str:
+        return str(self.random.randint(self.year_lower, self.year_upper))
+
     def generate(self) -> str:
         raise NotImplementedError("Not all components of date generated")
