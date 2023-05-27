@@ -3,6 +3,7 @@ from typing import List
 
 from tablegen.cells.amount_cell import AmountCell
 from tablegen.cells.cell import Cell
+from tablegen.cells.date_cell import DateCell
 from tablegen.cells.id_cell import IdCell
 from tablegen.cells.random_choice_cell import RandomChoiceCell
 from tablegen.cells.tracking_cell import TrackingCell
@@ -65,9 +66,18 @@ def generate_order_table(
     random: Random,
     table_name: str = "orders.csv",
 ) -> None:
-    ids: Cell = UniqueCell(IdCell(random))
-    cids: Cell = RandomChoiceCell(customer_ids, random)
+    id: Cell = UniqueCell(IdCell(random))
+    cid: Cell = RandomChoiceCell(customer_ids, random)
+    due: Cell = DateCell(1990, 2023, random)
     amount: Cell = AmountCell(random)
+
+    record_generator: RecordGenerator = RecordGenerator([id, cid, due, amount])
+    table_generator: TableGenerator = TableGenerator(record_generator)
+    csv_table_generator: CSVTableGenerator = CSVTableGenerator(
+        table_generator, table_name
+    )
+
+    csv_table_generator.generate(num_records)
 
 
 if __name__ == "__main__":
