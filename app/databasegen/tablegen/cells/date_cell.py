@@ -68,4 +68,7 @@ class DateCell(Cell):
         return self.random.randint(FIRST_DAY, num_days_in_month(month, year))
 
     def generate(self) -> str:
-        raise NotImplementedError("Not all components of date generated")
+        year: Year = self.generate_year()
+        month: Month = self.generate_month()
+        day: int = self.generate_day(month, year)
+        return f"{year:04}{month:02}{day:02}"
