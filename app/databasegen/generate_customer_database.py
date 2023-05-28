@@ -28,6 +28,12 @@ def combine_name(
     res += extension
     return res
 
+def read_names(filename: str) -> List[str]:
+    res: List[str] = []
+    with open(filename, 'r') as f:
+        for row in f:
+            res.append(row.strip().lower().capitalize())
+    return res
 
 def parse_database_parameters() -> (
     Tuple[TableName, RecordNum, TableName, RecordNum, str, str]
@@ -108,19 +114,11 @@ def main() -> None:
         surnames_source,
     ) = parse_database_parameters()
 
-    print(
-        customer_table_name,
-        customer_record_num,
-        order_table_name,
-        order_record_num,
-        first_names_source,
-        surnames_source,
-    )
-
-    first_names: List[str] = ["Matteo", "John"]
-    surnames: List[str] = ["Smith", "Jones"]
+    first_names: List[str] = read_names(first_names_source)
+    surnames: List[str] = read_names(surnames_source)
     random: Random = Random()
-    generate_database(1000, 10000, first_names, surnames, random)
+    generate_database(customer_record_num, order_record_num, first_names,
+                      surnames, random, customer_table_name, order_table_name)
 
 
 def generate_database(
