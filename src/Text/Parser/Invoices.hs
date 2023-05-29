@@ -1,5 +1,6 @@
 module Text.Parser.Invoices where
 
+import Text.Parser.Utils
 import Text.ParserCombinators.Parsec
 import Data.Bag
 
@@ -45,12 +46,6 @@ date :: GenParser Char st Date
 date = do
   id <- many digit
   return (read id)
-
-separator :: GenParser Char st Char
-separator = char ','
-
-eol :: GenParser Char st Char
-eol = char '\n'
 
 parseCSV :: String -> Either ParseError (Bag Invoice)
 parseCSV input = parse csvFile "(unknown)" input

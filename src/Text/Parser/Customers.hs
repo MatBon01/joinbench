@@ -1,5 +1,6 @@
 module Text.Parser.Customers where
 
+import Text.Parser.Utils
 import           Data.Bag
 import           Text.ParserCombinators.Parsec
 
@@ -30,12 +31,6 @@ cidCell = do
 
 nameCell :: GenParser Char st Name
 nameCell = many (noneOf ",\n")
-
-separator :: GenParser Char st Char
-separator = char ','
-
-eol :: GenParser Char st Char
-eol = char '\n'
 
 parseCSV :: String -> Either ParseError (Bag Customer)
 parseCSV input = parse csvFile "(unknown)" input
