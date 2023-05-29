@@ -39,7 +39,7 @@ def parse_database_parameters() -> (
     Tuple[TableName, RecordNum, TableName, RecordNum, str, str]
 ):
     CUSTOMER_NUM_DEFAULT: RecordNum = 1000
-    ORDER_NUM_DEFAULT: RecordNum = 10000
+    INVOICE_NUM_DEFAULT: RecordNum = 10000
     parser: argparse.ArgumentParser = argparse.ArgumentParser()
     parser.add_argument(
         "-o", "--output", help="output for the files", type=str, default="."
@@ -51,16 +51,17 @@ def parse_database_parameters() -> (
         default=CUSTOMER_NUM_DEFAULT,
     )
     parser.add_argument(
-        "--order-records",
-        help="number of order records",
+        "--invoice-records",
+        help="number of invoice records",
         type=int,
-        default=ORDER_NUM_DEFAULT,
+        default=INVOICE_NUM_DEFAULT,
     )
     parser.add_argument(
         "--customer-table", help="customer table name", type=str, default="customers"
     )
     parser.add_argument(
-        "--order-table", help="order table name", type=str, default="orders"
+        "--invoice-table", help="invoice table name", type=str,
+        default="invoices"
     )
     parser.add_argument("firstnames", help="csv file with first names", type=str)
     parser.add_argument("surnames", help="csv file with surnames", type=str)
@@ -75,23 +76,23 @@ def parse_database_parameters() -> (
     args = parser.parse_args()
 
     customer_record_num: RecordNum = args.customer_records
-    order_record_num: RecordNum = args.order_records
+    invoice_record_num: RecordNum = args.invoice_records
 
     if customer_record_num < 0:
         customer_record_num = CUSTOMER_NUM_DEFAULT
-    if order_record_num < 0:
-        order_record_num = ORDER_NUM_DEFAULT
+    if invoice_record_num < 0:
+        invoice_record_num = INVOICE_NUM_DEFAULT
 
     customer_table: TableName = combine_name(
         args.output, args.customer_table, args.add_date
     )
-    order_table: TableName = combine_name(args.output, args.order_table, args.add_date)
+    invoice_table: TableName = combine_name(args.output, args.invoice_table, args.add_date)
 
     return (
         customer_table,
         customer_record_num,
-        order_table,
-        order_record_num,
+        invoice_table,
+        invoice_record_num,
         args.firstnames,
         args.surnames,
     )
@@ -100,16 +101,16 @@ def parse_database_parameters() -> (
 def main() -> None:
     customer_table_name: TableName
     customer_record_num: RecordNum
-    order_table_name: TableName
-    order_record_num: RecordNum
+    invoice_table_name: TableName
+    invoice_record_num: RecordNum
     first_names_source: str
     surnames_source: str
 
     (
         customer_table_name,
         customer_record_num,
-        order_table_name,
-        order_record_num,
+        invoice_table_name,
+        invoice_record_num,
         first_names_source,
         surnames_source,
     ) = parse_database_parameters()
@@ -117,23 +118,23 @@ def main() -> None:
     first_names: List[str] = read_names(first_names_source)
     surnames: List[str] = read_names(surnames_source)
     random: Random = Random()
-    generate_database(customer_record_num, order_record_num, first_names,
-                      surnames, random, customer_table_name, order_table_name)
+    generate_database(customer_record_num, invoice_record_num, first_names,
+                      surnames, random, customer_table_name, invoice_table_name)
 
 
 def generate_database(
     num_customer_records: int,
-    num_order_records: int,
+    num_invoice_records: int,
     first_names: List[str],
     surnames: List[str],
     random: Random,
     customer_table_name: str = "customers.csv",
-    orders_table_name: str = "orders.csv",
+    invoice_table_name: str = "invoices.csv",
 ) -> None:
     cids: List[str] = generate_customer_table(
         num_customer_records, first_names, surnames, random, customer_table_name
     )
-    generate_order_table(num_order_records, cids, random, orders_table_name)
+    generate_invoice_table(num_invoice_records, cids, random, invoice_table_name)
 
 
 def generate_customer_table(
@@ -161,11 +162,11 @@ def generate_customer_table(
     return list(id_generator.seen)
 
 
-def generate_order_table(
+def generate_invoice_table(
     num_records: int,
     customer_ids: List[str],
     random: Random,
-    table_name: str = "orders.csv",
+    table_name: str = "invoice.csv",
 ) -> None:
     id: Cell = UniqueCell(IdCell(random))
     cid: Cell = RandomChoiceCell(customer_ids, random)
