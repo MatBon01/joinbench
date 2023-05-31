@@ -21,3 +21,15 @@ business domain.
 The type of benchmark to run also largely depends on the use-case for the
 database. Typically we can refer to the use cases as \emph{transaction
 processing} or \emph{decision support} \cite{PractitionersIntroduction}.
+
+\subsection{Transaction processing}
+Transaction processing is usually characterised by a large number of
+update-intensive requests, usually happening online
+\cite{PractitionersIntroduction}. It is clear that this type of environment
+demands an emphasis on throughput and integrity. For instance, a bank would
+likely have an \emph{online transaction processing system} or OLTP system in
+place and it clear that the ability to deal with a large number of transactions
+in a short period of time and for the accuracy if the information given is
+paramount. There are many well known benchmarks to test these types of systems,
+including \emph{DebitCredit}, \emph{TPC-C} and \emph{TPC-E} \cite{TPC-OLTP}.
+These benchmarks usually measure transactions per second.
