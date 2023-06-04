@@ -68,23 +68,33 @@ than most compositions, however, and have two different kinds.
 
 
 \subsection{Adjunctions}
-An adjunction expresses an intersection of arrows of two different functions. For instance Say you have the category \commoncatname{Set} of sets \cite{RelationalAlgebraByWayOfAdjunctions} and two functions $\morph{f}, \morph{g}$ with signatures \explicitmorph{f}{X}{A} and \explicitmorph{g}{X}{B} with $\obj{X}, \obj{A}, \obj{B} \in \commoncatname{Set}$.
-in \commoncatname{Set} with a common domain $\domain{f} = \domain{g} = \obj{A}
-\in \commoncatname{Set}$, how might we interpret the application of both
-functions on one element. We could create a new function \explicitmorph{h}{X}{A
-\times B} which for all $a \in \obj{A}$ maps $a \mapsto (\morph{f}(a),
-\morph{g}(a))$. Note that both \obj{X} and $\obj{A} \times \obj{B}$ are sets
-(where $\times$ denotes the Cartesian product of two sets, i.e. the set of all
-such pairings of elements of \obj{A} and \obj{B}). This is not a very natural
-way of writing this however. Consider now the product category
-$\commoncatname{Set}^2$ such that the elements are just pairs of sets and
-functions, pairs of functions $(\morph{i}, \morph{j}): (\domain{i}, \domain{j})
-\to (\codomain{i}, \codomain{j})$. It is clear that \commoncatname{Set} and
-$\commoncatname{Set}^2$ are distinct, i.e. a pair of a set is not a set nor is a
-pair of set. However, interestingly $h$ can quite easily be expressed within
-$\commoncatname{Set}^2$ as the function $(f, g)$ that maps $(\obj{A}, \obj{A})$
-to $(\obj{X}, \obj{Y})$ and links back to the situation in $\commoncatname{Set}$
-become clear. We introduce the diagonal functor $\functor{\Delta}:
+An adjunction expresses an equivalence of arrows of two different
+categories. We consider the following motivating example from
+\cite{RelationalAlgebraByWayOfAdjunctions}.
+Consider the category \commoncatname{Set} of sets and (total functions between
+them. 
+Let $\morph{f}, \morph{g}$ be functions with signatures \explicitmorph{f}{X}{A}
+and \explicitmorph{g}{X}{B}. That is two functions with the same domain in
+\commoncatname{Set} and different codomains. 
+How might we interpret the application of both functions on one element?
+We could create a new function \explicitmorph{h}{X}{A
+\times B} which for all $x \in \obj{X}$ maps $a \mapsto \pair{\morph{f}(x)}{ \morph{g}(x)}$. We emphasise that this function is a morphism in
+\commoncatname{Set} as both \obj{X} and $\obj{A} \times \obj{B}$ are sets
+(where $\times$ denotes the Cartesian product of two sets). 
+However, let us explore a more natural way of expressing this.
+Consider now the product category $\commoncatname{Set}^2$ such that the elements are just pairs of sets and functions, pairs of functions 
+$\signature{\pair{\morph{i}}{\morph{j}}}{\pair{\domain{i}}{\domain{j}}}{\pair{\codomain{i}}{\codomain{j}}}$.
+Simply, given two sets \obj{A}, \obj{B} and two functions with signatures
+\explicitmorph{f}{A}{C}, \explicitmorph{g}{B}{D}, a function in
+$\commoncatname{Set}^2$ is simply
+\signature{\pair{\morph{f}}{\morph{g}}}{\pair{\obj{A}}{\obj{B}}}{\pair{\obj{C}}{\obj{D}}}
+where \morph{f} ``acts'' on the first element and \morph{g} on the second.
+Interestingly we can more easily express $h$ as a morphism in
+$\commoncatname{Set}^2$, namely the function $\pair{\morph{f}}{\morph{g}}$ that
+maps $\pair{\obj{X}}{\obj{X}}$
+to $\pair{\obj{A}}{\obj{B}}$ and the parallels should be very clear.
+
+We introduce the diagonal functor $\functor{\Delta}:
 \commoncatname{Set} \to \commoncatname{Set}^2$, s.t. $\functorobj{\Delta}{A} =
 (\obj{A}, \obj{A})$ and $\functormorph{\Delta}{f} = (\morph{f}, \morph{f})$.
 Furthermore, the Cartesian product can also be seen view the lens of a functor $\functor{\times}: \commoncatname{Set}^2 \to \commoncatname{Set}$ that takes the pair of elements $(\obj{A}, \obj{B})$ and maps it to the set $\obj{A} \times \obj{B}$ and a pair of functions $(\morph{i}, \morph{j})$ to a function $k: \left(\domain{i} \times \domain{j}\right) \to \left(\codomain{i} \times \codomain{j}\right)$.

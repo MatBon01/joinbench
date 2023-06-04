@@ -5,7 +5,9 @@
 \newcommand{\morphs}[1]{\ensuremath{\mathrm{Mor}_{\cat{#1}}}}
 \newcommand{\obj}[1]{\ensuremath{\mathnormal{#1}}}
 \newcommand{\morph}[1]{\ensuremath{\mathnormal{#1}}}
-\newcommand{\explicitmorph}[3]{\ensuremath{\morph{#1}: \obj{#2} \to \obj{#3}}}
+% signature for a general function or morphism
+\newcommand{\signature}[3]{\ensuremath{#1: #2 \to #3}}
+\newcommand{\explicitmorph}[3]{\signature{\morph{#1}}{\obj{#2}}{\obj{#3}}}
 \newcommand{\morphcomp}[2]{\ensuremath{\morph{#2} \circ
 \morph{#1}}} % composition of morphisms
 \newcommand{\domain}[1]{\ensuremath{\mathrm{dom}\,\morph{#1}}}
@@ -13,7 +15,7 @@
 \newcommand{\id}[1]{\ensuremath{\mathrm{id}_{\obj{#1}}}} % id arrow in a category
 \newcommand{\homset}[3]{\ensuremath{\cat{#1}\left(#2, #3\right)}} % note that
 % the objects in the homset are not wrapped and must be done manually
-\newcommand{\commoncatname}[1]{\ensuremath{\mathrm{#1}}}
+\newcommand{\commoncatname}[1]{\ensuremath{\mathrm{\mathbf{#1}}}}
 \newcommand{\functor}[1]{\ensuremath{\mathnormal{#1}}} % a functor
 \newcommand{\functorobj}[2]{\ensuremath{\functor{#1} \obj{#2}}} % a functor applied to an object
 \newcommand{\functormorph}[2]{\ensuremath{\functor{#1} \morph{#2}}} % a functor applied to a morphism
@@ -23,6 +25,8 @@
 \newcommand{\explicitnattrans}[3]{\ensuremath{\nattrans{#1}: \functor{#2} \xrightarrow{.} \functor{#3}}}
 \newcommand{\nattransapply}[2]{\ensuremath{\nattrans{#1}_{#2}}} % application of a natural transformation
 \newcommand{\adunction}[2]{\ensuremath{\functor{#1} \dashv \functor{#2}}}
+% A pair, useful for product sets and cartesian products
+\newcommand{\pair}[2]{\ensuremath{\left(#1,\ #2\right)}}
 
 % Bag
 \newcommand{\bag}[1]{\ensuremath{\mathrm{Bag}\ #1}}
