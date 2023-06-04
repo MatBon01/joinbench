@@ -35,7 +35,16 @@ including \emph{DebitCredit}, \emph{TPC-C} and \emph{TPC-E} \cite{TPC-OLTP}.
 These benchmarks usually measure transactions per second.
 
 \subsubsection{Transaction integrity}
-% TODO: ACID
+We briefly note what we mean by the integrity of a transaction. A transaction
+simply is an input to the database that must be considered as one unit of work
+\cite{ComputerScienceDictionary} and completed independently to any concurrent
+actions occurring \cite{}. This behaviour can be described a set of
+properties typically remembered as the acronym \emph{ACID}
+\cite{ComputerScienceDictionary, PractitionersIntroduction}.
+\paragraph{atomicity}
+\paragraph{consistency}
+\paragraph{isolation}
+\paragraph{durability}
 
 \subsection{Decision processing}
 \subsubsection{Wisconsin benchmark}
