@@ -11,7 +11,8 @@ and the name of the relation with the set of its attributes is its
 \relation{R} with attributes $\attribute{A_1}, \attribute{A_2}, \ldots,
 \attribute{A_n}$ as: 
 \begin{center}
-    \schema{\relation{R}}{\(\attribute{A_1}, \attribute{A_2}, \ldots, \attribute{A_n}\)}
+    \schema{\relation{R}}{\attribute{A_1}, \attribute{A_2}, \ldots,
+    \attribute{A_n}}
 \end{center}
 
 A more practical example is the schema
@@ -121,7 +122,7 @@ As an example, we show the resulting relation of the selection \select{\attribut
   \caption[Example of selection on \relation{People} relation]{People relation with the selection \select{\attribute{age}\:>\:30}{People} applied to it.}
   \label{tab:peopleRelationSelection}
 \end{table}
-b
+
 \subsubsection{Products}\label{sec:products}
 The product of two relations \relation{R} and \relation{S} is simply the Cartesian product of the set of tuples of each relation, where instead of a binary tuple of tuples, the result is a single longer tuple. Typically, the result of $\relation{R} \times \relation{S}$ has the elements of tuples in $R$ before those in $S$. \cite{DatabaseSystems}
 
