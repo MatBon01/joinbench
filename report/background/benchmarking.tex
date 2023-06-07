@@ -1,0 +1,56 @@
+\section{Benchmarking databases}
+Databases are pervasive to modern society and thus standards have arisen over
+the last few decades to ensure that customers are able to pick their preferred
+DBMS vendor.
+
+At the top level, database benchmarks are usually split into three different
+categories: industry-standard, vendor and
+customer-application \cite{PractitionersIntroduction}. Each type of benchmark
+usually is driven by a different goal and thus are all important to the creation
+of a DBMS. Briefly, a vendor database benchmark is usually used during the
+development of a DBMS by the vendor themselves to aid
+the general development of the solution and sales; it is usually characterised
+by a more comprehensive suite of tests driven by insights into the internals. An
+industry-standard is usually characterised by independent testing of the
+database for comparisons across vendors. Finally, a customer-application test is
+a test that an organisation should design and run before choosing a specific
+vendor, choosing to test specific requirements and emphases related to their
+business domain.
+
+
+The type of benchmark to run also largely depends on the use-case for the
+database. Typically we can refer to the use cases as \emph{transaction
+processing} or \emph{decision support} \cite{PractitionersIntroduction}.
+
+\subsection{Transaction processing}
+Transaction processing is characterised by a large number of
+update-intensive requests
+\cite{PractitionersIntroduction}. It is clear that this type of environment
+demands an emphasis on throughput and integrity. For instance, a bank would
+likely have an \emph{online transaction processing system} or OLTP system in
+place and it clear that the ability to deal with a large number of transactions
+in a short period of time and for the accuracy if the information given is
+paramount. There are many well known benchmarks to test these types of systems,
+including \emph{DebitCredit}, \emph{TPC-C} and \emph{TPC-E} \cite{TPC-OLTP}.
+These benchmarks usually measure transactions per second.
+
+\subsubsection{Transaction integrity}
+We briefly note what we mean by the integrity of a transaction. A transaction
+simply is an input to the database that must be considered as one unit of work
+\cite{ComputerScienceDictionary} and completed independently to any concurrent
+actions occurring. This behaviour can be described a set of
+properties typically remembered as the acronym \emph{ACID}
+\cite{ComputerScienceDictionary, PractitionersIntroduction}.
+\paragraph{atomicity}
+\paragraph{consistency}
+\paragraph{isolation}
+\paragraph{durability}
+
+\subsection{Decision processing}
+\subsubsection{Wisconsin benchmark}
+
+\subsubsection{Single-User Decision Support} % SUDS
+
+\subsubsection{The Set Query Benchmark}
+
+\subsection{Best practices benchmarking}

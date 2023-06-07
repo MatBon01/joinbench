@@ -35,3 +35,6 @@ secondmarker
 counit
 verticalcomposition
 BagRelAlgOps
+OLTP
+DebitCredit
+TPC
