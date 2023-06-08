@@ -49,10 +49,25 @@ databases. This will help inform major design decisions of this project when
 deciding what aspects to include in the benchmarking of the alternative join
 syntax.
 
+Despite the innumerable use cases for databases in the modern world, many
+applications require and prioritise similar values when choosing a solution.
+Furthermore, as most industrial-standard database benchmarks have been designed in
+order to allow comparison for specific domain requirements, you will commonly
+find database benchmarks that are designed with one of two different
+applications in mind: \emph{transaction processing} or \emph{decision support}
+\cite{PractitionersIntroduction}; it is worth mentioning that other application
+types exist, however, such as \emph{document search} and \emph{direct marketing}
+\cite{SetQueryBenchmark}. The application types of transaction processing and
+decision support are so pervasive that they are commonly also used to partition
+other application types, for instance OLTP (Online transaction processing) and
+OLAP (Online analytical processing) are specialised for online processing but
+share many comparative similarities as transaction processing and decision
+support respectively \cite{OLTP-Oracle}.
 
-The type of benchmark to run also largely depends on the use-case for the
-database. Typically we can refer to the use cases as \emph{transaction
-processing} or \emph{decision support} \cite{PractitionersIntroduction}.
+This review will provide a brief overview of both
+the main database application types, then focus more strongly on decision
+support benchmarks as ad-hoc query processing is more heavily tested in these
+benchmarks and thus more relevant to the project.
 
 \subsection{Transaction processing}
 Transaction processing is characterised by a large number of
