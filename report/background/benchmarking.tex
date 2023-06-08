@@ -3,23 +3,45 @@ Databases are pervasive to modern society and thus standards have arisen over
 the last few decades to ensure that customers are able to pick their preferred
 DBMS vendor.
 
-At the top level, database benchmarks are classified split into three categories: industry-standard, vendor and
+At the top level, database benchmarks are classified into three categories: industry-standard, vendor and
 customer-application \cite{PractitionersIntroduction}. 
 These classifications are usually motivated by intention of the benchmark
-instead of structure of the database management system, there is no shortage of
-papers that advocate all three types of benchmarking
-\cite{PractitionersIntroduction} and many make strong implicit cases on the
-necessity of all three for the consumer.
+instead of structure of the database management system; there is no shortage of
+papers emphasising the importance of domain-specific benchmarks for applications
+\cite{PractitionersIntroduction, BenchmarkHandbook} and depending on the
+risk/performance tolerance of the application it may be necessary to consider
+results from all three categories.
 
-Briefly, a vendor database benchmark is usually used during the
-development of a DBMS by the vendor themselves to aid
-the general development of the solution and sales; it is usually characterised
-by a more comprehensive suite of tests driven by insights into the internals. An
-industry-standard is usually characterised by independent testing of the
-database for comparisons across vendors. Finally, a customer-application test is
-a test that an organisation should design and run before choosing a specific
-vendor, choosing to test specific requirements and emphases related to their
-business domain.
+\paragraph{Vendor benchmark} A vendor database benchmark is used by
+the database vendor during the production of the database management system.
+This benchmark usually serves multiple purposes not just limited to the design
+of the system. Of course, it is often used to highlight any performance
+bottlenecks driving the design of the system internally but it usually doubles
+up and acts as the knowledge base for the marketing of the system. Vendor
+benchmarks are usually characterised by a more comprehensive suite of
+tests to generate the insights capable of driving the direction of the
+product \cite{PractitionersIntroduction}.
+
+\paragraph{Industry-standard benchmark} An industry-standard benchmark is a set
+benchmarking suite designed independently to any vendor or solution. It is
+designed to allow for a fair comparison between different vendors and has been
+shown to increase competition between vendors \cite{Wisconsin2}. As much of
+this review will show, many industry-standard benchmarks have been developed
+to give results for a wide range of applications of databases for much more
+relevant and specialised results; and, although many benchmarks have similar
+metrics \cite{SetQueryBenchmark, DebitCredit}, just selecting what metrics to
+show consumers is not a trivial task \cite{DebitCredit}. When Gray's paper
+\cite{BenchmarkHandbook} was written, it was noted that these benchmarks were
+becoming so popular that vendors were also beginning to report their results
+with their marketing.
+
+\paragraph{Consumer-application benchmark} This type of benchmark refers to any
+benchmarking that a customer would run, typically to choose between different
+vendors for their application. This kind of testing can be critical for a
+performance-sensitive application \cite{PractitionersIntroduction} and is often
+done to test the performance of the database under a specific installation
+profile \cite{DoingYourOwnBenchmark} or loads. This is a very specialised
+requirements based benchmarking.
 
 
 The type of benchmark to run also largely depends on the use-case for the
