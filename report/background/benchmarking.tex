@@ -71,7 +71,8 @@ benchmarks and thus more relevant to the project.
 
 \subsection{Transaction processing}
 Transaction processing is characterised by a large number of
-update-intensive requests \cite{PractitionersIntroduction}.
+update-intensive database services with a particular emphasis on integrity of
+its requests \cite{PractitionersIntroduction}.
 It is clear that this type of environment
 demands an emphasis on throughput and integrity. For instance, a bank would
 likely have an online transaction processing system in place and the
@@ -94,17 +95,42 @@ allow the user to weight the comparative importance of features in this metric
 \cite{SetQueryBenchmark} but it is expected that much emphasis will come down to
 this defining number \cite{SetQueryBenchmark}.
 
-\subsubsection{Transaction integrity}
-We briefly note what we mean by the integrity of a transaction. A transaction
-simply is an input to the database that must be considered as one unit of work
-\cite{ComputerScienceDictionary} and completed independently to any concurrent
-actions occurring. This behaviour can be described a set of
-properties typically remembered as the acronym \emph{ACID}
-\cite{ComputerScienceDictionary, PractitionersIntroduction}.
-\paragraph{atomicity}
-\paragraph{consistency}
-\paragraph{isolation}
-\paragraph{durability}
+We note that the above definition of a transaction processing system not only
+highlights its intense performance requirements but also notes the importance of
+integrity. The bank example highlights intuitively what we mean by integrity, a
+shop may not want the transaction to go through zero times if it is reported
+that it has, in fact, been processed, just as I would not want the transaction
+to go through twice. So what exactly is a transaction? And how can we specify
+its integrity in a rigorous way?
+
+A transaction simply is an input to the database that must be considered as one
+unit of work \cite{ComputerScienceDictionary} and completed independently to any
+concurrent actions occurring \cite{ACID}. The integrity of this behaviour can be described 
+by a set of properties typically remembered as the acronym \emph{ACID} and
+explained below \cite{ACID, PractitionersIntroduction}.
+
+\paragraph{Atomicity} An ``all or nothing'' property of a transaction. All
+individual operations must take place or any partially-completed sequence of
+operations must have no lasting effects on the data. The user should be informed
+of which outcome has occurred.
+
+\paragraph{Consistency} Given the database was in a consistent/valid state
+before the transaction processed, it must remain in a consistent/valid state
+after any changes are committed; that is to say the changes cause not integrity
+constraints to be violated \cite{IntroToDatabaseSystems}. 
+Some texts favour the term ``correctness'' \cite{IntroToDatabaseSystems} but this
+discussion is outside of the scope of the project. 
+% correctness vs consistency: correctness may be preferred as it is stronger, 
+% and says that the database only contains true statements about the world
+
+\paragraph{Isolation} Information related to the execution of one transaction
+should be hidden from other transactions running concurrently. This is
+equivalent to being able to find an order such that the results of the execution
+of all transactions would be the same if they were executed sequentially in that
+order.
+
+\paragraph{Durability} Once a transaction has been successfully completed, its
+effects must persist and future malfunctions.
 
 \subsection{Decision processing}
 \subsubsection{Wisconsin benchmark}
