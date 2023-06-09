@@ -71,15 +71,28 @@ benchmarks and thus more relevant to the project.
 
 \subsection{Transaction processing}
 Transaction processing is characterised by a large number of
-update-intensive requests
-\cite{PractitionersIntroduction}. It is clear that this type of environment
+update-intensive requests \cite{PractitionersIntroduction}.
+It is clear that this type of environment
 demands an emphasis on throughput and integrity. For instance, a bank would
-likely have an \emph{online transaction processing system} or OLTP system in
-place and it clear that the ability to deal with a large number of transactions
-in a short period of time and for the accuracy if the information given is
-paramount. There are many well known benchmarks to test these types of systems,
-including \emph{DebitCredit}, \emph{TPC-C} and \emph{TPC-E} \cite{TPC-OLTP}.
-These benchmarks usually measure transactions per second.
+likely have an online transaction processing system in place and the
+ability to deal with a large number of transactions in a short period of
+time while maintaining the accuracy of the information is most likely paramount.
+There are many well known benchmarks to test these types of systems,
+including \emph{DebitCredit}, \emph{TPC-C} and \emph{TPC-E} \cite{DebitCredit,
+TPC-OLTP}.
+These benchmarks usually measure transactions per second or price per
+transactions per second. Efforts have been made to try and describe what is
+meant by ``price'' and usually it refers to the five-year capital cost (e.g.
+cost of hardware, software and system maintenance over a five year period)
+\cite{BenchmarkHandbook, DebitCredit}. The advantage of giving a metric
+dependent on price is that price is likely to be a limiting of important factor
+to most (if not all) organisations when shopping for database solutions and so
+it helps encompass all information about the system into a single comparable
+number \cite{SetQueryBenchmark}. It is worth noting that many benchmarks which
+include this metric also give more information for the user \cite{TPC-H} or
+allow the user to weight the comparative importance of features in this metric
+\cite{SetQueryBenchmark} but it is expected that much emphasis will come down to
+this defining number \cite{SetQueryBenchmark}.
 
 \subsubsection{Transaction integrity}
 We briefly note what we mean by the integrity of a transaction. A transaction
