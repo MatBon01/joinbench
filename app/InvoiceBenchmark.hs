@@ -9,4 +9,6 @@ import Data.Bag
 main :: IO ()
 main = do
   customers <- readFile "/tmp/tables/c100.csv"
+  invoices <- readFile "/tmp/tables/i100.csv"
   print $ head $ elements $ fromRight empty $ Customers.parseCSV customers
+  print $ head $ elements $ fromRight empty $ Invoices.parseCSV invoices
