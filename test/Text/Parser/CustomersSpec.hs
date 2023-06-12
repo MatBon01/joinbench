@@ -6,7 +6,7 @@ import Data.Bag as Bag
 import Text.ParserCombinators.Parsec
 import Data.Either
 
-expectedOutput = Bag [C 1 "John", C 2 "Kayla"]
+expectedOutput = Bag [C 1 "John" "Williams", C 2 "Kayla" "Johnson"]
 
 spec :: Spec
 spec = do
