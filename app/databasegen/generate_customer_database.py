@@ -70,7 +70,6 @@ def parse_database_parameters() -> (
         "--add-date",
         help="add date to the file name",
         action="store_true",
-        default=True,
     )
 
     args = parser.parse_args()
