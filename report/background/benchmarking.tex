@@ -184,6 +184,43 @@ recent benchmark was chosen. This was to try and consider the most up to date
 practices when exploring this field.
 
 \subsubsection{Wisconsin}
+In Bitton's paper, ``Benchmarking Database Systems - A Systematic Approach''
+\cite{Wisconsin} she presents the \emph{Wisconsin benchmark} alongside a
+comparison of a few major database systems at the time. She claimed that her
+custom database and queries represented a ``first attempt in developing a
+scientific methodology for performance evaluation of a database management
+system'' and claimed that previous evaluation studies of database machines were
+``based on simplified analytical models''.
+
+This literature review is focused only on the benchmarking methodology and
+largely ignores any results obtained by Bitton for the now clearly outdated
+database machines. From my perspective, her main contribution to the field was
+the idea to construct a synthetic database for the database which has
+subsequently been used in almost all benchmarks since, with the Set Query
+Benchmark specifically pointing out this contribution in its acknowledgements
+\cite{SetQueryBenchmark}. 
+
+Bitton reflects on the issues of using empirical
+databases for benchmarking observing that not only would you require a large
+sample size before they could be considered randomly distributed; furthermore
+for a benchmark empirical databases are difficult to scale and make it difficult
+to specify the selectivity of the operations being benchmarked. Selectivity has
+been used loosely here to refer to any operation that acts on a subset of
+the tuples; as Bitton explains, it is difficult to construct a selection query that
+selects a tenth of the database (i.e. a selection query with an \emph{selectivity
+factor} of 10\%) or only keeps 1000 tuples in an empirical database. Bitton
+notes that modelling selectivity factors on queries with joins is especially
+difficult (a key part of our problem domain). 
+
+Another benefit of using a synthetic database is, given that it is designed
+well, it should be more readable. The Wisconsin benchmark boasts relations and
+attributes with names that immediately give you an idea of what you would find
+and the distribution of its values. In Jim Gray's later work
+\cite{BenchmarkHandbook}, he specifically calls out simplicity as one of four
+key properties of a domain-specific benchmark - defining it as a database's
+understandability and commenting that without it the database would lack
+credibility.
+
 \subsubsection{Set Query}
 \subsubsection{DebitCredit}
 \subsubsection{TPC-H}
