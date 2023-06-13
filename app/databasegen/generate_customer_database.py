@@ -28,12 +28,14 @@ def combine_name(
     res += extension
     return res
 
+
 def read_names(filename: str) -> List[str]:
     res: List[str] = []
-    with open(filename, 'r') as f:
+    with open(filename, "r") as f:
         for row in f:
             res.append(row.strip().lower().capitalize())
     return res
+
 
 def parse_database_parameters() -> (
     Tuple[TableName, RecordNum, TableName, RecordNum, str, str]
@@ -60,8 +62,7 @@ def parse_database_parameters() -> (
         "--customer-table", help="customer table name", type=str, default="customers"
     )
     parser.add_argument(
-        "--invoice-table", help="invoice table name", type=str,
-        default="invoices"
+        "--invoice-table", help="invoice table name", type=str, default="invoices"
     )
     parser.add_argument("firstnames", help="csv file with first names", type=str)
     parser.add_argument("surnames", help="csv file with surnames", type=str)
@@ -85,7 +86,9 @@ def parse_database_parameters() -> (
     customer_table: TableName = combine_name(
         args.output, args.customer_table, args.add_date
     )
-    invoice_table: TableName = combine_name(args.output, args.invoice_table, args.add_date)
+    invoice_table: TableName = combine_name(
+        args.output, args.invoice_table, args.add_date
+    )
 
     return (
         customer_table,
@@ -117,8 +120,15 @@ def main() -> None:
     first_names: List[str] = read_names(first_names_source)
     surnames: List[str] = read_names(surnames_source)
     random: Random = Random()
-    generate_database(customer_record_num, invoice_record_num, first_names,
-                      surnames, random, customer_table_name, invoice_table_name)
+    generate_database(
+        customer_record_num,
+        invoice_record_num,
+        first_names,
+        surnames,
+        random,
+        customer_table_name,
+        invoice_table_name,
+    )
 
 
 def generate_database(
