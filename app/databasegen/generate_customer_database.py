@@ -1,4 +1,4 @@
-import argparse
+from argparse import ArgumentParser
 from datetime import datetime
 from random import Random
 from typing import List, Tuple
@@ -19,6 +19,8 @@ RecordNum = int
 
 
 def main() -> None:
+    parser: ArgumentParser = define_parser()
+
     customer_table_name: TableName
     customer_record_num: RecordNum
     invoice_table_name: TableName
@@ -33,7 +35,7 @@ def main() -> None:
         invoice_record_num,
         first_names_source,
         surnames_source,
-    ) = parse_database_parameters()
+    ) = parse_database_parameters(parser)
 
     first_names: List[str] = read_names(first_names_source)
     surnames: List[str] = read_names(surnames_source)
@@ -49,31 +51,11 @@ def main() -> None:
     )
 
 
-def combine_name(
-    output: str, name: str, add_date: bool, extension: str = ".csv"
-) -> TableName:
-    # assumes that the name does not have an extension on it
-    res: str = output + "/" + name
-    if add_date:
-        res += "_" + datetime.now().strftime("%y%m%d%H%M%S")
-    res += extension
-    return res
-
-
-def read_names(filename: str) -> List[str]:
-    res: List[str] = []
-    with open(filename, "r") as f:
-        for row in f:
-            res.append(row.strip().lower().capitalize())
-    return res
-
-
-def parse_database_parameters() -> (
-    Tuple[TableName, RecordNum, TableName, RecordNum, str, str]
-):
+def define_parser() -> ArgumentParser:
     CUSTOMER_NUM_DEFAULT: RecordNum = 1000
     INVOICE_NUM_DEFAULT: RecordNum = 10000
-    parser: argparse.ArgumentParser = argparse.ArgumentParser()
+
+    parser: ArgumentParser = ArgumentParser()
     parser.add_argument(
         "-o", "--output", help="output for the files", type=str, default="."
     )
@@ -104,15 +86,39 @@ def parse_database_parameters() -> (
         action="store_true",
     )
 
-    args = parser.parse_args()
+    return parser
 
+
+def combine_name(
+    output: str, name: str, add_date: bool, extension: str = ".csv"
+) -> TableName:
+    # assumes that the name does not have an extension on it
+    res: str = output + "/" + name
+    if add_date:
+        res += "_" + datetime.now().strftime("%y%m%d%H%M%S")
+    res += extension
+    return res
+
+
+def read_names(filename: str) -> List[str]:
+    res: List[str] = []
+    with open(filename, "r") as f:
+        for row in f:
+            res.append(row.strip().lower().capitalize())
+    return res
+
+
+def parse_database_parameters(
+    parser: ArgumentParser,
+) -> Tuple[TableName, RecordNum, TableName, RecordNum, str, str]:
+    args = parser.parse_args()
     customer_record_num: RecordNum = args.customer_records
     invoice_record_num: RecordNum = args.invoice_records
 
     if customer_record_num < 0:
-        customer_record_num = CUSTOMER_NUM_DEFAULT
+        raise ValueError("Number of records in the customer table must be nonnegative")
     if invoice_record_num < 0:
-        invoice_record_num = INVOICE_NUM_DEFAULT
+        raise ValueError("Number of records in the invoice table must be nonnegative")
 
     customer_table: TableName = combine_name(
         args.output, args.customer_table, args.add_date
