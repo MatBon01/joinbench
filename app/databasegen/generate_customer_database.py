@@ -18,6 +18,37 @@ TableName = str
 RecordNum = int
 
 
+def main() -> None:
+    customer_table_name: TableName
+    customer_record_num: RecordNum
+    invoice_table_name: TableName
+    invoice_record_num: RecordNum
+    first_names_source: str
+    surnames_source: str
+
+    (
+        customer_table_name,
+        customer_record_num,
+        invoice_table_name,
+        invoice_record_num,
+        first_names_source,
+        surnames_source,
+    ) = parse_database_parameters()
+
+    first_names: List[str] = read_names(first_names_source)
+    surnames: List[str] = read_names(surnames_source)
+    random: Random = Random()
+    generate_database(
+        customer_record_num,
+        invoice_record_num,
+        first_names,
+        surnames,
+        random,
+        customer_table_name,
+        invoice_table_name,
+    )
+
+
 def combine_name(
     output: str, name: str, add_date: bool, extension: str = ".csv"
 ) -> TableName:
@@ -97,37 +128,6 @@ def parse_database_parameters() -> (
         invoice_record_num,
         args.firstnames,
         args.surnames,
-    )
-
-
-def main() -> None:
-    customer_table_name: TableName
-    customer_record_num: RecordNum
-    invoice_table_name: TableName
-    invoice_record_num: RecordNum
-    first_names_source: str
-    surnames_source: str
-
-    (
-        customer_table_name,
-        customer_record_num,
-        invoice_table_name,
-        invoice_record_num,
-        first_names_source,
-        surnames_source,
-    ) = parse_database_parameters()
-
-    first_names: List[str] = read_names(first_names_source)
-    surnames: List[str] = read_names(surnames_source)
-    random: Random = Random()
-    generate_database(
-        customer_record_num,
-        invoice_record_num,
-        first_names,
-        surnames,
-        random,
-        customer_table_name,
-        invoice_table_name,
     )
 
 
