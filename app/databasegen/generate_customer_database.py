@@ -52,13 +52,17 @@ def main() -> None:
 
 
 def define_parser() -> ArgumentParser:
-    CUSTOMER_NUM_DEFAULT: RecordNum = 1000
-    INVOICE_NUM_DEFAULT: RecordNum = 10000
-
     parser: ArgumentParser = ArgumentParser()
-    parser.add_argument(
-        "-o", "--output", help="output for the files", type=str, default="."
-    )
+
+    parser = add_customer_table_arguments_to_parser(parser)
+    parser = add_invoice_table_arguments_to_parser(parser)
+    parser = add_output_arguments_to_parser(parser)
+
+    return parser
+
+
+def add_customer_table_arguments_to_parser(parser: ArgumentParser) -> ArgumentParser:
+    CUSTOMER_NUM_DEFAULT: RecordNum = 1000
     parser.add_argument(
         "--customer-records",
         help="number of customer records",
@@ -66,26 +70,37 @@ def define_parser() -> ArgumentParser:
         default=CUSTOMER_NUM_DEFAULT,
     )
     parser.add_argument(
+        "--customer-table", help="customer table name", type=str, default="customers"
+    )
+    parser.add_argument("firstnames", help="csv file with first names", type=str)
+    parser.add_argument("surnames", help="csv file with surnames", type=str)
+    return parser
+
+
+def add_invoice_table_arguments_to_parser(parser: ArgumentParser) -> ArgumentParser:
+    INVOICE_NUM_DEFAULT: RecordNum = 10000
+    parser.add_argument(
         "--invoice-records",
         help="number of invoice records",
         type=int,
         default=INVOICE_NUM_DEFAULT,
     )
     parser.add_argument(
-        "--customer-table", help="customer table name", type=str, default="customers"
-    )
-    parser.add_argument(
         "--invoice-table", help="invoice table name", type=str, default="invoices"
     )
-    parser.add_argument("firstnames", help="csv file with first names", type=str)
-    parser.add_argument("surnames", help="csv file with surnames", type=str)
+    return parser
+
+
+def add_output_arguments_to_parser(parser: ArgumentParser) -> ArgumentParser:
+    parser.add_argument(
+        "-o", "--output", help="output for the files", type=str, default="."
+    )
     parser.add_argument(
         "-d",
         "--add-date",
         help="add date to the file name",
         action="store_true",
     )
-
     return parser
 
 
