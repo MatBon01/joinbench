@@ -3,6 +3,7 @@ from datetime import datetime
 from random import Random
 from typing import List, Tuple
 
+from configuration.table_configuration import TableConfiguration
 from tablegen.cells.amount_cell import AmountCell
 from tablegen.cells.cell import Cell
 from tablegen.cells.date_cell import DateCell
@@ -12,7 +13,6 @@ from tablegen.cells.tracking_cell import TrackingCell
 from tablegen.cells.unique_cell import UniqueCell
 from tablegen.csv_table_generator import CSVTableGenerator
 from tablegen.record_generator import RecordGenerator
-from tablegen.table_configuration import TableConfiguration
 from tablegen.table_generator import TableGenerator
 
 TableName = str
