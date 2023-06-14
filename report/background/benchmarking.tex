@@ -240,6 +240,14 @@ tuple is exactly 182 bytes long in order to make the size of all four relations
 approximately 4MB, according to Bitton. These attributes can be found in
 \fref{tab:WisconsinAttributes} and are comprised of 2 key-like unique integer
 values, 12 cyclical integer fields with varying ranges and 2 character fields.
+
+\subparagraph{Unique fields} The unique attributes, names \attribute{unique1} and
+\attribute{unique2} are integer fields that range from $0$ to $K - 1$ where $K$
+is the cardinality (number of tuples) of the relation. \emph{Both} fields are
+randomly generated (as is emphasised in Bitton's reflective paper
+\cite{Wisconsin2}) but it is noted that \attribute{unique2} is usually used to
+sort the relation. As the name suggests, both fields are unique. 
+
 \subsubsection{Set Query}
 \subsubsection{DebitCredit}
 \subsubsection{TPC-H}
