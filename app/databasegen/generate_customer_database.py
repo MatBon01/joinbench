@@ -3,6 +3,7 @@ from datetime import datetime
 from random import Random
 from typing import List, Tuple
 
+from configuration.basic_table_configuration import BasicTableConfiguration
 from configuration.table_configuration import TableConfiguration
 from tablegen.cells.amount_cell import AmountCell
 from tablegen.cells.cell import Cell
@@ -116,7 +117,7 @@ def parse_invoice_table_arguments(args: Namespace) -> TableConfiguration:
     invoice_table: TableName = combine_name(
         args.output, args.invoice_table, args.add_date
     )
-    return TableConfiguration(invoice_table, invoice_record_num)
+    return BasicTableConfiguration(invoice_table, invoice_record_num)
 
 
 def parse_customer_table_arguments(args: Namespace) -> TableConfiguration:
@@ -126,7 +127,7 @@ def parse_customer_table_arguments(args: Namespace) -> TableConfiguration:
     customer_table: TableName = combine_name(
         args.output, args.customer_table, args.add_date
     )
-    return TableConfiguration(customer_table, customer_record_num)
+    return BasicTableConfiguration(customer_table, customer_record_num)
 
 
 def combine_name(
