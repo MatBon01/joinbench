@@ -37,10 +37,8 @@ def main() -> None:
 
     random: Random = Random()
     generate_database(
-        customer_table_config.table_name,
-        customer_table_config.num_records_in_table,
-        invoice_table_config.table_name,
-        invoice_table_config.num_records_in_table,
+        customer_table_config,
+        invoice_table_config,
         first_names,
         surnames,
         random,
@@ -151,18 +149,25 @@ def read_names(filename: str) -> List[str]:
 
 
 def generate_database(
-    customer_table_name: str,
-    num_customer_records: int,
-    invoice_table_name: str,
-    num_invoice_records: int,
+    customer_table_config: TableConfiguration,
+    invoice_table_config: TableConfiguration,
     first_names: List[str],
     surnames: List[str],
     random: Random,
 ) -> None:
     cids: List[str] = generate_customer_table(
-        num_customer_records, first_names, surnames, random, customer_table_name
+        customer_table_config.num_records_in_table,
+        first_names,
+        surnames,
+        random,
+        customer_table_config.table_name,
     )
-    generate_invoice_table(num_invoice_records, cids, random, invoice_table_name)
+    generate_invoice_table(
+        invoice_table_config.num_records_in_table,
+        cids,
+        random,
+        invoice_table_config.table_name,
+    )
 
 
 def generate_customer_table(
