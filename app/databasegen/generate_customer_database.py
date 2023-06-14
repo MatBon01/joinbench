@@ -1,4 +1,4 @@
-from argparse import ArgumentParser
+from argparse import ArgumentParser, Namespace
 from datetime import datetime
 from random import Random
 from typing import List, Tuple
@@ -12,6 +12,7 @@ from tablegen.cells.tracking_cell import TrackingCell
 from tablegen.cells.unique_cell import UniqueCell
 from tablegen.csv_table_generator import CSVTableGenerator
 from tablegen.record_generator import RecordGenerator
+from tablegen.table_configuration import TableConfiguration
 from tablegen.table_generator import TableGenerator
 
 TableName = str
@@ -104,6 +105,44 @@ def add_output_arguments_to_parser(parser: ArgumentParser) -> ArgumentParser:
     return parser
 
 
+def parse_database_parameters(
+    parser: ArgumentParser,
+) -> Tuple[TableName, RecordNum, TableName, RecordNum, str, str]:
+    args: Namespace = parser.parse_args()
+    invoice_record_num: RecordNum = args.invoice_records
+
+    customer_table_config: TableConfiguration = parse_customer_table_arguments(args)
+
+    customer_table: TableName = customer_table_config.table_name
+    customer_record_num: RecordNum = customer_table_config.num_records_in_table
+
+    if invoice_record_num < 0:
+        raise ValueError("Number of records in the invoice table must be nonnegative")
+
+    invoice_table: TableName = combine_name(
+        args.output, args.invoice_table, args.add_date
+    )
+
+    return (
+        customer_table,
+        customer_record_num,
+        invoice_table,
+        invoice_record_num,
+        args.firstnames,
+        args.surnames,
+    )
+
+
+def parse_customer_table_arguments(args: Namespace) -> TableConfiguration:
+    customer_record_num: RecordNum = args.customer_records
+    if customer_record_num < 0:
+        raise ValueError("Number of records in the customer table must be nonnegative")
+    customer_table: TableName = combine_name(
+        args.output, args.customer_table, args.add_date
+    )
+    return TableConfiguration(customer_table, customer_record_num)
+
+
 def combine_name(
     output: str, name: str, add_date: bool, extension: str = ".csv"
 ) -> TableName:
@@ -121,35 +160,6 @@ def read_names(filename: str) -> List[str]:
         for row in f:
             res.append(row.strip().lower().capitalize())
     return res
-
-
-def parse_database_parameters(
-    parser: ArgumentParser,
-) -> Tuple[TableName, RecordNum, TableName, RecordNum, str, str]:
-    args = parser.parse_args()
-    customer_record_num: RecordNum = args.customer_records
-    invoice_record_num: RecordNum = args.invoice_records
-
-    if customer_record_num < 0:
-        raise ValueError("Number of records in the customer table must be nonnegative")
-    if invoice_record_num < 0:
-        raise ValueError("Number of records in the invoice table must be nonnegative")
-
-    customer_table: TableName = combine_name(
-        args.output, args.customer_table, args.add_date
-    )
-    invoice_table: TableName = combine_name(
-        args.output, args.invoice_table, args.add_date
-    )
-
-    return (
-        customer_table,
-        customer_record_num,
-        invoice_table,
-        invoice_record_num,
-        args.firstnames,
-        args.surnames,
-    )
 
 
 def generate_database(
