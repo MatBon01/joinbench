@@ -254,10 +254,16 @@ attributes, 12 cyclical integer attributes with varying ranges and 3 string attr
         \attribute{two} & integer & $[0, 1]$ & random \\
         \attribute{four} & integer & $[0, 3]$ & random \\
         \attribute{ten} & integer & $[0, 9]$ & random \\
+        \attribute{twenty} & integer & $[0, 19]$ & random \\
         \attribute{hundred} & integer & $[0, 99]$ & random \\
         \attribute{thousand} & integer & $[0, 999]$ & random \\
+        \attribute{twothous} & integer & $[0, 1999]$ & random \\
         \attribute{fivethous} & integer & $[0, 4999]$ & random \\
         \attribute{tenthous} & integer & $[0, 9999]$ & random \\
+        \attribute{odd100} & integer & $\left[n\ |\ n \leftarrow [0, 99],\
+        \mathrm{odd}\  n\right]$ & random \\
+        \attribute{even100} & integer & $\left[n\ |\ n \leftarrow [0, 99],\
+        \mathrm{even}\  n\right]$ & random \\
         \hline
 
         \attribute{stringu1} & string & & unique, based on \attribute{unqiue1}, key\\
