@@ -22,18 +22,12 @@ RecordNum = int
 def main() -> None:
     parser: ArgumentParser = define_parser()
 
-    customer_table_name: TableName
-    customer_record_num: RecordNum
-    invoice_table_name: TableName
-    invoice_record_num: RecordNum
     first_names_source: str
     surnames_source: str
 
     (
-        customer_table_name,
-        customer_record_num,
-        invoice_table_name,
-        invoice_record_num,
+        customer_table_config,
+        invoice_table_config,
         first_names_source,
         surnames_source,
     ) = parse_database_parameters(parser)
@@ -42,13 +36,13 @@ def main() -> None:
     surnames: List[str] = read_names(surnames_source)
     random: Random = Random()
     generate_database(
-        customer_record_num,
-        invoice_record_num,
+        customer_table_config.num_records_in_table,
+        invoice_table_config.num_records_in_table,
         first_names,
         surnames,
         random,
-        customer_table_name,
-        invoice_table_name,
+        customer_table_config.table_name,
+        invoice_table_config.table_name,
     )
 
 
@@ -107,25 +101,13 @@ def add_output_arguments_to_parser(parser: ArgumentParser) -> ArgumentParser:
 
 def parse_database_parameters(
     parser: ArgumentParser,
-) -> Tuple[TableName, RecordNum, TableName, RecordNum, str, str]:
+) -> Tuple[TableConfiguration, TableConfiguration, str, str]:
     args: Namespace = parser.parse_args()
 
     customer_table_config: TableConfiguration = parse_customer_table_arguments(args)
-    customer_table: TableName = customer_table_config.table_name
-    customer_record_num: RecordNum = customer_table_config.num_records_in_table
-
     invoice_table_config: TableConfiguration = parse_invoice_table_arguments(args)
-    invoice_table = invoice_table_config.table_name
-    invoice_record_num = invoice_table_config.num_records_in_table
 
-    return (
-        customer_table,
-        customer_record_num,
-        invoice_table,
-        invoice_record_num,
-        args.firstnames,
-        args.surnames,
-    )
+    return (customer_table_config, invoice_table_config, args.firstnames, args.surnames)
 
 
 def parse_invoice_table_arguments(args: Namespace) -> TableConfiguration:
