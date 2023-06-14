@@ -235,6 +235,11 @@ naming is as above, any implementer knows exactly what relation they are dealing
 with making the benchmark a much more readable endeavour. Furthermore, as you will
 see later, it is paramount to calculating selectivity factors.
 
+\paragraph{The tuples} Each relation has 16 attributes, designed such that a
+tuple is exactly 182 bytes long in order to make the size of all four relations
+approximately 4MB, according to Bitton. These attributes can be found in
+\fref{tab:WisconsinAttributes} and are comprised of 2 key-like unique integer
+values, 12 cyclical integer fields with varying ranges and 2 character fields.
 \subsubsection{Set Query}
 \subsubsection{DebitCredit}
 \subsubsection{TPC-H}
