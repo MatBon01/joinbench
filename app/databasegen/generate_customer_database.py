@@ -156,11 +156,10 @@ def generate_database(
     random: Random,
 ) -> None:
     cids: List[str] = generate_customer_table(
-        customer_table_config.num_records_in_table,
+        customer_table_config,
         first_names,
         surnames,
         random,
-        customer_table_config.table_name,
     )
     generate_invoice_table(
         invoice_table_config.num_records_in_table,
@@ -171,11 +170,10 @@ def generate_database(
 
 
 def generate_customer_table(
-    num_records: int,
+    config: TableConfiguration,
     first_names: List[str],
     surnames: List[str],
     random: Random,
-    table_name: str = "customers.csv",
 ) -> List[str]:
     first_name_generator: Cell = RandomChoiceCell(first_names, random)
     surname_generator: Cell = RandomChoiceCell(surnames, random)
@@ -188,9 +186,9 @@ def generate_customer_table(
     table_generator: TableGenerator = TableGenerator(record_generator)
 
     csv_table_generator: CSVTableGenerator = CSVTableGenerator(
-        table_generator, table_name
+        table_generator, config.table_name
     )
-    csv_table_generator.generate(num_records)
+    csv_table_generator.generate(config.num_records_in_table)
 
     return list(id_generator.seen)
 
