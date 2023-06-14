@@ -221,6 +221,20 @@ key properties of a domain-specific benchmark - defining it as a database's
 understandability and commenting that without it the database would lack
 credibility.
 
+\paragraph{The relations} This section contains a description of the relations in
+the database system and a brief description of their use. The database consists
+of 4 relations, namely ``\relation{thoustup}'', ``\relation{twothoustup}'',
+``\relation{fivethoustup}'', and ``\relation{tenthoustup}'' with 1000, 2000, 5000
+and 10000 tuples respectively; where it is
+clear that the relations are named after it's cardinality (the number of tuples
+it contains \cite{PractitionersIntroduction}). It is worth noting that multiple
+relations are generated for use in 
+queries with multiple operands (such as a join), producing in practice
+``tenthoustupA'' and ``tenthoustupB'' for instance. The advantage to this explicit
+naming is as above, any implementer knows exactly what relation they are dealing
+with making the benchmark a much more readable endeavour. Furthermore, as you will
+see later, it is paramount to calculating selectivity factors.
+
 \subsubsection{Set Query}
 \subsubsection{DebitCredit}
 \subsubsection{TPC-H}
