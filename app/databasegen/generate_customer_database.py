@@ -162,10 +162,9 @@ def generate_database(
         random,
     )
     generate_invoice_table(
-        invoice_table_config.num_records_in_table,
+        invoice_table_config,
         cids,
         random,
-        invoice_table_config.table_name,
     )
 
 
@@ -194,10 +193,9 @@ def generate_customer_table(
 
 
 def generate_invoice_table(
-    num_records: int,
+    config: TableConfiguration,
     customer_ids: List[str],
     random: Random,
-    table_name: str = "invoice.csv",
 ) -> None:
     id: Cell = UniqueCell(IdCell(random))
     cid: Cell = RandomChoiceCell(customer_ids, random)
@@ -207,10 +205,10 @@ def generate_invoice_table(
     record_generator: RecordGenerator = RecordGenerator([id, cid, due, amount])
     table_generator: TableGenerator = TableGenerator(record_generator)
     csv_table_generator: CSVTableGenerator = CSVTableGenerator(
-        table_generator, table_name
+        table_generator, config.table_name
     )
 
-    csv_table_generator.generate(num_records)
+    csv_table_generator.generate(config.num_records_in_table)
 
 
 if __name__ == "__main__":
