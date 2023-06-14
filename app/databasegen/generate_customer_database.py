@@ -109,19 +109,14 @@ def parse_database_parameters(
     parser: ArgumentParser,
 ) -> Tuple[TableName, RecordNum, TableName, RecordNum, str, str]:
     args: Namespace = parser.parse_args()
-    invoice_record_num: RecordNum = args.invoice_records
 
     customer_table_config: TableConfiguration = parse_customer_table_arguments(args)
-
     customer_table: TableName = customer_table_config.table_name
     customer_record_num: RecordNum = customer_table_config.num_records_in_table
 
-    if invoice_record_num < 0:
-        raise ValueError("Number of records in the invoice table must be nonnegative")
-
-    invoice_table: TableName = combine_name(
-        args.output, args.invoice_table, args.add_date
-    )
+    invoice_table_config: TableConfiguration = parse_invoice_table_arguments(args)
+    invoice_table = invoice_table_config.table_name
+    invoice_record_num = invoice_table_config.num_records_in_table
 
     return (
         customer_table,
@@ -131,6 +126,16 @@ def parse_database_parameters(
         args.firstnames,
         args.surnames,
     )
+
+
+def parse_invoice_table_arguments(args: Namespace) -> TableConfiguration:
+    invoice_record_num: RecordNum = args.invoice_records
+    if invoice_record_num < 0:
+        raise ValueError("Number of records in the invoice table must be nonnegative")
+    invoice_table: TableName = combine_name(
+        args.output, args.invoice_table, args.add_date
+    )
+    return TableConfiguration(invoice_table, invoice_record_num)
 
 
 def parse_customer_table_arguments(args: Namespace) -> TableConfiguration:
