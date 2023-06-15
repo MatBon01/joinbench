@@ -242,14 +242,16 @@ approximately 4MB, according to Bitton. These attributes can be found in
 attributes, 12 cyclic integer attributes with varying domains and 3 string attributes.
 
 \begin{table}[t]
-    \begin{tabular}{r | c | c | p{0.2\linewidth}}
-        attribute & type & domain & properties \\
-        \hline\hline
+    \begin{tabular}{r c c p{0.2\linewidth}}
+        \toprule
+        \textbf{Attribute} & \textbf{Type} & \textbf{Domain} &
+        \textbf{Properties}\\
+        \midrule
 
         \attribute{unique1} & integer & $\{0, \ldots, K - 1\}$ & random, unique, key \\
         \attribute{unique2} & integer & $\{0, \ldots, K - 1\}$ & random, unique, key,
         primary \\
-        \hline
+        \midrule
 
         \attribute{two} & integer & $\{0, 1\}$ & random \\
         \attribute{four} & integer & $\{0, \ldots, 3\}$ & random \\
@@ -264,7 +266,7 @@ attributes, 12 cyclic integer attributes with varying domains and 3 string attri
         \mathrm{odd}\  n\right\}$ & random \\
         \attribute{even100} & integer & $\left\{n\ |\ n \leftarrow \{0, \ldots, 99\},\
         \mathrm{even}\  n\right\}$ & random \\
-        \hline
+        \midrule
 
         \attribute{stringu1} & \CharStringWithLength{52}
                              & \WisconsinUStringDef
@@ -275,9 +277,10 @@ attributes, 12 cyclic integer attributes with varying domains and 3 string attri
                              & unique, derived from \attribute{unqiue2}, key, primary\\
 
         \attribute{string4} & $\mathrm{char}(52)$  
-                            & $\WisconsinStringStructureDef{\$}{\$}{\$},\ \$ \in
+                            & $\WisconsinStringStructure{\$}{\$}{\$},\ \$ \in
                             \{A, H, O, V\}$
                             & cyclic \\
+        \bottomrule
     \end{tabular}
 
     \caption{The attributes of a relation with cardinality $K$ in the Wisconsin
