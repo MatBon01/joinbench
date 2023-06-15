@@ -242,7 +242,7 @@ approximately 4MB, according to Bitton. These attributes can be found in
 attributes, 12 cyclical integer attributes with varying ranges and 3 string attributes.
 
 \begin{table}[t]
-    \begin{tabular}{r | c | c | l}
+    \begin{tabular}{r | c | c | p{0.2\linewidth}}
         attribute & type & range & properties \\
         \hline\hline
 
@@ -266,10 +266,18 @@ attributes, 12 cyclical integer attributes with varying ranges and 3 string attr
         \mathrm{even}\  n\right]$ & random \\
         \hline
 
-        \attribute{stringu1} & string & & unique, based on \attribute{unqiue1}, key\\
-        \attribute{stringu2} & string & & unique, based on \attribute{unqiue2}, 
-        key, primary index\\
-        \attribute{string4} & string & (4 values) & 
+        \attribute{stringu1} & \CharStringWithLength{52}
+                             & \WisconsinUStringDef
+                             & unique, derived from \attribute{unqiue1}, key\\
+
+        \attribute{stringu2} & $\mathrm{char}(52)$  
+                             & \WisconsinUStringDef
+                             & unique, derived from \attribute{unqiue2}, key, primary\\
+
+        \attribute{string4} & $\mathrm{char}(52)$  
+                            & $\WisconsinStringStructureDef{\$}{\$}{\$},\ \$ \in
+                            \{A, H, O, V\}$
+                            & cyclic \\
     \end{tabular}
 
     \caption{The attributes of a relation with cardinality $K$ in the Wisconsin

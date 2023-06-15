@@ -53,6 +53,15 @@
 \newcommand{\thetajoin}[3]{\ensuremath{\relation{#2}\bowtie_{#1}\relation{#3}}}
 \newcommand{\equijoin}[4]{\ensuremath{\relation{#1}\,{}_{#2}\!\bowtie_{\:#4}\relation{#3}}}
 
+% Synthetic tables
+\newcommand{\CharStringWithLength}[1]{\ensuremath{\mathrm{char}(#1)}}
+\newcommand{\WisconsinUStringDef}[0]{\WisconsinGeneralUStringDef{\$_1}{\$_2}{\$_3}}
+\newcommand{\WisconsinGeneralUStringDef}[3]{\ensuremath{\WisconsinStringStructureDef{#1}{#2}{#3},\
+#1, #2, #3 \in \left\{\mathrm{A, \ldots, V}\right\}}}
+\newcommand{\WisconsinStringStructureDef}[3]{\ensuremath{\mathrm{#1}\WisconsinLabelledXSubstring{25}\mathrm{#2}\WisconsinLabelledXSubstring{24}\mathrm{#3}}}
+\newcommand{\WisconsinXSubstring}[0]{\ensuremath{\mathrm{xx\ldots xx}}}
+\newcommand{\WisconsinLabelledXSubstring}[1]{\ensuremath{\underbrace{\WisconsinXSubstring}_{\mathrm{#1\ xs}}}}
+
 % Temporary function to show italicised code similar to maths
 % TODO: Change
 \newcommand{\mathcodefunc}[1]{\ensuremath{\mathit{#1}}}
