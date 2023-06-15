@@ -239,11 +239,11 @@ see later, it is paramount to calculating selectivity factors.
 tuple is exactly 182 bytes long in order to make the size of all four relations
 approximately 4MB, according to Bitton. These attributes can be found in
 \fref{tab:WisconsinAttributes} and are comprised of 2 key-like unique integer
-attributes, 12 cyclical integer attributes with varying ranges and 3 string attributes.
+attributes, 12 cyclic integer attributes with varying domains and 3 string attributes.
 
 \begin{table}[t]
     \begin{tabular}{r | c | c | p{0.2\linewidth}}
-        attribute & type & range & properties \\
+        attribute & type & domain & properties \\
         \hline\hline
 
         \attribute{unique1} & integer & $\{0, \ldots, K - 1\}$ & random, unique, key \\
