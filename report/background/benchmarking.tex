@@ -305,6 +305,15 @@ can use it to specify any number of selectivity factors. For instance a
 selection operation on \attribute{two} relation would result in a selectivity
 factor of 50\%. 
 
+\subparagraph{String attributes} The database have three string attributes, all
+of which contain 52 characters. Two of these attributes, \attribute{stringu1}
+and \attribute{stringu2} are derivative on other randomly generated attributes
+in the relation, namely \attribute{unique1} and \attribute{unique2}
+respectively. Whereas the final string attributes \attribute{string4} cycles
+through four variations of a string. It is noted that all strings have names
+that help the reader understand their origins, with the first two containing
+``u1'' or ``u2'', and the number of values in its domain.
+
 \subsubsection{Set Query}
 \subsubsection{DebitCredit}
 \subsubsection{TPC-H}
