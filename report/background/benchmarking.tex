@@ -305,14 +305,31 @@ can use it to specify any number of selectivity factors. For instance a
 selection operation on \attribute{two} relation would result in a selectivity
 factor of 50\%. 
 
-\subparagraph{String attributes} The database have three string attributes, all
+\subparagraph{String attributes} The database has three string attributes, all
 of which contain 52 characters. Two of these attributes, \attribute{stringu1}
 and \attribute{stringu2} are derivative on other randomly generated attributes
 in the relation, namely \attribute{unique1} and \attribute{unique2}
 respectively. Whereas the final string attributes \attribute{string4} cycles
 through four variations of a string. It is noted that all strings have names
 that help the reader understand their origins, with the first two containing
-``u1'' or ``u2'', and the number of values in its domain.
+``u1'' or ``u2'', and the number of values in its domain. Each string follows
+the template outlined in \fref{fig:WisconsinStringTemplate}; each \$ is to be
+replaced with a letter between A and V inclusive (the \emph{significant
+letters}) and x denotes the character literal
+`x'. As each of the \$ can be replaced independently with 22 different
+letters, the template can produce $22^3 = 10,648$ unique strings. The design
+intention for this string was twofold, firstly it is clear how the template
+could easily be expanded to allow for more significant letters but less
+obviously, the spacings of the significant letters were meant to help change the
+CPU load by changing the CPU time needed to compare two strings.
+
+\begin{figure}[h]
+    \WisconsinUStringDef 
+    \caption{The general structure of a string attribute in the Wisconsin
+        database. Each \$ is to be substituted by a letter between A and V, and x
+    denotes the character literal `x'.}
+    \label{fig:WisconsinStringTemplate}
+\end{figure}
 
 \subsubsection{Set Query}
 \subsubsection{DebitCredit}
