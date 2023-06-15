@@ -246,24 +246,24 @@ attributes, 12 cyclical integer attributes with varying ranges and 3 string attr
         attribute & type & range & properties \\
         \hline\hline
 
-        \attribute{unique1} & integer & $[0, K - 1]$ & random, unique, key \\
-        \attribute{unique2} & integer & $[0, K - 1]$ & random, unique, key,
+        \attribute{unique1} & integer & $\{0, \ldots, K - 1\}$ & random, unique, key \\
+        \attribute{unique2} & integer & $\{0, \ldots, K - 1\}$ & random, unique, key,
         primary \\
         \hline
 
-        \attribute{two} & integer & $[0, 1]$ & random \\
-        \attribute{four} & integer & $[0, 3]$ & random \\
-        \attribute{ten} & integer & $[0, 9]$ & random \\
-        \attribute{twenty} & integer & $[0, 19]$ & random \\
-        \attribute{hundred} & integer & $[0, 99]$ & random \\
-        \attribute{thousand} & integer & $[0, 999]$ & random \\
-        \attribute{twothous} & integer & $[0, 1999]$ & random \\
-        \attribute{fivethous} & integer & $[0, 4999]$ & random \\
-        \attribute{tenthous} & integer & $[0, 9999]$ & random \\
-        \attribute{odd100} & integer & $\left[n\ |\ n \leftarrow [0, 99],\
-        \mathrm{odd}\  n\right]$ & random \\
-        \attribute{even100} & integer & $\left[n\ |\ n \leftarrow [0, 99],\
-        \mathrm{even}\  n\right]$ & random \\
+        \attribute{two} & integer & $\{0, 1\}$ & random \\
+        \attribute{four} & integer & $\{0, \ldots, 3\}$ & random \\
+        \attribute{ten} & integer & $\{0, \ldots, 9\}$ & random \\
+        \attribute{twenty} & integer & $\{0, \ldots, 19\}$ & random \\
+        \attribute{hundred} & integer & $\{0, \ldots, 99\}$ & random \\
+        \attribute{thousand} & integer & $\{0, \ldots, 999\}$ & random \\
+        \attribute{twothous} & integer & $\{0, \ldots, 1999\}$ & random \\
+        \attribute{fivethous} & integer & $\{0, \ldots, 4999\}$ & random \\
+        \attribute{tenthous} & integer & $\{0, \ldots, 9999\}$ & random \\
+        \attribute{odd100} & integer & $\left\{n\ |\ n \leftarrow \{0, \ldots, 99\},\
+        \mathrm{odd}\  n\right\}$ & random \\
+        \attribute{even100} & integer & $\left\{n\ |\ n \leftarrow \{0, \ldots, 99\},\
+        \mathrm{even}\  n\right\}$ & random \\
         \hline
 
         \attribute{stringu1} & \CharStringWithLength{52}
