@@ -57,12 +57,17 @@
 
 % Synthetic tables
 \newcommand{\CharStringWithLength}[1]{\ensuremath{\mathrm{char}(#1)}}
+
 \newcommand{\WisconsinUStringDef}[0]{\WisconsinGeneralUStringDef{\$_1}{\$_2}{\$_3}}
-\newcommand{\WisconsinGeneralUStringDef}[3]{\ensuremath{\WisconsinStringStructure{#1}{#2}{#3},\
+\newcommand{\WisconsinGeneralUStringDef}[3]{\ensuremath{\WisconsinLabelledStringStructure{#1}{#2}{#3},\
 #1, #2, #3 \in \left\{\mathrm{A, \ldots, V}\right\}}}
-\newcommand{\WisconsinStringStructure}[3]{\ensuremath{\mathrm{#1}\WisconsinLabelledXSubstring{25}\mathrm{#2}\WisconsinLabelledXSubstring{24}\mathrm{#3}}}
-\newcommand{\WisconsinXSubstring}[0]{\ensuremath{\mathrm{xx\ldots xx}}}
+
+\newcommand{\WisconsinStringStructure}[3]{\ensuremath{\mathrm{#1}\WisconsinXSubstring\mathrm{#2}\WisconsinXSubstring\mathrm{#3}}}
+
+\newcommand{\WisconsinLabelledStringStructure}[3]{\ensuremath{\mathrm{#1}\WisconsinLabelledXSubstring{25}\mathrm{#2}\WisconsinLabelledXSubstring{24}\mathrm{#3}}}
 \newcommand{\WisconsinLabelledXSubstring}[1]{\ensuremath{\underbrace{\WisconsinXSubstring}_{\mathrm{#1\ xs}}}}
+
+\newcommand{\WisconsinXSubstring}[0]{\ensuremath{\mathrm{xx\ldots xx}}}
 
 % Temporary function to show italicised code similar to maths
 % TODO: Change
