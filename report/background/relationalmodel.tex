@@ -21,10 +21,9 @@ It describes the schema for the relation \relation{People} with the attributes \
 An (empty) tabular representation for the \relation{People} relation can be found on \fref{tab:peopleRelationHeadings}.
 
 \begin{figure}[h]
-    \begin{center}
-        \schema{\relation{People}}{\attribute{firstName},\ \attribute{surname},\
-        \attribute{age}}
-    \end{center}
+    \centering
+    \schema{\relation{People}}{\attribute{firstName},\ \attribute{surname},\
+    \attribute{age}}
     \caption[Schema for the \relation{People} relation]{Example of a schema for the relation \relation{People}}
     \label{fig:peopleSchema}
 \end{figure}
@@ -40,21 +39,30 @@ An (empty) tabular representation for the \relation{People} relation can be foun
   \label{tab:peopleRelationHeadings}
 \end{table}
 
-A row of the table\footnote{Excluding the row with the headings.} is called a \emph{tuple} and it consists of \emph{components}, one per attribute. A tuple is simply denoted by a comma separated list of its components within parentheses. For instance a tuple for the \relation{People} relation would be:
+A row of the table\footnote{Excluding any row representing the name of the
+attributes} is called a \emph{tuple} which consists of \emph{components}, one
+per attribute. A tuple is simply denoted by a comma separated list of its
+components within parentheses. For instance a tuple for the \relation{People}
+relation could be:
 \begin{figure}[!h]
   \centering
-  (\verb|Jim|, \verb|Smith|, 32).
+  (Jim, Smith, 32).
+  \caption{An example tuple in the \relation{People} relation.}
+  \label{fig:peopleTuple}
 \end{figure}
 
-With this table we can now represent the \relation{People} in a tabular form in \fref{tab:peopleRelationWithTuple}:
-\begin{table}[h]
+We can now represent the \relation{People} relation containing the tuple in
+\fref{fig:peopleTuple} as \fref{tab:peopleRelationWithTuple}.
+
+\begin{table}[b]
   \centering
   \begin{tabular}{l|l|l}
     \attribute{firstName} & \attribute{surname} & \attribute{age} \\
     \hline\hline
     Jim & Smith & 32\\
   \end{tabular}
-  \caption[\relation{People} relation with tuple]{A tabular representation of the \relation{People} relation and its associated tuple.}
+  \caption[\relation{People} relation with tuple]{A tabular representation of
+  the \relation{People} relation with a tuple.}
   \label{tab:peopleRelationWithTuple}
 \end{table}
 
