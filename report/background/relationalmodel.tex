@@ -15,24 +15,28 @@ and the name of the relation with the set of its attributes is its
     \attribute{A_n}}
 \end{center}
 
-A more practical example is the schema
-\begin{figure}[!h]
-\begin{verbatim}
-  People(firstName, surname, age)
-\end{verbatim}
-\caption[Schema for the \relation{People} relation]{Example of a schema for the relation \relation{People}}
-\label{fig:peopleSchema}
+
+A more practical example is the schema found in \fref{fig:peopleSchema}.
+It describes the schema for the relation \relation{People} with the attributes \attribute{firstName}, \attribute{surname} and \attribute{age}.
+An (empty) tabular representation for the \relation{People} relation can be found on \fref{tab:peopleRelationHeadings}.
+
+\begin{figure}[h]
+    \begin{center}
+        \schema{\relation{People}}{\attribute{firstName},\ \attribute{surname},\
+        \attribute{age}}
+    \end{center}
+    \caption[Schema for the \relation{People} relation]{Example of a schema for the relation \relation{People}}
+    \label{fig:peopleSchema}
 \end{figure}
-This describes a schema for the relation \relation{People} and the attributes \attribute{firstName}, \attribute{surname} and \attribute{age}.
-An empty table showing the relation can be found on \fref{tab:peopleRelationHeadings}.
-\begin{table}[h]
+
+\begin{table}[t]
   \centering
   \begin{tabular}{l|l|l}
     \attribute{firstName} & \attribute{surname} & \attribute{age} \\
     \hline\hline
     & &\\
   \end{tabular}
-  \caption[\relation{People} relation's headings]{A tabular representation of the \relation{People} relation's attributes.}
+  \caption[\relation{People} relation's headings]{A tabular representation of the \relation{People} relation.}
   \label{tab:peopleRelationHeadings}
 \end{table}
 
