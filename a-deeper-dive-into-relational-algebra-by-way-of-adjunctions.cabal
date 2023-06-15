@@ -34,6 +34,7 @@ library
     -- Modules included in this library but not exported.
     other-modules: 
         Data.CMonoid
+        Text.Parser.Utils
 
     -- LANGUAGE extensions used by modules in this package.
     other-extensions:
