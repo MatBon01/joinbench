@@ -292,6 +292,19 @@ randomly generated (as is emphasised in Bitton's reflective paper
 \cite{Wisconsin2}) but it is noted that \attribute{unique2} is usually used to
 sort the relation. As the name suggests, both fields are unique. 
 
+\subparagraph{Cyclic integer values} These names of these attributes are
+named after the number of values they can take and any properties; for instance
+``\attribute{four}'' can take 4 values from 0 to 3, and ``\attribute{even100}''
+can take any even number between 0 and 99 (the first 100 numbers counting from
+0). Despite following a uniform distribution in Bitton's original paper, these
+integers have been dubbed cyclic as they are designed to be non-unique and some
+implementations \cite{PractitionersIntroduction} derive their value from a
+modulo operation on \attribute{unique1}. These attributes are key to the
+advantages of using a synthetic database as, given the relation cardinality, you
+can use it to specify any number of selectivity factors. For instance a
+selection operation on \attribute{two} relation would result in a selectivity
+factor of 50\%. 
+
 \subsubsection{Set Query}
 \subsubsection{DebitCredit}
 \subsubsection{TPC-H}
