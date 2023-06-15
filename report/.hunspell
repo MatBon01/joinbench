@@ -35,6 +35,8 @@ secondmarker
 counit
 verticalcomposition
 BagRelAlgOps
+peopleSchema
+peopleTuple
 OLTP
 OLAP
 DebitCredit
