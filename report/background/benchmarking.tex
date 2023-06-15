@@ -327,15 +327,6 @@ could easily be expanded to allow for more significant letters but less
 obviously, the spacings of the significant letters were meant to help change the
 CPU load by changing the CPU time needed to compare two strings.
 
-Both \attribute{stringu1} and \attribute{stringu2} are derived from
-\attribute{unique1} and \attribute{unique2} in the same way. The string
-corresponding to 0 is \WisconsinStringStructure{A}{A}{A} and to find the
-subsequent string, the leftmost character is `increased' and once it reaches `V',
-the next character increased (in the same way) and the current character is
-reset to `A`. This can be seen counting in base 22 with the least significant
-digit on the left instead of the right. An example can be found in
-\fref{fig:WisconsinUniqueStringExample}.
-
 \begin{figure}[h]
     \centering
     \WisconsinUStringDef 
@@ -344,6 +335,15 @@ digit on the left instead of the right. An example can be found in
     denotes the character literal `x'.}
     \label{fig:WisconsinStringTemplate}
 \end{figure}
+
+Both \attribute{stringu1} and \attribute{stringu2} are derived from
+\attribute{unique1} and \attribute{unique2} in the same way. The string
+corresponding to 0 is \WisconsinStringStructure{A}{A}{A} and to find the
+subsequent string, the leftmost character is `increased' and once it reaches `V',
+the next character increased (in the same way) and the current character is
+reset to `A`. This can be seen counting in base 22 with the least significant
+digit on the left instead of the right. An example can be found in
+\fref{fig:WisconsinUniqueStringExample}.
 
 \begin{table}[h]
     \begin{tabular}{c c}
@@ -373,6 +373,15 @@ digit on the left instead of the right. An example can be found in
     from \attribute{unique1} values.}
     \label{fig:WisconsinUniqueStringExample}
 \end{table}
+
+
+The components of \attribute{string4} simply cycle through the 4 values
+\WisconsinRepeatedStringStructure{A},
+\WisconsinRepeatedStringStructure{H},
+\WisconsinRepeatedStringStructure{O},
+\WisconsinRepeatedStringStructure{V}.
+If any ordering is required it is done on \attribute{unique2} (or equivalently
+\attribute{stringu2}).
 
 \subsubsection{Set Query}
 \subsubsection{DebitCredit}

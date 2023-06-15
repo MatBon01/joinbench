@@ -63,8 +63,11 @@
 #1, #2, #3 \in \left\{\mathrm{A, \ldots, V}\right\}}}
 
 \newcommand{\WisconsinStringStructure}[3]{\ensuremath{\mathrm{#1}\WisconsinXSubstring\mathrm{#2}\WisconsinXSubstring\mathrm{#3}}}
+\newcommand{\WisconsinRepeatedStringStructure}[1]{\WisconsinStringStructure{#1}{#1}{#1}}
 
 \newcommand{\WisconsinLabelledStringStructure}[3]{\ensuremath{\mathrm{#1}\WisconsinLabelledXSubstring{25}\mathrm{#2}\WisconsinLabelledXSubstring{24}\mathrm{#3}}}
+\newcommand{\WisconsinRepeatedLabelledStringStructure}[1]{\WisconsinLabelledStringStructure{#1}{#1}{#1}}
+
 \newcommand{\WisconsinLabelledXSubstring}[1]{\ensuremath{\underbrace{\WisconsinXSubstring}_{\mathrm{#1\ xs}}}}
 
 \newcommand{\WisconsinXSubstring}[0]{\ensuremath{\mathrm{xx\ldots xx}}}
