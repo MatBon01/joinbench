@@ -18,7 +18,7 @@ jobs:
           description: "Interim report compiling"
           state: "pending"
       - name: Install latex dependencies
-        run: sudo apt-get install -y latexmk texlive-font-utils texlive-latex-extra
+        run: sudo apt-get install -y latexmk texlive-font-utils texlive-latex-extra texlive-science
       - uses: actions/checkout@v3
       - name: Compile interim report
         run: make -C report interim.pdf
@@ -62,7 +62,7 @@ jobs:
           description: "Final report compiling"
           state: "pending"
       - name: Install latex dependencies
-        run: sudo apt-get install -y latexmk texlive-font-utils texlive-latex-extra
+        run: sudo apt-get install -y latexmk texlive-font-utils texlive-latex-extra texlive-science
       - uses: actions/checkout@v3
       - name: Compile final report
         run: make -C report final.pdf
