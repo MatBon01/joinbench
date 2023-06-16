@@ -40,3 +40,13 @@ peopleTuple
 OLTP
 DebitCredit
 TPC
+uncurried
+finitemapfuncs
+uncurry
+PointedSet
+isEmpty
+Eq
+eq
+CMonoid
+natjoin
+
