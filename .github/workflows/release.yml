@@ -49,20 +49,69 @@ jobs:
         with:
           name: interim
           path: report/interim.pdf
+
+  compile-final-report:
+    name: Compile final report
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set report compilation to pending
+        uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{secrets.GITHUB_TOKEN}}
+          context: "Final report compilation"
+          description: "Final report compiling"
+          state: "pending"
+      - name: Install latex dependencies
+        run: sudo apt-get install -y latexmk texlive-font-utils texlive-latex-extra
+      - uses: actions/checkout@v3
+      - name: Compile final report
+        run: make -C report final.pdf
+      - name: Show compilation failed on status
+        uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{secrets.GITHUB_TOKEN}}
+          context: "Final report compilation"
+          description: "Compilation failed"
+          state: "failure"
+        if: ${{ failure() }}
+      - name: Warn that compilation failed
+        run: echo "::warning title=Final report compilation report::Compilation failed"
+        if: ${{ failure() }}
+      - name: Show compilation succeeded on status
+        uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{secrets.GITHUB_TOKEN}}
+          context: "Final report compilation"
+          description: "Final report compiled"
+          state: "success"
+        if: ${{ success () }}
+      - name: Notice that compilation succeeded
+        run: echo "::notice title=Final report compilation report::Compilation succeeded"
+        if: ${{ success () }}
+      - name: Upload report as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: final
+          path: report/final.pdf
   
   create-release:
     name: Create release
-    needs: [compile-interim-report]
+    needs: [compile-interim-report, compile-final-report]
     runs-on: ubuntu-latest
     steps:
       - name: Download interim report artifact
         uses: actions/download-artifact@v3
         with:
           name: interim
+      - name: Download final report artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: final
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           files: |
             interim.pdf
+            final.pdf
           pre-release: true
 
