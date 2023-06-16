@@ -96,7 +96,7 @@ For ease of demonstration we use a more populated instance of the \relation{Peop
   \caption{Populated instance of the \relation{People} relation.}
   \label{tab:peopleRelationPopulated}
 \end{table}
-\subsubsection{Projections}
+\subsubsection{Projections}\label{sec:projections}
 Projections select certain attributes of a relation, removing the others and collapsing duplicates \todo{I thought we needed multiplicity, check this}.\cite{RelationalModel} This can be visualised as only keeping certain columns in the table.
 
 Given a list of $k$ attributes $L = \relationAttribute{a_1}, \relationAttribute{a_2}, \ldots, \relationAttribute{a_k}$, we can specify a projection on an $n$-ary (containing $n$ attributes) relation \relation{R} as \proj{L}{R}. The result is a $k$-ary relation whose attributes are specified by $L$ \cite{RelationalModel} and by convention the ``standard order'' of attributes is also determined by the order of attributed in $L$.\cite{DatabaseSystems}

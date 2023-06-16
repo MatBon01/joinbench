@@ -383,6 +383,21 @@ The components of \relationAttribute{string4} simply cycle through the 4 values
 If any ordering is required it is done on \relationAttribute{unique2} (or equivalently
 \relationAttribute{stringu2}).
 
+\paragraph{Queries} Along with a synthetic database, the Wisconsin benchmark
+also provides a set of queries to benchmark different relational operators.
+Bitton's queries attempt to measure the performance of the following (as stated
+in \cite{Wisconsin})
+\begin{enumerate}
+    \item Selection queries with varying selectivity factors
+    \item Projections with different proportions of duplicated attributes (whose
+        performance impact comes from the collapsing of duplicates as described
+        in \fref{sec:projections})
+    \item Single and multiple joins
+    \item Simple aggregates and aggregate functions
+    \item Updates
+\end{enumerate}
+Many queries contain version for using both primary and secondary indices.
+
 \subsubsection{Set Query}
 \subsubsection{DebitCredit}
 \subsubsection{TPC-H}
