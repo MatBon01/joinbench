@@ -8,22 +8,22 @@ The relational model represents data through two dimensional tables, called
 \emph{relations}. The columns of the ``table'' are called its \emph{attributes}
 and the name of the relation with the set of its attributes is its
 \emph{schema} \cite{DatabaseSystems}. We denote the schema of a relation
-\relation{R} with attributes $\attribute{A_1}, \attribute{A_2}, \ldots,
-\attribute{A_n}$ as: 
+\relation{R} with attributes $\relationAttribute{A_1}, \relationAttribute{A_2}, \ldots,
+\relationAttribute{A_n}$ as: 
 \begin{center}
-    \schema{\relation{R}}{\attribute{A_1}, \attribute{A_2}, \ldots,
-    \attribute{A_n}}
+    \schema{\relation{R}}{\relationAttribute{A_1}, \relationAttribute{A_2}, \ldots,
+    \relationAttribute{A_n}}
 \end{center}
 
 
 A more practical example is the schema found in \fref{fig:peopleSchema}.
-It describes the schema for the relation \relation{People} with the attributes \attribute{firstName}, \attribute{surname} and \attribute{age}.
+It describes the schema for the relation \relation{People} with the attributes \relationAttribute{firstName}, \relationAttribute{surname} and \relationAttribute{age}.
 An (empty) tabular representation for the \relation{People} relation can be found on \fref{tab:peopleRelationHeadings}.
 
 \begin{figure}[h]
     \centering
-    \schema{\relation{People}}{\attribute{firstName},\ \attribute{surname},\
-    \attribute{age}}
+    \schema{\relation{People}}{\relationAttribute{firstName},\ \relationAttribute{surname},\
+    \relationAttribute{age}}
     \caption[Schema for the \relation{People} relation]{Example of a schema for the relation \relation{People}}
     \label{fig:peopleSchema}
 \end{figure}
@@ -31,7 +31,7 @@ An (empty) tabular representation for the \relation{People} relation can be foun
 \begin{table}[t]
   \centering
   \begin{tabular}{l|l|l}
-    \attribute{firstName} & \attribute{surname} & \attribute{age} \\
+    \relationAttribute{firstName} & \relationAttribute{surname} & \relationAttribute{age} \\
     \hline\hline
     & &\\
   \end{tabular}
@@ -57,7 +57,7 @@ We can now represent the \relation{People} relation containing the tuple in
 \begin{table}[b]
   \centering
   \begin{tabular}{l|l|l}
-    \attribute{firstName} & \attribute{surname} & \attribute{age} \\
+    \relationAttribute{firstName} & \relationAttribute{surname} & \relationAttribute{age} \\
     \hline\hline
     Jim & Smith & 32\\
   \end{tabular}
@@ -87,7 +87,7 @@ For ease of demonstration we use a more populated instance of the \relation{Peop
 \begin{table}[h]
   \centering
   \begin{tabular}{l|l|l}
-    \attribute{firstName} & \attribute{surname} & \attribute{age} \\
+    \relationAttribute{firstName} & \relationAttribute{surname} & \relationAttribute{age} \\
     \hline\hline
     Jim & Smith & 32\\
     Herbert & Green & 34\\
@@ -99,13 +99,13 @@ For ease of demonstration we use a more populated instance of the \relation{Peop
 \subsubsection{Projections}
 Projections select certain attributes of a relation, removing the others and collapsing duplicates \todo{I thought we needed multiplicity, check this}.\cite{RelationalModel} This can be visualised as only keeping certain columns in the table.
 
-Given a list of $k$ attributes $L = \attribute{a_1}, \attribute{a_2}, \ldots, \attribute{a_k}$, we can specify a projection on an $n$-ary (containing $n$ attributes) relation \relation{R} as \proj{L}{R}. The result is a $k$-ary relation whose attributes are specified by $L$ \cite{RelationalModel} and by convention the ``standard order'' of attributes is also determined by the order of attributed in $L$.\cite{DatabaseSystems}
+Given a list of $k$ attributes $L = \relationAttribute{a_1}, \relationAttribute{a_2}, \ldots, \relationAttribute{a_k}$, we can specify a projection on an $n$-ary (containing $n$ attributes) relation \relation{R} as \proj{L}{R}. The result is a $k$-ary relation whose attributes are specified by $L$ \cite{RelationalModel} and by convention the ``standard order'' of attributes is also determined by the order of attributed in $L$.\cite{DatabaseSystems}
 
-We can see a demonstration of the projection $\proj{\attribute{firstName},\;\attribute{age}}{People}$ in \fref{tab:peopleRelationProjection}:
+We can see a demonstration of the projection $\proj{\relationAttribute{firstName},\;\relationAttribute{age}}{People}$ in \fref{tab:peopleRelationProjection}:
 \begin{table}[h]
   \centering
   \begin{tabular}{l|l}
-    \attribute{firstName} & \attribute{age} \\
+    \relationAttribute{firstName} & \relationAttribute{age} \\
     \hline\hline
     Jim & 32\\
     Herbert & 34\\
@@ -120,32 +120,32 @@ Just as projections select certain columns of a table, selections can be seen as
 
 Given a predicate $P$ and a relation \relation{R}, we denote the selection of \relation{R} by $P$ as \select{P}{R}. Just as with projections, the result is a relation; however, unlike projections we guarantee that the schema of the given resulting relation of \select{P}{R} is identical to the schema of \relation{R}.\cite{DatabaseSystems}
 
-\paragraph{Contents of the predicate} The predicate is comparable to any boolean expression or condition in a programming language with the exception that the underlying atoms of its expressions can be either attributes of the table \relation{R} or constants. Then, for each tuple $t$ of \relation{R}, in order to evaluate $P$ for each attribute \attribute{a_i} appearing in $P$, we replace it with the corresponding component of $t$.\cite{DatabaseSystems} We can see that the schema remains unchanged as the domains of each attribute are not altered and all attributes of selected tuples (those which return true for the predicate) are present in the result.
+\paragraph{Contents of the predicate} The predicate is comparable to any boolean expression or condition in a programming language with the exception that the underlying atoms of its expressions can be either attributes of the table \relation{R} or constants. Then, for each tuple $t$ of \relation{R}, in order to evaluate $P$ for each attribute \relationAttribute{a_i} appearing in $P$, we replace it with the corresponding component of $t$.\cite{DatabaseSystems} We can see that the schema remains unchanged as the domains of each attribute are not altered and all attributes of selected tuples (those which return true for the predicate) are present in the result.
 
-As an example, we show the resulting relation of the selection \select{\attribute{age}\:>\:30}{People} in \fref{tab:peopleRelationSelection}. Of course it is accepted and commonplace for the predicate to be a compound boolean expression using keywords such as \verb|AND|, \verb|OR| and \verb|NOT|.\cite{DatabaseSystems}
+As an example, we show the resulting relation of the selection \select{\relationAttribute{age}\:>\:30}{People} in \fref{tab:peopleRelationSelection}. Of course it is accepted and commonplace for the predicate to be a compound boolean expression using keywords such as \verb|AND|, \verb|OR| and \verb|NOT|.\cite{DatabaseSystems}
 \begin{table}[h]
   \centering
   \begin{tabular}{l|l|l}
-    \attribute{firstName} & \attribute{surname} & \attribute{age} \\
+    \relationAttribute{firstName} & \relationAttribute{surname} & \relationAttribute{age} \\
     \hline\hline
     Jim & Smith & 32\\
     Herbert & Green & 34\\
   \end{tabular}
-  \caption[Example of selection on \relation{People} relation]{People relation with the selection \select{\attribute{age}\:>\:30}{People} applied to it.}
+  \caption[Example of selection on \relation{People} relation]{People relation with the selection \select{\relationAttribute{age}\:>\:30}{People} applied to it.}
   \label{tab:peopleRelationSelection}
 \end{table}
 
 \subsubsection{Products}\label{sec:products}
 The product of two relations \relation{R} and \relation{S} is simply the Cartesian product of the set of tuples of each relation, where instead of a binary tuple of tuples, the result is a single longer tuple. Typically, the result of $\relation{R} \times \relation{S}$ has the elements of tuples in $R$ before those in $S$. \cite{DatabaseSystems}
 
-Clearly, the schema of the resulting relation $\relation{R} \times \relation{S}$ is altered. It takes the form of the union of the schemas of \relation{R} and \relation{S}. Of course in some instances there may be common attributes among \relation{R} and \relation{S}, say \attribute{a}, but in this case the headings associated with the attributes are set to \attribute{\relation{R}.a} and \attribute{\relation{S}.a} respectively.\cite{DatabaseSystems}
+Clearly, the schema of the resulting relation $\relation{R} \times \relation{S}$ is altered. It takes the form of the union of the schemas of \relation{R} and \relation{S}. Of course in some instances there may be common attributes among \relation{R} and \relation{S}, say \relationAttribute{a}, but in this case the headings associated with the attributes are set to \relationAttribute{\relation{R}.a} and \relationAttribute{\relation{S}.a} respectively.\cite{DatabaseSystems}
 
 For instance, given the relations \relation{R} and \relation{S} as in \fref{tab:productRelationR} and \fref{tab:productRelationS}, we can calculate the product $\relation{R} \times \relation{S}$ is as in \fref{tab:productResult}.
 
 \begin{table}[h]
   \centering
   \begin{tabular}{l|l|l}
-    \attribute{a} & \attribute{b} & \attribute{c} \\
+    \relationAttribute{a} & \relationAttribute{b} & \relationAttribute{c} \\
     \hline\hline
     1 & 2 & 3\\
     4 & 5 & 6\\
@@ -158,7 +158,7 @@ For instance, given the relations \relation{R} and \relation{S} as in \fref{tab:
 \begin{table}[h]
   \centering
   \begin{tabular}{l|l}
-  \attribute{c} & \attribute{d} \\
+  \relationAttribute{c} & \relationAttribute{d} \\
   \hline\hline
   10 & 11\\
   12 & 13\\
@@ -169,7 +169,7 @@ For instance, given the relations \relation{R} and \relation{S} as in \fref{tab:
 \begin{table}[h]
   \centering
   \begin{tabular}{l|l|l|l|l}
-    \attribute{a} & \attribute{b} & \attribute{\relation{R}.c} & \attribute{\relation{S}.c} & \attribute{d} \\
+    \relationAttribute{a} & \relationAttribute{b} & \relationAttribute{\relation{R}.c} & \relationAttribute{\relation{S}.c} & \relationAttribute{d} \\
     \hline\hline
     1 & 2 & 3 & 10 & 11\\
     1 & 2 & 3 & 12 & 13\\
@@ -197,7 +197,7 @@ A join is a way of creating a new relation by combining relations with common at
 \begin{table}[h]
   \centering
   \begin{tabular}{l|l|l}
-    \attribute{a} & \attribute{b} & \attribute{c} \\
+    \relationAttribute{a} & \relationAttribute{b} & \relationAttribute{c} \\
     \hline\hline
     1 & 2 & 3\\
     1 & 2 & 4\\
@@ -209,7 +209,7 @@ A join is a way of creating a new relation by combining relations with common at
 \begin{table}[h]
   \centering
   \begin{tabular}{l|l|l}
-    \attribute{b} & \attribute{c} & \attribute{d} \\
+    \relationAttribute{b} & \relationAttribute{c} & \relationAttribute{d} \\
     \hline\hline
     2 & 3 & 7\\
     5 & 6 & 8\\
@@ -217,13 +217,13 @@ A join is a way of creating a new relation by combining relations with common at
   \caption{Relation \relation{S} as example for joins.}
   \label{tab:joinRelationS}
 \end{table}
-\paragraph{Natural join}\label{sec:natjoin} The natural join is the first way to combine relations. Given that relations \relation{R} and \relation{S} have common attributes \attribute{a_1}, \ldots, \attribute{a_k}, tuples in \relation{R} and \relation{S} are combined if the component of all attributes are equal. This join is expressed as \natjoin{R}{S}.\cite{DatabaseSystems}
+\paragraph{Natural join}\label{sec:natjoin} The natural join is the first way to combine relations. Given that relations \relation{R} and \relation{S} have common attributes \relationAttribute{a_1}, \ldots, \relationAttribute{a_k}, tuples in \relation{R} and \relation{S} are combined if the component of all attributes are equal. This join is expressed as \natjoin{R}{S}.\cite{DatabaseSystems}
 \subparagraph*{Example of the natural join} Given the relations \relation{R} and \relation{S} in \fref{tab:joinRelationR} and \fref{tab:joinRelationS} respectively, the natural join $\natjoin{R}{S}$ is as in \fref{tab:naturalJoinResult}.\cite{RelationalModel}
 In this example we call the tuple \verb|(1, 2, 4)| a \emph{dangling tuple} as it failed to pair with any other tuple in relation \relation{S}.\cite{DatabaseSystems}
 \begin{table}[h]
   \centering
   \begin{tabular}{l|l|l|l}
-    \attribute{a} & \attribute{b} & \attribute{c} & \attribute{d} \\
+    \relationAttribute{a} & \relationAttribute{b} & \relationAttribute{c} & \relationAttribute{d} \\
     \hline\hline
     1 & 2 & 3 & 7 \\
     3 & 5 & 6 & 8 \\
@@ -235,7 +235,7 @@ In this example we call the tuple \verb|(1, 2, 4)| a \emph{dangling tuple} as it
 \paragraph{Theta-Join} The \emph{theta-join} is a generalisation of a join, where whether a record is kept is determined by some condition $\theta$. Given such a $\theta$, a theta-join between relations \relation{R} and \relation{S} is written as \thetajoin{\theta}{R}{S}. To determine the tuples of the new relation \thetajoin{\theta}{R}{S} we first must take the product $\relation{R} \times \relation{S}$ (as seen in \fref{sec:products}), then we filter out rows that return false in respect to the predicate $\theta$.\cite{DatabaseSystems}
 \todo{Check to make sure that theta is a condition and not an operator like join processing in relational databases says}
 
-\paragraph{Equijoin} The most important class of joins concerning this project, a specialisation of the theta-join. Equijoin is used when the operator of predicate $\theta$ between two attributes is an equality\footnote{So common that joins using operators other than $=$, such as $<$, are sometimes called \emph{nonequijoins}.\cite{JoinProcessing}}.\cite{JoinProcessing} An equijoin between relations \relation{R} and \relation{S} where we want to join the values of attributes \attribute{a} and \attribute{b} respectively is denoted \equijoin{R}{a}{S}{b}.
+\paragraph{Equijoin} The most important class of joins concerning this project, a specialisation of the theta-join. Equijoin is used when the operator of predicate $\theta$ between two attributes is an equality\footnote{So common that joins using operators other than $=$, such as $<$, are sometimes called \emph{nonequijoins}.\cite{JoinProcessing}}.\cite{JoinProcessing} An equijoin between relations \relation{R} and \relation{S} where we want to join the values of attributes \relationAttribute{a} and \relationAttribute{b} respectively is denoted \equijoin{R}{a}{S}{b}.
 \todo{Write example for equijoin}
 \subsubsection{Note on permutations}
 Permutations is another specialist operation in relational algebra, though not important to the scope of the project. For completion, despite the fact that relations are domain--unordered, their internal representation in computers is not and so permutation may be done for performance benefits despite no logical difference storing a relation and its permutations.\todo{Make sure I worded the performance benefits thing correctly}\cite{RelationalModel} Furthermore, permutation can be used (and is usually implied) to ensure that tuples with identical schemas differing only in ordering can have the normal set operations applied to them. \cite{DatabaseSystems}
