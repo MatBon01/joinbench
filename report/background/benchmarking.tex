@@ -147,7 +147,7 @@ the underlying system (CPU and I/O utilisation) \cite{PractitionersIntroduction}
 and the throughput or price per throughput \cite{TPC-H, SetQueryBenchmark,
 PractitionersIntroduction} (as in transaction support systems). 
 
-Although less pervaisive in our every day life to transaction support systems,
+Although less pervasive in our every day life to transaction support systems,
 there are a large number of benchmarks for decision support systems. To name a
 few there are the \emph{Wisconsin benchmark} \cite{Wisconsin}, \emph{Bull Single-User Decision
 Support benchmark (SUDS)} \cite{PractitionersIntroduction}, \emph{Set Query
@@ -237,7 +237,7 @@ see later, it is paramount to calculating selectivity factors.
 
 \paragraph{The tuples} Each relation has 16 attributes, designed such that a
 tuple is exactly 182 bytes long in order to make the size of all four relations
-approximately 4MB, according to Bitton. These attributes can be found in
+approximately 4 MB, according to Bitton. These attributes can be found in
 \fref{tab:WisconsinAttributes} and are comprised of 2 key-like unique integer
 attributes, 12 cyclic integer attributes with varying domains and 3 string attributes.
 
@@ -270,11 +270,11 @@ attributes, 12 cyclic integer attributes with varying domains and 3 string attri
 
         \relationAttribute{stringu1} & \CharStringWithLength{52}
                              & \WisconsinUStringDef
-                             & unique, derived from \relationAttribute{unqiue1}, key\\
+                             & unique, derived from \relationAttribute{unique1}, key\\
 
         \relationAttribute{stringu2} & $\mathrm{char}(52)$  
                              & \WisconsinUStringDef
-                             & unique, derived from \relationAttribute{unqiue2}, key, primary\\
+                             & unique, derived from \relationAttribute{unique2}, key, primary\\
 
         \relationAttribute{string4} & $\mathrm{char}(52)$  
                             & $\WisconsinLabelledStringStructure{\$}{\$}{\$},\ \$ \in
