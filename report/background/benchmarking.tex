@@ -3,58 +3,397 @@ Databases are pervasive to modern society and thus standards have arisen over
 the last few decades to ensure that customers are able to pick their preferred
 DBMS vendor.
 
-At the top level, database benchmarks are classified split into three categories: industry-standard, vendor and
+At the top level, database benchmarks are classified into three categories: industry-standard, vendor and
 customer-application \cite{PractitionersIntroduction}. 
 These classifications are usually motivated by intention of the benchmark
-instead of structure of the database management system, there is no shortage of
-papers that advocate all three types of benchmarking
-\cite{PractitionersIntroduction} and many make strong implicit cases on the
-necessity of all three for the consumer.
+instead of structure of the database management system; there is no shortage of
+papers emphasising the importance of domain-specific benchmarks for applications
+\cite{PractitionersIntroduction, BenchmarkHandbook} and depending on the
+risk/performance tolerance of the application it may be necessary to consider
+results from all three categories.
 
-Briefly, a vendor database benchmark is usually used during the
-development of a DBMS by the vendor themselves to aid
-the general development of the solution and sales; it is usually characterised
-by a more comprehensive suite of tests driven by insights into the internals. An
-industry-standard is usually characterised by independent testing of the
-database for comparisons across vendors. Finally, a customer-application test is
-a test that an organisation should design and run before choosing a specific
-vendor, choosing to test specific requirements and emphases related to their
-business domain.
+\paragraph{Vendor benchmark} A vendor database benchmark is used by
+the database vendor during the production of the database management system.
+This benchmark usually serves multiple purposes not just limited to the design
+of the system. Of course, it is often used to highlight any performance
+bottlenecks driving the design of the system internally but it usually doubles
+up and acts as the knowledge base for the marketing of the system. Vendor
+benchmarks are usually characterised by a more comprehensive suite of
+tests to generate the insights capable of driving the direction of the
+product \cite{PractitionersIntroduction}.
 
+\paragraph{Industry-standard benchmark} An industry-standard benchmark is a set
+benchmarking suite designed independently to any vendor or solution. It is
+designed to allow for a fair comparison between different vendors and has been
+shown to increase competition between vendors \cite{Wisconsin2}. As much of
+this review will show, many industry-standard benchmarks have been developed
+to give results for a wide range of applications of databases for much more
+relevant and specialised results; and, although many benchmarks have similar
+metrics \cite{SetQueryBenchmark, DebitCredit}, just selecting what metrics to
+show consumers is not a trivial task \cite{DebitCredit}. When Gray's paper
+\cite{BenchmarkHandbook} was written, it was noted that these benchmarks were
+becoming so popular that vendors were also beginning to report their results
+with their marketing.
 
-The type of benchmark to run also largely depends on the use-case for the
-database. Typically we can refer to the use cases as \emph{transaction
-processing} or \emph{decision support} \cite{PractitionersIntroduction}.
+\paragraph{Consumer-application benchmark} This type of benchmark refers to any
+benchmarking that a customer would run, typically to choose between different
+vendors for their application. This kind of testing can be critical for a
+performance-sensitive application \cite{PractitionersIntroduction} and is often
+done to test the performance of the database under a specific installation
+profile \cite{DoingYourOwnBenchmark} or loads. This is a very specialised
+requirements based benchmarking.
+
+The review now turns to different domain-specific benchmarking of databases in
+order to comment on and analyse any common structures found when designing
+databases. This will help inform major design decisions of this project when
+deciding what aspects to include in the benchmarking of the alternative join
+syntax.
+
+Despite the innumerable use cases for databases in the modern world, many
+applications require and prioritise similar values when choosing a solution.
+Furthermore, as most industrial-standard database benchmarks have been designed in
+order to allow comparison for specific domain requirements, you will commonly
+find database benchmarks that are designed with one of two different
+applications in mind: \emph{transaction processing} or \emph{decision support}
+\cite{PractitionersIntroduction}; it is worth mentioning that other application
+types exist, however, such as \emph{document search} and \emph{direct marketing}
+\cite{SetQueryBenchmark}. The application types of transaction processing and
+decision support are so pervasive that they are commonly also used to partition
+other application types, for instance OLTP (Online transaction processing) and
+OLAP (Online analytical processing) are specialised for online processing but
+share many comparative similarities as transaction processing and decision
+support respectively \cite{OLTP-Oracle}.
+
+This review will provide a brief overview of both
+the main database application types, then focus more strongly on decision
+support benchmarks as ad-hoc query processing is more heavily tested in these
+benchmarks and thus more relevant to the project.
 
 \subsection{Transaction processing}
 Transaction processing is characterised by a large number of
-update-intensive requests
-\cite{PractitionersIntroduction}. It is clear that this type of environment
+update-intensive database services with a particular emphasis on integrity of
+its requests \cite{PractitionersIntroduction}.
+It is clear that this type of environment
 demands an emphasis on throughput and integrity. For instance, a bank would
-likely have an \emph{online transaction processing system} or OLTP system in
-place and it clear that the ability to deal with a large number of transactions
-in a short period of time and for the accuracy if the information given is
-paramount. There are many well known benchmarks to test these types of systems,
-including \emph{DebitCredit}, \emph{TPC-C} and \emph{TPC-E} \cite{TPC-OLTP}.
-These benchmarks usually measure transactions per second.
+likely have an online transaction processing system in place and the
+ability to deal with a large number of transactions in a short period of
+time while maintaining the accuracy of the information is most likely paramount.
+There are many well known benchmarks to test these types of systems,
+including \emph{DebitCredit}, \emph{TPC-C} and \emph{TPC-E} \cite{DebitCredit,
+TPC-OLTP}.
+These benchmarks usually measure transactions per second or price per
+transactions per second. Efforts have been made to try and describe what is
+meant by ``price'' and usually it refers to the five-year capital cost (e.g.
+cost of hardware, software and system maintenance over a five year period)
+\cite{BenchmarkHandbook, DebitCredit}. The advantage of giving a metric
+dependent on price is that price is likely to be a limiting of important factor
+to most (if not all) organisations when shopping for database solutions and so
+it helps encompass all information about the system into a single comparable
+number \cite{SetQueryBenchmark}. It is worth noting that many benchmarks which
+include this metric also give more information for the user \cite{TPC-H} or
+allow the user to weight the comparative importance of features in this metric
+\cite{SetQueryBenchmark} but it is expected that much emphasis will come down to
+this defining number \cite{SetQueryBenchmark}.
 
-\subsubsection{Transaction integrity}
-We briefly note what we mean by the integrity of a transaction. A transaction
-simply is an input to the database that must be considered as one unit of work
-\cite{ComputerScienceDictionary} and completed independently to any concurrent
-actions occurring. This behaviour can be described a set of
-properties typically remembered as the acronym \emph{ACID}
-\cite{ComputerScienceDictionary, PractitionersIntroduction}.
-\paragraph{atomicity}
-\paragraph{consistency}
-\paragraph{isolation}
-\paragraph{durability}
+We note that the above definition of a transaction processing system not only
+highlights its intense performance requirements but also notes the importance of
+integrity. The bank example highlights intuitively what we mean by integrity, a
+shop may not want the transaction to go through zero times if it is reported
+that it has, in fact, been processed, just as I would not want the transaction
+to go through twice. So what exactly is a transaction? And how can we specify
+its integrity in a rigorous way?
 
-\subsection{Decision processing}
-\subsubsection{Wisconsin benchmark}
+A transaction simply is an input to the database that must be considered as one
+unit of work \cite{ComputerScienceDictionary} and completed independently to any
+concurrent actions occurring \cite{ACID}. The integrity of this behaviour can be described 
+by a set of properties typically remembered as the acronym \emph{ACID} and
+explained below \cite{ACID, PractitionersIntroduction}.
 
-\subsubsection{Single-User Decision Support} % SUDS
+\paragraph{Atomicity} An ``all or nothing'' property of a transaction. All
+individual operations must take place or any partially-completed sequence of
+operations must have no lasting effects on the data. The user should be informed
+of which outcome has occurred.
 
-\subsubsection{The Set Query Benchmark}
+\paragraph{Consistency} Given the database was in a consistent/valid state
+before the transaction processed, it must remain in a consistent/valid state
+after any changes are committed; that is to say the changes cause not integrity
+constraints to be violated \cite{IntroToDatabaseSystems}. 
+Some texts favour the term ``correctness'' \cite{IntroToDatabaseSystems} but this
+discussion is outside of the scope of the project. 
+% correctness vs consistency: correctness may be preferred as it is stronger, 
+% and says that the database only contains true statements about the world
 
-\subsection{Best practices benchmarking}
+\paragraph{Isolation} Information related to the execution of one transaction
+should be hidden from other transactions running concurrently. This is
+equivalent to being able to find an order such that the results of the execution
+of all transactions would be the same if they were executed sequentially in that
+order.
+
+\paragraph{Durability} Once a transaction has been successfully completed, its
+effects must persist and future malfunctions.
+
+\subsection{Decision support}
+Decision support is characterised by the need to execute complicated queries on
+a database with fewer changes \cite{IntroToDatabaseSystems,
+PractitionersIntroduction}. The business value from this sort of application are
+vast, especially in automatic report generation to produce insights and direct
+company strategy \cite{SetQueryBenchmark, IntroToDatabaseSystems}. Despite the
+clear business needs, the measurements usually taken by decision support
+benchmarks are not as standard as those by transaction processing benchmarks and
+metrics usually vary according to benchmark 
+\cite{PractitionersIntroduction}; some common metrics collected are a measure of
+elapsed time \cite{Wisconsin, TPC-H, PractitionersIntroduction}, performance of
+the underlying system (CPU and I/O utilisation) \cite{PractitionersIntroduction}
+and the throughput or price per throughput \cite{TPC-H, SetQueryBenchmark,
+PractitionersIntroduction} (as in transaction support systems). 
+
+Although less pervasive in our every day life to transaction support systems,
+there are a large number of benchmarks for decision support systems. To name a
+few there are the \emph{Wisconsin benchmark} \cite{Wisconsin}, \emph{Bull Single-User Decision
+Support benchmark (SUDS)} \cite{PractitionersIntroduction}, \emph{Set Query
+benchmark} \cite{SetQueryBenchmark} and \emph{TPC-H} \cite{TPC-H}. 
+
+\subsection{Database benchmarking case studies}
+In the section a variety of different benchmarks will be briefly presented and
+compared. The reader should note that the list of benchmarks presented is
+nowhere near exhaustive and are chosen specifically sample. Although the effort
+for representation has been made, the benchmarks also were not chosen to be
+representative of the large academic field; it must be noted that benchmarking
+databases usually tests a lot more than is relevant to this project and so none
+should be completely relevant. The decisions on which benchmarks to include in
+this section were made on the following criteria:
+\subparagraph{Historical importance}\label{enum:historicalImportance} I believe that the largest benefit of this
+literature review to the project is identifying the steps that benchmarks have
+taken to approach the empirically based and approximated rigorous approach they
+are today in order to inform design decisions throughout the project. Therefore,
+rather than just basing the decision on recency, I believe it more beneficial
+considering papers of more historical importance in order to present an
+intuition on key values within benchmarking databases instead of following a
+clear and inexpressive specification that could lead to designs that obfuscate
+the (specific) results the project deems important. 
+\subparagraph{Relevance} Relevance to the project at hand is extremely
+important. There are many defining features of the projects such as a query
+based, join heavy theory and therefore benchmarks with specific abilities to
+answer questions favouring these features were chosen (clearly leaning towards
+decision support benchmarks).
+\subparagraph{Recency} The recency of the benchmark was taken into consideration
+when comparing to others, however was not a deciding factor. At times, if there
+were multiple similar benchmarks without historical importance (especially if
+it has been made clear that some benchmarks have been deprecated) the most
+recent benchmark was chosen. This was to try and consider the most up to date
+practices when exploring this field.
+
+\subsubsection{Wisconsin}
+In Bitton's paper, ``Benchmarking Database Systems - A Systematic Approach''
+\cite{Wisconsin} she presents the \emph{Wisconsin benchmark} alongside a
+comparison of a few major database systems at the time. She claimed that her
+custom database and queries represented a ``first attempt in developing a
+scientific methodology for performance evaluation of a database management
+system'' and claimed that previous evaluation studies of database machines were
+``based on simplified analytical models''.
+
+This literature review is focused only on the benchmarking methodology and
+largely ignores any results obtained by Bitton for the now clearly outdated
+database machines. From my perspective, her main contribution to the field was
+the idea to construct a synthetic database for the database which has
+subsequently been used in almost all benchmarks since, with the Set Query
+Benchmark specifically pointing out this contribution in its acknowledgements
+\cite{SetQueryBenchmark}. 
+
+Bitton reflects on the issues of using empirical
+databases for benchmarking observing that not only would you require a large
+sample size before they could be considered randomly distributed; furthermore
+for a benchmark empirical databases are difficult to scale and make it difficult
+to specify the selectivity of the operations being benchmarked. Selectivity has
+been used loosely here to refer to any operation that acts on a subset of
+the tuples; as Bitton explains, it is difficult to construct a selection query that
+selects a tenth of the database (i.e. a selection query with an \emph{selectivity
+factor} of 10\%) or only keeps 1000 tuples in an empirical database. Bitton
+notes that modelling selectivity factors on queries with joins is especially
+difficult (a key part of our problem domain). 
+
+Another benefit of using a synthetic database is, given that it is designed
+well, it should be more readable. The Wisconsin benchmark boasts relations and
+attributes with names that immediately give you an idea of what you would find
+and the distribution of its values. In Jim Gray's later work
+\cite{BenchmarkHandbook}, he specifically calls out simplicity as one of four
+key properties of a domain-specific benchmark - defining it as a database's
+understandability and commenting that without it the database would lack
+credibility.
+
+\paragraph{The relations} This section contains a description of the relations in
+the database system and a brief description of their use. The database consists
+of 4 relations, namely ``\relation{thoustup}'', ``\relation{twothoustup}'',
+``\relation{fivethoustup}'', and ``\relation{tenthoustup}'' with 1000, 2000, 5000
+and 10000 tuples respectively; where it is
+clear that the relations are named after it's cardinality (the number of tuples
+it contains \cite{PractitionersIntroduction}). It is worth noting that multiple
+relations are generated for use in 
+queries with multiple operands (such as a join), producing in practice
+``tenthoustupA'' and ``tenthoustupB'' for instance. The advantage to this explicit
+naming is as above, any implementer knows exactly what relation they are dealing
+with making the benchmark a much more readable endeavour. Furthermore, as you will
+see later, it is paramount to calculating selectivity factors.
+
+\paragraph{The tuples} Each relation has 16 attributes, designed such that a
+tuple is exactly 182 bytes long in order to make the size of all four relations
+approximately 4 MB, according to Bitton. These attributes can be found in
+\fref{tab:WisconsinAttributes} and are comprised of 2 key-like unique integer
+attributes, 12 cyclic integer attributes with varying domains and 3 string attributes.
+
+\begin{table}[t]
+    \begin{tabular}{r c c p{0.2\linewidth}}
+        \toprule
+        \textbf{Attribute} & \textbf{Type} & \textbf{Domain} &
+        \textbf{Properties}\\
+        \midrule
+
+        \relationAttribute{unique1} & integer & $\{0, \ldots, K - 1\}$ & random, unique, key \\
+        \relationAttribute{unique2} & integer & $\{0, \ldots, K - 1\}$ & random, unique, key,
+        primary \\
+        \midrule
+
+        \relationAttribute{two} & integer & $\{0, 1\}$ & random \\
+        \relationAttribute{four} & integer & $\{0, \ldots, 3\}$ & random \\
+        \relationAttribute{ten} & integer & $\{0, \ldots, 9\}$ & random \\
+        \relationAttribute{twenty} & integer & $\{0, \ldots, 19\}$ & random \\
+        \relationAttribute{hundred} & integer & $\{0, \ldots, 99\}$ & random \\
+        \relationAttribute{thousand} & integer & $\{0, \ldots, 999\}$ & random \\
+        \relationAttribute{twothous} & integer & $\{0, \ldots, 1999\}$ & random \\
+        \relationAttribute{fivethous} & integer & $\{0, \ldots, 4999\}$ & random \\
+        \relationAttribute{tenthous} & integer & $\{0, \ldots, 9999\}$ & random \\
+        \relationAttribute{odd100} & integer & $\left\{n\ |\ n \leftarrow \{0, \ldots, 99\},\
+        \mathrm{odd}\  n\right\}$ & random \\
+        \relationAttribute{even100} & integer & $\left\{n\ |\ n \leftarrow \{0, \ldots, 99\},\
+        \mathrm{even}\  n\right\}$ & random \\
+        \midrule
+
+        \relationAttribute{stringu1} & \CharStringWithLength{52}
+                             & \WisconsinUStringDef
+                             & unique, derived from \relationAttribute{unique1}, key\\
+
+        \relationAttribute{stringu2} & $\mathrm{char}(52)$  
+                             & \WisconsinUStringDef
+                             & unique, derived from \relationAttribute{unique2}, key, primary\\
+
+        \relationAttribute{string4} & $\mathrm{char}(52)$  
+                            & $\WisconsinLabelledStringStructure{\$}{\$}{\$},\ \$ \in
+                            \{A, H, O, V\}$
+                            & cyclic \\
+        \bottomrule
+    \end{tabular}
+
+    \caption{The attributes of a relation with cardinality $K$ in the Wisconsin
+    database for benchmarking \cite{PractitionersIntroduction, Wisconsin}}
+    \label{tab:WisconsinAttributes}
+\end{table}
+
+\subparagraph{Unique integer attributes} The unique attributes, names \relationAttribute{unique1} and
+\relationAttribute{unique2} are integer fields that range from $0$ to $K - 1$ where $K$
+is the cardinality (number of tuples) of the relation. \emph{Both} fields are
+randomly generated (as is emphasised in Bitton's reflective paper
+\cite{Wisconsin2}) but it is noted that \relationAttribute{unique2} is usually used to
+sort the relation. As the name suggests, both fields are unique. 
+
+\subparagraph{Cyclic integer attributes} These names of these attributes are
+named after the number of values they can take and any properties; for instance
+``\relationAttribute{four}'' can take 4 values from 0 to 3, and ``\relationAttribute{even100}''
+can take any even number between 0 and 99 (the first 100 numbers counting from
+0). Despite following a uniform distribution in Bitton's original paper, these
+integers have been dubbed cyclic as they are designed to be non-unique and some
+implementations \cite{PractitionersIntroduction} derive their value from a
+modulo operation on \relationAttribute{unique1}. These attributes are key to the
+advantages of using a synthetic database as, given the relation cardinality, you
+can use it to specify any number of selectivity factors. For instance a
+selection operation on \relationAttribute{two} relation would result in a selectivity
+factor of 50\%. 
+
+\subparagraph{String attributes} The database has three string attributes, all
+of which contain 52 characters. Two of these attributes, \relationAttribute{stringu1}
+and \relationAttribute{stringu2} are derivative on other randomly generated attributes
+in the relation, namely \relationAttribute{unique1} and \relationAttribute{unique2}
+respectively. Whereas the final string attributes \relationAttribute{string4} cycles
+through four variations of a string. It is noted that all strings have names
+that help the reader understand their origins, with the first two containing
+``u1'' or ``u2'' denoting what component the value would be derived from and the
+``4'' in \relationAttribute{string4} denoting the cardinality of its domain. Each string follows
+the template outlined in \fref{fig:WisconsinStringTemplate}; each \$ is to be
+replaced with a letter between A and V inclusive (the \emph{significant
+letters}) and x denotes the character literal
+`x'. As each of the \$ can be replaced independently with 22 different
+letters, the template can produce $22^3 = 10,648$ unique strings. The design
+intention for this string was twofold, firstly it is clear how the template
+could easily be expanded to allow for more significant letters but less
+obviously, the spacings of the significant letters were meant to help change the
+CPU load by changing the CPU time needed to compare two strings.
+
+\begin{figure}[h]
+    \centering
+    \WisconsinUStringDef 
+    \caption{The general structure of a string attribute in the Wisconsin
+        database. Each \$ is to be substituted by a letter between A and V, and x
+    denotes the character literal `x'.}
+    \label{fig:WisconsinStringTemplate}
+\end{figure}
+
+Both \relationAttribute{stringu1} and \relationAttribute{stringu2} are derived from
+\relationAttribute{unique1} and \relationAttribute{unique2} in the same way. The string
+corresponding to 0 is \WisconsinStringStructure{A}{A}{A} and to find the
+subsequent string, the leftmost character is `increased' and once it reaches `V',
+the next character increased (in the same way) and the current character is
+reset to `A`. This can be seen counting in base 22 with the least significant
+digit on the left instead of the right. An example can be found in
+\fref{fig:WisconsinUniqueStringExample}.
+
+\begin{table}[h]
+    \begin{tabular}{c c}
+        \toprule
+        \relationAttribute{unique1} & \relationAttribute{stringu1} \\
+        \midrule
+        
+        0 & \WisconsinStringStructure{A}{A}{A} \\
+        1 & \WisconsinStringStructure{B}{A}{A} \\
+        2 & \WisconsinStringStructure{C}{A}{A} \\
+
+        \vdots & \vdots \\
+
+        21 & \WisconsinStringStructure{V}{A}{A} \\
+        22 & \WisconsinStringStructure{A}{B}{A} \\
+        23 & \WisconsinStringStructure{B}{B}{A} \\
+
+        \vdots & \vdots \\
+
+        12,166 & \WisconsinStringStructure{V}{V}{A} \\
+        12,167 & \WisconsinStringStructure{A}{A}{B} \\
+        \vdots & \vdots \\
+        \bottomrule
+        
+    \end{tabular}
+    \caption{An example of the process to derive \relationAttribute{stringu1} values
+    from \relationAttribute{unique1} values.}
+    \label{fig:WisconsinUniqueStringExample}
+\end{table}
+
+
+The components of \relationAttribute{string4} simply cycle through the 4 values
+\WisconsinRepeatedStringStructure{A},
+\WisconsinRepeatedStringStructure{H},
+\WisconsinRepeatedStringStructure{O},
+\WisconsinRepeatedStringStructure{V}.
+If any ordering is required it is done on \relationAttribute{unique2} (or equivalently
+\relationAttribute{stringu2}).
+
+\paragraph{Queries} Along with a synthetic database, the Wisconsin benchmark
+also provides a set of queries to benchmark different relational operators.
+Bitton's queries attempt to measure the performance of the following (as stated
+in \cite{Wisconsin})
+\begin{enumerate}
+    \item Selection queries with varying selectivity factors
+    \item Projections with different proportions of duplicated attributes (whose
+        performance impact comes from the collapsing of duplicates as described
+        in \fref{sec:projections})
+    \item Single and multiple joins
+    \item Simple aggregates and aggregate functions
+    \item Updates
+\end{enumerate}
+Many queries contain version for using both primary and secondary indices.

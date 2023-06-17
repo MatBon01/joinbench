@@ -38,8 +38,10 @@ BagRelAlgOps
 peopleSchema
 peopleTuple
 OLTP
+OLAP
 DebitCredit
 TPC
+Bitton
 uncurried
 finitemapfuncs
 uncurry
@@ -49,4 +51,19 @@ Eq
 eq
 CMonoid
 natjoin
+thoustup
+tenthoustupA
+WisconsinAttributes
+unique1
+unique2
+twothous
+fivethous
+tenthous
+odd100
+even100
+stringu1
+stringu2
+string4
+WisconsinUniqueStringExample
+prejoin
 
