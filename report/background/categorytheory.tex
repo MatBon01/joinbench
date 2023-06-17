@@ -8,9 +8,15 @@ visualisation of concepts.
 
 \subsection{Categories}
 \theoremstyle{definition}\newtheorem*{categorydef}{Category}
-We will first take the purely mathematical introduction to category theory. We see that most structures in mathematics have similar key features: a collection of elements (typically with some rules governing them depending on the definition of the structure) and morphisms or transformations between them preserving the structure of elements. Notice, groups and group homomorphisms, rings and ring homomorphisms, topological spaces and continuous maps. This will be our inspiration while defining categories, ultimately the abstraction of these structures. \todo{introduce the non maths way of looking at it as well from the categories, types and structures book}
+We see that most structures in mathematics have similar key features: a
+collection of elements (typically with some rules governing them depending on
+the definition of the structure) and morphisms or transformations between them
+preserving the structure of elements. Notice, groups and group homomorphisms,
+rings and ring homomorphisms, topological spaces and continuous maps. This will
+be our inspiration while defining categories, ultimately the abstraction of
+these structures. 
 \begin{categorydef}
-  A \emph{category} \cat{C} is a set\footnote{In more rigorous definitions one must be careful of defining the collections of objects as a set lest Russell's paradox comes into play}\todo{Make sure that this is correct.} of \emph{objects} \objs{C}, such as \obj{a}, \obj{b}, \obj{c}, and \emph{morphisms} (or \emph{arrows}) \morphs{C} between them, such as \morph{f}, \morph{g}. We require that:
+  A \emph{category} \cat{C} is a set\footnote{In more rigorous definitions one must be careful of defining the collections of objects as a set lest Russell's paradox comes into play} of \emph{objects} \objs{C}, such as \obj{a}, \obj{b}, \obj{c}, and \emph{morphisms} (or \emph{arrows}) \morphs{C} between them, such as \morph{f}, \morph{g}. We require that:
   \begin{itemize}
     \item There are two operations; \emph{domain} which associates with every arrow \morph{f} an object $\obj{a} = \domain{f}$ and \emph{codomain} which associates with every arrow \morph{f} an object $\obj{b} = \codomain{f}$. We can now express this information as \explicitmorph{f}{a}{b}.\footnote{Though we emphasise the distinction between a function and a morphism.}
     \item There is a composition rule between morphisms such that given \explicitmorph{f}{a}{b} and \explicitmorph{g}{b}{c}, there is another arrow \explicitmorph{\morph{g} \circ \morph{f}}{a}{c} in \morphs{C}.
