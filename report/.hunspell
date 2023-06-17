@@ -42,3 +42,12 @@ OLAP
 DebitCredit
 TPC
 Bitton
+uncurried
+finitemapfuncs
+uncurry
+PointedSet
+isEmpty
+Eq
+eq
+CMonoid
+natjoin
