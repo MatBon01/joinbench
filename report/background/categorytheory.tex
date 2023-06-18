@@ -69,9 +69,9 @@ Given two functors $\functor{F}, \functor{G} : \cat{C} \to \cat{D}$ a
     \cat{D}$ are functors. The vertical composition \cite{RelationalAlgebraByWayOfAdjunctions}
     $\explicitnattrans{\verticalcomposition{\tau}{\nu}}{E}{G}$
     is defined by the composition of the underlying arrows for every
-    object $\obj{A} \in \cat{C}$. Explicitly, the components
-    $\nattransapply{\left(\verticalcomposition{\tau}{\nu}\right)}{A} =
-    \morphcomp{\nattransapply{\tau}{A}}{\nattransapply{\nu}{A}}$
+    object $\obj{a} \in \cat{C}$. Explicitly, the components
+    $\nattransapply{\left(\verticalcomposition{\tau}{\nu}\right)}{\obj{a}} =
+    \morphcomp{\nattransapply{\tau}{\obj{a}}}{\nattransapply{\nu}{\obj{a}}}$.
 \label{sec:verticalcomposition}
 \end{verticalcompositiondef}
 
@@ -108,9 +108,9 @@ sets that can easily be considered a Cartesian product $\obj{X} \times \obj{Y}$.
 Motivated by this example, we give a formal definition of an adjunction.
 \begin{adjunctiondef}
     Given two functors $\functor{L}: \cat{D} \to \cat{C}$ and $\functor{R}:
-    \cat{C} \to \cat{D}$, we define an adjunction $\adunction{L}{R}$ \todo{has a
-    domain and codomain} such that there is a natural isomorphism between the
-    hom-sets as follows:\cite{RelationalAlgebraByWayOfAdjunctions}
+    \cat{C} \to \cat{D}$, we define an adjunction $\adunction{L}{R}$
+    such that there is a natural isomorphism between the
+    hom-sets as follows \cite{RelationalAlgebraByWayOfAdjunctions}:
     \[
         \lfloor - \rfloor: \homset{C}{\functorobj{L}{A}}{B} \cong
         \homset{D}{A}{\functorobj{R}{B}} :\lceil - \rceil
@@ -123,16 +123,21 @@ Motivated by this example, we give a formal definition of an adjunction.
     \emph{counit}:
     $\explicitnattrans{\epsilon}{L \circ R}{\mathrm{Id}}$ such that
     $\nattransapply{\epsilon}{B} = \lceil \id{\functorobj{R}{A}} \rceil$. We
-    require that the unit and counit obey the `triangle identities':
-\[
-            \verticalcomposition{\nattransapply{\eta}{\functor{R}}}{\functorobj{R}{\nattrans{\epsilon}}}
-            = \id{}
-\] \todo{fix notation}
+    require that the unit and counit obey the `triangle identities' \cite{RelationalAlgebraByWayOfAdjunctions}:
+      $
+      \verticalcomposition
+          {\nattransapply{\eta}{\functor{R}}}
+          {\functorobj{R}{\nattrans{\epsilon}}} 
+      = \id{}
+      $
     and
-\[
-    \verticalcomposition{\functorobj{L}{\nattrans{\eta}}}{\nattransapply{\epsilon}{\functor{L}}}
-    = \id{}
-\]
+      $
+      \verticalcomposition
+          {\functorobj{L}{\nattrans{\eta}}}
+          {\nattransapply{\epsilon} {\functor{L}}} 
+      = \id{}
+      $.
+
 \end{adjunctiondef}
 
 We see that the unit $\eta$ is a mapping between elements in \cat{D}, noting
