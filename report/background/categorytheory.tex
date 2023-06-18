@@ -35,7 +35,13 @@ codomain \obj{b}.
 
 Similar to the arrows we have within categories, we can transform categories to other categories. This is the notion of a functor.
 \begin{covfunctordef}
-  Given two categories \cat{C} and \cat{D}, a (covariant) functor $\functor{F}: \cat{C} \to \cat{D}$ is two related functions, an \emph{object function} and an \emph{arrow function} (both written as \functor{F}). The object function $\functor{F}: \objs{C} \to \objs{D}$ maps an object $a$ in \cat{C} to $\functorobj{F}{a}$ in \cat{D}. Given an arrow $\morph{f}: \obj{a} \to \obj{b}$ in \cat{C}, the arrow function maps \morph{f} to $\functormorph{F}{f}: \functorobj{F}{a} \to \functorobj{F}{b}$. The functor must obey the following properties: \todo{Should I say the arrow is in the cat or the morphs of the cat}
+  Given two categories \cat{C} and \cat{D}, a (covariant) functor $\functor{F}:
+  \cat{C} \to \cat{D}$ is two related functions, an \emph{object function} and
+  an \emph{arrow function} (both written as \functor{F}). The object function
+  $\functor{F}: \objs{C} \to \objs{D}$ maps an object $a$ in \cat{C} to
+  $\functorobj{F}{a}$ in \cat{D}. Given an arrow $\morph{f}: \obj{a} \to
+  \obj{b}$ in \cat{C}, the arrow function maps \morph{f} to
+  $\functormorph{F}{f}: \functorobj{F}{a} \to \functorobj{F}{b}$ in \cat{D}. The functor must obey the following properties:
   \begin{itemize}
     \item It must preserve the identity morphism, i.e. $\functormorph{F}{\id{a}} = \id{\functorobj{F}{a}}$.
     \item It must also preserve composition, i.e. $\functormorph{F}{\left(\morph{g} \circ \morph{f}\right)} = \functormorph{F}{\morph{g}} \circ \functormorph{F}{\morph{f}}$.
