@@ -1,10 +1,22 @@
 \section{Category theory}
-Category theory will be our main tool in describing the mathematical structure of different elements of our database systems, and relations between them. More generally, category theory can be seen as a way of taking the abstractions that algebra was built on to a higher level, an ``abstraction of abstractions''. You can find that just as easily as categories can help us in our domain, categories have a rich language and can describe many structures in mathematics ranging from groups and rings to matrices. 
+Category theory will be the main tool in describing the structure and operations
+of our database system. Category theory is a very powerful tool in mathematics
+and can be seen as an ``abstraction of abstractions''. The category theory that
+will appear in this paper is very limited and does not do justice to the full
+language, although some mathematical examples are presented to try and aid
+visualisation of concepts.
+
 \subsection{Categories}
 \theoremstyle{definition}\newtheorem*{categorydef}{Category}
-We will first take the purely mathematical introduction to category theory. We see that most structures in mathematics have similar key features: a collection of elements (typically with some rules governing them depending on the definition of the structure) and morphisms or transformations between them preserving the structure of elements. Notice, groups and group homomorphisms, rings and ring homomorphisms, topological spaces and continuous maps. This will be our inspiration while defining categories, ultimately the abstraction of these structures. \todo{introduce the non maths way of looking at it as well from the categories, types and structures book}
+We see that most structures in mathematics have similar key features: a
+collection of elements (typically with some rules governing them depending on
+the definition of the structure) and morphisms or transformations between them
+preserving the structure of elements. Notice, groups and group homomorphisms,
+rings and ring homomorphisms, topological spaces and continuous maps. This will
+be our inspiration while defining categories, ultimately the abstraction of
+these structures. 
 \begin{categorydef}
-  A \emph{category} \cat{C} is a set\footnote{In more rigorous definitions one must be careful of defining the collections of objects as a set lest Russell's paradox comes into play}\todo{Make sure that this is correct.} of \emph{objects} \objs{C}, such as \obj{a}, \obj{b}, \obj{c}, and \emph{morphisms} (or \emph{arrows}) \morphs{C} between them, such as \morph{f}, \morph{g}. We require that:
+  A \emph{category} \cat{C} is a set\footnote{In more rigorous definitions one must be careful of defining the collections of objects as a set lest Russell's paradox comes into play} of \emph{objects} \objs{C}, such as \obj{a}, \obj{b}, \obj{c}, and \emph{morphisms} (or \emph{arrows}) \morphs{C} between them, such as \morph{f}, \morph{g}. We require that:
   \begin{itemize}
     \item There are two operations; \emph{domain} which associates with every arrow \morph{f} an object $\obj{a} = \domain{f}$ and \emph{codomain} which associates with every arrow \morph{f} an object $\obj{b} = \codomain{f}$. We can now express this information as \explicitmorph{f}{a}{b}.\footnote{Though we emphasise the distinction between a function and a morphism.}
     \item There is a composition rule between morphisms such that given \explicitmorph{f}{a}{b} and \explicitmorph{g}{b}{c}, there is another arrow \explicitmorph{\morph{g} \circ \morph{f}}{a}{c} in \morphs{C}.
@@ -13,17 +25,27 @@ We will first take the purely mathematical introduction to category theory. We s
     \item Composition with the identity morphism is the identity on morphisms. Explicitly, given the arrow \explicitmorph{f}{a}{b}, we have $\morph{f} \circ \id{a} = \id{b} \circ \morph{f} = \morph{f}$.
   \end{itemize}
 \end{categorydef}
-\todo{introduce hom-set}
+
+\paragraph{}Furthermore, a \emph{hom-set} \homset{C}{\obj{a}}{\obj{b}} is
+defined as the collection of all arrows in \cat{C} with domain \obj{a} and
+codomain \obj{b}.
 
 \subsection{Functors}
 \theoremstyle{definition}\newtheorem*{covfunctordef}{Functor}
 
 Similar to the arrows we have within categories, we can transform categories to other categories. This is the notion of a functor.
 \begin{covfunctordef}
-  Given two categories \cat{C} and \cat{D}, a (covariant) functor $\functor{F}: \cat{C} \to \cat{D}$ is two related functions, an \emph{object function} and an \emph{arrow function} (both written as \functor{F}). The object function $\functor{F}: \objs{C} \to \objs{D}$ maps an object $a$ in \cat{C} to $\functorobj{F}{a}$ in \cat{D}. Given an arrow $\morph{f}: \obj{a} \to \obj{b}$ in \cat{C}, the arrow function maps \morph{f} to $\functormorph{F}{f}: \functorobj{F}{a} \to \functorobj{F}{b}$. The functor must obey the following properties: \todo{Should I say the arrow is in the cat or the morphs of the cat}
+  Given two categories \cat{C} and \cat{D}, a (covariant) functor $\functor{F}:
+  \cat{C} \to \cat{D}$ is two related functions, an \emph{object function} and
+  an \emph{arrow function} (both written as \functor{F}). The object function
+  $\functor{F}: \objs{C} \to \objs{D}$ maps an object $a$ in \cat{C} to
+  $\functorobj{F}{a}$ in \cat{D}. Given an arrow $\morph{f}: \obj{a} \to
+  \obj{b}$ in \cat{C}, the arrow function maps \morph{f} to
+  $\functormorph{F}{f}: \functorobj{F}{a} \to \functorobj{F}{b}$ in \cat{D}. The functor must obey the following properties:
   \begin{itemize}
     \item It must preserve the identity morphism, i.e. $\functormorph{F}{\id{a}} = \id{\functorobj{F}{a}}$.
-    \item It must also preserve composition, i.e. $\functormorph{F}{\left(\morph{g} \circ \morph{f}\right)} = \functormorph{F}{\morph{g}} \circ \functormorph{F}{\morph{f}}$.
+    \item It must also preserve composition, i.e.
+        $\functormorph{F}{\left(\morph{g} \circ \morph{f}\right)} = \functormorph{F}{\morph{g}} \circ \functormorph{F}{\morph{f}}$.
   \end{itemize}
 \end{covfunctordef}
 
@@ -38,28 +60,20 @@ Given two functors $\functor{F}, \functor{G} : \cat{C} \to \cat{D}$ a
 
 \end{nattransdef}
 
-\subsubsection{Compositions}
-As you might expect from the denotation of a natural transformation with an
-arrow, there are composition laws for them. They are slightly more complicated
-than most compositions, however, and have two different kinds.
 \theoremstyle{definition}\newtheorem*{verticalcompositiondef}{Vertical Composition}
-\theoremstyle{definition}\newtheorem*{horizontalcompositiondef}{Horizontal Composition}
 
-\cite{RelationalAlgebraByWayOfAdjunctions}
 \begin{verticalcompositiondef}
     Given two natural transformations
     \explicitnattrans{\tau}{E}{F} and
     \explicitnattrans{\nu}{F}{G} where $\functor{E, F, G}: \cat{C} \to
-    \cat{D}$ are functors. The vertical composition
+    \cat{D}$ are functors. The vertical composition \cite{RelationalAlgebraByWayOfAdjunctions}
     $\explicitnattrans{\verticalcomposition{\tau}{\nu}}{E}{G}$
     is defined by the composition of the underlying arrows for every
-    object $\obj{A} \in \cat{C}$. Explicitly, the components
-    $\nattransapply{\left(\verticalcomposition{\tau}{\nu}\right)}{A} =
-    \morphcomp{\nattransapply{\tau}{A}}{\nattransapply{\nu}{A}}$
+    object $\obj{a} \in \cat{C}$. Explicitly, the components
+    $\nattransapply{\left(\verticalcomposition{\tau}{\nu}\right)}{\obj{a}} =
+    \morphcomp{\nattransapply{\tau}{\obj{a}}}{\nattransapply{\nu}{\obj{a}}}$.
 \label{sec:verticalcomposition}
 \end{verticalcompositiondef}
-
-\todo{Add horizontal composition definition}
 
 
 \subsection{Adjunctions}
@@ -94,9 +108,9 @@ sets that can easily be considered a Cartesian product $\obj{X} \times \obj{Y}$.
 Motivated by this example, we give a formal definition of an adjunction.
 \begin{adjunctiondef}
     Given two functors $\functor{L}: \cat{D} \to \cat{C}$ and $\functor{R}:
-    \cat{C} \to \cat{D}$, we define an adjunction $\adunction{L}{R}$ \todo{has a
-    domain and codomain} such that there is a natural isomorphism between the
-    hom-sets as follows:\cite{RelationalAlgebraByWayOfAdjunctions}
+    \cat{C} \to \cat{D}$, we define an adjunction $\adunction{L}{R}$
+    such that there is a natural isomorphism between the
+    hom-sets as follows \cite{RelationalAlgebraByWayOfAdjunctions}:
     \[
         \lfloor - \rfloor: \homset{C}{\functorobj{L}{A}}{B} \cong
         \homset{D}{A}{\functorobj{R}{B}} :\lceil - \rceil
@@ -109,16 +123,21 @@ Motivated by this example, we give a formal definition of an adjunction.
     \emph{counit}:
     $\explicitnattrans{\epsilon}{L \circ R}{\mathrm{Id}}$ such that
     $\nattransapply{\epsilon}{B} = \lceil \id{\functorobj{R}{A}} \rceil$. We
-    require that the unit and counit obey the `triangle identities':
-\[
-            \verticalcomposition{\nattransapply{\eta}{\functor{R}}}{\functorobj{R}{\nattrans{\epsilon}}}
-            = \id{}
-\] \todo{fix notation}
+    require that the unit and counit obey the `triangle identities' \cite{RelationalAlgebraByWayOfAdjunctions}:
+      $
+      \verticalcomposition
+          {\nattransapply{\eta}{\functor{R}}}
+          {\functorobj{R}{\nattrans{\epsilon}}} 
+      = \id{}
+      $
     and
-\[
-    \verticalcomposition{\functorobj{L}{\nattrans{\eta}}}{\nattransapply{\epsilon}{\functor{L}}}
-    = \id{}
-\]
+      $
+      \verticalcomposition
+          {\functorobj{L}{\nattrans{\eta}}}
+          {\nattransapply{\epsilon} {\functor{L}}} 
+      = \id{}
+      $.
+
 \end{adjunctiondef}
 
 We see that the unit $\eta$ is a mapping between elements in \cat{D}, noting
@@ -127,11 +146,6 @@ morphism \id{\functorobj{L}{A}}.
 In trying to understand the triangle inequalities it is worth remembering the
 definition of vertical composition in \fref{sec:verticalcomposition}, namely
 that
-$\nattransapply{\left(\verticalcomposition{\eta}{\epsilon})\right)}{\obj{A}} =
+$\nattransapply{\left(\verticalcomposition{\eta}{\epsilon}\right)}{\obj{A}} =
 \morphcomp{\nattransapply{\eta}{\obj{A}}}{\nattransapply{\epsilon}{\obj{A}}}$
 where the right hand side is simple the composition of arrows.
-\todo{Description very similar to the paper so make sure it is not plagiarism}
-
-\todo{Describe why adjunctions are such a key character in this paper}
-\todo{Add more information between here}
-\subsection{Graded Monads}\label{sec:gradedmonads}
