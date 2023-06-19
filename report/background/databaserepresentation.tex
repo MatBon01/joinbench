@@ -1,15 +1,10 @@
 \section{Evolution of database representation}
 \subsection{Bags}
-\todo{Understand and distinguish between bags being the bulk type}
-\paragraph{Characteristics of a database}We expect our database approximation to not be ordered and admit multiplicities and a finite bag of values is one of the simplest constructions that does so. Like a finite set, a bag contains a collection of unordered values. However, unlike a set, bags can contain duplicate elements. \cite{RelationalAlgebraByWayOfAdjunctions} This multiplicity is key for processing non-idempotent aggregations. For instance, if summing up the ages of a database of people, without admitting multiplicity we would only sum each unique age once.
+\paragraph{Characteristics of a database}We expect our database approximation to not be ordered and admit multiplicities and a finite bag of values is one of the simplest constructions that does so. Like a finite set, a bag contains a collection of unordered values. However, unlike a set, bags can contain duplicate elements \cite{RelationalAlgebraByWayOfAdjunctions}.  This multiplicity is key for processing non-idempotent aggregations. For instance, if summing up the ages of a database of people, without admitting multiplicity we would only sum each unique age once.
 \subparagraph{Generalisation}Furthermore, going forward we generalise to bags of any types instead of the classical ``bags of records''. This also allows us to deal with intermediate tables that contain non-record values.
-\todo{Add the mathematical parts about bags}
-\todo{When reading about finite maps it says that it's better for databases as non finite maps cannot be aggregated, can non finite bags be aggregates - is this why they are finite?}
-
-\todo{Write rest of section}
 
 In \fref{tab:BagRelAlgOps} we summarise the implementation of relational algebra operators with bags
-as their bulk type\cite{RelationalAlgebraByWayOfAdjunctions}.
+as their bulk type \cite{RelationalAlgebraByWayOfAdjunctions}.
 \begin{table}[h]
     \centering
     \begin{tabular}{r|l}
@@ -28,7 +23,8 @@ as their bulk type\cite{RelationalAlgebraByWayOfAdjunctions}.
 \end{table}
 
 \subsection{Indexed tables}
-We want to move towards an indexed representation of our table in order to equijoin by indexing. \todo{Understand if this is right and equijoin by indexing}. So in this section we introduce the mathematical concepts required to define such an implementation.
+We want to move towards an indexed representation of our table in order to
+equijoin by indexing. In this section we introduce the mathematical concepts required to define such an implementation.
 \theoremstyle{definition}\newtheorem*{psetdef}{Pointed set}
 \theoremstyle{definition}\newtheorem*{ppfuncdef}{Point-preserving function}
 \theoremstyle{definition}\newtheorem*{mapdef}{Map}
@@ -40,9 +36,6 @@ We commonly refer to the distinguished element of a set $A$ as $null_A$ or, when
 \begin{ppfuncdef}\label{def:ppfunc}
   Given two pointed sets $\pset{A}{null_A}$ and $\pset{B}{null_B}$, a total function $f: A \rightarrow B$ is point-preserving if $f(null_A) = null_B$.
 \end{ppfuncdef}
-\todo{See if there is a way to have better spacing in brackets}
-
-\todo{Add in more mathematical detail for point preserving functions}
 
 We now have the mathematical tools required to define a map. In its finite form a map is widely known in computer science by many other names such as a dictionary, association lists or key-value maps.
 
@@ -54,8 +47,3 @@ Let $\keyset$ be a set and $\valset$ a pointed set. To those already familiar wi
   A finite map of type \finitemap{\keyset}{\valset} is a map where only a finite number of keys are mapped to $null_\valset$ (where $null_\valset$ is the distinguished element of \valset). 
 \end{finitemapdef}
 The advantage of using a finite map in a database is to allow aggregation.
-\todo{Understand why only semi-monoidal}
-\todo{Introduced indexed tables}
-\paragraph{Useful functions}{} \todo{Explain all the functions needed, such as
-merge\label{sec:finitemapfuncs}}
-
