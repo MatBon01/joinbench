@@ -11,6 +11,6 @@ main = do
   let customers = fromRight empty $ CP.parseCSV customersCSV
   invoicesCSV <- readFile "app/examples/tables/i100.csv"
   let invoices = fromRight empty $ IP.parseCSV invoicesCSV
-  print $ head $ elements customers
-  print $ head $ elements invoices
+  let join = [ (c, i) | c <- elements customers, i <- elements invoices, cid c == cust i]
+  print join
 
