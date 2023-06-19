@@ -6,7 +6,10 @@ import Data.CMonoid
 import qualified Data.PointedSet as Pointed
 
 newtype Bag a = Bag {elements :: [a]}
-  deriving (Show)
+
+instance (Show a) => (Show (Bag a)) where
+  show = intercalate "\n" . map show . elements
+
 
 instance (Eq a) => Eq (Bag a) where
   b1 == b2 = eq' (elements b1) (elements b2)
