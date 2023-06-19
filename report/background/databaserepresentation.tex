@@ -36,9 +36,6 @@ We commonly refer to the distinguished element of a set $A$ as $null_A$ or, when
 \begin{ppfuncdef}\label{def:ppfunc}
   Given two pointed sets $\pset{A}{null_A}$ and $\pset{B}{null_B}$, a total function $f: A \rightarrow B$ is point-preserving if $f(null_A) = null_B$.
 \end{ppfuncdef}
-\todo{See if there is a way to have better spacing in brackets}
-
-\todo{Add in more mathematical detail for point preserving functions}
 
 We now have the mathematical tools required to define a map. In its finite form a map is widely known in computer science by many other names such as a dictionary, association lists or key-value maps.
 
@@ -50,8 +47,6 @@ Let $\keyset$ be a set and $\valset$ a pointed set. To those already familiar wi
   A finite map of type \finitemap{\keyset}{\valset} is a map where only a finite number of keys are mapped to $null_\valset$ (where $null_\valset$ is the distinguished element of \valset). 
 \end{finitemapdef}
 The advantage of using a finite map in a database is to allow aggregation.
-\todo{Understand why only semi-monoidal}
-\todo{Introduced indexed tables}
 \paragraph{Useful functions}{} \todo{Explain all the functions needed, such as
 merge\label{sec:finitemapfuncs}}
 
