@@ -13,9 +13,10 @@ This could be naively converted into a list comprehension with the following:
 \[
   \left[\,(r, s)\;|\;r \leftarrow R,\;s \leftarrow S,\;r.a = s.b\,\right]
 \]
-where $(r, s)$ is seen as a single tuple whose attributes \attribute{\relation{R}.a} and \attribute{\relation{R}.b} are merged. \todo{fix example so that you do not need to see things}
+where $(r, s)$ is seen as a single tuple whose attributes
+\relationAttribute{\relation{R}.a} and \relationAttribute{\relation{R}.b} are merged. \todo{fix example so that you do not need to see things}
 
-With this naive implementation we effectively convert \equijoin{R}{\attribute{a}}{S}{\attribute{b}} to \select{\attribute{a} = \attribute{b}}{\relation{R} \times \relation{S}}, generating a relation with $|R||S|$ tuples in the process then filtering through each.
+With this naive implementation we effectively convert \equijoin{R}{\relationAttribute{a}}{S}{\relationAttribute{b}} to \select{\relationAttribute{a} = \relationAttribute{b}}{\relation{R} \times \relation{S}}, generating a relation with $|R||S|$ tuples in the process then filtering through each.
 
 This can much be much more efficiently implemented by viewing databases as indexed tables. We can index each relation by its associated attribute in the equijoin and merge the results -- localising the Cartesian product to tuples we know are in the new relation; if care is taken with comparisons and projection, this approach admits a linear time implementation of the equijoin \cite{RelationalAlgebraByWayOfAdjunctions}. With some mathematical tools explained in \fref{sec:gradedmonads} we show that these indexed tables share enough of a monadic structure to fit a comprehension syntax using the extended syntax discussed above.
 
