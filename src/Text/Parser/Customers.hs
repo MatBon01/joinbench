@@ -1,7 +1,7 @@
 module Text.Parser.Customers where
 
-import Text.Parser.Utils
 import           Data.Bag
+import           Text.Parser.Utils
 import           Text.ParserCombinators.Parsec
 
 type Identifier = Int
