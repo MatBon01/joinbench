@@ -66,8 +66,20 @@ We can now represent the \relation{People} relation containing the tuple in
   \label{tab:peopleRelationWithTuple}
 \end{table}
 
-In the relational model the constraint that each each component of a tuple must be an of an atomic type; meaning the component should reasonably not be a compound data type such as records, lists or sets. Furthermore, each attribute has its own associated \emph{domain}, specifying an elementary type that all components belonging to that column must take. The domain can be specified in the the schema using a colon as follows:
-\begin{figure}[!h]
+In the relational model the constraint that each each component of a tuple must
+be an of an atomic type; meaning the component should reasonably not be a
+compound data type such as records, lists or sets. Furthermore, each attribute
+has its own associated \emph{domain}, specifying an elementary type that all
+components belonging to that column must take. The domain can be specified in
+the the schema using a colon as shown in \fref{fig:peopleSchemaWithDomain}.
+\begin{figure}[h]
+    \centering
+    \schema{\relation{People}}{\relationAttribute{firstName}: string,\
+        \relationAttribute{surname}: string,\
+    \relationAttribute{age}: integer}
+
+        \caption{The people schema with its associated domains.}
+\label{fig:peopleSchemaWithDomains}
 \end{figure}
 
 It is now natural to see a tuple as a collection of components (defined by
