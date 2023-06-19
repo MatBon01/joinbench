@@ -1,0 +1,12 @@
+module Main where
+
+import Text.Parser.Customers as CP
+import Text.Parser.Invoices as IP
+import Data.Bag
+import Data.Either
+
+main :: IO ()
+main = do
+  customersCSV <- readFile "app/examples/tables/c100.csv"
+  let customers = fromRight empty $ CP.parseCSV customersCSV
+  print $ head $ elements customers
