@@ -1,18 +1,18 @@
 module Text.Parser.Invoices where
 
-import Text.Parser.Utils
-import Text.ParserCombinators.Parsec
-import Data.Bag
-import Data.Word
+import           Data.Bag
+import           Data.Word
+import           Text.Parser.Utils
+import           Text.ParserCombinators.Parsec
 
 type Identifier = Word16
 type Date = Int
 type Amount = Int
 
-data Invoice = I 
-  { iid :: Identifier
-  , cust :: Identifier
-  , due :: Date
+data Invoice = I
+  { iid    :: Identifier
+  , cust   :: Identifier
+  , due    :: Date
   , amount :: Amount} deriving (Show, Eq)
 
 csvFile :: GenParser Char st (Bag Invoice)
@@ -23,7 +23,7 @@ csvFile = do
 
 invoiceRecord :: GenParser Char st Invoice
 invoiceRecord = do
-  iidCell <- identifier 
+  iidCell <- identifier
   separator
   custIdCell <- identifier
   separator
