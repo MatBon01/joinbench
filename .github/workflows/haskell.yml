@@ -74,7 +74,7 @@ jobs:
       uses: Sibz/github-status-action@v1
       with:
         authToken: ${{secrets.GITHUB_TOKEN}}
-        context: "Haskell test"
+        context: "Haskell tests"
         description: "No spelling mistakes detected"
         state: "success"
         sha: ${{github.event.pull_request.head.sha || github.sha}}
