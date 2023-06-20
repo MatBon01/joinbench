@@ -3,8 +3,9 @@ module Text.Parser.Invoices where
 import Text.Parser.Utils
 import Text.ParserCombinators.Parsec
 import Data.Bag
+import Data.Word
 
-type Identifier = Int
+type Identifier = Word16
 type Date = Int
 type Amount = Int
 
