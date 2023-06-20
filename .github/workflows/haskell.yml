@@ -40,6 +40,44 @@ jobs:
         cabal build --only-dependencies --enable-tests --enable-benchmarks
     - name: Build
       run: cabal build --enable-tests --enable-benchmarks all
+
+
+
+    - name: Set test status to pending
+      uses: Sibz/github-status-action@v1
+      with:
+        authToken: ${{secrets.GITHUB_TOKEN}}
+        context: "Haskell tests"
+        description: "Testing Haskell code"
+        state: "pending"
     - name: Run tests
+      id: test
       run: cabal test all
+    - name: Report failure status
+      if: ${{ failure() && steps.test.conclusion == 'failure' }}
+      uses: Sibz/github-status-action@v1
+      with:
+        authToken: ${{secrets.GITHUB_TOKEN}}
+        context: "Haskell tests"
+        description: "Haskell tests failed"
+        state: "failure"
+
+    - name: Report test failures 
+      if: ${{ failure() && steps.test.conclusion == 'failure' }}
+      run: echo -e "::warning title=Haskell test report::Haskell tests failed."
+
+    - name: Report test success status
+      if: success()
+      uses: Sibz/github-status-action@v1
+      with:
+        authToken: ${{secrets.GITHUB_TOKEN}}
+        context: "Haskell test"
+        description: "No spelling mistakes detected"
+        state: "success"
+
+    - name: Report test success
+      if: success()
+      run: echo "::notice title=Haskell test report::All tests passed."
+
+
 
