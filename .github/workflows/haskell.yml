@@ -50,6 +50,7 @@ jobs:
         context: "Haskell tests"
         description: "Testing Haskell code"
         state: "pending"
+        sha: ${{github.event.pull_request.head.sha || github.sha}}
     - name: Run tests
       id: test
       run: cabal test all
@@ -61,6 +62,7 @@ jobs:
         context: "Haskell tests"
         description: "Haskell tests failed"
         state: "failure"
+        sha: ${{github.event.pull_request.head.sha || github.sha}}
 
     - name: Report test failures 
       if: ${{ failure() && steps.test.conclusion == 'failure' }}
@@ -74,6 +76,7 @@ jobs:
         context: "Haskell test"
         description: "No spelling mistakes detected"
         state: "success"
+        sha: ${{github.event.pull_request.head.sha || github.sha}}
 
     - name: Report test success
       if: success()
