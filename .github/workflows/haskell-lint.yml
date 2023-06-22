@@ -15,7 +15,6 @@ jobs:
 
 
       - name: Set hlint status to pending
-        id: lint
         uses: Sibz/github-status-action@v1
         with:
           authToken: ${{secrets.GITHUB_TOKEN}}
@@ -25,6 +24,7 @@ jobs:
           sha: ${{github.event.pull_request.head.sha || github.sha}}
 
       - name: 'Run HLint'
+        id: lint
         uses: haskell/actions/hlint-run@v2
         with:
           path: src/
