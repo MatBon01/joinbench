@@ -81,6 +81,10 @@ executable modular-product
     import: example-properties
     main-is:          ModularProductExample.hs
 
+executable modular-index
+    import: example-properties
+    main-is:          ModularIndexExample.hs
+
 executable invoice-benchmark
     main-is:          InvoiceBenchmark.hs
 
