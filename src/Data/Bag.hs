@@ -1,15 +1,15 @@
 {-# LANGUAGE InstanceSigs #-}
+
 module Data.Bag where
 
-import Data.List
 import Data.CMonoid
+import Data.List
 import qualified Data.PointedSet as Pointed
 
 newtype Bag a = Bag {elements :: [a]}
 
 instance (Show a) => (Show (Bag a)) where
   show = intercalate "\n" . map show . elements
-
 
 instance (Eq a) => Eq (Bag a) where
   b1 == b2 = eq' (elements b1) (elements b2)
@@ -52,7 +52,7 @@ empty = Bag []
 union :: (Bag a, Bag a) -> Bag a
 union (b1, b2) = Bag (elements b1 ++ elements b2)
 
-reduceBag :: CMonoid m => Bag m -> m
+reduceBag :: (CMonoid m) => Bag m -> m
 -- Reduce a bag of ms into an m (e.g. a bag of bags into a bag)
 reduceBag = mconcat . elements
 

@@ -1,87 +1,124 @@
 module Database.BagSpec (spec) where
 
-import Test.Hspec
-import qualified Database.Bag as DB
-import qualified Data.Bag as Bag
-import Data.Monoid
-import Database.Bag (productEquijoin, indexedEquijoin)
-import Data.Key as Map
 import Data.Array
+import qualified Data.Bag as Bag
+import Data.Key as Map
+import Data.Monoid
 import Data.Word
+import Database.Bag (indexedEquijoin, productEquijoin)
+import qualified Database.Bag as DB
+import Test.Hspec
 
 type Name = String
+
 data Person = Person {firstName :: Name, lastName :: Name} deriving (Show, Eq)
+
 people = Bag.Bag [Person "John" "Doe", Person "Jane" "Doe", Person "John" "Smith"]
-lastNameJoin = Bag.Bag 
-  [ (Person "John" "Doe", Person "John" "Doe")
-  , (Person "John" "Doe", Person "Jane" "Doe")
-  , (Person "Jane" "Doe", Person "Jane" "Doe")
-  , (Person "Jane" "Doe", Person "John" "Doe")
-  , (Person "John" "Smith", Person "John" "Smith") ]
+
+lastNameJoin =
+  Bag.Bag
+    [ (Person "John" "Doe", Person "John" "Doe"),
+      (Person "John" "Doe", Person "Jane" "Doe"),
+      (Person "Jane" "Doe", Person "Jane" "Doe"),
+      (Person "Jane" "Doe", Person "John" "Doe"),
+      (Person "John" "Smith", Person "John" "Smith")
+    ]
 
 data NameNum = NN {name :: Name, nums :: Int} deriving (Show, Eq)
+
 namenums = Bag.Bag [NN "John" 12, NN "Jane" 12, NN "John" 18]
-namenumjoins = Bag.Bag 
-  [ (NN "John" 12, NN "John" 12)
-  , (NN "John" 12, NN "Jane" 12)
-  , (NN "Jane" 12, NN "Jane" 12)
-  , (NN "Jane" 12, NN "John" 12)
-  , (NN "John" 18, NN "John" 18) ]
+
+namenumjoins =
+  Bag.Bag
+    [ (NN "John" 12, NN "John" 12),
+      (NN "John" 12, NN "Jane" 12),
+      (NN "Jane" 12, NN "Jane" 12),
+      (NN "Jane" 12, NN "John" 12),
+      (NN "John" 18, NN "John" 18)
+    ]
 
 type OrderId = Int
+
 type OrderPrice = Float
+
 type Item = String
+
 type ItemQuantity = Int
+
 data OrderInvoice = OrderInvoice {invoiceId :: OrderId, orderPrice :: OrderPrice} deriving (Show, Eq)
+
 -- Purposefully different id name from invoice for testing variation
 data OrderItem = OrderItem {item :: Item, orderId :: OrderId, quantity :: ItemQuantity} deriving (Show, Eq)
 
 -- Tests join when there is at most one matching element per id
-orderPrices1 = Bag.Bag 
-  [ OrderInvoice 1 25.50
-  , OrderInvoice 2 15.20
-  , OrderInvoice 3 12.12 ]
-orderItems1 = Bag.Bag
-  [ OrderItem "Apple" 1 23
-  , OrderItem "Banana" 2 12 ]
-orderJoin1 = Bag.Bag  -- orderPrices join OrderItems by id
-  [ (OrderInvoice 1 25.50, OrderItem "Apple" 1 23)
-  , (OrderInvoice 2 15.20, OrderItem "Banana" 2 12)]
+orderPrices1 =
+  Bag.Bag
+    [ OrderInvoice 1 25.50,
+      OrderInvoice 2 15.20,
+      OrderInvoice 3 12.12
+    ]
+
+orderItems1 =
+  Bag.Bag
+    [ OrderItem "Apple" 1 23,
+      OrderItem "Banana" 2 12
+    ]
+
+orderJoin1 =
+  Bag.Bag -- orderPrices join OrderItems by id
+    [ (OrderInvoice 1 25.50, OrderItem "Apple" 1 23),
+      (OrderInvoice 2 15.20, OrderItem "Banana" 2 12)
+    ]
 
 -- Tests join when there are no matching elements per id
-orderPrices2 = Bag.Bag 
-  [ OrderInvoice 1 25.50
-  , OrderInvoice 2 15.20
-  , OrderInvoice 3 12.12 ]
-orderItems2 = Bag.Bag
-  [ OrderItem "Apple" 4 23
-  , OrderItem "Banana" 5 12 ]
+orderPrices2 =
+  Bag.Bag
+    [ OrderInvoice 1 25.50,
+      OrderInvoice 2 15.20,
+      OrderInvoice 3 12.12
+    ]
+
+orderItems2 =
+  Bag.Bag
+    [ OrderItem "Apple" 4 23,
+      OrderItem "Banana" 5 12
+    ]
 
 -- Tests join when there are multiple records in a single table with the same Id
-orderPrices3 = Bag.Bag 
-  [ OrderInvoice 1 25.50
-  , OrderInvoice 2 15.20
-  , OrderInvoice 3 12.12 ]
-orderItems3 = Bag.Bag
-  [ OrderItem "Apple" 1 11
-  , OrderItem "Orange" 1 5
-  , OrderItem "Peach" 1 12
-  , OrderItem "Milk" 2 2
-  , OrderItem "Banana" 2 12 
-  , OrderItem "Chocolate" 3 5]
+orderPrices3 =
+  Bag.Bag
+    [ OrderInvoice 1 25.50,
+      OrderInvoice 2 15.20,
+      OrderInvoice 3 12.12
+    ]
+
+orderItems3 =
+  Bag.Bag
+    [ OrderItem "Apple" 1 11,
+      OrderItem "Orange" 1 5,
+      OrderItem "Peach" 1 12,
+      OrderItem "Milk" 2 2,
+      OrderItem "Banana" 2 12,
+      OrderItem "Chocolate" 3 5
+    ]
+
 orderItems3kvps =
-  [ (1, Bag.Bag [OrderItem "Apple" 1 11, OrderItem "Orange" 1 5, OrderItem "Peach" 1 12])
-  , (2, Bag.Bag [OrderItem "Milk" 2 2, OrderItem "Banana" 2 12])
-  , (3, Bag.Bag [OrderItem "Chocolate" 3 5])
+  [ (1, Bag.Bag [OrderItem "Apple" 1 11, OrderItem "Orange" 1 5, OrderItem "Peach" 1 12]),
+    (2, Bag.Bag [OrderItem "Milk" 2 2, OrderItem "Banana" 2 12]),
+    (3, Bag.Bag [OrderItem "Chocolate" 3 5])
   ]
-orderItems3Array = A (accumArray (curry Bag.union) (Bag.empty :: Bag.Bag OrderItem) (0, 2^16 - 1) orderItems3kvps)
-orderJoin3 = Bag.Bag  -- orderPrices join OrderItems by id
-  [ (OrderInvoice 1 25.50, OrderItem "Apple" 1 11)
-  , (OrderInvoice 1 25.50, OrderItem "Orange" 1 5)
-  , (OrderInvoice 1 25.50, OrderItem "Peach" 1 12)
-  , (OrderInvoice 2 15.20, OrderItem "Banana" 2 12)
-  , (OrderInvoice 2 15.20, OrderItem "Milk" 2 2)
-  , (OrderInvoice 3 12.12, OrderItem "Chocolate" 3 5)]
+
+orderItems3Array = A (accumArray (curry Bag.union) (Bag.empty :: Bag.Bag OrderItem) (0, 2 ^ 16 - 1) orderItems3kvps)
+
+orderJoin3 =
+  Bag.Bag -- orderPrices join OrderItems by id
+    [ (OrderInvoice 1 25.50, OrderItem "Apple" 1 11),
+      (OrderInvoice 1 25.50, OrderItem "Orange" 1 5),
+      (OrderInvoice 1 25.50, OrderItem "Peach" 1 12),
+      (OrderInvoice 2 15.20, OrderItem "Banana" 2 12),
+      (OrderInvoice 2 15.20, OrderItem "Milk" 2 2),
+      (OrderInvoice 3 12.12, OrderItem "Chocolate" 3 5)
+    ]
 
 spec :: Spec
 spec = do
@@ -105,7 +142,8 @@ spec = do
       DB.cp (Bag.Bag [1, 2], (DB.empty :: DB.Table Char)) `shouldBe` (DB.empty :: DB.Table (Int, Char))
     it "returns an empty table when both tables are empty" $ do
       DB.cp ((DB.empty :: DB.Table Bool), (DB.empty :: DB.Table Char)) `shouldBe` (DB.empty :: DB.Table (Bool, Char))
-  describe "Database.Bag neutral" $ do -- TODO:: add more tests when understood
+  describe "Database.Bag neutral" $ do
+    -- TODO:: add more tests when understood
     it "returns a bag with the unit element" $ do
       DB.neutral `shouldBe` Bag.Bag [()]
   describe "Database.Bag project" $ do
@@ -126,9 +164,11 @@ spec = do
   describe "Database.Bag productEquijoin" $ do
     it "can join two tables with at most one matching element" $ do
       productEquijoin invoiceId orderId (orderPrices1, orderItems1) `shouldBe` orderJoin1
-    it "can join two tables with more than one matching elements,\
-        \ only multiple in one table" $ do
-      productEquijoin invoiceId orderId (orderPrices3, orderItems3) `shouldBe` orderJoin3
+    it
+      "can join two tables with more than one matching elements,\
+      \ only multiple in one table"
+      $ do
+        productEquijoin invoiceId orderId (orderPrices3, orderItems3) `shouldBe` orderJoin3
     it "can join two tables with no matching elements" $ do
       productEquijoin invoiceId orderId (orderPrices2, orderItems2) `shouldBe` Bag.empty
     it "can join two tables with multiple elements in both tables" $ do
@@ -137,15 +177,17 @@ spec = do
     it "can correctly index with trivial key" $ do
       people `DB.indexBy` const () `shouldBe` Map.Lone people
     it "can correctly index an empty bag" $ do
-      (DB.empty :: DB.Table Int) `DB.indexBy` const ()  `shouldBe` (Map.empty :: Map () (Bag.Bag Int))
+      (DB.empty :: DB.Table Int) `DB.indexBy` const () `shouldBe` (Map.empty :: Map () (Bag.Bag Int))
     it "can correctly index a bag with a repeated index" $ do
       orderItems3 `DB.indexBy` (fromIntegral . orderId :: OrderItem -> Word16) `shouldBe` orderItems3Array
     it "can join two tables with at most one matching element" $ do
-       indexedEquijoin (fromIntegral . invoiceId :: OrderInvoice -> Word16) (fromIntegral . orderId) (orderPrices1, orderItems1) `shouldBe` orderJoin1
-    it "can join two tables with more than one matching elements,\
-        \ only multiple in one table" $ do
-       indexedEquijoin (fromIntegral . invoiceId :: OrderInvoice -> Word16) (fromIntegral . orderId) (orderPrices3, orderItems3) `shouldBe` orderJoin3
+      indexedEquijoin (fromIntegral . invoiceId :: OrderInvoice -> Word16) (fromIntegral . orderId) (orderPrices1, orderItems1) `shouldBe` orderJoin1
+    it
+      "can join two tables with more than one matching elements,\
+      \ only multiple in one table"
+      $ do
+        indexedEquijoin (fromIntegral . invoiceId :: OrderInvoice -> Word16) (fromIntegral . orderId) (orderPrices3, orderItems3) `shouldBe` orderJoin3
     it "can join two tables with no matching elements" $ do
-       indexedEquijoin (fromIntegral . invoiceId :: OrderInvoice -> Word16) (fromIntegral . orderId) (orderPrices2, orderItems2) `shouldBe` Bag.empty
+      indexedEquijoin (fromIntegral . invoiceId :: OrderInvoice -> Word16) (fromIntegral . orderId) (orderPrices2, orderItems2) `shouldBe` Bag.empty
     it "can join two tables with multiple elements in both tables" $ do
-       indexedEquijoin (fromIntegral . nums :: NameNum -> Word16) (fromIntegral . nums) (namenums, namenums) `shouldBe` namenumjoins
+      indexedEquijoin (fromIntegral . nums :: NameNum -> Word16) (fromIntegral . nums) (namenums, namenums) `shouldBe` namenumjoins
