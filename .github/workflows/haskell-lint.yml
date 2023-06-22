@@ -19,10 +19,10 @@ jobs:
         uses: Sibz/github-status-action@v1
         with:
           authToken: ${{secrets.GITHUB_TOKEN}}
-        context: "hlint"
-        description: "Haskell linting"
-        state: "pending"
-        sha: ${{github.event.pull_request.head.sha || github.sha}}
+          context: "hlint"
+          description: "Haskell linting"
+          state: "pending"
+          sha: ${{github.event.pull_request.head.sha || github.sha}}
 
       - name: 'Run HLint'
         uses: haskell/actions/hlint-run@v2
@@ -35,10 +35,10 @@ jobs:
         uses: Sibz/github-status-action@v1
         with:
           authToken: ${{secrets.GITHUB_TOKEN}}
-        context: "Haskell linting"
-        description: "Errors and/or warnings detected in haskell files"
-        state: "failure"
-        sha: ${{github.event.pull_request.head.sha || github.sha}}
+          context: "hlint"
+          description: "Errors and/or warnings detected in haskell files"
+          state: "failure"
+          sha: ${{github.event.pull_request.head.sha || github.sha}}
       - name: Report linting failure to use
         if: ${{ failure() && steps.lint.conclusion == 'failure' }}
         run: echo -e "::warning title=Haskell linting report::Errors and/or warnings detected in haskell files"
@@ -48,10 +48,10 @@ jobs:
         uses: Sibz/github-status-action@v1
         with:
           authToken: ${{secrets.GITHUB_TOKEN}}
-        context: "Haskell linting"
-        description: "No linting errors were found in Haskell source files"
-        state: "success"
-        sha: ${{github.event.pull_request.head.sha || github.sha}}
+          context: "hlint"
+          description: "No linting errors were found in Haskell source files"
+          state: "success"
+          sha: ${{github.event.pull_request.head.sha || github.sha}}
 
       - name: Report test success
         if: success()
