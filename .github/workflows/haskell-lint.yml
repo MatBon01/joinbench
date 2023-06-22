@@ -40,7 +40,7 @@ jobs:
           description: "Errors and/or warnings detected in haskell files"
           state: "failure"
           sha: ${{github.event.pull_request.head.sha || github.sha}}
-      - name: Report linting failure to use
+      - name: Report linting failure to user
         if: ${{ steps.lint.outcome == 'failure' }}
         run: echo -e "::warning title=Haskell linting report::Errors and/or warnings detected in haskell files"
 
@@ -57,3 +57,49 @@ jobs:
       - name: Report test success
         if: ${{ steps.lint.outcome == 'success' }}
         run: echo "::notice title=Haskell test report::No linting errors were found in Haskell source files"
+
+  ormolu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set ormolu status to pending
+        uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{secrets.GITHUB_TOKEN}}
+          context: "ormolu"
+          description: "Haskell formatting"
+          state: "pending"
+          sha: ${{github.event.pull_request.head.sha || github.sha}}
+
+      - name: 'Run ormolu'
+        id: format
+        continue-on-error: true
+        uses: haskell-actions/run-ormolu@v13            
+
+      - name: Report formatting failure to status
+        if: ${{ steps.format.outcome == 'failure' }}
+        uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{secrets.GITHUB_TOKEN}}
+          context: "ormolu"
+          description: "There were formatting errors in Haskell files"
+          state: "failure"
+          sha: ${{github.event.pull_request.head.sha || github.sha}}
+      - name: Report formatting failure to user
+        if: ${{ steps.format.outcome == 'failure' }}
+        run: echo -e "::warning title=Haskell formatting report::There were formatting errors in Haskell files"
+
+      - name: Report test success status
+        if: ${{ steps.format.outcome == 'success' }}
+        uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{secrets.GITHUB_TOKEN}}
+          context: "ormolu"
+          description: "All Haskell files are correctly formatted"
+          state: "success"
+          sha: ${{github.event.pull_request.head.sha || github.sha}}
+
+      - name: Report test success
+        if: ${{ steps.foramt.outcome == 'success' }}
+        run: echo "::notice title=Haskell formatting report::All Haskell files are correctly formatted"
