@@ -10,7 +10,7 @@ jobs:
         uses: Sibz/github-status-action@v1
         with:
           authToken: ${{secrets.GITHUB_TOKEN}}
-          context: "Spell checker"
+          context: "Report spell checker"
           description: "Spell checking in progress"
           state: "pending"
       - uses: actions/checkout@v3
@@ -26,24 +26,24 @@ jobs:
           make -C report -s spellcheck >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
       - name: Report no errors
-        run: echo "::notice title=Spell report::No spelling errors detected"
+        run: echo "::notice title=Report spelling report::No spelling errors detected"
         if: steps.spellcheck.outputs.numSpellingErrors == 0
       - name: Set spell status to passed if no spelling errors
         uses: Sibz/github-status-action@v1
         with:
           authToken: ${{secrets.GITHUB_TOKEN}}
-          context: "Spell checker"
+          context: "Report spell checker"
           description: "No spelling mistakes detected"
           state: "success"
         if: steps.spellcheck.outputs.numSpellingErrors == 0
       - name: Report errors
-        run: echo -e "::warning title=Spell report::${{ steps.spellcheck.outputs.numSpellingErrors }} spelling errors were found\n${{ steps.spellcheck.outputs.spellingErrorList }}"
+        run: echo -e "::warning title=Report spelling report::${{ steps.spellcheck.outputs.numSpellingErrors }} spelling errors were found\n${{ steps.spellcheck.outputs.spellingErrorList }}"
         if: steps.spellcheck.outputs.numSpellingErrors > 0
       - name: Set spell status to failure if there are spelling errors
         uses: Sibz/github-status-action@v1
         with:
           authToken: ${{secrets.GITHUB_TOKEN}}
-          context: "Spell checker"
+          context: "Report spell checker"
           description: "${{ steps.spellcheck.outputs.numSpellingErrors }} spelling errors were found"
           state: "failure"
         if: steps.spellcheck.outputs.numSpellingErrors > 0
@@ -55,7 +55,7 @@ jobs:
         uses: Sibz/github-status-action@v1
         with:
           authToken: ${{secrets.GITHUB_TOKEN}}
-          context: "Linter"
+          context: "Report linter"
           description: "Linting in progress"
           state: "pending"
       - uses: actions/checkout@v3
@@ -71,26 +71,26 @@ jobs:
           make -C report -s lint >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
       - name: Report no errors
-        run: echo "::notice title=Linting report::No Linting warnings detected"
+        run: echo "::notice title=Report linting report::No Linting warnings detected"
         if: steps.linting.outputs.numLintingWarnings == 0
       - name: Set linting status to passed if no linting errors
         uses: Sibz/github-status-action@v1
         with:
           authToken: ${{secrets.GITHUB_TOKEN}}
-          context: "Linter"
+          context: "Report linter"
           description: "No linting errors were found"
           state: "success"
         if: steps.linting.outputs.numLintingWarnings == 0
       - name: Report errors
         run: |
-          echo -e "::warning title=Linting report::${{ steps.linting.outputs.numLintingWarnings }} linting errors were found"
+          echo -e "::warning title=Report linting report::${{ steps.linting.outputs.numLintingWarnings }} linting errors were found"
           make -C report -s lint
         if: steps.linting.outputs.numLintingWarnings > 0
       - name: Set linting status to success if there are linting warnings
         uses: Sibz/github-status-action@v1
         with:
           authToken: ${{secrets.GITHUB_TOKEN}}
-          context: "Linter"
+          context: "Report linter"
           description: "${{ steps.linting.outputs.numLintingWarnings }} linting errors were found"
           state: "success"
         if: steps.linting.outputs.numLintingWarnings > 0
