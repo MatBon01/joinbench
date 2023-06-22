@@ -14,7 +14,7 @@ import Test.Hspec
 addOneOrTwo x = Bag.Bag [x + 1, x + 2]
 
 -- Some examples for the test
-b1 = Bag.Bag ['ab', 'b', 'c']
+b1 = Bag.Bag ['k', 'b', 'c']
 
 b2 = Bag.Bag ['b', 'c', 'd']
 
