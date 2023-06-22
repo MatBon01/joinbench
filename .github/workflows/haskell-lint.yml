@@ -13,8 +13,46 @@ jobs:
       - name: 'Set up HLint'
         uses: haskell/actions/hlint-setup@v2
 
+
+      - name: Set hlint status to pending
+        id: lint
+        uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{secrets.GITHUB_TOKEN}}
+        context: "hlint"
+        description: "Haskell linting"
+        state: "pending"
+        sha: ${{github.event.pull_request.head.sha || github.sha}}
+
       - name: 'Run HLint'
         uses: haskell/actions/hlint-run@v2
         with:
           path: src/
           fail-on: warning
+            
+      - name: Report linting failure to status
+        if: ${{ failure() && steps.lint.conclusion == 'failure' }}
+        uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{secrets.GITHUB_TOKEN}}
+        context: "Haskell linting"
+        description: "Errors and/or warnings detected in haskell files"
+        state: "failure"
+        sha: ${{github.event.pull_request.head.sha || github.sha}}
+      - name: Report linting failure to use
+        if: ${{ failure() && steps.lint.conclusion == 'failure' }}
+        run: echo -e "::warning title=Haskell linting report::Errors and/or warnings detected in haskell files"
+
+      - name: Report test success status
+        if: success()
+        uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{secrets.GITHUB_TOKEN}}
+        context: "Haskell linting"
+        description: "No linting errors were found in Haskell source files"
+        state: "success"
+        sha: ${{github.event.pull_request.head.sha || github.sha}}
+
+      - name: Report test success
+        if: success()
+        run: echo "::notice title=Haskell test report::No linting errors were found in Haskell source files"
