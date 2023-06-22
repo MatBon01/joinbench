@@ -28,7 +28,7 @@ jobs:
         continue-on-error: true
         uses: haskell/actions/hlint-run@v2
         with:
-          path: src/
+          path: '["src/", "test/", "app/"]'
           fail-on: warning
             
       - name: Report linting failure to status
