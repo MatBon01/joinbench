@@ -52,9 +52,10 @@ jobs:
         sha: ${{github.event.pull_request.head.sha || github.sha}}
     - name: Run tests
       id: test
+      continue-on-error: true
       run: cabal test all
     - name: Report failure status
-      if: ${{ failure() && steps.test.conclusion == 'failure' }}
+      if: ${{ steps.test.outcome == 'failure' }}
       uses: Sibz/github-status-action@v1
       with:
         authToken: ${{secrets.GITHUB_TOKEN}}
@@ -64,11 +65,11 @@ jobs:
         sha: ${{github.event.pull_request.head.sha || github.sha}}
 
     - name: Report test failures 
-      if: ${{ failure() && steps.test.conclusion == 'failure' }}
+      if: ${{ steps.test.outcome == 'failure' }}
       run: echo -e "::warning title=Haskell test report::Haskell tests failed."
 
     - name: Report test success status
-      if: success()
+      if: ${{ steps.test.outcome == 'success' }}
       uses: Sibz/github-status-action@v1
       with:
         authToken: ${{secrets.GITHUB_TOKEN}}
@@ -78,7 +79,7 @@ jobs:
         sha: ${{github.event.pull_request.head.sha || github.sha}}
 
     - name: Report test success
-      if: success()
+      if: ${{ steps.test.outcome == 'success' }}
       run: echo "::notice title=Haskell test report::All tests passed."
 
 
