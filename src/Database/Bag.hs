@@ -1,9 +1,9 @@
 module Database.Bag where
 
 import qualified Data.Bag as Bag
-import Database.IndexedTable
 import Data.CMonoid
 import Data.Key
+import Database.IndexedTable
 
 type Table = Bag.Bag
 
@@ -29,16 +29,16 @@ project = fmap
 select :: (a -> Bool) -> Table a -> Table a
 select p = Bag.Bag . filter p . Bag.elements
 
-aggregate :: CMonoid a => Table a -> a
+aggregate :: (CMonoid a) => Table a -> a
 aggregate = Bag.reduceBag
 
-productEquijoin :: Eq c => (a -> c) -> (b -> c) ->  (Table a, Table b) -> Table (a, b)
+productEquijoin :: (Eq c) => (a -> c) -> (b -> c) -> (Table a, Table b) -> Table (a, b)
 productEquijoin fa fb = select equality . cp
-  where 
+  where
     equality (a, b) = fa a == fb b
 
 indexBy :: (Key k) => Table a -> (a -> k) -> Map k (Table a)
-indexBy bs keyProj = (index . fmap (\x -> (keyProj x, x))) bs 
+indexBy bs keyProj = (index . fmap (\x -> (keyProj x, x))) bs
 
 indexedEquijoin :: (Key k) => (a -> k) -> (b -> k) -> (Table a, Table b) -> Table (a, b)
 -- t1, t2 Bags

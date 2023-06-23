@@ -1,12 +1,14 @@
 module Text.Parser.Customers where
 
-import           Data.Bag
-import           Text.Parser.Utils
-import           Text.ParserCombinators.Parsec
+import Data.Bag
+import Text.Parser.Utils
+import Text.ParserCombinators.Parsec
 
 type Identifier = Int
+
 type Name = String
-data Customer = C { cid :: Identifier, firstName :: Name, surname :: Name} deriving (Show, Eq)
+
+data Customer = C {cid :: Identifier, firstName :: Name, surname :: Name} deriving (Show, Eq)
 
 csvFile :: GenParser Char st (Bag Customer)
 csvFile = do

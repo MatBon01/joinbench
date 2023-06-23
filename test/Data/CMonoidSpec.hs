@@ -1,7 +1,7 @@
 module Data.CMonoidSpec (spec) where
 
-import Test.Hspec
 import Data.Monoid
+import Test.Hspec
 
 spec :: Spec
 spec = do

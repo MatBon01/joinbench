@@ -1,7 +1,7 @@
 module Data.PointedSetSpec (spec) where
 
-import Test.Hspec
 import qualified Data.PointedSet as Pointed
+import Test.Hspec
 
 spec :: Spec
 spec = do

@@ -1,10 +1,10 @@
 module Text.Parser.CustomersSpec where
 
-import Test.Hspec 
-import Text.Parser.Customers
 import Data.Bag as Bag
-import Text.ParserCombinators.Parsec
 import Data.Either
+import Test.Hspec
+import Text.Parser.Customers
+import Text.ParserCombinators.Parsec
 
 expectedOutput = Bag [C 1 "John" "Williams", C 2 "Kayla" "Johnson"]
 

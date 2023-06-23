@@ -1,15 +1,15 @@
-{-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE TypeFamilies #-}
 
 module Data.Key where
 
-import Data.PointedSet
-import Data.Bag
-import Data.CMonoid
-import Data.Word
 import Data.Array
+import Data.Bag
 import qualified Data.Bifunctor as Bifunctor
+import Data.CMonoid
+import Data.PointedSet
+import Data.Word
 
 class (Functor (Map k)) => Key k where
   data Map k :: * -> *
@@ -36,7 +36,7 @@ instance Key () where -- unit type
   single ((), v) = Lone v
   merge (Lone v1, Lone v2) = Lone (v1, v2)
   dom map = if isEmpty map then Data.Bag.empty else pure ()
-  cod (Lone v) = if isEmpty (Lone v) then Data.Bag.empty else pure v 
+  cod (Lone v) = if isEmpty (Lone v) then Data.Bag.empty else pure v
   lookup (Lone v) () = v
   index kvps = Lone (fmap snd kvps)
   unindex (Lone vs) = fmap (\v -> ((), v)) vs
@@ -46,17 +46,17 @@ instance Functor (Map ()) where
 
 instance Key Word16 where -- constant type (array indexed by 16 bit word)
   newtype Map Word16 v = A (Array Word16 v) deriving (Eq, Show)
-  empty = A (accumArray (curry snd) Data.PointedSet.null (0, 2^16-1) [])
+  empty = A (accumArray (curry snd) Data.PointedSet.null (0, 2 ^ 16 - 1) [])
   isEmpty (A a) = all isNull (elems a)
-  single (k, v) = A (accumArray (curry snd) Data.PointedSet.null (0, 2^16-1) [(k, v)])
-  merge (A a1, A a2) = A (listArray (0, 2^16 - 1) (zip (elems a1) (elems a2)))
-  dom (A a) = Bag [ k | (k, v) <- assocs a, not (isNull v) ]
-  cod (A a) = Bag [ v | (k, v) <- assocs a, not (isNull v) ]
+  single (k, v) = A (accumArray (curry snd) Data.PointedSet.null (0, 2 ^ 16 - 1) [(k, v)])
+  merge (A a1, A a2) = A (listArray (0, 2 ^ 16 - 1) (zip (elems a1) (elems a2)))
+  dom (A a) = Bag [k | (k, v) <- assocs a, not (isNull v)]
+  cod (A a) = Bag [v | (k, v) <- assocs a, not (isNull v)]
   lookup (A a) = (!) a
-  index kvps = A (accumArray (curry Data.Bag.union) Data.Bag.empty (0, 2^16-1) vals)
+  index kvps = A (accumArray (curry Data.Bag.union) Data.Bag.empty (0, 2 ^ 16 - 1) vals)
     where
       vals = (elements . fmap (Bifunctor.second Data.Bag.single)) kvps
-  unindex (A a) = Bag [ (k, v) | (k, vs) <- assocs a, v <- elements vs ]
+  unindex (A a) = Bag [(k, v) | (k, vs) <- assocs a, v <- elements vs]
 
 instance Functor (Map Word16) where
   fmap f (A a) = A (fmap f a)
