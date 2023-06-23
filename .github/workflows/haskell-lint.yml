@@ -58,31 +58,33 @@ jobs:
         if: ${{ steps.lint.outcome == 'success' }}
         run: echo "::notice title=Haskell test report::No linting errors were found in Haskell source files"
 
-  ormolu:
+  fourmolu:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set ormolu status to pending
+      - name: Set fourmolu status to pending
         uses: Sibz/github-status-action@v1
         with:
           authToken: ${{secrets.GITHUB_TOKEN}}
-          context: "ormolu"
+          context: "fourmolu"
           description: "Haskell formatting"
           state: "pending"
           sha: ${{github.event.pull_request.head.sha || github.sha}}
 
-      - name: 'Run ormolu'
+      - name: 'Run fourmolu'
         id: format
         continue-on-error: true
-        uses: haskell-actions/run-ormolu@v13            
+        uses: haskell-actions/run-fourmolu@v9           
+        with:
+          version: "0.13.0.0"
 
       - name: Report formatting failure to status
         if: ${{ steps.format.outcome == 'failure' }}
         uses: Sibz/github-status-action@v1
         with:
           authToken: ${{secrets.GITHUB_TOKEN}}
-          context: "ormolu"
+          context: "fourmolu"
           description: "There were formatting errors in Haskell files"
           state: "failure"
           sha: ${{github.event.pull_request.head.sha || github.sha}}
@@ -95,7 +97,7 @@ jobs:
         uses: Sibz/github-status-action@v1
         with:
           authToken: ${{secrets.GITHUB_TOKEN}}
-          context: "ormolu"
+          context: "fourmolu"
           description: "All Haskell files are correctly formatted"
           state: "success"
           sha: ${{github.event.pull_request.head.sha || github.sha}}
