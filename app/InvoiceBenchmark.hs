@@ -8,12 +8,12 @@ import Text.Parser.Invoices as Invoices
 
 main :: IO ()
 main = do
-  customers <- readFile "/tmp/tables/c100.csv"
-  invoices <- readFile "/tmp/tables/i100.csv"
-  defaultMain
-    [ bgroup
-        "parse"
-        [ bench "customers" $ whnf Customers.parseCSV customers,
-          bench "invoices" $ whnf Invoices.parseCSV invoices
+    customers <- readFile "/tmp/tables/c100.csv"
+    invoices <- readFile "/tmp/tables/i100.csv"
+    defaultMain
+        [ bgroup
+            "parse"
+            [ bench "customers" $ whnf Customers.parseCSV customers
+            , bench "invoices" $ whnf Invoices.parseCSV invoices
+            ]
         ]
-    ]
