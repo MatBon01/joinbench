@@ -103,5 +103,5 @@ jobs:
           sha: ${{github.event.pull_request.head.sha || github.sha}}
 
       - name: Report test success
-        if: ${{ steps.foramt.outcome == 'success' }}
+        if: ${{ steps.format.outcome == 'success' }}
         run: echo "::notice title=Haskell formatting report::All Haskell files are correctly formatted"
