@@ -74,7 +74,7 @@ jobs:
       with:
         authToken: ${{secrets.GITHUB_TOKEN}}
         context: "Haskell tests"
-        description: "No spelling mistakes detected"
+        description: "All Haskell tests pass"
         state: "success"
         sha: ${{github.event.pull_request.head.sha || github.sha}}
 
