@@ -1,11 +1,11 @@
 module Text.Parser.Invoices where
 
 import Data.Bag
+import Data.Word
 import Text.Parser.Utils
 import Text.ParserCombinators.Parsec
 
-type Identifier = Int
-
+type Identifier = Word16
 type Date = Int
 
 type Amount = Int
