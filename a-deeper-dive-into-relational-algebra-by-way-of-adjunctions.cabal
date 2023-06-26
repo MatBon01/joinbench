@@ -71,6 +71,9 @@ common example-properties
     hs-source-dirs:   app/examples
     default-language: Haskell2010
 
+executable new-comprehension
+    import: example-properties
+    main-is:          NewComprehensionExample.hs
 
 executable old-comprehension
     import: example-properties

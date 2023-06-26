@@ -2,6 +2,7 @@
 
 module Data.Bag where
 
+import Control.Applicative
 import Data.CMonoid
 import Data.List
 import qualified Data.PointedSet as Pointed
@@ -37,10 +38,14 @@ instance Semigroup (Bag a) where
 instance Monoid (Bag a) where
     mempty = Data.Bag.empty
 
+instance Alternative Bag where
+  empty = Data.Bag.empty
+  (<|>) = (<>)
+
 instance CMonoid (Bag a)
 
 instance Pointed.PointedSet (Bag a) where
-    null = empty
+    null = Data.Bag.empty
     isNull :: Bag a -> Bool
     -- Implement isNull with pattern matching to not require Eq a
     isNull (Bag []) = True
