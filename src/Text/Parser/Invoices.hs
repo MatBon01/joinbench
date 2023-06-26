@@ -52,4 +52,4 @@ date = do
     return (read id)
 
 parseCSV :: String -> Either ParseError (Bag Invoice)
-parseCSV input = parse csvFile "(unknown)" input
+parseCSV = parse csvFile "(unknown)"

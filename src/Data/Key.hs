@@ -1,9 +1,11 @@
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE TupleSections #-}
 {-# LANGUAGE TypeFamilies #-}
 
 module Data.Key where
 
+import Control.Monad
 import Data.Array
 import Data.Bag
 import qualified Data.Bifunctor as Bifunctor
@@ -35,20 +37,20 @@ instance Key () where -- unit type
     isEmpty (Lone v) = isNull v
     single ((), v) = Lone v
     merge (Lone v1, Lone v2) = Lone (v1, v2)
-    dom map = if isEmpty map then Data.Bag.empty else pure ()
+    dom map = Control.Monad.when (isEmpty map) Data.Bag.empty
     cod (Lone v) = if isEmpty (Lone v) then Data.Bag.empty else pure v
     lookup (Lone v) () = v
     index kvps = Lone (fmap snd kvps)
-    unindex (Lone vs) = fmap (\v -> ((), v)) vs
+    unindex (Lone vs) = fmap ((),) vs
 
 instance Functor (Map ()) where
     fmap f (Lone v) = Lone (f v)
 
 instance Key Word16 where -- constant type (array indexed by 16 bit word)
     newtype Map Word16 v = A (Array Word16 v) deriving (Eq, Show)
-    empty = A (accumArray (curry snd) Data.PointedSet.null (0, 2 ^ 16 - 1) [])
+    empty = A (accumArray (\_ x -> x) Data.PointedSet.null (0, 2 ^ 16 - 1) [])
     isEmpty (A a) = all isNull (elems a)
-    single (k, v) = A (accumArray (curry snd) Data.PointedSet.null (0, 2 ^ 16 - 1) [(k, v)])
+    single (k, v) = A (accumArray (\ _ x -> x) Data.PointedSet.null (0, 2 ^ 16 - 1) [(k, v)])
     merge (A a1, A a2) = A (listArray (0, 2 ^ 16 - 1) (zip (elems a1) (elems a2)))
     dom (A a) = Bag [k | (k, v) <- assocs a, not (isNull v)]
     cod (A a) = Bag [v | (k, v) <- assocs a, not (isNull v)]

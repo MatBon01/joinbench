@@ -35,4 +35,4 @@ nameCell :: GenParser Char st Name
 nameCell = many (noneOf ",\n")
 
 parseCSV :: String -> Either ParseError (Bag Customer)
-parseCSV input = parse csvFile "(unknown)" input
+parseCSV = parse csvFile "(unknown)"
