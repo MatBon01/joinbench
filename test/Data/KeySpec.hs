@@ -30,33 +30,33 @@ spec = do
         it "can unindex a map with multiplicities" $ unindex (Lone (Bag.Bag [True, True, False])) `shouldBe` Bag.Bag [((), True), ((), True), ((), False)]
         it "can reduce a map correctly" $ reduce (Lone (Bag.Bag ['a'])) `shouldBe` Bag.Bag ['a']
     describe "Map Word16" $ do
-        it "correctly produces an empty map" $ (empty :: Map Word16 (Maybe Int)) `shouldBe` A (accumArray (\ _ x -> x) Nothing (0, 2 ^ 16 - 1) [])
-        it "can correctly detect an empty map" $ isEmpty (A (accumArray (\ _ x -> x) Nothing (0, 2 ^ 16 - 1) []) :: Map Word16 (Maybe Int)) `shouldBe` True
+        it "correctly produces an empty map" $ (empty :: Map Word16 (Maybe Int)) `shouldBe` A (accumArray (\_ x -> x) Nothing (0, 2 ^ 16 - 1) [])
+        it "can correctly detect an empty map" $ isEmpty (A (accumArray (\_ x -> x) Nothing (0, 2 ^ 16 - 1) []) :: Map Word16 (Maybe Int)) `shouldBe` True
         it "detects its created empty map as empty" $ isEmpty (empty :: Map Word16 (Maybe Int)) `shouldBe` True
-        it "correctly produces a singleton with a non null value" $ single (5, Just 'c') `shouldBe` A (accumArray (\ _ x -> x) Nothing (0, 2 ^ 16 - 1) [(5, Just 'c')])
-        it "correctly produces a singleton with a null value" $ single (5, Nothing :: Maybe Int) `shouldBe` A (accumArray (\ _ x -> x) Nothing (0, 2 ^ 16 - 1) [(5, Nothing :: Maybe Int)])
-        it "correctly merges two singletons with different indices" $ merge (single (5, Just 'd'), single (6, Just 'e')) `shouldBe` A (accumArray (\ _ x -> x) (Nothing, Nothing) (0, 2 ^ 16 - 1) [(5, (Just 'd', Nothing)), (6, (Nothing, Just 'e'))])
-        it "correctly merges two singletons with the same index" $ merge (single (5, Just "one"), single (5, Just "two")) `shouldBe` A (accumArray (\ _ x -> x) (Nothing, Nothing) (0, 2 ^ 16 - 1) [(5, (Just "one", Just "two"))])
-        it "correctly merges with one null value in the key" $ merge (single (5, Just "one"), single (5, Nothing :: Maybe String)) `shouldBe` A (accumArray (\ _ x -> x) (Nothing, Nothing) (0, 2 ^ 16 - 1) [(5, (Just "one", Nothing :: Maybe String))])
+        it "correctly produces a singleton with a non null value" $ single (5, Just 'c') `shouldBe` A (accumArray (\_ x -> x) Nothing (0, 2 ^ 16 - 1) [(5, Just 'c')])
+        it "correctly produces a singleton with a null value" $ single (5, Nothing :: Maybe Int) `shouldBe` A (accumArray (\_ x -> x) Nothing (0, 2 ^ 16 - 1) [(5, Nothing :: Maybe Int)])
+        it "correctly merges two singletons with different indices" $ merge (single (5, Just 'd'), single (6, Just 'e')) `shouldBe` A (accumArray (\_ x -> x) (Nothing, Nothing) (0, 2 ^ 16 - 1) [(5, (Just 'd', Nothing)), (6, (Nothing, Just 'e'))])
+        it "correctly merges two singletons with the same index" $ merge (single (5, Just "one"), single (5, Just "two")) `shouldBe` A (accumArray (\_ x -> x) (Nothing, Nothing) (0, 2 ^ 16 - 1) [(5, (Just "one", Just "two"))])
+        it "correctly merges with one null value in the key" $ merge (single (5, Just "one"), single (5, Nothing :: Maybe String)) `shouldBe` A (accumArray (\_ x -> x) (Nothing, Nothing) (0, 2 ^ 16 - 1) [(5, (Just "one", Nothing :: Maybe String))])
         it "merging with two empty values produces an empty map" $ merge (single (5, Nothing :: Maybe String), single (5, Nothing :: Maybe String)) `shouldBe` (empty :: Map Word16 (Maybe String, Maybe String))
-        it "can correctly unmerge a map" $ unmerge (A (accumArray (\ _ x -> x) (Nothing, Nothing) (0, 2 ^ 16 - 1) [(5, (Just "one", Just "two")), (6, (Just "three", Just "four"))])) `shouldBe` (A (accumArray (\ _ x -> x) Nothing (0, 2 ^ 16 - 1) [(5, Just "one"), (6, Just "three")]), A (accumArray (\ _ x -> x) Nothing (0, 2 ^ 16 - 1) [(5, Just "two"), (6, Just "four")]))
+        it "can correctly unmerge a map" $ unmerge (A (accumArray (\_ x -> x) (Nothing, Nothing) (0, 2 ^ 16 - 1) [(5, (Just "one", Just "two")), (6, (Just "three", Just "four"))])) `shouldBe` (A (accumArray (\_ x -> x) Nothing (0, 2 ^ 16 - 1) [(5, Just "one"), (6, Just "three")]), A (accumArray (\_ x -> x) Nothing (0, 2 ^ 16 - 1) [(5, Just "two"), (6, Just "four")]))
         it "can correctly unmerge an empty map" $ unmerge (empty :: Map Word16 (Maybe String, Maybe Bool)) `shouldBe` (empty :: Map Word16 (Maybe String), empty :: Map Word16 (Maybe Bool))
-        it "can correctly find the domain of a map" $ dom (A (accumArray (\ _ x -> x) Nothing (0, 2 ^ 16 - 1) [(5, Just 'd'), (6, Just 'e')])) `shouldBe` Bag.Bag [5, 6]
+        it "can correctly find the domain of a map" $ dom (A (accumArray (\_ x -> x) Nothing (0, 2 ^ 16 - 1) [(5, Just 'd'), (6, Just 'e')])) `shouldBe` Bag.Bag [5, 6]
         it "can correctly find the domain of an empty map" $ dom (empty :: Map Word16 (Maybe String)) `shouldBe` (Bag.empty :: Bag.Bag Word16)
         it "can correctly find the domain of a map with only null values" $ dom (single (5, Nothing)) `shouldBe` (Bag.empty :: Bag.Bag Word16)
-        it "can correctly find the codomain of a map" $ cod (A (accumArray (\ _ x -> x) Nothing (0, 2 ^ 16 - 1) [(5, Just 'd'), (6, Just 'e')])) `shouldBe` Bag.Bag [Just 'd', Just 'e']
+        it "can correctly find the codomain of a map" $ cod (A (accumArray (\_ x -> x) Nothing (0, 2 ^ 16 - 1) [(5, Just 'd'), (6, Just 'e')])) `shouldBe` Bag.Bag [Just 'd', Just 'e']
         it "can correctly find the codomain of an empty map" $ cod (empty :: Map Word16 (Maybe Bool)) `shouldBe` (Bag.empty :: Bag.Bag (Maybe Bool))
         it "can correctly find the codomain of a map with only null elements" $ cod (single (5 :: Word16, Nothing :: Maybe Int)) `shouldBe` (Bag.empty :: Bag.Bag (Maybe Int))
         it "can lookup a singleton with a present key" $ Data.Key.lookup (single (5 :: Word16, Just 3)) 5 `shouldBe` Just 3
         it "can lookup a singleton with a key not present" $ Data.Key.lookup (single (5 :: Word16, Just 3)) 4 `shouldBe` (Pointed.null :: Maybe Int)
         it "can lookup an empty map" $ Data.Key.lookup (empty :: Map Word16 (Bag.Bag Int)) 2 `shouldBe` (Pointed.null :: Bag.Bag Int)
-        it "can create a map from a bag of key value pairs with distinct indices" $ Data.Key.index (Bag.Bag [(1, Just '1'), (2, Just '2')]) `shouldBe` A (accumArray (\ _ x -> x) (Bag.empty :: Bag.Bag (Maybe Char)) (0, 2 ^ 16 - 1) [(1, Bag.single (Just '1')), (2, Bag.single (Just '2'))])
-        it "can create a map from a bag of key value pairs with shared indices" $ Data.Key.index (Bag.Bag [(1, Just '1'), (2, Just '2'), (1, Just '3'), (2, Just '4')]) `shouldBe` A (accumArray (\ _ x -> x) (Bag.empty :: Bag.Bag (Maybe Char)) (0, 2 ^ 16 - 1) [(1, Bag.Bag [Just '1', Just '3']), (2, Bag.Bag [Just '2', Just '4'])])
+        it "can create a map from a bag of key value pairs with distinct indices" $ Data.Key.index (Bag.Bag [(1, Just '1'), (2, Just '2')]) `shouldBe` A (accumArray (\_ x -> x) (Bag.empty :: Bag.Bag (Maybe Char)) (0, 2 ^ 16 - 1) [(1, Bag.single (Just '1')), (2, Bag.single (Just '2'))])
+        it "can create a map from a bag of key value pairs with shared indices" $ Data.Key.index (Bag.Bag [(1, Just '1'), (2, Just '2'), (1, Just '3'), (2, Just '4')]) `shouldBe` A (accumArray (\_ x -> x) (Bag.empty :: Bag.Bag (Maybe Char)) (0, 2 ^ 16 - 1) [(1, Bag.Bag [Just '1', Just '3']), (2, Bag.Bag [Just '2', Just '4'])])
         it "can index an empty bag" $ Data.Key.index (Bag.empty :: Bag.Bag (Word16, Maybe Char)) `shouldBe` (empty :: Map Word16 (Bag.Bag (Maybe Char)))
         --
-        it "can unindex a map with singleton bag values" $ Data.Key.unindex (A (accumArray (\ _ x -> x) (Bag.empty :: Bag.Bag (Maybe Char)) (0, 2 ^ 16 - 1) [(1, Bag.single (Just '1')), (2, Bag.single (Just '2'))])) `shouldBe` Bag.Bag [(1, Just '1'), (2, Just '2')]
-        it "can unindex a map with bags with multiple values" $ Data.Key.unindex (A (accumArray (\ _ x -> x) (Bag.empty :: Bag.Bag (Maybe Char)) (0, 2 ^ 16 - 1) [(1, Bag.Bag [Just '1', Just '1']), (2, Bag.Bag [Just '2', Just '4'])])) `shouldBe` Bag.Bag [(1, Just '1'), (2, Just '2'), (1, Just '1'), (2, Just '4')]
+        it "can unindex a map with singleton bag values" $ Data.Key.unindex (A (accumArray (\_ x -> x) (Bag.empty :: Bag.Bag (Maybe Char)) (0, 2 ^ 16 - 1) [(1, Bag.single (Just '1')), (2, Bag.single (Just '2'))])) `shouldBe` Bag.Bag [(1, Just '1'), (2, Just '2')]
+        it "can unindex a map with bags with multiple values" $ Data.Key.unindex (A (accumArray (\_ x -> x) (Bag.empty :: Bag.Bag (Maybe Char)) (0, 2 ^ 16 - 1) [(1, Bag.Bag [Just '1', Just '1']), (2, Bag.Bag [Just '2', Just '4'])])) `shouldBe` Bag.Bag [(1, Just '1'), (2, Just '2'), (1, Just '1'), (2, Just '4')]
         it "can index unindex an empty map" $ Data.Key.unindex (empty :: Map Word16 (Bag.Bag (Maybe Char))) `shouldBe` (Bag.empty :: Bag.Bag (Word16, Maybe Char))
-        it "can reduce a map with singleton bags" $ Data.Key.reduce (A (accumArray (\ _ x -> x) (Bag.empty :: Bag.Bag Bool) (0, 2 ^ 16 - 1) [(1, Bag.single True), (2, Bag.single False)])) `shouldBe` Bag.Bag [True, False]
-        it "can reduce a map with multiple value bags bags" $ Data.Key.reduce (A (accumArray (\ _ x -> x) (Bag.empty :: Bag.Bag Int) (0, 2 ^ 16 - 1) [(1, Bag.Bag [1, 2]), (2, Bag.Bag [2, 5, 6])])) `shouldBe` Bag.Bag [1, 2, 2, 5, 6]
+        it "can reduce a map with singleton bags" $ Data.Key.reduce (A (accumArray (\_ x -> x) (Bag.empty :: Bag.Bag Bool) (0, 2 ^ 16 - 1) [(1, Bag.single True), (2, Bag.single False)])) `shouldBe` Bag.Bag [True, False]
+        it "can reduce a map with multiple value bags bags" $ Data.Key.reduce (A (accumArray (\_ x -> x) (Bag.empty :: Bag.Bag Int) (0, 2 ^ 16 - 1) [(1, Bag.Bag [1, 2]), (2, Bag.Bag [2, 5, 6])])) `shouldBe` Bag.Bag [1, 2, 2, 5, 6]
         it "can reduce an empty map" $ (Data.Key.empty :: Map Word16 (Bag.Bag Int)) `shouldBe` (empty :: Map Word16 (Bag.Bag Int))
