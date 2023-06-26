@@ -39,7 +39,7 @@ library
     -- LANGUAGE extensions used by modules in this package.
     other-extensions:
         InstanceSigs, TypeFamilies, FlexibleContexts,
-        FlexibleInstances
+        FlexibleInstances, TupleSections
     build-depends:
         base >=4.16.4.0,
         array >= 0.5.4.0,

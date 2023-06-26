@@ -325,6 +325,9 @@ cabal.project.local~
 .HTF/
 .ghc.environment.*
 
+# Hlint output
+report.html
+
 # Environment files
 .DS_Store
 

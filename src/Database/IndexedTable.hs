@@ -1,8 +1,8 @@
 module Database.IndexedTable where
 
 import qualified Data.Bag as Bag
-import qualified Data.Key as Map
 import Data.CMonoid
+import qualified Data.Key as Map
 
 empty :: (Map.Key k) => Map.Map k (Bag.Bag v)
 empty = Map.empty
