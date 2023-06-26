@@ -6,6 +6,8 @@ import Data.Monoid
 import qualified Data.PointedSet as Pointed
 import Test.Hspec
 
+{- HLINT ignore "Monoid law, right identity" -}
+
 -- Some test cases from https://www.cis.upenn.edu/~cis1940/spring13/lectures/
 (.*) = liftA2 (*)
 
@@ -94,7 +96,7 @@ spec = do
         it "correctly can calculate the cartesian product of two bags" $ do
             Bag.cp (b1, b2) `shouldBe` Bag.Bag [('a', 'b'), ('a', 'c'), ('a', 'd'), ('b', 'b'), ('b', 'c'), ('b', 'd'), ('c', 'b'), ('c', 'c'), ('c', 'd')]
         it "correctly deals with the empty bag in a cartesian product" $ do
-            Bag.cp (b1, (Bag.empty :: Bag.Bag Int)) `shouldBe` (Bag.empty :: Bag.Bag (Char, Int))
+            Bag.cp (b1, Bag.empty :: Bag.Bag Int) `shouldBe` (Bag.empty :: Bag.Bag (Char, Int))
     describe "Data.Bag.single" $ do
         it "creates a singleton bag" $ do
             Bag.single 'a' `shouldBe` Bag.Bag ['a']

@@ -122,72 +122,43 @@ orderJoin3 =
 
 spec :: Spec
 spec = do
-    describe "Database.Bag empty" $ do
-        it "produces an empty Bag of the same type" $ do
-            (DB.empty :: DB.Table Int) `shouldBe` (Bag.empty :: Bag.Bag Int)
-    describe "Database.Bag single" $ do
-        it "produces a Bag with a single element" $ do
-            DB.single 5 `shouldBe` Bag.Bag [5]
+    describe "Database.Bag empty" $ it "produces an empty Bag of the same type" $ (DB.empty :: DB.Table Int) `shouldBe` (Bag.empty :: Bag.Bag Int)
+    describe "Database.Bag single" $ it "produces a Bag with a single element" $ DB.single 5 `shouldBe` Bag.Bag [5]
     describe "Database.Bag union" $ do
-        it "uses the bag union to calculate the union" $ do
-            DB.union (Bag.Bag [1, 2, 3], Bag.Bag [3, 4, 5]) `shouldBe` Bag.Bag [1, 2, 3, 3, 4, 5]
-        it "can correctly deal with one empty table in the union" $ do
-            DB.union (Bag.Bag [1, 2, 3], DB.empty) `shouldBe` Bag.Bag [1, 2, 3]
-        it "can find the union of two empty tables" $ do
-            DB.union ((DB.empty :: DB.Table Char), DB.empty) `shouldBe` (DB.empty :: DB.Table Char)
+        it "uses the bag union to calculate the union" $ DB.union (Bag.Bag [1, 2, 3], Bag.Bag [3, 4, 5]) `shouldBe` Bag.Bag [1, 2, 3, 3, 4, 5]
+        it "can correctly deal with one empty table in the union" $ DB.union (Bag.Bag [1, 2, 3], DB.empty) `shouldBe` Bag.Bag [1, 2, 3]
+        it "can find the union of two empty tables" $ DB.union (DB.empty :: DB.Table Char, DB.empty) `shouldBe` (DB.empty :: DB.Table Char)
     describe "Database.Bag cp" $ do
-        it "correctly can calculate the cartesian product of two tables" $ do
-            DB.cp (Bag.Bag [1, 2], Bag.Bag [3, 4]) `shouldBe` Bag.Bag [(1, 3), (1, 4), (2, 3), (2, 4)]
-        it "returns an empty table when one table is empty" $ do
-            DB.cp (Bag.Bag [1, 2], (DB.empty :: DB.Table Char)) `shouldBe` (DB.empty :: DB.Table (Int, Char))
-        it "returns an empty table when both tables are empty" $ do
-            DB.cp ((DB.empty :: DB.Table Bool), (DB.empty :: DB.Table Char)) `shouldBe` (DB.empty :: DB.Table (Bool, Char))
+        it "correctly can calculate the cartesian product of two tables" $ DB.cp (Bag.Bag [1, 2], Bag.Bag [3, 4]) `shouldBe` Bag.Bag [(1, 3), (1, 4), (2, 3), (2, 4)]
+        it "returns an empty table when one table is empty" $ DB.cp (Bag.Bag [1, 2], DB.empty :: DB.Table Char) `shouldBe` (DB.empty :: DB.Table (Int, Char))
+        it "returns an empty table when both tables are empty" $ DB.cp (DB.empty :: DB.Table Bool, DB.empty :: DB.Table Char) `shouldBe` (DB.empty :: DB.Table (Bool, Char))
     describe "Database.Bag neutral" $ do
         -- TODO:: add more tests when understood
-        it "returns a bag with the unit element" $ do
-            DB.neutral `shouldBe` Bag.Bag [()]
-    describe "Database.Bag project" $ do
-        it "can select a certain column from a record" $ do
-            DB.project lastName people `shouldBe` Bag.Bag ["Doe", "Doe", "Smith"]
+        it "returns a bag with the unit element" $ DB.neutral `shouldBe` Bag.Bag [()]
+    describe "Database.Bag project" $ it "can select a certain column from a record" $ DB.project lastName people `shouldBe` Bag.Bag ["Doe", "Doe", "Smith"]
     describe "Database.Bag select" $ do
-        it "can select a subset of the table" $ do
-            DB.select (\p -> lastName p == "Doe") people `shouldBe` Bag.Bag [Person "John" "Doe", Person "Jane" "Doe"]
-        it "can empty a whole table if necessary" $ do
-            DB.select (const False) people `shouldBe` Bag.Bag []
-        it "can select the whole table" $ do
-            DB.select (const True) people `shouldBe` people
+        it "can select a subset of the table" $ DB.select (\p -> lastName p == "Doe") people `shouldBe` Bag.Bag [Person "John" "Doe", Person "Jane" "Doe"]
+        it "can empty a whole table if necessary" $ DB.select (const False) people `shouldBe` Bag.Bag []
+        it "can select the whole table" $ DB.select (const True) people `shouldBe` people
     describe "Database.Bag aggregate" $ do
-        it "can correctly aggregate a table without multiplicities" $ do
-            (getAny . DB.aggregate) (Bag.Bag [Any True, Any False]) `shouldBe` True
-        it "can correctly aggregate a table with multiplicities" $ do
-            DB.aggregate (Bag.Bag [1, 1, 1, 1, 2] :: Bag.Bag (Sum Int)) `shouldBe` 6
+        it "can correctly aggregate a table without multiplicities" $ (getAny . DB.aggregate) (Bag.Bag [Any True, Any False]) `shouldBe` True
+        it "can correctly aggregate a table with multiplicities" $ DB.aggregate (Bag.Bag [1, 1, 1, 1, 2] :: Bag.Bag (Sum Int)) `shouldBe` 6
     describe "Database.Bag productEquijoin" $ do
-        it "can join two tables with at most one matching element" $ do
-            productEquijoin invoiceId orderId (orderPrices1, orderItems1) `shouldBe` orderJoin1
+        it "can join two tables with at most one matching element" $ productEquijoin invoiceId orderId (orderPrices1, orderItems1) `shouldBe` orderJoin1
         it
             "can join two tables with more than one matching elements,\
             \ only multiple in one table"
-            $ do
-                productEquijoin invoiceId orderId (orderPrices3, orderItems3) `shouldBe` orderJoin3
-        it "can join two tables with no matching elements" $ do
-            productEquijoin invoiceId orderId (orderPrices2, orderItems2) `shouldBe` Bag.empty
-        it "can join two tables with multiple elements in both tables" $ do
-            productEquijoin lastName lastName (people, people) `shouldBe` lastNameJoin
+            $ productEquijoin invoiceId orderId (orderPrices3, orderItems3) `shouldBe` orderJoin3
+        it "can join two tables with no matching elements" $ productEquijoin invoiceId orderId (orderPrices2, orderItems2) `shouldBe` Bag.empty
+        it "can join two tables with multiple elements in both tables" $ productEquijoin lastName lastName (people, people) `shouldBe` lastNameJoin
     describe "indexBy" $ do
-        it "can correctly index with trivial key" $ do
-            people `DB.indexBy` const () `shouldBe` Map.Lone people
-        it "can correctly index an empty bag" $ do
-            (DB.empty :: DB.Table Int) `DB.indexBy` const () `shouldBe` (Map.empty :: Map () (Bag.Bag Int))
-        it "can correctly index a bag with a repeated index" $ do
-            orderItems3 `DB.indexBy` (fromIntegral . orderId :: OrderItem -> Word16) `shouldBe` orderItems3Array
-        it "can join two tables with at most one matching element" $ do
-            indexedEquijoin (fromIntegral . invoiceId :: OrderInvoice -> Word16) (fromIntegral . orderId) (orderPrices1, orderItems1) `shouldBe` orderJoin1
+        it "can correctly index with trivial key" $ people `DB.indexBy` const () `shouldBe` Map.Lone people
+        it "can correctly index an empty bag" $ (DB.empty :: DB.Table Int) `DB.indexBy` const () `shouldBe` (Map.empty :: Map () (Bag.Bag Int))
+        it "can correctly index a bag with a repeated index" $ orderItems3 `DB.indexBy` (fromIntegral . orderId :: OrderItem -> Word16) `shouldBe` orderItems3Array
+        it "can join two tables with at most one matching element" $ indexedEquijoin (fromIntegral . invoiceId :: OrderInvoice -> Word16) (fromIntegral . orderId) (orderPrices1, orderItems1) `shouldBe` orderJoin1
         it
             "can join two tables with more than one matching elements,\
             \ only multiple in one table"
-            $ do
-                indexedEquijoin (fromIntegral . invoiceId :: OrderInvoice -> Word16) (fromIntegral . orderId) (orderPrices3, orderItems3) `shouldBe` orderJoin3
-        it "can join two tables with no matching elements" $ do
-            indexedEquijoin (fromIntegral . invoiceId :: OrderInvoice -> Word16) (fromIntegral . orderId) (orderPrices2, orderItems2) `shouldBe` Bag.empty
-        it "can join two tables with multiple elements in both tables" $ do
-            indexedEquijoin (fromIntegral . nums :: NameNum -> Word16) (fromIntegral . nums) (namenums, namenums) `shouldBe` namenumjoins
+            $ indexedEquijoin (fromIntegral . invoiceId :: OrderInvoice -> Word16) (fromIntegral . orderId) (orderPrices3, orderItems3) `shouldBe` orderJoin3
+        it "can join two tables with no matching elements" $ indexedEquijoin (fromIntegral . invoiceId :: OrderInvoice -> Word16) (fromIntegral . orderId) (orderPrices2, orderItems2) `shouldBe` Bag.empty
+        it "can join two tables with multiple elements in both tables" $ indexedEquijoin (fromIntegral . nums :: NameNum -> Word16) (fromIntegral . nums) (namenums, namenums) `shouldBe` namenumjoins
