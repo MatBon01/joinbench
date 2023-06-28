@@ -68,28 +68,31 @@ common example-properties
         base >=4.16.4.0,
         a-deeper-dive-into-relational-algebra-by-way-of-adjunctions,
 
-    hs-source-dirs:   app/examples
     default-language: Haskell2010
 
 executable new-comprehension
     import: example-properties
-    main-is:          NewComprehensionExample.hs
+    hs-source-dirs: app/examples
+    main-is: NewComprehensionExample.hs
 
 executable old-comprehension
     import: example-properties
-    main-is:          OldComprehensionExample.hs
+    hs-source-dirs: app/examples
+    main-is: OldComprehensionExample.hs
 
 
 executable modular-product
     import: example-properties
-    main-is:          ModularProductExample.hs
+    hs-source-dirs: app/examples
+    main-is: ModularProductExample.hs
 
 executable modular-index
     import: example-properties
-    main-is:          ModularIndexExample.hs
+    hs-source-dirs: app/examples
+    main-is: ModularIndexExample.hs
 
 executable invoice-benchmark
-    main-is:          InvoiceBenchmark.hs
+    main-is: InvoiceBenchmark.hs
 
     -- Modules included in this executable, other than Main.
     -- other-modules:
