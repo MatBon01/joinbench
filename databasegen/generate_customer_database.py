@@ -177,7 +177,7 @@ def generate_customer_table(
 ) -> List[str]:
     first_name_generator: Cell = RandomChoiceCell(first_names, random)
     surname_generator: Cell = RandomChoiceCell(surnames, random)
-    id_generator: TrackingCell = TrackingCell(IdCell(random))
+    id_generator: TrackingCell = TrackingCell(IdCell(random, 10000, 59999))
 
     record_generator: RecordGenerator = RecordGenerator(
         [first_name_generator, surname_generator, id_generator]
@@ -198,7 +198,7 @@ def generate_invoice_table(
     customer_ids: List[str],
     random: Random,
 ) -> None:
-    id: Cell = UniqueCell(IdCell(random))
+    id: Cell = UniqueCell(IdCell(random, 10000, 59999))
     cid: Cell = RandomChoiceCell(customer_ids, random)
     due: Cell = DateCell(1990, 2023, random)
     amount: Cell = AmountCell(random)
