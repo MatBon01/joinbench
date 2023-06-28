@@ -39,8 +39,8 @@ instance Monoid (Bag a) where
     mempty = Data.Bag.empty
 
 instance Alternative Bag where
-  empty = Data.Bag.empty
-  (<|>) = (<>)
+    empty = Data.Bag.empty
+    (<|>) = (<>)
 
 instance CMonoid (Bag a)
 
