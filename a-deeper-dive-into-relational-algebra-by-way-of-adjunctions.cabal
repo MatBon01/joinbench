@@ -91,39 +91,25 @@ executable modular-index
     hs-source-dirs: app/examples
     main-is: ModularIndexExample.hs
 
+common benchmark
+    build-depends:
+        base >=4.16.4.0,
+        a-deeper-dive-into-relational-algebra-by-way-of-adjunctions,
+        criterion >= 1.6.2.0,
+
+    default-language: Haskell2010
+
 executable invoice-benchmark
+    import: benchmark
     main-is: InvoiceBenchmark.hs
 
-    -- Modules included in this executable, other than Main.
-    -- other-modules:
+    hs-source-dirs:   app
 
-    -- LANGUAGE extensions used by modules in this package.
-    -- other-extensions:
-
-    build-depends:
-        base >=4.16.4.0,
-        a-deeper-dive-into-relational-algebra-by-way-of-adjunctions,
-        criterion >= 1.6.2.0,
+executable lazy-benchmark
+    import: benchmark
+    main-is: TestLazyBenchmark.hs
 
     hs-source-dirs:   app
-    default-language: Haskell2010
-
-executable test-lazy-benchmark 
-    main-is:          TestLazyBenchmark.hs
-
-    -- Modules included in this executable, other than Main.
-    -- other-modules:
-
-    -- LANGUAGE extensions used by modules in this package.
-    -- other-extensions:
-
-    build-depends:
-        base >=4.16.4.0,
-        a-deeper-dive-into-relational-algebra-by-way-of-adjunctions,
-        criterion >= 1.6.2.0,
-
-    hs-source-dirs:   app
-    default-language: Haskell2010
 
 test-suite spec
     default-language:   Haskell2010
