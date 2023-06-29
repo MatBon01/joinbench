@@ -20,5 +20,6 @@ main = do
             "parse"
             [ bench "customers" $ whnf Customers.parseCSV customers
             , bench "invoices" $ whnf Invoices.parseCSV invoices
-            ]
+            ],
+          bgroup "joins" []
         ]
