@@ -1,4 +1,5 @@
 {-# LANGUAGE MonadComprehensions #-}
+
 module Main where
 
 import Criterion.Main
@@ -30,15 +31,32 @@ main = do
                 , bench "invoices" $ whnf Invoices.parseCSV invoicesCSV
                 ]
             , bgroup
-                "joins"
+                "join"
                 [ bench "modular product" $
                     whnf (productEquijoin cid cust) (customers, invoices)
                 , bench "old comprehension" $
-                    whnf oldComprehension (customers, invoices)
+                    whnf oldJoinComprehension (customers, invoices)
                 , bench "modular indexed" $
                     whnf (indexedEquijoin cid cust) (customers, invoices)
                 ]
+            , bgroup
+                "join with selection"
+                [ bench "modular product" $
+                    whnf
+                        (select selectionCriteria . productEquijoin cid cust)
+                        (customers, invoices)
+                , bench "old comprehension" $
+                    whnf oldSelectionComprehension (customers, invoices)
+                ]
             ]
 
-oldComprehension :: (Table Customer, Table Invoice) -> Table (Customer, Invoice)
-oldComprehension (cs, is) = [ (c, i) | c <- cs, i <- is, cid c == cust i ]
+oldJoinComprehension :: (Table Customer, Table Invoice) -> Table (Customer, Invoice)
+oldJoinComprehension (cs, is) = [(c, i) | c <- cs, i <- is, cid c == cust i]
+
+selectionCriteriaSplittingPrice = 500
+
+selectionCriteria :: (Customer, Invoice) -> Bool
+selectionCriteria = (> selectionCriteriaSplittingPrice) . amount . snd
+
+oldSelectionComprehension :: (Table Customer, Table Invoice) -> Table (Customer, Invoice)
+oldSelectionComprehension (cs, is) = [(c, i) | c <- cs, i <- is, cid c == cust i, amount i > selectionCriteriaSplittingPrice]
