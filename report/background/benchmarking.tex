@@ -423,7 +423,11 @@ unordered columns, such as \relationAttribute{K100} the number denotes its
 cardinality (where if a number ends with a ``K'' it denotes a multiple of 1000,
 such as \relationAttribute{K40K} having a cardinality of $40,000$). If a column
 has a cardinality of $N$, then components can take any value between $1$ and
-$N$ inclusive.
+$N$ inclusive. In order to allow the scaling of tables, the cardinality of the
+two largest ordered columns, \relationAttribute{K500K} and
+\relationAttribute{K250K}, are increased accordingly; as
+\relationAttribute{KSEQ} enumerates the number of rows, it is clear that its
+cardinality increases.
 
 \paragraph{Character columns} The character columns in the Set Query Benchmark
 serve a very different purpose to the strings in the Wisconsin database and are
