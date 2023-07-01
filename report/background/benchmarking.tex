@@ -405,6 +405,16 @@ support benchmarks than TPC and DebitCredit, namely the \emph{set queries}. Set 
 are queries which potentially need information from a large set of tuples.
 
 \paragraph{The BENCH relation} The table used in the set benchmark, named
-\relation{BENCH}, is synthetically generated with 16 columns. Similarly to the
+\relation{BENCH}, is synthetically generated with 21 columns. Similarly to the
 Wisconsin benchmark there are a mixture of integer and string attributes; Namely
-thirteen indexed attributes and three character columns.
+13 indexed attributes and eight character columns.
+
+\paragraph{Character columns} The character columns in the Set Query Benchmark
+serve a very different purpose to the strings in the Wisconsin database and are
+there simply to pad out a row to 200 bytes. The columns are named simply
+\relationAttribute{S1}, \relationAttribute{S2}, \ldots, \relationAttribute{S8}. The relationAttribute
+\relationAttribute{S1} is an 8 character string, whereas \relationAttribute{S2} through to
+\relationAttribute{S8} are 20 character strings. The strings are not used for retrievals
+and so O'Neil says they can all be set to the same value; interestingly, O'Neil
+writes that the reason they are not used in retrievals is as unindexed
+retrievals in a large database system with scarce writes is not advised.
