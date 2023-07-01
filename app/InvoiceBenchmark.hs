@@ -1,3 +1,4 @@
+{-# LANGUAGE MonadComprehensions #-}
 module Main where
 
 import Criterion.Main
@@ -28,5 +29,14 @@ main = do
                 [ bench "customers" $ whnf Customers.parseCSV customersCSV
                 , bench "invoices" $ whnf Invoices.parseCSV invoicesCSV
                 ]
-            , bgroup "joins" [bench "modular product" $ whnf (productEquijoin cid cust) (customers, invoices)]
+            , bgroup
+                "joins"
+                [ bench "modular product" $
+                    whnf (productEquijoin cid cust) (customers, invoices)
+                , bench "old comprehension" $
+                    whnf oldComprehension (customers, invoices)
+                ]
             ]
+
+oldComprehension :: (Table Customer, Table Invoice) -> Table (Customer, Invoice)
+oldComprehension (cs, is) = [ (c, i) | c <- cs, i <- is, cid c == cust i ]
