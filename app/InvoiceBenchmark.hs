@@ -1,8 +1,8 @@
 module Main where
 
 import Criterion.Main
-import Data.Bag
 import Data.Either
+import Database.Bag
 import System.Environment
 import Text.Parser.Customers as Customers
 import Text.Parser.Invoices as Invoices
@@ -14,14 +14,19 @@ invoiceArgIndex = 1
 main :: IO ()
 main = do
     args <- getArgs
-    customers <- readFile $ args !! customerArgIndex
-    invoices <- readFile $ args !! invoiceArgIndex
+
+    customersCSV <- readFile $ args !! customerArgIndex
+    invoicesCSV <- readFile $ args !! invoiceArgIndex
+
+    let customers = fromRight empty $ Customers.parseCSV customersCSV
+    let invoices = fromRight empty $ Invoices.parseCSV invoicesCSV
+
     withArgs (drop numArgs args) $
         defaultMain
             [ bgroup
                 "parse"
-                [ bench "customers" $ whnf Customers.parseCSV customers
-                , bench "invoices" $ whnf Invoices.parseCSV invoices
+                [ bench "customers" $ whnf Customers.parseCSV customersCSV
+                , bench "invoices" $ whnf Invoices.parseCSV invoicesCSV
                 ]
-            , bgroup "joins" []
+            , bgroup "joins" [bench "modular product" $ whnf (productEquijoin cid cust) (customers, invoices)]
             ]
