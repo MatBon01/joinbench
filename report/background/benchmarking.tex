@@ -439,5 +439,7 @@ The relation
 \relationAttribute{S1} is an 8 character string, whereas \relationAttribute{S2} through to
 \relationAttribute{S8} are 20 character strings. The strings are not used for retrievals
 and so O'Neil says they can all be set to the same value; interestingly, O'Neil
-writes that the reason they are not used in retrievals is as unindexed
-retrievals in a large database system with scarce writes is not advised.
+writes that the reason they are not used in retrievals is to mirror the fact
+that
+retrievals in a large database system with scarce writes on columns without
+indexing is generally not advised.
