@@ -35,6 +35,8 @@ main = do
                     whnf (productEquijoin cid cust) (customers, invoices)
                 , bench "old comprehension" $
                     whnf oldComprehension (customers, invoices)
+                , bench "modular indexed" $
+                    whnf (indexedEquijoin cid cust) (customers, invoices)
                 ]
             ]
 
