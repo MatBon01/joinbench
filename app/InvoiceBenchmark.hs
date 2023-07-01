@@ -47,6 +47,10 @@ main = do
                         (customers, invoices)
                 , bench "old comprehension" $
                     whnf oldSelectionComprehension (customers, invoices)
+                , bench "modular indexed" $
+                    whnf
+                        (select selectionCriteria . indexedEquijoin cid cust)
+                        (customers, invoices)
                 ]
             ]
 
