@@ -409,6 +409,34 @@ for example, as described by Bitton, you know that a selection on
 \relationAttribute{twentyPercent}, say $\relationAttribute{twentyPercent} = 2$,
 will give 20\% of the table no matter the cardinality.
 
+\subparagraph{String attributes} The string attributes remained the same size
+but their template and methods of generation changed. The justification for the
+fixed-length strings was so that each disk page could hold the same number of
+tuples. An an overview of the template for \relationAttribute{stringu1} and
+\relationAttribute{stringU2} can be found in \fref{fig:NewWisconsinUniqueString}
+and for \relationAttribute{string4} in \fref{fig:NewWisconsinString4}. The
+generation are not described but it suffices to know that
+\relationAttribute{stringu1} and \relationAttribute{stringu2} are generated
+based on \relationAttribute{unique1} and \relationAttribute{unique2}
+respectively, whereas \relationAttribute{string4} continues to be cyclic.
+
+\begin{figure}[h]
+    \centering
+    \NewWisconsinUString
+
+    \caption{Template for the unique strings in the updated Wisconsin database.}
+    \label{fig:NewWisconsinUniqueString}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \NewWisconsinCyclicStringDef{}
+
+    \caption{Template for \relationAttribute{string4} in the updated Wisconsin database.}
+    \label{fig:NewWisconsinString4}
+\end{figure}
+
+
 \begin{table}[t]
 
     \begin{tabular}{r c l}

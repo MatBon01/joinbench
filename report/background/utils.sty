@@ -71,6 +71,25 @@
 
 \newcommand{\WisconsinXSubstring}[0]{\ensuremath{\mathrm{xx\ldots xx}}}
 
+
+\newcommand{\NewWisconsinUString}[0]{\ensuremath{\NewGeneralWisconsinUStringTemplate{\$_1}{\$_2}{\$_3}{\$_4}{\$_5}{\$_6}{\$_7},\
+\$_i \in \NewWisconsinUStringCharDomain{}, i \in \left\{1, \ldots, 7\right\}}}
+
+\newcommand{\NewWisconsinUStringCharDomain}[0]{\ensuremath{\left\{\mathrm{A,
+\ldots, Z}\right\}}}
+
+\newcommand{\NewGeneralWisconsinUString}[8]{\ensuremath{\NewGeneralWisconsinUStringTemplate{#1}{#2}{#3}{#4}{#5}{#6}{#7},\ #1, #2, #3, #4, #5, #6, #7 \in #8}}
+
+\newcommand{\NewGeneralWisconsinUStringTemplate}[7]{\ensuremath{#1 #2 #3 #4 #5 #6 #7\WisconsinLabelledXSubstring{45}}}
+
+\newcommand{\NewWisconsinCyclicStringDef}[0]{\ensuremath{\NewWisconsinGeneralCyclicStringDef{\$}{\NewWisconsinCyclicStringCharDomain{}}}}
+\newcommand{\NewWisconsinGeneralCyclicStringDef}[2]{\ensuremath{\NewWisconsinGeneralCyclicStringDefTemplate{#1}{#1}{#1}{#1},\
+#1 \in #2}}
+\newcommand{\NewWisconsinGeneralCyclicStringDefTemplate}[4]{\ensuremath{#1 #2 #3
+#4}\WisconsinLabelledXSubstring{48}}
+    \newcommand{\NewWisconsinCyclicStringCharDomain}[0]{\ensuremath{\left\{\mathrm{A}, \mathrm{H}, \mathrm{O}, \mathrm{V}\right\}}}
+
+
 % Temporary function to show italicised code similar to maths
 % TODO: Change
 \newcommand{\mathcodefunc}[1]{\ensuremath{\mathit{#1}}}
