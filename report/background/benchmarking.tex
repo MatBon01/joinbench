@@ -443,3 +443,33 @@ writes that the reason they are not used in retrievals is to mirror the fact
 that
 retrievals in a large database system with scarce writes on columns without
 indexing is generally not advised.
+
+\subsubsection{TPC-H}
+The TPC-H benchmark is one of the more recent benchmarks for decision support
+systems designed by the Transaction Processing Performance Council (TPC). The
+benchmark contains a bigger emphasis on updates compared to Wisconsin and Set
+Query Benchmark (specifically concurrent updates) while still focusing on
+ad-hoc business related queries. This benchmark is meant to represent a more
+modern and authoritative benchmarking system in this literature review but is
+not to be discussed in depth as it is beyond the scope of this project.
+
+\paragraph{Overall Structure} The TPC-H benchmark takes a different, perhaps more
+realistic, approach to their database model. The benchmark consists of eight
+``separate and individual tables'' which have varying relationships to each
+other. The database has some constraints on size, such as a minimum on data from
+10,000 suppliers which leads to a database of almost ten million rows
+(approximately a raw storage capacity of 1 GB). This is default size not
+comparable to either the Wisconsin benchmark and the set query benchmark; it is
+worth arguing that both can be scaled up, but so too can the TPC-H benchmark be
+scaled to much larger datasets.
+
+\paragraph{The relations} The table definition clearly has parallels to the business world with
+tables not only being assigned varying structures and cardinalities, but
+real-life applications too. We see, for instance, the \relation{SUPPLIER}
+relation, with attributes such as \relationAttribute{SUPPKEY},
+\relationAttribute{NAME} and \relationAttribute{ACCTBAL}. The cardinality of
+\relation{SUPPLIER} is also specified as $\mathrm{SF} \cdot 10,000$ where
+$\mathrm{SF}$ is the scale factor for the chosen database size. This contrasts
+the \relation{ORDERS} relation with attributes such as
+\relationAttribute{TOTALPRICE} and
+a cardinality of $\mathrm{SF} \cdot 1,500,000$.
