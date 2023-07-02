@@ -462,3 +462,14 @@ other. The database has some constraints on size, such as a minimum on data from
 comparable to either the Wisconsin benchmark and the set query benchmark; it is
 worth arguing that both can be scaled up, but so too can the TPC-H benchmark be
 scaled to much larger datasets.
+
+\paragraph{The relations} The table definition clearly has parallels to the business world with
+tables not only being assigned varying structures and cardinalities, but
+real-life applications too. We see, for instance, the \relation{SUPPLIER}
+relation, with attributes such as \relationAttribute{SUPPKEY},
+\relationAttribute{NAME} and \relationAttribute{ACCTBAL}. The cardinality of
+\relation{SUPPLIER} is also specified as $\mathrm{SF} \cdot 10,000$ where
+$\mathrm{SF}$ is the scale factor for the chosen database size. This contrasts
+the \relation{ORDERS} relation with attributes such as
+\relationAttribute{TOTALPRICE} and
+a cardinality of $\mathrm{SF} \cdot 1,500,000$.
