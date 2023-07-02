@@ -253,15 +253,15 @@ attributes, 12 cyclic integer attributes with varying domains and 3 string attri
         primary \\
         \midrule
 
-        \relationAttribute{two} & integer & $\{0, 1\}$ & random \\
-        \relationAttribute{four} & integer & $\{0, \ldots, 3\}$ & random \\
-        \relationAttribute{ten} & integer & $\{0, \ldots, 9\}$ & random \\
-        \relationAttribute{twenty} & integer & $\{0, \ldots, 19\}$ & random \\
-        \relationAttribute{hundred} & integer & $\{0, \ldots, 99\}$ & random \\
-        \relationAttribute{thousand} & integer & $\{0, \ldots, 999\}$ & random \\
-        \relationAttribute{twothous} & integer & $\{0, \ldots, 1999\}$ & random \\
-        \relationAttribute{fivethous} & integer & $\{0, \ldots, 4999\}$ & random \\
-        \relationAttribute{tenthous} & integer & $\{0, \ldots, 9999\}$ & random \\
+        \relationAttribute{two} & integer & $\{0, 1\}$ & cyclic \\
+        \relationAttribute{four} & integer & $\{0, \ldots, 3\}$ & cyclic \\
+        \relationAttribute{ten} & integer & $\{0, \ldots, 9\}$ & cyclic \\
+        \relationAttribute{twenty} & integer & $\{0, \ldots, 19\}$ & cyclic \\
+        \relationAttribute{hundred} & integer & $\{0, \ldots, 99\}$ & cyclic \\
+        \relationAttribute{thousand} & integer & $\{0, \ldots, 999\}$ & cyclic \\
+        \relationAttribute{twothous} & integer & $\{0, \ldots, 1999\}$ & cyclic \\
+        \relationAttribute{fivethous} & integer & $\{0, \ldots, 4999\}$ & cyclic \\
+        \relationAttribute{tenthous} & integer & $\{0, \ldots, 9999\}$ & cyclic \\
         \relationAttribute{odd100} & integer & $\left\{n\ |\ n \leftarrow \{0, \ldots, 99\},\
         \mathrm{odd}\  n\right\}$ & random \\
         \relationAttribute{even100} & integer & $\left\{n\ |\ n \leftarrow \{0, \ldots, 99\},\
@@ -299,10 +299,8 @@ sort the relation. As the name suggests, both fields are unique.
 named after the number of values they can take and any properties; for instance
 ``\relationAttribute{four}'' can take 4 values from 0 to 3, and ``\relationAttribute{even100}''
 can take any even number between 0 and 99 (the first 100 numbers counting from
-0). Despite following a uniform distribution in Bitton's original paper, these
-integers have been dubbed cyclic as they are designed to be non-unique and some
-implementations \cite{PractitionersIntroduction} derive their value from a
-modulo operation on \relationAttribute{unique1}. These attributes are key to the
+0). The possible values for each of these attributes are cycled through while
+generating the table. These attributes are key to the
 advantages of using a synthetic database as, given the relation cardinality, you
 can use it to specify any number of selectivity factors. For instance a
 selection operation on \relationAttribute{two} relation would result in a selectivity
