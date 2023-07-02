@@ -399,6 +399,16 @@ description of the changes follow.
 \relationAttribute{unique1} is randomly generated and
 \relationAttribute{unique2} is sequential.
 
+\subparagraph{Cyclic integer attributes} The cyclic integer attributes such as
+\relationAttribute{two} and \relationAttribute{hundred} were mostly replaced
+with percentages. The cardinalities stay the same, but the method of generation
+also differs: instead of cycling through values, they are now randomly generated
+by using the appropriate modulo operation on \relationAttribute{unique1}. The
+reason for the change is that you can exactly tell the selectivity of a query;
+for example, as described by Bitton, you know that a selection on
+\relationAttribute{twentyPercent}, say $\relationAttribute{twentyPercent} = 2$,
+will give 20\% of the table no matter the cardinality.
+
 \begin{table}[t]
 
     \begin{tabular}{r c l}
