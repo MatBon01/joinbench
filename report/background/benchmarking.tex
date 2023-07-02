@@ -383,6 +383,31 @@ The components of \relationAttribute{string4} simply cycle through the 4 values
 If any ordering is required it is done on \relationAttribute{unique2} (or equivalently
 \relationAttribute{stringu2}).
 
+\paragraph{Improvements to the Wisconsin Database} As one of the first
+standard ways of testing database systems the Wisconsin database has been
+criticised throughout the years and been subject to multiple retrospectives by
+the original authors \cite{Wisconsin2}. Among other comments there were emphases
+on criticism revolving around the single user limitation of the benchmark, its
+lack of scalability and string design. Not addressing the single user concerns
+in this benchmark improvements were suggested for the latter two issues. In
+order to address the scalability concerns and string design Bitton introduces a
+change to a few of their attributes in \cite{Wisconsin2} as well as rework which
+can be seen in \fref{tab:WisconsinImprovedAttributes}. A brief non-exhaustive
+description of the changes follow.
+
+\begin{table}[t]
+
+    \begin{tabular}{r c l}
+        \toprule
+
+    \end{tabular}
+
+
+    \caption{The improved attributes of the Wisconsin database as seen in
+    \cite{Wisconsin2}}
+    \label{tab:WisconsinImprovedAttributes}
+\end{table}
+
 \paragraph{Queries} Along with a synthetic database, the Wisconsin benchmark
 also provides a set of queries to benchmark different relational operators.
 Bitton's queries attempt to measure the performance of the following (as stated
