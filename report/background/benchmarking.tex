@@ -469,11 +469,18 @@ respectively, whereas \relationAttribute{string4} continues to be cyclic.
         \relationAttribute{oddOnePercent} & $\{1, 3, \ldots, 199\}$ & random,
         $\left(\relationAttribute{onePercent} \cdot 2\right) + 1$ \\
         \midrule
+
+        \relationAttribute{stringu1} & \NewWisconsinUString{} & random, based on
+        \relationAttribute{unique1} \\
+        \relationAttribute{stringu2} & \NewWisconsinUString{} & random, based on
+        \relationAttribute{unique2} \\
+        \relationAttribute{string4} & \NewWisconsinCyclicStringDef{} & cyclic \\
+        \bottomrule
     \end{tabular}
 
 
     \caption{The improved attributes of the Wisconsin database as seen in
-    \cite{Wisconsin2}}
+    \cite{Wisconsin2}.}
     \label{tab:WisconsinImprovedAttributes}
 \end{table}
 
