@@ -94,4 +94,6 @@ fiftyPercent
 unique3
 evenOnePercent
 oddOnePercent
-
+SUPPKEY
+ACCTBAL
+TOTALPRICE
