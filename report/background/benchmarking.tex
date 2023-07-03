@@ -411,8 +411,8 @@ will give 20\% of the table no matter the cardinality.
 but their template and methods of generation changed. The justification for the
 fixed-length strings was so that each disk page could hold the same number of
 tuples. An an overview of the template for \relationAttribute{stringu1} and
-\relationAttribute{stringU2} can be found in \fref{fig:NewWisconsinUniqueString}
-and for \relationAttribute{string4} in \fref{fig:NewWisconsinString4}. The
+\relationAttribute{stringu2} can be found in \fref{fig:NewWisconsinUniqueString}
+and for \relationAttribute{string4} in \fref{fig:NewWisconsinCyclicString}. The
 generation are not described but it suffices to know that
 \relationAttribute{stringu1} and \relationAttribute{stringu2} are generated
 based on \relationAttribute{unique1} and \relationAttribute{unique2}
@@ -431,7 +431,7 @@ respectively, whereas \relationAttribute{string4} continues to be cyclic.
     \NewWisconsinCyclicStringDef{}
 
     \caption{Template for \relationAttribute{string4} in the updated Wisconsin database.}
-    \label{fig:NewWisconsinString4}
+    \label{fig:NewWisconsinCyclicString}
 \end{figure}
 
 
