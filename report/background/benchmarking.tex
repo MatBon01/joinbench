@@ -253,15 +253,15 @@ attributes, 12 cyclic integer attributes with varying domains and 3 string attri
         primary \\
         \midrule
 
-        \relationAttribute{two} & integer & $\{0, 1\}$ & random \\
-        \relationAttribute{four} & integer & $\{0, \ldots, 3\}$ & random \\
-        \relationAttribute{ten} & integer & $\{0, \ldots, 9\}$ & random \\
-        \relationAttribute{twenty} & integer & $\{0, \ldots, 19\}$ & random \\
-        \relationAttribute{hundred} & integer & $\{0, \ldots, 99\}$ & random \\
-        \relationAttribute{thousand} & integer & $\{0, \ldots, 999\}$ & random \\
-        \relationAttribute{twothous} & integer & $\{0, \ldots, 1999\}$ & random \\
-        \relationAttribute{fivethous} & integer & $\{0, \ldots, 4999\}$ & random \\
-        \relationAttribute{tenthous} & integer & $\{0, \ldots, 9999\}$ & random \\
+        \relationAttribute{two} & integer & $\{0, 1\}$ & cyclic \\
+        \relationAttribute{four} & integer & $\{0, \ldots, 3\}$ & cyclic \\
+        \relationAttribute{ten} & integer & $\{0, \ldots, 9\}$ & cyclic \\
+        \relationAttribute{twenty} & integer & $\{0, \ldots, 19\}$ & cyclic \\
+        \relationAttribute{hundred} & integer & $\{0, \ldots, 99\}$ & cyclic \\
+        \relationAttribute{thousand} & integer & $\{0, \ldots, 999\}$ & cyclic \\
+        \relationAttribute{twothous} & integer & $\{0, \ldots, 1999\}$ & cyclic \\
+        \relationAttribute{fivethous} & integer & $\{0, \ldots, 4999\}$ & cyclic \\
+        \relationAttribute{tenthous} & integer & $\{0, \ldots, 9999\}$ & cyclic \\
         \relationAttribute{odd100} & integer & $\left\{n\ |\ n \leftarrow \{0, \ldots, 99\},\
         \mathrm{odd}\  n\right\}$ & random \\
         \relationAttribute{even100} & integer & $\left\{n\ |\ n \leftarrow \{0, \ldots, 99\},\
@@ -299,10 +299,8 @@ sort the relation. As the name suggests, both fields are unique.
 named after the number of values they can take and any properties; for instance
 ``\relationAttribute{four}'' can take 4 values from 0 to 3, and ``\relationAttribute{even100}''
 can take any even number between 0 and 99 (the first 100 numbers counting from
-0). Despite following a uniform distribution in Bitton's original paper, these
-integers have been dubbed cyclic as they are designed to be non-unique and some
-implementations \cite{PractitionersIntroduction} derive their value from a
-modulo operation on \relationAttribute{unique1}. These attributes are key to the
+0). The possible values for each of these attributes are cycled through while
+generating the table. These attributes are key to the
 advantages of using a synthetic database as, given the relation cardinality, you
 can use it to specify any number of selectivity factors. For instance a
 selection operation on \relationAttribute{two} relation would result in a selectivity
@@ -382,6 +380,109 @@ The components of \relationAttribute{string4} simply cycle through the 4 values
 \WisconsinRepeatedStringStructure{V}.
 If any ordering is required it is done on \relationAttribute{unique2} (or equivalently
 \relationAttribute{stringu2}).
+
+\paragraph{Improvements to the Wisconsin Database} As one of the first
+standard ways of testing database systems the Wisconsin database has been
+criticised throughout the years and been subject to multiple retrospectives by
+the original authors \cite{Wisconsin2}. Among other comments there were emphases
+on criticism revolving around the single user limitation of the benchmark, its
+lack of scalability and string design. Not addressing the single user concerns
+in this benchmark improvements were suggested for the latter two issues. In
+order to address the scalability concerns and string design Bitton introduces a
+change to a few of their attributes in \cite{Wisconsin2} as well as rework which
+can be seen in \fref{tab:WisconsinImprovedAttributes}. A brief non-exhaustive
+description of the changes follow.
+
+\subparagraph{Unique attributes} The unique attributes were changed so that only
+\relationAttribute{unique1} is randomly generated and
+\relationAttribute{unique2} is sequential.
+
+\subparagraph{Cyclic integer attributes} The cyclic integer attributes such as
+\relationAttribute{two} and \relationAttribute{hundred} were mostly replaced
+with percentages. The cardinalities stay the same, but the method of generation
+also differs: instead of cycling through values, they are now randomly generated
+by using the appropriate modulo operation on \relationAttribute{unique1}. The
+reason for the change is that you can exactly tell the selectivity of a query;
+for example, as described by Bitton, you know that a selection on
+\relationAttribute{twentyPercent}, say $\relationAttribute{twentyPercent} = 2$,
+will give 20\% of the table no matter the cardinality.
+
+\subparagraph{String attributes} The string attributes remained the same size
+but their template and methods of generation changed. The justification for the
+fixed-length strings was so that each disk page could hold the same number of
+tuples. An an overview of the template for \relationAttribute{stringu1} and
+\relationAttribute{stringu2} can be found in \fref{fig:NewWisconsinUniqueString}
+and for \relationAttribute{string4} in \fref{fig:NewWisconsinCyclicString}. The
+generation are not described but it suffices to know that
+\relationAttribute{stringu1} and \relationAttribute{stringu2} are generated
+based on \relationAttribute{unique1} and \relationAttribute{unique2}
+respectively, whereas \relationAttribute{string4} continues to be cyclic.
+
+\begin{figure}[h]
+    \centering
+    \NewWisconsinUString
+
+    \caption{Template for the unique strings in the updated Wisconsin database.}
+    \label{fig:NewWisconsinUniqueString}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \NewWisconsinCyclicStringDef{}
+
+    \caption{Template for \relationAttribute{string4} in the updated Wisconsin database.}
+    \label{fig:NewWisconsinCyclicString}
+\end{figure}
+
+
+\begin{table}[t]
+
+    \begin{tabular}{l c l}
+        \toprule
+        Attribute & Values & Properties \\
+        \midrule
+
+        \relationAttribute{unique1} & $\{0, \ldots, K - 1\}$ & random, unique \\
+        \relationAttribute{unique2} & $\{0, \ldots, K - 1\}$ & sequential, unique \\
+        \midrule
+
+        \relationAttribute{two} & $\{0, 1\}$ & random,
+        \NewWisconsinCyclicIntegerDef{2} \\
+        \relationAttribute{four} & $\{0, \ldots, 3\}$ & random,
+        \NewWisconsinCyclicIntegerDef{4} \\
+        \relationAttribute{ten} & $\{0, \ldots, 9\}$ & random,
+        \NewWisconsinCyclicIntegerDef{10} \\
+        \relationAttribute{twenty} & $\{0, \ldots, 19\}$ & random,
+        \NewWisconsinCyclicIntegerDef{20} \\
+        \relationAttribute{onePercent} & $\{0, \ldots, 99\}$ & random,
+        \NewWisconsinCyclicIntegerDef{100} \\
+        \relationAttribute{tenPercent} & $\{0, \ldots, 9\}$ & random,
+        \NewWisconsinCyclicIntegerDef{10} \\
+        \relationAttribute{twentyPercent} & $\{0, \ldots, 4\}$ & random,
+        \NewWisconsinCyclicIntegerDef{5} \\
+        \relationAttribute{fiftyPercent} & $\{0, 1\}$ & random,
+        \NewWisconsinCyclicIntegerDef{2} \\
+        \relationAttribute{unique3} & $\{0, \ldots, K - 1\}$ & random,
+        \relationAttribute{unique1} \\
+        \relationAttribute{evenOnePercent} & $\{0, 2, \ldots, 198\}$ & random,
+        $\left(\relationAttribute{onePercent} \cdot 2\right)$ \\
+        \relationAttribute{oddOnePercent} & $\{1, 3, \ldots, 199\}$ & random,
+        $\left(\relationAttribute{onePercent} \cdot 2\right) + 1$ \\
+        \midrule
+
+        \relationAttribute{stringu1} & \NewWisconsinUString{} & random, based on
+        \relationAttribute{unique1} \\
+        \relationAttribute{stringu2} & \NewWisconsinUString{} & random, based on
+        \relationAttribute{unique2} \\
+        \relationAttribute{string4} & \NewWisconsinCyclicStringDef{} & cyclic \\
+        \bottomrule
+    \end{tabular}
+
+
+    \caption{The improved attributes of the Wisconsin database as seen in
+    \cite{Wisconsin2}.}
+    \label{tab:WisconsinImprovedAttributes}
+\end{table}
 
 \paragraph{Queries} Along with a synthetic database, the Wisconsin benchmark
 also provides a set of queries to benchmark different relational operators.
