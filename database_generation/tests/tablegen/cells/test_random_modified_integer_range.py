@@ -1,7 +1,7 @@
 from random import Random
 from typing import Callable, List, Tuple
 
-from range_test_helper import RangeTestHelper
+from test_utils.range_test_helper import RangeTestHelper
 
 from databasegen.tablegen.cells.random_modified_integer_range import \
     RandomModifiedIntegerRangeCell

@@ -8,5 +8,5 @@ build-backend = "hatchling.build"
 addopts = [
     "--import-mode=importlib",
 ]
-pythonpath = ["src", "tests/test_utils"]
+pythonpath = ["src", "tests"]
 norecursedirs = ["test_utils"]

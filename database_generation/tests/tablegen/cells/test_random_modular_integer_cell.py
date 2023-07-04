@@ -1,6 +1,6 @@
 from random import Random
 
-from range_test_helper import RangeTestHelper
+from test_utils.range_test_helper import RangeTestHelper
 
 from databasegen.tablegen.cells.random_modular_integer_cell import \
     RandomModularIntegerCell
