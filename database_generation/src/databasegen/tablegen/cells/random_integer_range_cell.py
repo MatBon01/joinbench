@@ -1,9 +1,8 @@
 from random import Random
 from typing import Callable
 
-from databasegen.tablegen.cells.cell import Cell
-from databasegen.tablegen.cells.random_modified_integer_range import \
-    RandomModifiedIntegerRangeCell
+from .cell import Cell
+from .random_modified_integer_range import RandomModifiedIntegerRangeCell
 
 
 class RandomIntegerRangeCell(Cell):
