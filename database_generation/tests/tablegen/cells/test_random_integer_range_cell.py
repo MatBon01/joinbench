@@ -1,6 +1,8 @@
 from random import Random
 from typing import List, Tuple
 
+from range_test_helper import RangeTestHelper
+
 from databasegen.tablegen.cells.random_integer_range_cell import \
     RandomIntegerRangeCell
 
@@ -22,10 +24,9 @@ class TestRandomIntegerRangeCell:
             cell: RandomIntegerRangeCell = RandomIntegerRangeCell(
                 lower_bound, upper_bound, Random()
             )
-            for _ in range(TEST_REPEATS):
-                value = int(cell.generate())
-                assert value >= lower_bound
-                assert value <= upper_bound
+            RangeTestHelper.test_int_within_range(
+                cell, lower_bound, upper_bound, TEST_REPEATS
+            )
 
     def test_cell_has_random_output(self):
         # This test has a 1 in 2^1000 chance of failing assuming a uniform
@@ -37,13 +38,4 @@ class TestRandomIntegerRangeCell:
         cell: RandomIntegerRangeCell = RandomIntegerRangeCell(
             LOWER_BOUND, UPPER_BOUND, random
         )
-
-        last: str = ""
-        curr: str = cell.generate()
-        i: int = 0
-        while i < ATTEMPTS and (last == "" or last == curr):
-            last = curr
-            curr = cell.generate()
-            i += 1
-
-        assert i < ATTEMPTS
+        RangeTestHelper.test_varied_output(cell, ATTEMPTS)
