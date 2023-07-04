@@ -1,4 +1,4 @@
-from databasegen.tablegen.cells.cell import Cell
+from .cell import Cell
 
 class CounterCell(Cell):
     def __init__(self, start: int = 0):

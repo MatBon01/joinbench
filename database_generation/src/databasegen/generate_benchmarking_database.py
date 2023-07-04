@@ -1,15 +1,14 @@
 from random import Random
 from typing import List
 
-from databasegen.tablegen.cells.cell import Cell
-from databasegen.tablegen.cells.counter_cell import CounterCell
-from databasegen.tablegen.cells.even_integer_cell import EvenIntegerCell
-from databasegen.tablegen.cells.odd_integer_cell import OddIntegerCell
-from databasegen.tablegen.cells.random_modular_integer_cell import \
-    RandomModularIntegerCell
-from databasegen.tablegen.csv_table_generator import CSVTableGenerator
-from databasegen.tablegen.record_generator import RecordGenerator
-from databasegen.tablegen.table_generator import TableGenerator
+from tablegen.cells.cell import Cell
+from tablegen.cells.counter_cell import CounterCell
+from tablegen.cells.even_integer_cell import EvenIntegerCell
+from tablegen.cells.odd_integer_cell import OddIntegerCell
+from tablegen.cells.random_modular_integer_cell import RandomModularIntegerCell
+from tablegen.csv_table_generator import CSVTableGenerator
+from tablegen.record_generator import RecordGenerator
+from tablegen.table_generator import TableGenerator
 
 
 def main():
