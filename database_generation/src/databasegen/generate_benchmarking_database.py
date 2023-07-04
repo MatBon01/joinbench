@@ -16,6 +16,12 @@ def main():
 
 
 def construct_record_generator(random: Random) -> RecordGenerator:
+    cells: List[Cell] = get_cell_list(random)
+
+    return RecordGenerator(cells)
+
+
+def get_cell_list(random: Random) -> List[Cell]:
     id: Cell = CounterCell()
     one_percent: Cell = RandomModularIntegerCell(100, random)
     twenty_percent: Cell = RandomModularIntegerCell(5, random)
@@ -31,9 +37,9 @@ def construct_record_generator(random: Random) -> RecordGenerator:
         twenty_five_percent,
         fifty_percent,
         even_one_percent,
+        odd_one_percent,
     ]
-
-    return RecordGenerator(cells)
+    return cells
 
 
 if __name__ == "__main__":
