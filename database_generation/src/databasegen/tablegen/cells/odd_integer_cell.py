@@ -1,4 +1,5 @@
 from random import Random
+from typing import Callable
 
 from databasegen.tablegen.cells.cell import Cell
 from databasegen.tablegen.cells.random_modified_modular_integer_cell import \
