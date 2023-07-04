@@ -8,3 +8,4 @@ build-backend = "hatchling.build"
 addopts = [
     "--import-mode=importlib",
 ]
+pythonpath = "src"
