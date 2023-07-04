@@ -14,13 +14,17 @@ from tablegen.table_generator import TableGenerator
 def main():
     OUTPUT_FILE_NAME: str = "benchmarking_database.csv"
     NUM_RECORDS: int = 1000
+    generate_database(NUM_RECORDS, OUTPUT_FILE_NAME)
+
+
+def generate_database(num_records: int, file_path: str) -> None:
     random: Random = Random()
     record_generator: RecordGenerator = construct_record_generator(random)
     table_generator: TableGenerator = TableGenerator(record_generator)
     csv_table_generator: CSVTableGenerator = CSVTableGenerator(
-        table_generator, OUTPUT_FILE_NAME
+        table_generator, file_path
     )
-    csv_table_generator.generate(NUM_RECORDS)
+    csv_table_generator.generate(num_records)
 
 
 def construct_record_generator(random: Random) -> RecordGenerator:
