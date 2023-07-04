@@ -7,12 +7,21 @@ from databasegen.tablegen.cells.even_integer_cell import EvenIntegerCell
 from databasegen.tablegen.cells.odd_integer_cell import OddIntegerCell
 from databasegen.tablegen.cells.random_modular_integer_cell import \
     RandomModularIntegerCell
+from databasegen.tablegen.csv_table_generator import CSVTableGenerator
 from databasegen.tablegen.record_generator import RecordGenerator
+from databasegen.tablegen.table_generator import TableGenerator
 
 
 def main():
+    OUTPUT_FILE_NAME: str = "benchmarking_database.csv"
+    NUM_RECORDS: int = 1000
     random: Random = Random()
     record_generator: RecordGenerator = construct_record_generator(random)
+    table_generator: TableGenerator = TableGenerator(record_generator)
+    csv_table_generator: CSVTableGenerator = CSVTableGenerator(
+        table_generator, OUTPUT_FILE_NAME
+    )
+    csv_table_generator.generate(NUM_RECORDS)
 
 
 def construct_record_generator(random: Random) -> RecordGenerator:
