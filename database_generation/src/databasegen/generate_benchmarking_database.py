@@ -1,3 +1,4 @@
+import sys
 from random import Random
 from typing import List
 
@@ -12,9 +13,14 @@ from tablegen.table_generator import TableGenerator
 
 
 def main():
-    OUTPUT_FILE_NAME: str = "benchmarking_database.csv"
-    NUM_RECORDS: int = 1000
-    generate_database(NUM_RECORDS, OUTPUT_FILE_NAME)
+    NUM_RECORDS_INDEX: int = 1
+    OUTPUT_FILE_NAME_INDEX: int = 2
+    ARG_TOTAL: int = 3
+    assert len(sys.argv) == ARG_TOTAL
+
+    num_records: int = int(sys.argv[NUM_RECORDS_INDEX])
+    output_file_name: str = sys.argv[OUTPUT_FILE_NAME_INDEX]
+    generate_database(num_records, output_file_name)
 
 
 def generate_database(num_records: int, file_path: str) -> None:
