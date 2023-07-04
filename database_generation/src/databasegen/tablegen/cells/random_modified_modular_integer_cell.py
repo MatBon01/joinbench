@@ -9,3 +9,6 @@ class RandomModifiedModularIntegerCell(Cell):
         self.modulus: int = modulus
         self.random: Random = random
         self.modifier: Callable[[int], int] = modifier
+
+    def generate(self) -> str:
+        return str(self.modifier(self.random.randint(0, self.modulus - 1)))
