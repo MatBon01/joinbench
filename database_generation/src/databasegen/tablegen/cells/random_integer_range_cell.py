@@ -1,12 +1,17 @@
 from random import Random
+from typing import Callable
+
 from databasegen.tablegen.cells.cell import Cell
+from databasegen.tablegen.cells.random_modified_integer_range import \
+    RandomModifiedIntegerRangeCell
 
 
 class RandomIntegerRangeCell(Cell):
     def __init__(self, lower_bound: int, upper_bound: int, random: Random):
-        self.lower_bound = lower_bound
-        self.upper_bound = upper_bound
-        self.random = random
+        ID_MODIFIER: Callable[[int], int] = lambda x: x
+        self.cell: RandomModifiedIntegerRangeCell = RandomModifiedIntegerRangeCell(
+            lower_bound, upper_bound, random, ID_MODIFIER
+        )
 
     def generate(self) -> str:
-        return str(self.random.randint(self.lower_bound, self.upper_bound))
+        return self.cell.generate()
