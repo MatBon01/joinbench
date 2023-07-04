@@ -29,7 +29,8 @@ library
         Database.Bag,
         Database.IndexedTable,
         Text.Parser.Customers,
-        Text.Parser.Invoices
+        Text.Parser.Invoices,
+        Text.Parser.BenchmarkTable
 
     -- Modules included in this library but not exported.
     other-modules: 
@@ -124,7 +125,8 @@ test-suite spec
         Database.BagSpec,
         Database.IndexedTableSpec,
         Text.Parser.CustomersSpec,
-        Text.Parser.InvoicesSpec
+        Text.Parser.InvoicesSpec,
+        Text.Parser.BenchmarkTableSpec
     build-depends:
         base >=4.16.4.0,
         hspec ^>=2.10,
