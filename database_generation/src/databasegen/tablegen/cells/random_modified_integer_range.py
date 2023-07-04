@@ -16,3 +16,8 @@ class RandomModifiedIntegerRangeCell(Cell):
         self.upper_bound: int = upper_bound
         self.random: Random = random
         self.modifier: Callable[[int], int] = modifier
+
+    def generate(self) -> str:
+        return str(
+            self.modifier(self.random.randint(self.lower_bound, self.upper_bound))
+        )
