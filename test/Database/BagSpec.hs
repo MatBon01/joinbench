@@ -164,14 +164,7 @@ spec = do
     describe "Database.Bag aggregate" $ do
         it "can correctly aggregate a table without multiplicities" $ (getAny . DB.aggregate) (Bag.Bag [Any True, Any False]) `shouldBe` True
         it "can correctly aggregate a table with multiplicities" $ DB.aggregate (Bag.Bag [1, 1, 1, 1, 2] :: Bag.Bag (Sum Int)) `shouldBe` 6
-    describe "Database.Bag productEquijoin" $ do
-        it "can join two tables with at most one matching element" $ productEquijoin invoiceId orderId (orderPrices1, orderItems1) `shouldBe` orderJoin1
-        it
-            "can join two tables with more than one matching elements,\
-            \ only multiple in one table"
-            $ productEquijoin invoiceId orderId (orderPrices3, orderItems3) `shouldBe` orderJoin3
-        it "can join two tables with no matching elements" $ productEquijoin invoiceId orderId (orderPrices2, orderItems2) `shouldBe` Bag.empty
-        it "can join two tables with multiple elements in both tables" $ productEquijoin lastName lastName (people, people) `shouldBe` lastNameJoin
+    describe "Database.Bag productEquijoin" $ equijoinTest productEquijoin
     describe "indexBy" $ do
         it "can correctly index with trivial key" $ people `DB.indexBy` const () `shouldBe` Map.Lone people
         it "can correctly index an empty bag" $ (DB.empty :: DB.Table Int) `DB.indexBy` const () `shouldBe` (Map.empty :: Map () (Bag.Bag Int))
