@@ -20,6 +20,6 @@ main = do
 
 getJoinBenchTable :: IO (Table JoinBenchRecord)
 getJoinBenchTable = do
-    let joinBenchFileName = "join_bench_table.csv"
+    let joinBenchFileName = "tables/join_bench_table.csv"
     joinBenchCSV <- readFile joinBenchFileName
     return $ fromRight empty $ parseCSV joinBenchCSV
