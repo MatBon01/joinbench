@@ -120,6 +120,20 @@ orderJoin3 =
         , (OrderInvoice 3 12.12, OrderItem "Chocolate" 3 5)
         ]
 
+orderItems4 =
+    Bag.Bag
+        [ OrderItem "Apple" 1 12
+        , OrderItem "Banana" 2 12
+        ]
+
+orderItems4SelfJoin =
+    Bag.Bag
+        [ (OrderItem "Apple" 1 12, OrderItem "Apple" 1 12)
+        , (OrderItem "Banana" 2 12, OrderItem "Banana" 2 12)
+        , (OrderItem "Banana" 2 12, OrderItem "Apple" 1 12)
+        , (OrderItem "Apple" 1 12, OrderItem "Banana" 2 12)
+        ]
+
 spec :: Spec
 spec = do
     describe "Database.Bag empty" $ it "produces an empty Bag of the same type" $ (DB.empty :: DB.Table Int) `shouldBe` (Bag.empty :: Bag.Bag Int)
@@ -163,4 +177,4 @@ spec = do
         it "can join two tables with no matching elements" $
             indexedEquijoin invoiceId orderId (orderPrices2, orderItems2) `shouldBe` Bag.empty
         it "can join two tables with multiple elements in both tables" $
-            indexedEquijoin nums nums (namenums, namenums) `shouldBe` namenumjoins
+            indexedEquijoin quantity quantity (orderItems4, orderItems4) `shouldBe` orderItems4SelfJoin
