@@ -156,10 +156,11 @@ spec = do
         it "can correctly index an empty bag" $ (DB.empty :: DB.Table Int) `DB.indexBy` const () `shouldBe` (Map.empty :: Map () (Bag.Bag Int))
         it "can correctly index a bag with a repeated index" $ orderItems3 `DB.indexBy` (fromIntegral . orderId :: OrderItem -> Word16) `shouldBe` orderItems3Array
     describe "Database.Bag indexedEquijoin" $ do
-        it "can join two tables with at most one matching element" $ indexedEquijoin (fromIntegral . invoiceId :: OrderInvoice -> Word16) (fromIntegral . orderId) (orderPrices1, orderItems1) `shouldBe` orderJoin1
-        it
-            "can join two tables with more than one matching elements,\
-            \ only multiple in one table"
-            $ indexedEquijoin (fromIntegral . invoiceId :: OrderInvoice -> Word16) (fromIntegral . orderId) (orderPrices3, orderItems3) `shouldBe` orderJoin3
-        it "can join two tables with no matching elements" $ indexedEquijoin (fromIntegral . invoiceId :: OrderInvoice -> Word16) (fromIntegral . orderId) (orderPrices2, orderItems2) `shouldBe` Bag.empty
-        it "can join two tables with multiple elements in both tables" $ indexedEquijoin (fromIntegral . nums :: NameNum -> Word16) (fromIntegral . nums) (namenums, namenums) `shouldBe` namenumjoins
+        it "can join two tables with at most one matching element" $
+            indexedEquijoin invoiceId orderId (orderPrices1, orderItems1) `shouldBe` orderJoin1
+        it "can join two tables with more than one matching elements, only multiple in one table" $
+            indexedEquijoin invoiceId orderId (orderPrices3, orderItems3) `shouldBe` orderJoin3
+        it "can join two tables with no matching elements" $
+            indexedEquijoin invoiceId orderId (orderPrices2, orderItems2) `shouldBe` Bag.empty
+        it "can join two tables with multiple elements in both tables" $
+            indexedEquijoin nums nums (namenums, namenums) `shouldBe` namenumjoins
