@@ -5,7 +5,7 @@ import qualified Data.Bag as Bag
 import Data.Key as Map
 import Data.Monoid
 import Data.Word
-import Database.Bag (indexedEquijoin, productEquijoin, comprehensionEquijoin)
+import Database.Bag (comprehensionEquijoin, indexedEquijoin, productEquijoin)
 import qualified Database.Bag as DB
 import Test.Hspec
 
@@ -145,6 +145,9 @@ spec :: Spec
 spec = do
     describe "Database.Bag empty" $ it "produces an empty Bag of the same type" $ (DB.empty :: DB.Table Int) `shouldBe` (Bag.empty :: Bag.Bag Int)
     describe "Database.Bag single" $ it "produces a Bag with a single element" $ DB.single 5 `shouldBe` Bag.Bag [5]
+    describe "Database.Bag fromList" $
+        it "produces a Bag from a list" $
+            DB.fromList [1, 2] `shouldBe` DB.union (DB.single 1, DB.single 2)
     describe "Database.Bag union" $ do
         it "uses the bag union to calculate the union" $ DB.union (Bag.Bag [1, 2, 3], Bag.Bag [3, 4, 5]) `shouldBe` Bag.Bag [1, 2, 3, 3, 4, 5]
         it "can correctly deal with one empty table in the union" $ DB.union (Bag.Bag [1, 2, 3], DB.empty) `shouldBe` Bag.Bag [1, 2, 3]

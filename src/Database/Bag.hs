@@ -18,6 +18,9 @@ single = Bag.single
 union :: (Table a, Table a) -> Table a
 union = Bag.union
 
+fromList :: [a] -> Table a
+fromList = Bag.Bag
+
 cp :: (Table a, Table b) -> Table (a, b)
 cp = Bag.cp
 
