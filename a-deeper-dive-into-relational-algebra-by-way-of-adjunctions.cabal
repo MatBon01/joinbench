@@ -98,6 +98,8 @@ common benchmark
         a-deeper-dive-into-relational-algebra-by-way-of-adjunctions,
         criterion >= 1.6.2.0,
 
+    other-modules: BenchmarkUtils
+
     default-language: Haskell2010
 
 executable invoice-benchmark
