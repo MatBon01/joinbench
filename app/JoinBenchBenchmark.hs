@@ -15,7 +15,7 @@ main = do
         [ bgroup
             "join on onePercent"
             [ bench "modular product" $ whnf (productEquijoin onePercent onePercent) (table, table)
-            , bench "old comprehension" $ whnf onePercentOldComprehension (table, table)
+            , bench "old comprehension" $ whnf (comprehensionEquijoin onePercent onePercent) (table, table)
             , bench "modular indexed" $ whnf (indexedEquijoin onePercent onePercent) (table, table)
             ]
         ]
@@ -25,6 +25,3 @@ getJoinBenchTable = do
     let joinBenchFileName = "join_bench_table.csv"
     joinBenchCSV <- readFile joinBenchFileName
     return $ fromRight empty $ parseCSV joinBenchCSV
-
-onePercentOldComprehension :: (Table JoinBenchRecord, Table JoinBenchRecord) -> Table (JoinBenchRecord, JoinBenchRecord)
-onePercentOldComprehension (table1, table2) = [(a, b) | a <- table1, b <- table2, onePercent a == onePercent b]

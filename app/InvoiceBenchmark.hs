@@ -35,7 +35,7 @@ main = do
                 [ bench "modular product" $
                     whnf (productEquijoin cid cust) (customers, invoices)
                 , bench "old comprehension" $
-                    whnf oldJoinComprehension (customers, invoices)
+                    whnf (comprehensionEquijoin cid cust) (customers, invoices)
                 , bench "modular indexed" $
                     whnf (indexedEquijoin cid cust) (customers, invoices)
                 ]
@@ -53,9 +53,6 @@ main = do
                         (customers, invoices)
                 ]
             ]
-
-oldJoinComprehension :: (Table Customer, Table Invoice) -> Table (Customer, Invoice)
-oldJoinComprehension (cs, is) = [(c, i) | c <- cs, i <- is, cid c == cust i]
 
 selectionCriteriaSplittingPrice = 500
 
