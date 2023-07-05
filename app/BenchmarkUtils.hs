@@ -1,12 +1,21 @@
+{-# LANGUAGE ExplicitForAll #-}
+
 module BenchmarkUtils where
 
 import Criterion.Main
+import Data.Key
 import Database.Bag
 
 equijoinBenchmark name fa fb as bs =
     bgroup
         name
-        [ bench "modular product" $ whnf (productEquijoin fa fb) (as, bs)
-        , bench "old comprehension" $ whnf (comprehensionEquijoin fa fb) (as, bs)
-        , bench "modular indexed" $ whnf (indexedEquijoin fa fb) (as, bs)
-        ]
+        (map equijoinTransform equijoinNameAndMethod)
+  where
+    equijoinTransform (name, func) = bench name $ whnf (func fa fb) (as, bs)
+
+equijoinNameAndMethod :: forall k a b. (Eq k, Key k) => [(String, (a -> k) -> (b -> k) -> (Table a, Table b) -> Table (a, b))]
+equijoinNameAndMethod =
+    [ ("modular product", productEquijoin)
+    , ("old comprehension", comprehensionEquijoin)
+    , ("modular indexed", indexedEquijoin)
+    ]
