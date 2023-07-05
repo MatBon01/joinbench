@@ -24,7 +24,7 @@ lastNameJoin =
         , (Person "John" "Smith", Person "John" "Smith")
         ]
 
-data NameNum = NN {name :: Name, nums :: Int} deriving (Show, Eq)
+data NameNum = NN {name :: Name, nums :: Word16} deriving (Show, Eq)
 
 namenums = Bag.Bag [NN "John" 12, NN "Jane" 12, NN "John" 18]
 
@@ -37,13 +37,13 @@ namenumjoins =
         , (NN "John" 18, NN "John" 18)
         ]
 
-type OrderId = Int
+type OrderId = Word16
 
 type OrderPrice = Float
 
 type Item = String
 
-type ItemQuantity = Int
+type ItemQuantity = Word16
 
 data OrderInvoice = OrderInvoice {invoiceId :: OrderId, orderPrice :: OrderPrice} deriving (Show, Eq)
 
