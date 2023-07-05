@@ -120,18 +120,25 @@ orderJoin3 =
         , (OrderInvoice 3 12.12, OrderItem "Chocolate" 3 5)
         ]
 
-orderItems4 =
+-- for ease of testing breaking index as orderId
+orderPrices4 =
     Bag.Bag
-        [ OrderItem "Apple" 1 12
-        , OrderItem "Banana" 2 12
+        [ OrderInvoice 1 25.50
+        , OrderInvoice 1 15.20
         ]
 
-orderItems4SelfJoin =
+orderItems4 =
     Bag.Bag
-        [ (OrderItem "Apple" 1 12, OrderItem "Apple" 1 12)
-        , (OrderItem "Banana" 2 12, OrderItem "Banana" 2 12)
-        , (OrderItem "Banana" 2 12, OrderItem "Apple" 1 12)
-        , (OrderItem "Apple" 1 12, OrderItem "Banana" 2 12)
+        [ OrderItem "Apple" 1 23
+        , OrderItem "Banana" 1 12
+        ]
+
+orderJoin4 =
+    Bag.Bag
+        [ (OrderInvoice 1 25.50, OrderItem "Apple" 1 23)
+        , (OrderInvoice 1 25.50, OrderItem "Banana" 1 12)
+        , (OrderInvoice 1 15.20, OrderItem "Apple" 1 23)
+        , (OrderInvoice 1 15.20, OrderItem "Banana" 1 12)
         ]
 
 spec :: Spec
@@ -169,12 +176,14 @@ spec = do
         it "can correctly index with trivial key" $ people `DB.indexBy` const () `shouldBe` Map.Lone people
         it "can correctly index an empty bag" $ (DB.empty :: DB.Table Int) `DB.indexBy` const () `shouldBe` (Map.empty :: Map () (Bag.Bag Int))
         it "can correctly index a bag with a repeated index" $ orderItems3 `DB.indexBy` (fromIntegral . orderId :: OrderItem -> Word16) `shouldBe` orderItems3Array
-    describe "Database.Bag indexedEquijoin" $ do
-        it "can join two tables with at most one matching element" $
-            indexedEquijoin invoiceId orderId (orderPrices1, orderItems1) `shouldBe` orderJoin1
-        it "can join two tables with more than one matching elements, only multiple in one table" $
-            indexedEquijoin invoiceId orderId (orderPrices3, orderItems3) `shouldBe` orderJoin3
-        it "can join two tables with no matching elements" $
-            indexedEquijoin invoiceId orderId (orderPrices2, orderItems2) `shouldBe` Bag.empty
-        it "can join two tables with multiple elements in both tables" $
-            indexedEquijoin quantity quantity (orderItems4, orderItems4) `shouldBe` orderItems4SelfJoin
+    describe "Database.Bag indexedEquijoin" (equijoinTest indexedEquijoin)
+
+equijoinTest equijoin = do
+    it "can join two tables with at most one matching element" $
+        equijoin invoiceId orderId (orderPrices1, orderItems1) `shouldBe` orderJoin1
+    it "can join two tables with more than one matching elements, only multiple in one table" $
+        equijoin invoiceId orderId (orderPrices3, orderItems3) `shouldBe` orderJoin3
+    it "can join two tables with no matching elements" $
+        equijoin invoiceId orderId (orderPrices2, orderItems2) `shouldBe` Bag.empty
+    it "can join two tables with multiple elements in both tables" $
+        equijoin invoiceId orderId (orderPrices4, orderItems4) `shouldBe` orderJoin4
