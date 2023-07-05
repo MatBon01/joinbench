@@ -5,7 +5,7 @@ import Data.Either
 import Test.Hspec
 import Text.Parser.JoinBenchTable
 
-expectedOutput :: Bag BenchmarkRecord
+expectedOutput :: Bag JoinBenchRecord
 expectedOutput = Bag [B 0 29 4 2 1 40 49, B 1 95 3 3 0 76 115]
 
 spec :: Spec

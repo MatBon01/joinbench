@@ -4,16 +4,16 @@ import Data.Bag
 import Text.Parser.Utils
 import Text.ParserCombinators.Parsec
 
-data BenchmarkRecord = B {id :: Int, onePercent :: Int, twentyPercent :: Int, twentyfivePercent :: Int, fiftyPercent :: Int, evenOnePercent :: Int, oddOnePercent :: Int}
+data JoinBenchRecord = B {id :: Int, onePercent :: Int, twentyPercent :: Int, twentyfivePercent :: Int, fiftyPercent :: Int, evenOnePercent :: Int, oddOnePercent :: Int}
     deriving (Show, Eq)
 
-csvFile :: GenParser Char st (Bag BenchmarkRecord)
+csvFile :: GenParser Char st (Bag JoinBenchRecord)
 csvFile = do
     result <- many record
     eof
     return (Bag result)
 
-record :: GenParser Char st BenchmarkRecord
+record :: GenParser Char st JoinBenchRecord
 record = do
     id <- intCell
     separator
@@ -36,5 +36,5 @@ intCell = do
     x <- many1 digit
     return (read x)
 
-parseCSV :: String -> Either ParseError (Bag BenchmarkRecord)
+parseCSV :: String -> Either ParseError (Bag JoinBenchRecord)
 parseCSV = parse csvFile "(unknown)"
