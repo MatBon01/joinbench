@@ -155,6 +155,7 @@ spec = do
         it "can correctly index with trivial key" $ people `DB.indexBy` const () `shouldBe` Map.Lone people
         it "can correctly index an empty bag" $ (DB.empty :: DB.Table Int) `DB.indexBy` const () `shouldBe` (Map.empty :: Map () (Bag.Bag Int))
         it "can correctly index a bag with a repeated index" $ orderItems3 `DB.indexBy` (fromIntegral . orderId :: OrderItem -> Word16) `shouldBe` orderItems3Array
+    describe "Database.Bag indexedEquijoin" $ do
         it "can join two tables with at most one matching element" $ indexedEquijoin (fromIntegral . invoiceId :: OrderInvoice -> Word16) (fromIntegral . orderId) (orderPrices1, orderItems1) `shouldBe` orderJoin1
         it
             "can join two tables with more than one matching elements,\
