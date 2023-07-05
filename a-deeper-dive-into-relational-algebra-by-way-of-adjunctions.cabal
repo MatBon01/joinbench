@@ -30,7 +30,7 @@ library
         Database.IndexedTable,
         Text.Parser.Customers,
         Text.Parser.Invoices,
-        Text.Parser.BenchmarkTable
+        Text.Parser.JoinBenchTable
 
     -- Modules included in this library but not exported.
     other-modules: 
@@ -126,7 +126,7 @@ test-suite spec
         Database.IndexedTableSpec,
         Text.Parser.CustomersSpec,
         Text.Parser.InvoicesSpec,
-        Text.Parser.BenchmarkTableSpec
+        Text.Parser.JoinBenchTableSpec
     build-depends:
         base >=4.16.4.0,
         hspec ^>=2.10,

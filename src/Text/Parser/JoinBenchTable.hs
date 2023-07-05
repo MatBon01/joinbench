@@ -1,4 +1,4 @@
-module Text.Parser.BenchmarkTable where
+module Text.Parser.JoinBenchTable where
 
 import Data.Bag
 import Text.Parser.Utils
