@@ -5,7 +5,7 @@ import qualified Data.Bag as Bag
 import Data.Key as Map
 import Data.Monoid
 import Data.Word
-import Database.Bag (indexedEquijoin, productEquijoin)
+import Database.Bag (indexedEquijoin, productEquijoin, comprehensionEquijoin)
 import qualified Database.Bag as DB
 import Test.Hspec
 
@@ -169,7 +169,8 @@ spec = do
         it "can correctly index with trivial key" $ people `DB.indexBy` const () `shouldBe` Map.Lone people
         it "can correctly index an empty bag" $ (DB.empty :: DB.Table Int) `DB.indexBy` const () `shouldBe` (Map.empty :: Map () (Bag.Bag Int))
         it "can correctly index a bag with a repeated index" $ orderItems3 `DB.indexBy` (fromIntegral . orderId :: OrderItem -> Word16) `shouldBe` orderItems3Array
-    describe "Database.Bag indexedEquijoin" (equijoinTest indexedEquijoin)
+    describe "Database.Bag indexedEquijoin" $ equijoinTest indexedEquijoin
+    describe "Database.Bag comprehensionEquijoin" $ equijoinTest comprehensionEquijoin
 
 equijoinTest equijoin = do
     it "can join two tables with at most one matching element" $
