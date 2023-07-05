@@ -130,7 +130,8 @@ test-suite spec
         Database.IndexedTableSpec,
         Text.Parser.CustomersSpec,
         Text.Parser.InvoicesSpec,
-        Text.Parser.JoinBenchTableSpec
+        Text.Parser.JoinBenchTableSpec,
+        Database.BagSpecData
     build-depends:
         base >=4.16.4.0,
         hspec ^>=2.10,
