@@ -103,7 +103,11 @@ common benchmark
 executable invoice-benchmark
     import: benchmark
     main-is: InvoiceBenchmark.hs
+    hs-source-dirs:   app
 
+executable joinbench-benchmark
+    import: benchmark
+    main-is: JoinBenchBenchmark.hs
     hs-source-dirs:   app
 
 executable lazy-benchmark
