@@ -1,3 +1,4 @@
+.SECONDARY:
 .PHONY: joinbench
 
 database_gen_path = database_generation/src/databasegen
