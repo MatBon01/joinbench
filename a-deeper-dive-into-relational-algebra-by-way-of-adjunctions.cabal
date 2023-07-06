@@ -30,7 +30,7 @@ library
         Database.IndexedTable,
         Text.Parser.Customers,
         Text.Parser.Invoices,
-        Text.Parser.BenchmarkTable
+        Text.Parser.JoinBenchTable
 
     -- Modules included in this library but not exported.
     other-modules: 
@@ -98,12 +98,20 @@ common benchmark
         a-deeper-dive-into-relational-algebra-by-way-of-adjunctions,
         criterion >= 1.6.2.0,
 
+    other-modules: BenchmarkUtils
+
+    other-extensions: ExplicitForAll
+
     default-language: Haskell2010
 
 executable invoice-benchmark
     import: benchmark
     main-is: InvoiceBenchmark.hs
+    hs-source-dirs:   app
 
+executable joinbench-benchmark
+    import: benchmark
+    main-is: JoinBenchBenchmark.hs
     hs-source-dirs:   app
 
 executable lazy-benchmark
@@ -126,7 +134,8 @@ test-suite spec
         Database.IndexedTableSpec,
         Text.Parser.CustomersSpec,
         Text.Parser.InvoicesSpec,
-        Text.Parser.BenchmarkTableSpec
+        Text.Parser.JoinBenchTableSpec,
+        Database.BagSpecData
     build-depends:
         base >=4.16.4.0,
         hspec ^>=2.10,

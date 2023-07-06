@@ -1,3 +1,5 @@
+{-# LANGUAGE MonadComprehensions #-}
+
 module Database.Bag where
 
 import qualified Data.Bag as Bag
@@ -15,6 +17,9 @@ single = Bag.single
 
 union :: (Table a, Table a) -> Table a
 union = Bag.union
+
+fromList :: [a] -> Table a
+fromList = Bag.Bag
 
 cp :: (Table a, Table b) -> Table (a, b)
 cp = Bag.cp
@@ -48,3 +53,6 @@ indexedEquijoin if1 if2 (t1, t2) = (reduce . fmap cp . merge) (it1, it2)
     -- Indexed table 1 and 2
     it1 = t1 `indexBy` if1
     it2 = t2 `indexBy` if2
+
+comprehensionEquijoin :: (Eq c) => (a -> c) -> (b -> c) -> (Table a, Table b) -> Table (a, b)
+comprehensionEquijoin fa fb (as, bs) = [(a, b) | a <- as, b <- bs, fa a == fb b]

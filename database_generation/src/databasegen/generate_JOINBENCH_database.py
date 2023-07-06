@@ -16,7 +16,8 @@ def main():
     NUM_RECORDS_INDEX: int = 1
     OUTPUT_FILE_NAME_INDEX: int = 2
     ARG_TOTAL: int = 3
-    assert len(sys.argv) == ARG_TOTAL
+    assert len(sys.argv) == ARG_TOTAL, f"expecting {ARG_TOTAL} arguments but \
+received {len(sys.argv)}: {';'.join(sys.argv)}."
 
     num_records: int = int(sys.argv[NUM_RECORDS_INDEX])
     output_file_name: str = sys.argv[OUTPUT_FILE_NAME_INDEX]
