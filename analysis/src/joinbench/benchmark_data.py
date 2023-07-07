@@ -20,7 +20,7 @@ class BenchmarkData:
         self,
     ) -> Dict[str, Set[Tuple[int, str]]]:
         names: List[str] = list(self.get_report_names_in_order())
-        groups: Dict[str, List[Tuple[int, str]]] = defaultdict(set)
+        groups: Dict[str, Set[Tuple[int, str]]] = defaultdict(set)
         for i, name in enumerate(names):
             group: str
             name: str
@@ -34,7 +34,7 @@ class BenchmarkData:
         return set(self.map_benchmark_groups_and_benchmark_indices().keys())
 
     def get_benchmark_mean(self, index: int) -> float:
-        return self.data["reportAnalysis"][index]['anMean']['estPoint']
+        return self.data["reportAnalysis"][index]["anMean"]["estPoint"]
 
     def get_means_for_benchmark_list(self, indices: List[int]) -> List[float]:
         return list(map(self.get_benchmark_mean, indices))

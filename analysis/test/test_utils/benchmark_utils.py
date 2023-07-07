@@ -1,6 +1,7 @@
 from typing import Dict, List, Set, Tuple
 
 from joinbench.benchmark import Benchmark
+from joinbench.benchmark_data import BenchmarkData
 
 
 def get_test_benchmarks() -> List[Benchmark]:
@@ -16,6 +17,9 @@ def get_test_benchmarks() -> List[Benchmark]:
 
 def get_test_data_location() -> str:
     return "test/joinbench/test_data.json"
+
+def get_test_benchmark_data() -> BenchmarkData:
+    return BenchmarkData(get_test_data_location())
 
 
 def get_list_of_data_report_names() -> List[str]:
