@@ -8,9 +8,6 @@ class BenchmarkOrganiser:
         with open(data_path, "r") as f:
             self.data = json.load(f)
 
-    def get_benchmark_group_names(self) -> List[str]:
-        return list(BenchmarkOrganiser._get_report_names((self.data)))
-
     @staticmethod
     def _get_report_names(data) -> Set[str]:
         names: Set[str] = set()

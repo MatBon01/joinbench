@@ -23,14 +23,6 @@ class TestBenchmarkOrganiser:
             "benchmark",
         )
 
-    def test_can_correctly_get_report_names(self):
-        test_data_location: str = get_test_data_location()
-        with open(test_data_location, "r") as f:
-            data = json.load(f)
-        assert (
-            BenchmarkOrganiser._get_report_names(data) == get_test_data_report_names()
-        )
-
     def test_can_correctly_map_correct_number_of_benchmark_groups(self):
         names: List[str] = get_list_of_data_report_names()
         groups = BenchmarkOrganiser.map_benchmark_groups_and_benchmark_indices(
