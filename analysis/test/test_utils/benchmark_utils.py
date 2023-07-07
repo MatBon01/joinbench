@@ -49,27 +49,27 @@ def get_test_data_benchmark_group_names() -> Set[str]:
 
 
 def get_test_data_benchmark_group_and_benchmark_mapping() -> (
-    Dict[str, List[Tuple[int, str]]]
+    Dict[str, Set[Tuple[int, str]]]
 ):
     return {
-        "join on onePercent": [
+        "join on onePercent": {
             (0, "modular product"),
             (1, "old comprehension"),
             (2, "modular indexed"),
-        ],
-        "join onePercent and twentyPercent": [
+        },
+        "join onePercent and twentyPercent": {
             (3, "modular product"),
             (4, "old comprehension"),
             (5, "modular indexed"),
-        ],
-        "join onePercent and fiftyPercent": [
+        },
+        "join onePercent and fiftyPercent": {
             (6, "modular product"),
             (7, "old comprehension"),
             (8, "modular indexed"),
-        ],
-        "join even and odd": [
+        },
+        "join even and odd": {
             (9, "modular product"),
             (10, "old comprehension"),
             (11, "modular indexed"),
-        ],
+        },
     }

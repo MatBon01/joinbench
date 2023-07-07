@@ -8,34 +8,27 @@ class BenchmarkData:
     def __init__(self, data_path: str):
         self.data = pd.read_json(data_path)
 
-    @staticmethod
-    def _get_report_names(data) -> Set[str]:
-        names: Set[str] = set()
-        for group in data:
-            names.add(group["reportName"])
-        return names
+    def get_report_names_in_order(self) -> List[str]:
+        return list(self.data["reportName"])
 
     @staticmethod
     def separate_benchmark_group_and_name(reportName: str) -> Tuple[str, str]:
         groupBenchmarkNames = reportName.split("/")
         return groupBenchmarkNames[0], groupBenchmarkNames[1]
 
-    @staticmethod
     def map_benchmark_groups_and_benchmark_indices(
-        names,
-    ) -> Dict[str, List[Tuple[int, str]]]:
-        groups: Dict[str, List[Tuple[int, str]]] = defaultdict(list)
+        self,
+    ) -> Dict[str, Set[Tuple[int, str]]]:
+        names: List[str] = list(self.get_report_names_in_order())
+        groups: Dict[str, List[Tuple[int, str]]] = defaultdict(set)
         for i, name in enumerate(names):
             group: str
             name: str
             group, name = BenchmarkData.separate_benchmark_group_and_name(name)
 
-            groups[group].append((i, name))
+            groups[group].add((i, name))
 
         return groups
 
-    @staticmethod
-    def get_benchmark_group_names(names) -> Set[str]:
-        return set(
-            BenchmarkData.map_benchmark_groups_and_benchmark_indices(names).keys()
-        )
+    def get_benchmark_group_names(self) -> Set[str]:
+        return set(self.map_benchmark_groups_and_benchmark_indices().keys())
