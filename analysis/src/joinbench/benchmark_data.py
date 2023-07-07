@@ -1,12 +1,12 @@
-import json
 from collections import defaultdict
 from typing import Dict, List, Set, Tuple
 
+import pandas as pd
 
-class BenchmarkOrganiser:
+
+class BenchmarkData:
     def __init__(self, data_path: str):
-        with open(data_path, "r") as f:
-            self.data = json.load(f)
+        self.data = pd.read_json(data_path)
 
     @staticmethod
     def _get_report_names(data) -> Set[str]:
@@ -28,7 +28,7 @@ class BenchmarkOrganiser:
         for i, name in enumerate(names):
             group: str
             name: str
-            group, name = BenchmarkOrganiser.separate_benchmark_group_and_name(name)
+            group, name = BenchmarkData.separate_benchmark_group_and_name(name)
 
             groups[group].append((i, name))
 
@@ -37,5 +37,5 @@ class BenchmarkOrganiser:
     @staticmethod
     def get_benchmark_group_names(names) -> Set[str]:
         return set(
-            BenchmarkOrganiser.map_benchmark_groups_and_benchmark_indices(names).keys()
+            BenchmarkData.map_benchmark_groups_and_benchmark_indices(names).keys()
         )

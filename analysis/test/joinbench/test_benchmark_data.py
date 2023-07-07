@@ -1,4 +1,3 @@
-import json
 from typing import Dict, List, Set, Tuple
 
 from test_utils.benchmark_utils import (
@@ -7,32 +6,28 @@ from test_utils.benchmark_utils import (
     get_test_data_benchmark_group_names, get_test_data_location,
     get_test_data_report_names)
 
-from joinbench.benchmark_organiser import BenchmarkOrganiser
+from joinbench.benchmark_data import BenchmarkData
 
 
-class TestBenchmarkOrganiser:
+class TestBenchmarkData:
     def test_can_initialise_with_valid_benchmark_data(self):
         test_data_location: str = get_test_data_location()
-        assert BenchmarkOrganiser(test_data_location)
+        assert BenchmarkData(test_data_location)
 
     def test_can_correctly_separate_report_name(self):
-        assert BenchmarkOrganiser.separate_benchmark_group_and_name(
-            "group/benchmark"
-        ) == (
+        assert BenchmarkData.separate_benchmark_group_and_name("group/benchmark") == (
             "group",
             "benchmark",
         )
 
     def test_can_correctly_map_correct_number_of_benchmark_groups(self):
         names: List[str] = get_list_of_data_report_names()
-        groups = BenchmarkOrganiser.map_benchmark_groups_and_benchmark_indices(
-            names
-        ).keys()
+        groups = BenchmarkData.map_benchmark_groups_and_benchmark_indices(names).keys()
         assert len(groups) == 4
 
     def test_can_correctly_find_benchmark_groups(self):
         names: List[str] = get_list_of_data_report_names()
-        groups = BenchmarkOrganiser.map_benchmark_groups_and_benchmark_indices(names)
+        groups = BenchmarkData.map_benchmark_groups_and_benchmark_indices(names)
         expected: Set[str] = get_test_data_benchmark_group_names()
         assert set(groups) == expected
 
@@ -44,7 +39,7 @@ class TestBenchmarkOrganiser:
         names: List[str] = get_list_of_data_report_names()
         actual: Dict[
             str, List[Tuple[int, str]]
-        ] = BenchmarkOrganiser.map_benchmark_groups_and_benchmark_indices(names)
+        ] = BenchmarkData.map_benchmark_groups_and_benchmark_indices(names)
 
         assert actual == expected
 
@@ -52,6 +47,6 @@ class TestBenchmarkOrganiser:
         expected: Set[str] = get_test_data_benchmark_group_names()
 
         names: List[str] = get_list_of_data_report_names()
-        actual: Set[str] = BenchmarkOrganiser.get_benchmark_group_names(names)
+        actual: Set[str] = BenchmarkData.get_benchmark_group_names(names)
 
         assert actual == expected
