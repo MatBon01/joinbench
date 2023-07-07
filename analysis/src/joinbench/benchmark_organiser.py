@@ -1,5 +1,6 @@
 import json
-from typing import List, Set, Tuple
+from collections import defaultdict
+from typing import Dict, List, Set, Tuple
 
 
 class BenchmarkOrganiser:
@@ -18,6 +19,20 @@ class BenchmarkOrganiser:
         return names
 
     @staticmethod
-    def _separate_group_from_name(reportName: str) -> Tuple[str, str]:
+    def separate_benchmark_group_and_name(reportName: str) -> Tuple[str, str]:
         groupBenchmarkNames = reportName.split("/")
         return groupBenchmarkNames[0], groupBenchmarkNames[1]
+
+    @staticmethod
+    def map_benchmark_groups_and_benchmark_indices(
+        names,
+    ) -> Dict[str, List[Tuple[int, str]]]:
+        groups: Dict[str, List[Tuple[int, str]]] = defaultdict(list)
+        for i, name in enumerate(names):
+            group: str
+            name: str
+            group, name = BenchmarkOrganiser.separate_benchmark_group_and_name(name)
+
+            groups[group].append((i, name))
+
+        return groups
