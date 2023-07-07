@@ -32,3 +32,9 @@ class BenchmarkData:
 
     def get_benchmark_group_names(self) -> Set[str]:
         return set(self.map_benchmark_groups_and_benchmark_indices().keys())
+
+    def get_benchmark_mean(self, index: int) -> float:
+        return self.data["reportAnalysis"][index]['anMean']['estPoint']
+
+    def get_means_for_benchmark_list(self, indices: List[int]) -> List[float]:
+        return list(map(self.get_benchmark_mean, indices))

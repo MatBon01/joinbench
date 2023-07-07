@@ -64,7 +64,21 @@ class TestBenchmarkData:
 
         expected: Set[str] = get_test_data_benchmark_group_names()
 
-        names: List[str] = get_list_of_data_report_names()
         actual: Set[str] = benchmark_data.get_benchmark_group_names()
 
         assert actual == expected
+
+    def test_can_retrieve_mean_for_a_benchmark(self):
+        test_data_location: str = get_test_data_location()
+        benchmark_data: BenchmarkData = BenchmarkData(test_data_location)
+
+        expected: float = 0.000000029314520320675693
+        assert benchmark_data.get_benchmark_mean(1) == expected
+
+    def test_can_retrieve_multiple_means(self):
+        test_data_location: str = get_test_data_location()
+        benchmark_data: BenchmarkData = BenchmarkData(test_data_location)
+
+        expected: List[float] = [0.00000003142288461705547, 0.000000029314520320675693]
+
+        assert benchmark_data.get_means_for_benchmark_list([0, 1]) == expected
