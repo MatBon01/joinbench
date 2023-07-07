@@ -36,5 +36,5 @@ class BenchmarkData:
     def get_benchmark_mean(self, index: int) -> float:
         return self.data["reportAnalysis"][index]["anMean"]["estPoint"]
 
-    def get_means_for_benchmark_list(self, indices: List[int]) -> List[float]:
+    def get_means_of_benchmark_list(self, indices: List[int]) -> List[float]:
         return list(map(self.get_benchmark_mean, indices))

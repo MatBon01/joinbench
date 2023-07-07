@@ -75,4 +75,4 @@ class TestBenchmarkData:
 
         expected: List[float] = [0.00000003142288461705547, 0.000000029314520320675693]
 
-        assert benchmark_data.get_means_for_benchmark_list([0, 1]) == expected
+        assert benchmark_data.get_means_of_benchmark_list([0, 1]) == expected
