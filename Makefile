@@ -8,7 +8,7 @@ data_path = data
 joinbench: joinbench100
 
 joinbench%: $(tables_path)/join_bench_table_%.csv
-	cabal run joinbench-benchmark -- $(tables_path)/join_bench_table_$*.csv --template json --output data/joinbench$*.json
+	cabal run joinbench-benchmark -- $(tables_path)/join_bench_table_$*.csv --json data/joinbench$*.json
 
 $(tables_path)/join_bench_table_%.csv:
 	python3 $(database_gen_path)/generate_JOINBENCH_database.py $* ${tables_path}/join_bench_table_$*.csv
