@@ -55,3 +55,11 @@ class TestBenchmarkOrganiser:
         ] = BenchmarkOrganiser.map_benchmark_groups_and_benchmark_indices(names)
 
         assert actual == expected
+
+    def test_can_get_correct_benchmark_group_names(self):
+        expected: Set[str] = get_test_data_benchmark_group_names()
+
+        names: List[str] = get_list_of_data_report_names()
+        actual: Set[str] = BenchmarkOrganiser.get_benchmark_group_names(names)
+
+        assert actual == expected

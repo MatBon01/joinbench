@@ -36,3 +36,9 @@ class BenchmarkOrganiser:
             groups[group].append((i, name))
 
         return groups
+
+    @staticmethod
+    def get_benchmark_group_names(names) -> Set[str]:
+        return set(
+            BenchmarkOrganiser.map_benchmark_groups_and_benchmark_indices(names).keys()
+        )
