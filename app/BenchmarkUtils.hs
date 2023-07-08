@@ -11,7 +11,7 @@ equijoinBenchmark name fa fb as bs =
         name
         (map equijoinTransform equijoinNameAndMethod)
   where
-    equijoinTransform (name, func) = bench name $ whnf (func fa fb) (as, bs)
+    equijoinTransform (name, func) = bench name $ nf (func fa fb) (as, bs)
 
 equijoinNameAndMethod :: forall k a b. (Eq k, Key k) => [(String, (a -> k) -> (b -> k) -> (Table a, Table b) -> Table (a, b))]
 equijoinNameAndMethod =
