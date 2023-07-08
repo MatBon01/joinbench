@@ -18,15 +18,15 @@ class BenchmarkData:
 
     def map_benchmark_groups_and_benchmark_indices(
         self,
-    ) -> Dict[str, Set[Tuple[int, str]]]:
+    ) -> Dict[str, List[Tuple[int, str]]]:
         names: List[str] = list(self.get_report_names_in_order())
-        groups: Dict[str, Set[Tuple[int, str]]] = defaultdict(set)
+        groups: Dict[str, List[Tuple[int, str]]] = defaultdict(list)
         for i, name in enumerate(names):
             group: str
             name: str
             group, name = BenchmarkData.separate_benchmark_group_and_name(name)
 
-            groups[group].add((i, name))
+            groups[group].append((i, name))
 
         return groups
 

@@ -44,11 +44,11 @@ class TestBenchmarkData:
         benchmark_data: BenchmarkData = get_test_benchmark_data()
 
         expected: Dict[
-            str, Set[Tuple[int, str]]
+            str, List[Tuple[int, str]]
         ] = get_test_data_benchmark_group_and_benchmark_mapping()
 
         actual: Dict[
-            str, Set[Tuple[int, str]]
+            str, List[Tuple[int, str]]
         ] = benchmark_data.map_benchmark_groups_and_benchmark_indices()
 
         assert actual == expected
