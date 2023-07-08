@@ -3,6 +3,7 @@
 module Data.Bag where
 
 import Control.Applicative
+import Control.DeepSeq
 import Data.CMonoid
 import Data.List
 import qualified Data.PointedSet as Pointed
@@ -50,6 +51,9 @@ instance Pointed.PointedSet (Bag a) where
     -- Implement isNull with pattern matching to not require Eq a
     isNull (Bag []) = True
     isNull _ = False
+
+instance NFData a => NFData (Bag a) where
+    rnf (Bag xs) = rnf xs
 
 empty :: Bag a
 empty = Bag []

@@ -1,6 +1,7 @@
 module Data.BagSpec (spec) where
 
 import Control.Applicative
+import Control.DeepSeq
 import qualified Data.Bag as Bag
 import Data.Monoid
 import qualified Data.PointedSet as Pointed
@@ -21,6 +22,9 @@ b1 = Bag.Bag ['a', 'b', 'c']
 b2 = Bag.Bag ['b', 'c', 'd']
 
 b3 = Bag.Bag ['c', 'd', 'e']
+
+l4 :: [Int]
+l4 = [1, 2, 3, 4]
 
 spec :: Spec
 spec = do
@@ -105,3 +109,7 @@ spec = do
             Bag.filter (== 'a') b1 `shouldBe` Bag.Bag ['a']
         it "can filter a bag and maintain multiplicities" $ do
             Bag.filter even (Bag.Bag [1, 2, 4, 2, 3, 4, 4, 6]) `shouldBe` Bag.Bag [2, 2, 4, 4, 4, 6]
+
+    describe "Data.Bag NFData" $ do
+        it "reduces to the same normal form as the list given" $
+            rnf (Bag.Bag l4) `shouldBe` rnf l4
