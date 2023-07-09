@@ -52,7 +52,7 @@ instance Pointed.PointedSet (Bag a) where
     isNull (Bag []) = True
     isNull _ = False
 
-instance NFData a => NFData (Bag a) where
+instance (NFData a) => NFData (Bag a) where
     rnf (Bag xs) = rnf xs
 
 empty :: Bag a
