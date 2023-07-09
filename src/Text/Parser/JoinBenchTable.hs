@@ -1,12 +1,16 @@
 module Text.Parser.JoinBenchTable where
 
+import Control.DeepSeq
 import Data.Bag
 import Data.Word
 import Text.Parser.Utils
 import Text.ParserCombinators.Parsec
 
-data JoinBenchRecord = B {id :: Int, onePercent :: Word16, twentyPercent :: Word16, twentyfivePercent :: Word16, fiftyPercent :: Word16, evenOnePercent :: Word16, oddOnePercent :: Word16}
+data JoinBenchRecord = B {uid :: Int, onePercent :: Word16, twentyPercent :: Word16, twentyfivePercent :: Word16, fiftyPercent :: Word16, evenOnePercent :: Word16, oddOnePercent :: Word16}
     deriving (Show, Eq)
+
+instance NFData JoinBenchRecord where
+    rnf a = rnf (uid a, onePercent a, twentyPercent a, twentyfivePercent a, fiftyPercent a, evenOnePercent a, oddOnePercent a)
 
 csvFile :: GenParser Char st (Bag JoinBenchRecord)
 csvFile = do

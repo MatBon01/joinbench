@@ -19,8 +19,8 @@ class BenchmarkPlotter:
         means = self.data.get_means_of_benchmark_list(indices)
 
         ax.set_title(f"Mean time to complete '{group_name}'")
-        ax.set_ylabel("time (s)")
-        ax.set_xlabel("function")
+        ax.set_ylabel("Time (s)")
+        ax.set_xlabel("Function")
 
         ax.bar(names, means)
 
