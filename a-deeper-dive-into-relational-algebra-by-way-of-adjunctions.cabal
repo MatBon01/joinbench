@@ -115,6 +115,12 @@ executable joinbench-benchmark
     main-is: JoinBenchBenchmark.hs
     hs-source-dirs:   app
 
+    ghc-options:
+        -O2
+        -threaded
+        -fprof-auto
+        "-with-rtsopts=-N -p -s -h -i0.1"
+
 executable lazy-benchmark
     import: benchmark
     main-is: TestLazyBenchmark.hs
