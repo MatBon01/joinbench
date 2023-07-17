@@ -30,8 +30,3 @@ getJoinBenchTableName :: IO String
 getJoinBenchTableName = do
     args <- getArgs
     return $ args !! joinBenchFileNameArgIndex
-
-getJoinBenchTable :: String -> IO (Table JoinBenchRecord)
-getJoinBenchTable joinBenchFileName = do
-    joinBenchCSV <- readFile joinBenchFileName
-    return $ fromRight empty $ parseCSV joinBenchCSV
