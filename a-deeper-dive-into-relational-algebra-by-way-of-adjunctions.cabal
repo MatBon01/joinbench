@@ -51,47 +51,71 @@ library
 
 executable appendix-example
     main-is:          AppendixExample.hs
-
-    -- Modules included in this executable, other than Main.
-    -- other-modules:
-
-    -- LANGUAGE extensions used by modules in this package.
-    -- other-extensions:
-
     build-depends:
         base >=4.16.4.0,
         a-deeper-dive-into-relational-algebra-by-way-of-adjunctions,
 
-    hs-source-dirs:   app
+    hs-source-dirs:   app/examples
     default-language: Haskell2010
 
-common example-properties
+common invoice-example
     build-depends:
         base >=4.16.4.0,
         a-deeper-dive-into-relational-algebra-by-way-of-adjunctions,
 
     default-language: Haskell2010
 
-executable new-comprehension
-    import: example-properties
-    hs-source-dirs: app/examples
+    other-modules: Utils
+
+executable invoice-new-comprehension
+    import: invoice-example
+    hs-source-dirs: app/examples/invoice
     main-is: NewComprehensionExample.hs
 
-executable old-comprehension
-    import: example-properties
-    hs-source-dirs: app/examples
+executable invoice-old-comprehension
+    import: invoice-example
+    hs-source-dirs: app/examples/invoice
     main-is: OldComprehensionExample.hs
 
 
+executable invoice-modular-product
+    import: invoice-example
+    hs-source-dirs: app/examples/invoice
+    main-is: ModularProductExample.hs
+
+executable invoice-modular-index
+    import: invoice-example
+    hs-source-dirs: app/examples/invoice
+    main-is: ModularIndexExample.hs
+
+common joinbench-example
+    build-depends:
+        base >=4.16.4.0,
+        a-deeper-dive-into-relational-algebra-by-way-of-adjunctions,
+
+    default-language: Haskell2010
+
+    ghc-options:
+        -fprof-cafs
+        -fforce-recomp
+        -fprof-auto
+        "-with-rtsopts=-hy -p"
+
+executable old-comprehension
+    import: joinbench-example
+    hs-source-dirs: app/examples/joinbench
+    main-is: OldComprehensionExample.hs
+
 executable modular-product
-    import: example-properties
-    hs-source-dirs: app/examples
+    import: joinbench-example
+    hs-source-dirs: app/examples/joinbench
     main-is: ModularProductExample.hs
 
 executable modular-index
-    import: example-properties
-    hs-source-dirs: app/examples
+    import: joinbench-example
+    hs-source-dirs: app/examples/joinbench
     main-is: ModularIndexExample.hs
+
 
 common benchmark
     build-depends:
@@ -115,11 +139,6 @@ executable joinbench-benchmark
     main-is: JoinBenchBenchmark.hs
     hs-source-dirs:   app
 
-executable lazy-benchmark
-    import: benchmark
-    main-is: TestLazyBenchmark.hs
-
-    hs-source-dirs:   app
 
 test-suite spec
     default-language:   Haskell2010

@@ -2,6 +2,7 @@ module Text.Parser.JoinBenchTable where
 
 import Control.DeepSeq
 import Data.Bag
+import Data.Either
 import Data.Word
 import Text.Parser.Utils
 import Text.ParserCombinators.Parsec
@@ -48,3 +49,8 @@ word16Cell = do
 
 parseCSV :: String -> Either ParseError (Bag JoinBenchRecord)
 parseCSV = parse csvFile "(unknown)"
+
+readJoinBenchTable :: String -> IO (Bag JoinBenchRecord)
+readJoinBenchTable joinBenchFileName = do
+    joinBenchCSV <- readFile joinBenchFileName
+    return $ fromRight empty $ parseCSV joinBenchCSV
