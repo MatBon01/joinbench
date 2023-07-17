@@ -50,7 +50,7 @@ word16Cell = do
 parseCSV :: String -> Either ParseError (Bag JoinBenchRecord)
 parseCSV = parse csvFile "(unknown)"
 
-getJoinBenchTable :: String -> IO (Bag JoinBenchRecord)
-getJoinBenchTable joinBenchFileName = do
+readJoinBenchTable :: String -> IO (Bag JoinBenchRecord)
+readJoinBenchTable joinBenchFileName = do
     joinBenchCSV <- readFile joinBenchFileName
     return $ fromRight empty $ parseCSV joinBenchCSV

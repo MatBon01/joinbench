@@ -15,7 +15,7 @@ spec = do
             testFile <- readFile "test/Text/Parser/joinbenchtest.csv"
             fromRight Bag.empty (parseCSV testFile) `shouldBe` expectedOutput
 
-    describe "getJoinBenchTable" $ do
+    describe "readJoinBenchTable" $ do
         it "can correctly parse the example" $ do
-            joinBenchTable <- getJoinBenchTable "test/Text/Parser/joinbenchtest.csv"
+            joinBenchTable <- readJoinBenchTable "test/Text/Parser/joinbenchtest.csv"
             joinBenchTable `shouldBe` expectedOutput

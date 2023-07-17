@@ -15,7 +15,7 @@ joinBenchFileNameArgIndex = 0
 main :: IO ()
 main = do
     joinBenchFileName <- getJoinBenchTableName
-    table <- getJoinBenchTable joinBenchFileName
+    table <- readJoinBenchTable joinBenchFileName
 
     args <- getArgs
     withArgs (drop numArgs args) $
