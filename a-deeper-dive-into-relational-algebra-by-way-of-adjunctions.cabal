@@ -101,6 +101,11 @@ common joinbench-example
         -fprof-auto
         "-with-rtsopts=-hy -p"
 
+executable modular-product
+    import: joinbench-example
+    hs-source-dirs: app/examples/joinbench
+    main-is: ModularProductExample.hs
+
 executable modular-index
     import: joinbench-example
     hs-source-dirs: app/examples/joinbench
