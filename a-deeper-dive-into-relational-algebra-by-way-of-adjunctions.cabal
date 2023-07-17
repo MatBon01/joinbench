@@ -139,11 +139,6 @@ executable joinbench-benchmark
     main-is: JoinBenchBenchmark.hs
     hs-source-dirs:   app
 
-    ghc-options:
-        -fprof-cafs
-        -fforce-recomp
-        -fprof-auto
-        "-with-rtsopts=-hd -p"
 
 test-suite spec
     default-language:   Haskell2010
