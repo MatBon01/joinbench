@@ -16,6 +16,9 @@ generalEquijoinBenchmark name fa fb as bs evalmethod =
 equijoinBenchmark name fa fb as bs =
     generalEquijoinBenchmark name fa fb as bs nf
 
+whnfEquijoinBenchmark name fa fb as bs =
+    generalEquijoinBenchmark name fa fb as bs whnf
+
 equijoinNameAndMethod :: forall k a b. (Eq k, Key k) => [(String, (a -> k) -> (b -> k) -> (Table a, Table b) -> Table (a, b))]
 equijoinNameAndMethod =
     [ ("modular product", productEquijoin)

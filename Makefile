@@ -7,6 +7,9 @@ data_path = data
 
 joinbench: joinbench100
 
+joinbenchwhnf%: $(tables_path)/join_bench_table_%.csv
+	cabal run whnf-joinbench-benchmark -- $(tables_path)/join_bench_table_$*.csv --template json --output data/joinbenchwhnf$*.json
+
 joinbench%: $(tables_path)/join_bench_table_%.csv
 	cabal run joinbench-benchmark -- $(tables_path)/join_bench_table_$*.csv --template json --output data/joinbench$*.json
 
