@@ -139,6 +139,10 @@ executable joinbench-benchmark
     main-is: JoinBenchBenchmark.hs
     hs-source-dirs:   app
 
+executable whnf-joinbench-benchmark
+    import: benchmark
+    main-is: JoinBenchWHNFBenchmark.hs
+    hs-source-dirs: app
 
 test-suite spec
     default-language:   Haskell2010
