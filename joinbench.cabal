@@ -1,5 +1,5 @@
 cabal-version:      2.4
-name:               a-deeper-dive-into-relational-algebra-by-way-of-adjunctions
+name:               joinbench
 version:            0.1.0.0
 synopsis:
     Benchmarking and expanding on the paper "Relational Algebra by way of Adjunctions"
@@ -22,7 +22,7 @@ extra-source-files:
     README.md
 
 library
-    exposed-modules: 
+    exposed-modules:
         Data.Bag,
         Data.PointedSet,
         Data.Key,
@@ -33,7 +33,7 @@ library
         Text.Parser.JoinBenchTable
 
     -- Modules included in this library but not exported.
-    other-modules: 
+    other-modules:
         Data.CMonoid
         Text.Parser.Utils
 
@@ -53,7 +53,7 @@ executable appendix-example
     main-is:          AppendixExample.hs
     build-depends:
         base >=4.16.4.0,
-        a-deeper-dive-into-relational-algebra-by-way-of-adjunctions,
+        joinbench
 
     hs-source-dirs:   app/examples
     default-language: Haskell2010
@@ -61,7 +61,7 @@ executable appendix-example
 common invoice-example
     build-depends:
         base >=4.16.4.0,
-        a-deeper-dive-into-relational-algebra-by-way-of-adjunctions,
+        joinbench
 
     default-language: Haskell2010
 
@@ -91,7 +91,7 @@ executable invoice-modular-index
 common joinbench-example
     build-depends:
         base >=4.16.4.0,
-        a-deeper-dive-into-relational-algebra-by-way-of-adjunctions,
+        joinbench
 
     default-language: Haskell2010
 
@@ -120,7 +120,7 @@ executable modular-index
 common benchmark
     build-depends:
         base >=4.16.4.0,
-        a-deeper-dive-into-relational-algebra-by-way-of-adjunctions,
+        joinbench,
         criterion >= 1.6.2.0,
 
     other-modules: BenchmarkUtils
@@ -159,7 +159,7 @@ test-suite spec
     build-depends:
         base >=4.16.4.0,
         hspec ^>=2.10,
-        a-deeper-dive-into-relational-algebra-by-way-of-adjunctions,
+        joinbench,
         array >= 0.5.4.0,
         parsec >= 0.3.1.15,
         deepseq >= 1.4.6.1
