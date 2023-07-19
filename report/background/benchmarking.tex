@@ -582,3 +582,13 @@ array of different takes to benchmarking, both due to progressions in the field
 and difference in requirements there is a large overlap in what values each
 designer chose. This subsection is designed to condense the lessons in the
 previous section.
+
+\paragraph{Synthetic databases} Synthetic databases are key to give benchmarks
+the customisation, standards, readability and structure necessary to provide any
+sort of useful result. We see many approaches to the synthetic database
+structure, the multiple tables for relation sizes seen in
+Set Query Benchmark \cite{SetQueryBenchmark}, the single table whose size is changed via selection
+queries in Wisconsin \cite{Wisconsin}, and the realistic approach set up in
+\cite{TPC-H}. The size of each tuple can be designed so that a relation's size
+is known. And perhaps most importantly, selectivity factors and CPU usage can be
+changed by definition or combination of attributes.
