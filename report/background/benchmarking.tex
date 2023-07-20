@@ -592,3 +592,12 @@ queries in Wisconsin \cite{Wisconsin}, and the realistic approach set up in
 \cite{TPC-H}. The size of each tuple can be designed so that a relation's size
 is known. And perhaps most importantly, selectivity factors and CPU usage can be
 changed by definition or combination of attributes.
+
+\paragraph{Scalability} A key criticism for founding DBMS benchmark systems is a
+lack of scalability, as can be seen in the update to the Wisconsin benchmark
+\cite{Wisconsin2}. Technology is advancing often as well as vastly different
+needs in different domains, and so a `one size fits all' approach is not viable
+for such benchmarks. A general strategy employed to overcome any of these
+limitations is to partition a percentage of the database or have the largest $n$
+attributes scale to the size of the relation. It is also worth noting that
+scalability to parallel execution is also desirable \cite{BenchmarkHandbook}.
