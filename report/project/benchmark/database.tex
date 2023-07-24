@@ -1,1 +1,12 @@
 \section{Synthetic database creation}\label{sec:benchmark:database}
+Synthetic databases are critical to running a customisable and repeatable
+benchmark. Those who wish to benchmark a database can use custom synthetic
+databases in order to specify a large amount of unknowns in the data of the
+benchmarks run. Examples of such parameters range from both the size of the
+database as a whole to on a tuple level by carefully choosing attribute domains.
+Attribute domains can also help give a heuristic control to resource load while
+processing queries by determining how difficult it is to computer an answer (for
+instance using the equality of strings). Furthermore, when designed correctly synthetic
+databases can provide a readable method to easily specify wanted properties of
+queries via explicit and easy to calculate selectivity factors in selections and
+joins.
