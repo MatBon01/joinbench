@@ -11,3 +11,11 @@ databases can provide a readable method to easily specify wanted properties of
 queries via explicit and easy to calculate selectivity factors in selections and
 joins. More information on database benchmark design can be found in
 \fref{sec:background:benchmarkbestpractices}.
+
+\paragraph{} In order to have a customisable synthetic benchmark for the
+project, we created a collection of python modules to easily configure and
+export different databases. We chose to implement this as an extensible set of
+classes to represent different cell domains which then can be configured,
+specified and passed to objects representing larger structures of the database
+and handle generation for each of their responsibilities. This section is a
+walk through the ensuing python modules and their internal relationships.
