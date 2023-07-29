@@ -19,3 +19,15 @@ classes to represent different cell domains which then can be configured,
 specified and passed to objects representing larger structures of the database
 and handle generation for each of their responsibilities. This section is a
 walk through the ensuing python modules and their internal relationships.
+
+\paragraph{Overview} This section describes the overall structure of the
+solution. We start with a list of objects extending the \lstinline{Cell}
+abstract class. We pass this list to a \lstinline{RecordGenerator} object, which
+then can be given to a \lstinline{TableGenerator} object to generate the
+database. Finally the database generator can be given to an object, such as the
+implemented \lstinline{CSVTableGenerator} to create the
+specified output. The advantages of this approach is the ability to easily
+configure a handful of properties of the output database by varying just the list of cells.
+Cells can be easily manipulated given they conform to the \lstinline{Cell} API
+and so their basic capabilities cover a large amount of behaviour and
+compositions.
