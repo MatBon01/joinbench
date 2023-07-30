@@ -20,8 +20,18 @@ specified and passed to objects representing larger structures of the database
 and handle generation for each of their responsibilities. This section is a
 walk through the ensuing python modules and their internal relationships.
 
+\begin{wrapfigure}{R}{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.4\textwidth]{project/benchmark/database_generation_class_diagram}
+    \caption{UML class diagram showing the modules used for synthetic database
+    creation.}
+    \label{fig:project:benchmark:creation-class-diagram}
+\end{wrapfigure}
+
 \paragraph{Overview} This section describes the overall structure of the
-solution. We start with a list of objects extending the \lstinline{Cell}
+solution, a class-diagram to aid the explanation can be found in
+\fref{fig:project:benchmark:creation-class-diagram}.
+We start with a list of objects extending the \lstinline{Cell}
 abstract class. We pass this list to a \lstinline{RecordGenerator} object, which
 then can be given to a \lstinline{TableGenerator} object to generate the
 database. Finally the database generator can be given to an object, such as the
