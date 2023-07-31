@@ -20,13 +20,39 @@ specified and passed to objects representing larger structures of the database
 and handle generation for each of their responsibilities. This section is a
 walk through the ensuing python modules and their internal relationships.
 
-\begin{wrapfigure}{R}{0.4\textwidth}
-    \centering
-    \includegraphics[width=0.4\textwidth]{project/benchmark/database_generation_class_diagram}
-    \caption{UML class diagram showing the modules used for synthetic database
-    creation.}
-    \label{fig:project:benchmark:creation-class-diagram}
-\end{wrapfigure}
+\begin{figure}[t]
+\begin{tikzpicture}
+    \begin{package}{databasegen}
+        \begin{abstractclass}{Cell}{0,0}
+            \operation[0]{+ generate() : str}
+        \end{abstractclass}
+
+        \begin{class}{RecordGenerator}{7, 0}
+            \attribute{+ cells : List[Cell]}
+            \operation{+ generate() : List[str]}
+        \end{class}
+
+        \begin{class}{TableGenerator}{0, -3}
+            \attribute{+ record\_generator : RecordGenerator}
+            \operation{+ generate(num\_records : int = 1) : Iterable[List[str]]}
+        \end{class}
+
+        \begin{class}{CSVTableGenerator}{7, -3}
+            \attribute{+ path : str}
+            \attribute{+ dialect : str}
+            \attribute{+ table\_generator : TableGenerator}
+            \operation{+ generate(num\_records : int) : null}
+        \end{class}
+
+        \composition{RecordGenerator}{}{}{Cell}
+        \composition{TableGenerator}{}{}{RecordGenerator}
+        \composition{CSVTableGenerator}{}{}{TableGenerator}
+    \end{package}
+\end{tikzpicture}
+\caption{UML class diagram showing the modules used for synthetic database
+creation.}
+\label{fig:project:benchmark:creation-class-diagram}
+\end{figure}
 
 \paragraph{Overview} This section describes the overall structure of the
 solution, a class-diagram to aid the explanation can be found in
