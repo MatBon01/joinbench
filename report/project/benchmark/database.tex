@@ -41,3 +41,11 @@ configure a handful of properties of the output database by varying just the lis
 Cells can be easily manipulated given they conform to the \lstinline{Cell} API
 and so their basic capabilities cover a large amount of behaviour and
 compositions.
+
+\paragraph{Cell} The \lstinline{Cell} abstract class presents the main API for
+customising the domain of attributes in a database table. It defines only one
+operation, namely \lstinline{generate() : str} which returns the next value of
+the attribute the \lstinline{Cell} class represents. It is worth noting that
+once you extend the \lstinline{Cell} abstract class, its method is not static so
+an object must be instantiated; this gives every attribute the ability to hold
+state to help control the generation of values.
