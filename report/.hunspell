@@ -97,3 +97,13 @@ oddOnePercent
 SUPPKEY
 ACCTBAL
 TOTALPRICE
+benchmarkbestpractices
+databasegen
+str
+RecordGenerator
+TableGenerator
+num
+int
+Iterable
+CSVTableGenerator
+UML

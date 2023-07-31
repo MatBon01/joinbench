@@ -122,6 +122,7 @@ at a time. Of course the operating system may buffer the output but at a high
 level this allows for what I believe to fine-grained yet logical writes that the
 operating system can schedule.
 \subparagraph{Other ideas} There are many other way to potentially output the
-data in useful ways. For instance, one may output the database to the stdout
-stream (or perhaps both stdout and a given file). More interestingly one could execute an SQL \lstinline{INSERT}
+data in useful ways. For instance, one may output the database to the standard
+output
+stream (or perhaps both standard output and a given file). More interestingly one could execute an SQL \lstinline{INSERT}
 statement for each tuple, populating a running database.
