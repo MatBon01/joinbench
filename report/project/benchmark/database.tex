@@ -49,3 +49,14 @@ the attribute the \lstinline{Cell} class represents. It is worth noting that
 once you extend the \lstinline{Cell} abstract class, its method is not static so
 an object must be instantiated; this gives every attribute the ability to hold
 state to help control the generation of values.
+
+\paragraph{RecordGenerator} The \lstinline{RecordGenerator} class is
+responsible for defining objects that generate the tuples of a table. As a tuple
+is a set of attributes, the \lstinline{RecordGenerator} must be instantiated
+with a list of \lstinline{Cell}s. Note that in this implementation the set of
+attributes as theoretically outlined in \fref{sec:relationalmodel} gain an
+order but this is for the obvious pragmatic use when exporting data. The
+\lstinline{RecordGenerator} class defines only one operation,
+\lstinline{generate}, but instead of returning a string, it returns a list of
+strings in the same order as the list of \lstinline{Cell}s passed to the
+constructor.
