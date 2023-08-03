@@ -95,6 +95,11 @@ the problem domain. As a final addition, abstract classes with behaviour
 increases the coupling of the code and so the argument could be made it would
 negatively impact the cleanliness of the code.
 
+In order to create the joinbench benchmark a handful of different cells were
+designed to represent the domains necessary to create the \relation{JOINBENCH}
+table. Great care was taken in the design to eliminate duplication and
+generalise the cells as will be presented here.
+
 \paragraph{RecordGenerator} The \lstinline{RecordGenerator} class is
 responsible for defining objects that generate the tuples of a table. As a tuple
 is a set of attributes, the \lstinline{RecordGenerator} must be instantiated
