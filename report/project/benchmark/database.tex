@@ -76,6 +76,25 @@ once you extend the \lstinline{Cell} abstract class, its method is not static so
 an object must be instantiated; this gives every attribute the ability to hold
 state to help control the generation of values.
 
+In practice, when extending the cell class for uses within the project, specific
+patterns would emerge. Usually, most cells require a
+\lstinline{Random} object in their initialiser. The benefit to the composition
+with an external \lstinline{Random} object is that the generation of values can
+be controlled both in a fine-tuned and systematic way; this allows the user to
+specify the distribution used to generate numbers both in a cell scope and
+interlink randomness between cells by sharing \lstinline{Random} objects.
+Although \lstinline{Cell} is an abstract class, I did not think it would be
+appropriate to enforce the use of a \lstinline{Random} object in the initialiser
+or give default behaviours. The result of generating a cell can be so varied
+that no default behaviour would be appropriate in a general case, potentially
+causing future extensions of the \lstinline{Cell} class to behave unexpectedly.
+Furthermore, unfortunately python does not support interfaces and favours duck
+typing and so abstract classes were a necessary evil to specify a common API and
+type the code for static analysis; otherwise an interface would much better suit
+the problem domain. As a final addition, abstract classes with behaviour
+increases the coupling of the code and so the argument could be made it would
+negatively impact the cleanliness of the code.
+
 \paragraph{RecordGenerator} The \lstinline{RecordGenerator} class is
 responsible for defining objects that generate the tuples of a table. As a tuple
 is a set of attributes, the \lstinline{RecordGenerator} must be instantiated
