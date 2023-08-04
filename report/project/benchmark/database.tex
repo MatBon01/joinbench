@@ -23,21 +23,21 @@ walk through the ensuing python modules and their internal relationships.
 \begin{figure}[t]
 \begin{tikzpicture}
     \begin{package}{databasegen}
-        \begin{abstractclass}{Cell}{0,0}
+        \begin{abstractclass}{Cell}{-4,0}
             \operation[0]{+ generate() : str}
         \end{abstractclass}
 
-        \begin{class}{RecordGenerator}{7, 0}
+        \begin{class}{RecordGenerator}{4, 0}
             \attribute{+ cells : List[Cell]}
             \operation{+ generate() : List[str]}
         \end{class}
 
-        \begin{class}{TableGenerator}{0, -3}
+        \begin{class}[text width=9cm]{TableGenerator}{0, -3}
             \attribute{+ record\_generator : RecordGenerator}
             \operation{+ generate(num\_records : int = 1) : Iterable[List[str]]}
         \end{class}
 
-        \begin{class}{CSVTableGenerator}{7, -3}
+        \begin{class}[text width=6cm]{CSVTableGenerator}{0, -6}
             \attribute{+ path : str}
             \attribute{+ dialect : str}
             \attribute{+ table\_generator : TableGenerator}
