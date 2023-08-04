@@ -132,7 +132,37 @@ It is clear that the \lstinline{RandomModifiedIntegerRangeCell}
 (\lstinline{RandomModifiedModularRangeCell}) and
 \lstinline{RandomIntegerRangeCell} (\lstinline{RandomModularIntegerCell}, resp.)
 are related by passing the identity function ($\mathrm{id}: x \mapsto x$) as the
-\lstinline{modifier} argument.
+\lstinline{modifier} argument. See
+\fref{fig:project:benchmark:random-integer-cell-dependencies} for a
+comprehensive representation of the dependencies discussed above.
+
+\begin{figure}[t]
+    \begin{tikzpicture}
+        \begin{class}{RandomIntegerRangeCell}{0, -3}
+        \end{class}
+        \begin{class}[text width=7cm]{RandomModifiedIntegerRangeCell}{0, -0}
+        \end{class}
+        \begin{class}{RandomModularIntegerCell}{8, -3}
+        \end{class}
+        \begin{class}[text width=7cm]{RandomModifiedModularIntegerCell}{8, -0}
+        \end{class}
+        \begin{class}{EvenIntegerCell}{0, 3}
+        \end{class}
+        \begin{class}{OddIntegerCell}{8, 3}
+        \end{class}
+
+        \unidirectionalAssociation{EvenIntegerCell}{}{}{RandomModifiedModularIntegerCell}
+        \unidirectionalAssociation{OddIntegerCell}{}{}{RandomModifiedModularIntegerCell}
+        \unidirectionalAssociation{RandomIntegerRangeCell}{}{}{RandomModifiedIntegerRangeCell}
+        \unidirectionalAssociation{RandomModifiedModularIntegerCell}{}{}{RandomModifiedIntegerRangeCell}
+        \unidirectionalAssociation{RandomModularIntegerCell}{}{}{RandomModifiedModularIntegerCell}
+
+    \end{tikzpicture}
+    \caption{UML dependency diagram showcasing the web of dependencies affecting
+    the random integer group of cells. Note that the APIs have been omitted for
+relevance.}
+    \label{fig:project:benchmark:random-integer-cell-dependencies}
+\end{figure}
 
 \paragraph{RecordGenerator} The \lstinline{RecordGenerator} class is
 responsible for defining objects that generate the tuples of a table. As a tuple
