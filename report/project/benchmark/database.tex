@@ -136,6 +136,20 @@ are related by passing the identity function ($\mathrm{id}: x \mapsto x$) as the
 \fref{fig:project:benchmark:random-integer-cell-dependencies} for a
 comprehensive representation of the dependencies discussed above.
 
+Cells that cover a different generation space or have more complicated
+requirements are also possible to represent with this structure and design. An
+example of a cell that uses and modifies its state, also used in the
+\relation{JOINBENCH} relation, is the \lstinline{CounterCell}. The
+\lstinline{CounterCell} is used in the \relation{JOINBENCH} relation to provide
+a unique integer to each row. Its simple implementation where an integer
+attribute is initialised in the constructor and returned then incremented after
+ever call to \lstinline{generate} demonstrates the utility of implementing a
+\lstinline{Cell} as a class with state instead of stateless alternatives. Before
+\relation{JOINBENCH} was settled on and domains specified other test attributes
+for an \relation{INVOICE} table were defined and represent a more creative
+coverage of the possible space domain.
+
+
 \begin{figure}[t]
     \begin{tikzpicture}
         \begin{class}{RandomIntegerRangeCell}{0, -3}
