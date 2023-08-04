@@ -137,26 +137,28 @@ are related by passing the identity function ($\mathrm{id}: x \mapsto x$) as the
 comprehensive representation of the dependencies discussed above.
 
 Cells that cover a different generation space or have more complicated
-requirements are also possible to represent with this structure and design. An
+requirements are representable with this structure and design. An
 example of a cell that uses and modifies its state, also used in the
 \relation{JOINBENCH} relation, is the \lstinline{CounterCell}. The
 \lstinline{CounterCell} is used in the \relation{JOINBENCH} relation to provide
-a unique integer to each row. Its simple implementation where an integer
-attribute is initialised in the constructor and returned then incremented after
-ever call to \lstinline{generate} demonstrates the utility of implementing a
-\lstinline{Cell} as a class with state instead of stateless alternatives. Before
+a unique integer for each row representing what is commonly known as a primary
+key. Its implementation consisting of an integer
+attribute initialised in the constructor and returned then incremented after
+every call to \lstinline{generate} is a simple advocate to the utility of implementing
+\lstinline{Cell} as a class allowing state in contrast to stateless alternatives. Before
 \relation{JOINBENCH} was settled on and domains specified other test attributes
 for an \database{INVOICE} database were defined and represent a more creative
-coverage of the possible space domain. A \relation{CUSTOMER} table was defined
-for the \database{INVOICE} database and it is no surprise an
+coverage of possible attribute domains. A \relation{CUSTOMER} table was defined
+for the \database{INVOICE} database and it is no surprise a
 \relationAttribute{firstName} attribute followed. In response to this attribute
-a \lstinline{RandomChoiceCell} was defined which, once initialised with a list
-of strings (such as names in this example), the \lstinline{generate} method
+a \lstinline{RandomChoiceCell} was defined which once initialised with a list
+of strings (such as names in this example) the \lstinline{generate} method
 would randomly pick and return an option from the list. The
 \lstinline{RandomChoiceCell} extends the examples presented in the report to
 domains other than integers, covering the space of types that can be converted
-to strings given that the exact domain is enumerated into a list. For a
-demonstration of more complex operations a \lstinline{DateCell} was also defined
+to strings once the exact domain is enumerated into a list. We also mention the
+\lstinline{DateCell} to
+demonstrate a more complex operation defined
 for use in an \relation{INVOICE} relation within the \database{INVOICE}
 database. The \lstinline{DateCell} generated a random valid date contained within the range of
 years provided in the constructor returned in long form \verb|YYYYMMDD|.
