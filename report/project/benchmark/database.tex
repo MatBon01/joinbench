@@ -146,8 +146,20 @@ attribute is initialised in the constructor and returned then incremented after
 ever call to \lstinline{generate} demonstrates the utility of implementing a
 \lstinline{Cell} as a class with state instead of stateless alternatives. Before
 \relation{JOINBENCH} was settled on and domains specified other test attributes
-for an \relation{INVOICE} table were defined and represent a more creative
-coverage of the possible space domain.
+for an \database{INVOICE} database were defined and represent a more creative
+coverage of the possible space domain. A \relation{CUSTOMER} table was defined
+for the \database{INVOICE} database and it is no surprise an
+\relationAttribute{firstName} attribute followed. In response to this attribute
+a \lstinline{RandomChoiceCell} was defined which, once initialised with a list
+of strings (such as names in this example), the \lstinline{generate} method
+would randomly pick and return an option from the list. The
+\lstinline{RandomChoiceCell} extends the examples presented in the report to
+domains other than integers, covering the space of types that can be converted
+to strings given that the exact domain is enumerated into a list. For a
+demonstration of more complex operations a \lstinline{DateCell} was also defined
+for use in an \relation{INVOICE} relation within the \database{INVOICE}
+database. The \lstinline{DateCell} generated a random valid date contained within the range of
+years provided in the constructor returned in long form \verb|YYYYMMDD|.
 
 
 \begin{figure}[t]
