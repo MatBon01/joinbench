@@ -121,6 +121,7 @@ OddIntegerCell
 DateCell
 UniqueCell
 TrackingCell
+DuplicateCell
 twentyFivePercent
 CounterCell
 RandomChoiceCell
