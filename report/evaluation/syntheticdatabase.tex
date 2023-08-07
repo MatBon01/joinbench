@@ -6,7 +6,7 @@ benefits of synthetic data are vast and include the ability to define schemas
 that are specialised in benchmarking and readability while controlling frequency
 of values and other important properties.
 
-Overall the result was quite different from other technologies available,
+\paragraph{Comparison to existing solutions} Overall the result was quite different from other technologies available,
 offering a low-level bare-bones solution. Many existing solutions equally support
 qualitative data to quantitative with selling points based on the
 \lstinline{Faker} python module \cite{Faker}. Although \lstinline{Faker} did not come to my
@@ -46,3 +46,19 @@ solution. Despite the fact that it is not the intended purpose of the system,
 the generation is clearly created to be able to represent real world data, which
 the \relation{JOINBENCH} relation is far from. Therefore, other more specialised
 solutions may be more useful.
+
+In conclusion, despite the rich variety of tools already available for the
+problem domain I believe the infrastructure created during this project for
+synthetic database creation is a useful contribution. Although, when taken for
+their intended purpose most alternate solution provide a more complete and
+beneficial solution, I believe the framework created by me is low level enough
+to be manipulatable in a clean way to express a wide range of properties that
+might be needed for a benchmark. Benchmarks are characterised by the need to
+strictly control the data and express properties on the data easily and
+specifically, this may suggest that a low level solution may be better suited
+and when organised as such may result in cleaner code than trying to adapt
+higher level solutions. Although, ``low-level'' and ``bare-bones''
+might sound like drawbacks of deliverable it was intentionally designed and serves
+as a different style of implementation to the other solutions available; a style
+I believe suits the intricacies of the project and leaves much room for
+extensions if necessary in future.
