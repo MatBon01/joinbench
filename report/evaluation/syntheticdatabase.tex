@@ -69,3 +69,29 @@ was designed from a pragmatic point of view for the task at hand; as such,
 despite my best efforts to keep the tool general and open for future use, some
 limitations in the scope currently developed have risen. My concerns lie in two
 main categories, interactions and overall system knowledge by the program.
+
+\subparagraph{Interactions} Especially as cell composition became more prevalent
+in the design or other potential dependencies between cells arose the potential
+untidiness of the solution lurked in. An example currently in the system is the
+way \lstinline{RecordCell} strays from the simple \lstinline{Cell} API. Although
+the solution prides itself in being low level and customisable by code, it
+feels like a stray away from a uniformity that in future may be exploited for
+different spin off solutions as may be described later in this section. Other
+instances of when extra code may need to be introduced due to unforeseen
+dependencies between components may be cells that require a larger context to
+function such as
+the total number of records to be generated. In current implementations, only
+higher levels of the system are made aware of this, also at the last possible
+moment. Again, these are not large issues but concerns of difficulties as
+use cases may scale; a client could simply initialise the needed
+\lstinline{Cell}s with the needed context at runtime. Therefore this may only
+be an obstacle for potential automation and better message passing mechanisms
+might need to be developed between client and framework or within the framework
+itself to allow for cleaner solutions.
+
+\subparagraph{System knowledge} The framework currently is lacking in knowledge
+of the system larger than what it was primarily created for, the generation of
+data. In other words, the program is not aware of the context it is running in,
+such as the schema of the database as a whole. Many extensions could be created
+by giving the program more knowledge, unnecessary for just the synthesis of
+data.
