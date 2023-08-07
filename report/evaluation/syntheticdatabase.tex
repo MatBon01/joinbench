@@ -30,3 +30,19 @@ with other data synthesising modules that depend on
 it, such as \lstinline{pydbgen}, can give a more complete solution even in
 comparison to my framework. In essence, it uses the variety of data sources
 provided by framework compiled into a variety of different outputs formats.
+
+Moreover, other solutions with very different aims exist. Academics in the US
+have developed DataSynthesizer \cite{DataSynthesizer} which is a privacy
+oriented synthetic data generator for collaborating with sensitive data. Given
+an input of a sensitive data the technology comes in three parts, a
+\lstinline{DataDescriber} which analyses the data and describes its form, a
+\lstinline{DataGenerator} which takes this information and creates a
+predetermined number of rows, and finally a \lstinline{ModelInspector} for
+determining the similarity of the produced data to the private data. It is clear
+in order to use the technology as intended I would already require a dataset to
+reproduce. Hypothetically, singling out the \lstinline{DataGenerator} and
+providing a hand-written description may also not be a very specialised
+solution. Despite the fact that it is not the intended purpose of the system,
+the generation is clearly created to be able to represent real world data, which
+the \relation{JOINBENCH} relation is far from. Therefore, other more specialised
+solutions may be more useful.
