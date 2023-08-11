@@ -124,3 +124,25 @@ Even, as mentioned in the previous paragraph, deciding the return types and
 number of abstract methods in the class can either introduce a whole level of
 extremely useful functionality or bloat the system. This part of the report will
 evaluate some more difficult design decisions made in cells and cell examples.
+
+Composition of cells was introduced in the project as a way of adding another
+level of complexity to the decisions developers were able to make. The examples
+coded during the project, however, tended to be quite inefficient and general;
+they would definitely need to be redefined and optimised to work at scale.
+Despite the early inefficient implementations of composition the generality they
+must improve is a systematic problem prescribed by the type of solution that may result in unreadable, yet
+efficient, solutions if taken seriously in further development. The
+generality described here is found in the inability to apply different
+algorithms when different properties are given in the domain. Going back to the
+example in \fref{sec:benchark:synthetic-database} for cell composition,
+\lstinline{unique_nums}. The algorithm used in \lstinline{uniqiue_nums}, which
+to remind you is simply a \lstinline{RandomModularIntegerCell} in a
+\lstinline{UniqueCell} is quite inefficient and generates new values until an unseen
+integer is found. It has been widely known for decades that algorithms to
+produce a random permutations of integers are prevelant and a large discussion
+of methods to generate dense
+unique random data can be found in Gray's paper ``Quickly Generation
+Billion-Record Synthetic Databases'' \cite{GenLargeSynthDB}. This shows that
+many more suitable ways of generating unique dense integers exist and open the
+question as to other optimisations that may be made to \lstinline{UniqueCell}
+for other more specialised areas.
