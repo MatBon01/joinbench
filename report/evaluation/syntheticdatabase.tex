@@ -145,4 +145,14 @@ unique random data can be found in Gray's paper ``Quickly Generation
 Billion-Record Synthetic Databases'' \cite{GenLargeSynthDB}. This shows that
 many more suitable ways of generating unique dense integers exist and open the
 question as to other optimisations that may be made to \lstinline{UniqueCell}
-for other more specialised areas.
+for other more specialised areas. A potential solution may be to define a range
+of specialised cells (and not using composition in these cases) as problems
+arise. I find this solution to be acceptable as I can personally justify new
+classes for unique cases. It is clear, however, that the number of cells may
+grow greatly as the framework is extended in this way and the correct times to
+use cell composition may become more confusing; it is
+clearly a trade off between optimisation and readability. I believe that this
+issue also highlights the strength my solution has in extensibility as the
+question is not whether the framework allows such structures, but whether we
+should and users of this system can make their own decisions and implement such
+cells for themselves and their use cases.
