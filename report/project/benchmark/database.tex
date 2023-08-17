@@ -1,288 +1,45 @@
-\section{Synthetic database creation}\label{sec:benchmark:database}
-Synthetic databases are critical to running a customisable and repeatable
-benchmark. Those who wish to benchmark a database can use custom synthetic
-databases in order to specify a large amount of unknowns in the data of the
-benchmarks run. Examples of such parameters range from both the size of the
-database as a whole to on a tuple level by carefully choosing attribute domains.
-Attribute domains can also help give a heuristic control to resource load while
-processing queries by determining how difficult it is to computer an answer (for
-instance using the equality of strings). Furthermore, when designed correctly synthetic
-databases can provide a readable method to easily specify wanted properties of
-queries via explicit and easy to calculate selectivity factors in selections and
-joins. More information on database benchmark design can be found in
-\fref{sec:background:benchmarkbestpractices}.
+\section{Benchmarking database}
+As part of the project a benchmark will be run on the database system outlined
+in \fref{chap:database}. As the paper \relalg{} had a focus on their join algorithm, so will the benchmark focus
+on the performance of join queries in particular representing the class of query
+optimisations most prominent in the paper. This section will describe some design
+decisions taken into account when constructing the relations used in the
+benchmark and finally describe the \relation{JOINBENCH} relation which will be
+used to perform most benchmarks.
 
-\paragraph{} In order to have a customisable synthetic benchmark for the
-project, we created a collection of python modules to easily configure and
-export different databases. We chose to implement this as an extensible set of
-classes to represent different cell domains which then can be configured,
-specified and passed to objects representing larger structures of the database
-and handle generation for each of their responsibilities. This section is a
-walk through the ensuing python modules and their internal relationships.
+\subsection{Initial design decisions}
+As explained in \fref{sec:background:dbbenchmarking} there are a number of styles that can be adapted to
+conduct benchmarks for database management system implementations. Often the
+style is greatly dependent on the context the system works in and the purposes
+of the information gathering. It was my decision that a decision support system
+had many important parallels to the domain of interest and so to design the
+benchmark with a stronger focus on the work that has been conducted in that
+area. Following are some characteristics of decision support
+systems~\cite{IntroToDatabaseSystems}
+that make their structure and benchmarks particularly relevant to this
+project.
 
-\begin{figure}[t]
-\begin{tikzpicture}
-    \begin{package}{databasegen}
-        \begin{abstractclass}{Cell}{-4,0}
-            \operation[0]{+ generate() : str}
-        \end{abstractclass}
+\subparagraph{Join complexity} Queries in decision support systems typically
+have more complicated design this is caused by the need to access many
+kinds of facts in order to answer complex queries. Although the
+paper \relalg{}~\cite{RelationalAlgebraByWayOfAdjunctions}
+does not recommend any advice for dealing with multiple joins on a practical
+industrial scale (as the book An introduction to database
+systems~\cite{IntroToDatabaseSystems} describes with industry
+standard \emph{prejoin}s), its work is central on the efficiency of joins as a
+guiding example.
 
-        \begin{class}{RecordGenerator}{4, 0}
-            \attribute{+ cells : List[Cell]}
-            \operation{+ generate() : List[str]}
-        \end{class}
+\subparagraph{Ad hoc queries} Decision support frameworks usually rely on ad hoc
+queries more than other applications and as such their benchmarks test its
+ability to deal with these queries more than other applications~\cite{SetQueryBenchmark, PractitionersIntroduction}. This is a similar
+query type that is of interest for this benchmark.
 
-        \begin{class}[text width=9cm]{TableGenerator}{0, -3}
-            \attribute{+ record\_generator : RecordGenerator}
-            \operation{+ generate(num\_records : int = 1) : Iterable[List[str]]}
-        \end{class}
+\subparagraph{Integrity unimportant} The paper \relalg{} does not provide any way of
+updating the table, only query methods. This is similar to the aspect of
+decision support systems who assume that the data is correct and
+does not deal with many updates. Therefore little or no emphasis is placed on
+testing the integrity of the system. This helps construct a benchmark that more
+accurately reflects the algorithmic core of the paper where the focus was on
+query optimisation.
 
-        \begin{class}[text width=6cm]{CSVTableGenerator}{0, -6}
-            \attribute{+ path : str}
-            \attribute{+ dialect : str}
-            \attribute{+ table\_generator : TableGenerator}
-            \operation{+ generate(num\_records : int) : null}
-        \end{class}
-
-        \composition{RecordGenerator}{}{}{Cell}
-        \composition{TableGenerator}{}{}{RecordGenerator}
-        \composition{CSVTableGenerator}{}{}{TableGenerator}
-    \end{package}
-\end{tikzpicture}
-\caption{UML class diagram showing the modules used for synthetic database
-creation.}
-\label{fig:project:benchmark:creation-class-diagram}
-\end{figure}
-
-\paragraph{Overview} This section describes the overall structure of the
-solution, a class-diagram to aid the explanation can be found in
-\fref{fig:project:benchmark:creation-class-diagram}.
-We start with a list of objects extending the \lstinline{Cell}
-abstract class. We pass this list to a \lstinline{RecordGenerator} object, which
-then can be given to a \lstinline{TableGenerator} object to generate the
-database. Finally the database generator can be given to an object, such as the
-implemented \lstinline{CSVTableGenerator} to create the
-specified output. The advantages of this approach is the ability to easily
-configure a handful of properties of the output database by varying just the list of cells.
-Cells can be easily manipulated given they conform to the \lstinline{Cell} API
-and so their basic capabilities cover a large amount of behaviour and
-compositions.
-
-\paragraph{Cell} The \lstinline{Cell} abstract class presents the main API for
-customising the domain of attributes in a database table. It defines only one
-operation, namely \lstinline[language=Python]{generate() : str} which returns the next value of
-the attribute the \lstinline{Cell} class represents. It is worth noting that
-once you extend the \lstinline{Cell} abstract class, its method is not static so
-an object must be instantiated; this gives every attribute the ability to hold
-state to help control the generation of values.
-
-In practice, when extending the cell class for uses within the project, specific
-patterns would emerge. Usually, most cells require a
-\lstinline{Random} object in their initialiser. The benefit to the composition
-with an external \lstinline{Random} object is that the generation of values can
-be controlled both in a fine-tuned and systematic way; this allows the user to
-specify the distribution used to generate numbers both in a cell scope and
-interlink randomness between cells by sharing \lstinline{Random} objects.
-Although \lstinline{Cell} is an abstract class, I did not think it would be
-appropriate to enforce the use of a \lstinline{Random} object in the initialiser
-or give default behaviours. The result of generating a cell can be so varied
-that no default behaviour would be appropriate in a general case, potentially
-causing future extensions of the \lstinline{Cell} class to behave unexpectedly.
-Furthermore, unfortunately python does not support interfaces and favours duck
-typing and so abstract classes were a necessary evil to specify a common API and
-type the code for static analysis; otherwise an interface would much better suit
-the problem domain. As a final addition, abstract classes with behaviour
-increases the coupling of the code and so the argument could be made it would
-negatively impact the cleanliness of the code.
-
-In order to create the joinbench benchmark a handful of different cells were
-designed to represent the domains necessary to create the \relation{JOINBENCH}
-table. Great care was taken in the design to eliminate duplication and
-generalise the cells as will be presented here.
-
-Most \lstinline{Cell}s used in the \relation{JOINBENCH} table are based on the
-\lstinline{RandomModularIntegerCell} class. As the name suggests given a modulo
-$n$ in the constructor this cell will generate a random number in the range $\{0,
-\,1,\,\ldots,\,n - 1\}$ using a given \lstinline{Random} object. In fact, the
-implementation of \lstinline{RandomModularIntegerCell} relies on a more general
-\lstinline{RandomIntegerRangeCell} which when given a lower bound $l$ and an
-upper bound $u$ generates numbers in the range $\{l,\,l + 1,\,\ldots,\,u - 1\}$.
-The \lstinline{RandomIntegerRangeCell} along with the syntactic sugar of the
-\lstinline{RandomModularIntegerCell} can represent most attributes seen in the
-\relation{JOINBENCH} table; examples are \relationAttribute{onePercent} defined as a
-\lstinline{RandomModularIntegerCell} with modulo $100$ or
-\relationAttribute{twentyFivePercent} may be implemented with a
-\lstinline{RandomIntegerRangeCell} with lower bound $0$ and upper bound $4$
-(generating numbers between $0$ and $3$ inclusive for a total of $4$ distinct
-values). However, more complex cells that fundamentally are not too different
-from the cells described above are needed for a larger set of use cases. How
-might we randomly generate entries from the first $10$ values of the geometric
-sequence $3^i$ say? Or, more relevant to the \relation{JOINBENCH} relation, the
-first $100$ even numbers? To allow a more general number generation from
-integers the \lstinline{RandomIntegerRangeCell} and
-\lstinline{RandomModularIntegerCell} are based on
-\lstinline{RandomModifiedIntegerRangeCell} and
-\lstinline{RandomModifiedModularIntegerCell} respectively. How these classes
-differ is an extra parameter in the constructor that takes an argument of type
-\lstinline[language=Python]{Callable[[int], int]}, the type that represents a function that takes an integer
-and returns an integer. Cells of this type generate a random number within the
-constraints given by the range or modulo as usual then apply the
-\lstinline{modifier} function and return a string representation of the result.
-It is clear that the \lstinline{RandomModifiedIntegerRangeCell}
-(\lstinline{RandomModifiedModularIntegerCell}) and
-\lstinline{RandomIntegerRangeCell} (\lstinline{RandomModularIntegerCell},
-respectively)
-are related by passing the identity function ($\mathrm{id}: x \mapsto x$) as the
-\lstinline{modifier} argument. See
-\fref{fig:project:benchmark:random-integer-cell-dependencies} for a
-comprehensive representation of the dependencies discussed above.
-
-Cells that cover a different generation space or have more complicated
-requirements are representable with this structure and design. An
-example of a cell that uses and modifies its state, also used in the
-\relation{JOINBENCH} relation, is the \lstinline{CounterCell}. The
-\lstinline{CounterCell} is used in the \relation{JOINBENCH} relation to provide
-a unique integer for each row representing what is commonly known as a primary
-key. Its implementation consisting of an integer
-attribute initialised in the constructor and returned then incremented after
-every call to \lstinline{generate} is a simple advocate to the utility of implementing
-\lstinline{Cell} as a class allowing state in contrast to stateless alternatives. Before
-\relation{JOINBENCH} was settled on and domains specified other test attributes
-for an \database{INVOICE} database were defined and represent a more creative
-coverage of possible attribute domains. A \relation{CUSTOMER} table was defined
-for the \database{INVOICE} database and it is no surprise a
-\relationAttribute{firstName} attribute followed. In response to this attribute
-a \lstinline{RandomChoiceCell} was defined which once initialised with a list
-of strings (such as names in this example) the \lstinline{generate} method
-would randomly pick and return an option from the list. The
-\lstinline{RandomChoiceCell} extends the examples presented in the report to
-domains other than integers, covering the space of types that can be converted
-to strings once the exact domain is enumerated into a list. We also mention the
-\lstinline{DateCell} to
-demonstrate a more complex operation defined
-for use in an \relation{INVOICE} relation within the \database{INVOICE}
-database. The \lstinline{DateCell} generated a random valid date contained within the range of
-years provided in the constructor returned in long form \verb|YYYYMMDD|.
-
-Before much of the complexity was alleviated by the integer based design of the
-\relation{JOINBENCH} relation systems had to be design to ensure attributes had
-the desired properties. The \relation{JOINBENCH} relation gives us mathematical
-approximations, algorithms and laws to ensure properties such as frequency of
-values and uniqueness but for the more general space of domains as required by
-previous iterations of databases used, such as the \database{INVOICE} database,
-alternative methods were required. To fulfil these requirements the idea of cell
-composition was introduced. Cell composition is simply a cell that takes another cell
-during initialisation to offer a modified behaviour. A prime example of such a
-composite cell is the \lstinline{UniqueCell}. As the name suggests the
-\lstinline{UniqueCell} ensures that all values generated by the cell are unique.
-For example, during initialisation, we might pass an object of type
-\lstinline{RandomModularIntegerCell} with modulo $100$ to the
-\lstinline{UniqueCell} constructor as follows:
-\begin{lstlisting}[language=Python]
-nums: Cell = RandomModularIntegerCell(100)
-unique_nums: Cell = UniqueCell(nums)
-\end{lstlisting}
-The resulting \lstinline{unique_nums} is then a cell that generates numbers from
-$0$ to $99$ at most once. The \lstinline{UniqueCell} is not the only type of
-cell that benefits from composition, however. Foreign keys also present an
-interesting organisational issue while creating synthetic data for databases; by
-foreign keys I am referring to any data that refers to an already established
-value in another relation, for instance in the \database{INVOICE} database you
-may want to link a customer's id value from the \relation{CUSTOMER} relation to
-their orders in the \database{INVOICE} relation and expect that no order has a
-customer id that does not appear in the \relation{CUSTOMER} relation. This class
-of problems can also be solved by cell composition, namely the
-\lstinline{TrackingCell} cell. The \lstinline{TrackingCell} follows the
-pattern of cell composition by taking another \lstinline{Cell} during
-construction and obeys the \lstinline{Cell} API, however it also defines an
-additional method that returns the set of all values generated by the cell. This
-may be converted to a list and fed into a \lstinline{RandomChoiceCell} later, for
-instance, in order to allow the duplication of data for use in an attribute
-acting as the foreign key.
-Finally, when preparing to generate data in order to test joins on data it is
-imperative to have an idea of the frequency values appear in the table and to ensure
-that data is repeated at least the number of times desired. The
-\lstinline{DuplicateCell} enables a more general tune over duplicates in larger
-domains. On instantiation you state the rate of duplication as a number
-between 0 and 1 and the cell chooses an already seen value with that
-probability; this ensures that a proportion of the results are repeated and so
-enables joining attributes with a larger level of scarcity.
-
-\begin{figure}[t]
-    \begin{tikzpicture}
-        \begin{class}{RandomIntegerRangeCell}{0, -3}
-        \end{class}
-        \begin{class}[text width=7cm]{RandomModifiedIntegerRangeCell}{0, -0}
-        \end{class}
-        \begin{class}{RandomModularIntegerCell}{8, -3}
-        \end{class}
-        \begin{class}[text width=7cm]{RandomModifiedModularIntegerCell}{8, -0}
-        \end{class}
-        \begin{class}{EvenIntegerCell}{0, 3}
-        \end{class}
-        \begin{class}{OddIntegerCell}{8, 3}
-        \end{class}
-
-        \unidirectionalAssociation{EvenIntegerCell}{}{}{RandomModifiedModularIntegerCell}
-        \unidirectionalAssociation{OddIntegerCell}{}{}{RandomModifiedModularIntegerCell}
-        \unidirectionalAssociation{RandomIntegerRangeCell}{}{}{RandomModifiedIntegerRangeCell}
-        \unidirectionalAssociation{RandomModifiedModularIntegerCell}{}{}{RandomModifiedIntegerRangeCell}
-        \unidirectionalAssociation{RandomModularIntegerCell}{}{}{RandomModifiedModularIntegerCell}
-
-    \end{tikzpicture}
-    \caption{UML dependency diagram showcasing the web of dependencies affecting
-    the random integer group of cells. Note that the APIs have been omitted for
-relevance.}
-    \label{fig:project:benchmark:random-integer-cell-dependencies}
-\end{figure}
-
-\paragraph{RecordGenerator} The \lstinline{RecordGenerator} class is
-responsible for defining objects that generate the tuples of a table. As a tuple
-is a set of attributes, the \lstinline{RecordGenerator} must be instantiated
-with a list of \lstinline{Cell}s. Note that in this implementation the set of
-attributes as theoretically outlined in \fref{sec:relationalmodel} gain an
-order but this is for the obvious pragmatic use when exporting data. The
-\lstinline{RecordGenerator} class defines only one operation,
-\lstinline{generate}, but instead of returning a string, it returns a list of
-strings in the same order as the list of \lstinline{Cell}s passed to the
-constructor.
-
-\paragraph{TableGenerator} The \lstinline{TableGenerator} builds on the
-\lstinline{RecordGenerator} in much the same way a table is a set of tuples. It
-requires a \lstinline{RecordGenerator} in its constructor to define the domain
-and number of attributes and also has a consistently named operation,
-\lstinline{generate}. The operation \lstinline{generate} however is subtly
-different from the pattern established in \lstinline{RecordGenerator}. Assuming
-a table in practice should at least an order of magnitude larger than a single
-tuple, it might become costly to generate the entire table at once and hold it
-in memory while it is being used. Instead, the \lstinline{TableGenerator}'s
-\lstinline{generate} function takes in a parameter describing how many rows to
-generate, as one might expect, but returns an \lstinline{Iterable} type where
-each iteration returns the list of strings generated by the
-\lstinline{RecordGenerator}.
-
-\paragraph{Outputting the data} Although there is no need for a next step,
-outputting the data is likely to be a next step. After defining a
-\lstinline{TableGenerator} we are left with an function that given the
-cardinality of a relation, will product an iterator that generates such a table.
-A recommended pattern for outputting data is again to take the
-\lstinline{TableGenerator} as an argument during construction and define a
-\lstinline{generate} function that specifies a number of records and returns
-nothing. This counter intuitive return value is to ensure that the efficiency
-gained by the \lstinline{TableGenerator} is not lost as accumulating the table
-would cause, where possible it would be beneficial to write the relation one
-tuple at a time to whatever output is desired. I did not define an interface as
-think that this step in the process is closest to client code and is not needed
-by framework outlined therefore it would be needlessly restrictive.
-\subparagraph{CSVTableGenerator} An example of such a class used in the project
-is the \lstinline{CSVTableGenerator} that follows the exact recommendations
-above. It takes a specification of the CSV file to write to, namely a path and
-CSV dialect, and generate commands the CSV library to write each record one row
-at a time. Of course the operating system may buffer the output but at a high
-level this allows for what I believe to fine-grained yet logical writes that the
-operating system can schedule.
-\subparagraph{Other ideas} There are many other way to potentially output the
-data in useful ways. For instance, one may output the database to the standard
-output
-stream (or perhaps both standard output and a given file). More interestingly one could execute an SQL \lstinline{INSERT}
-statement for each tuple, populating a running database.
+\subsection{The \relation{JOINBENCH} relation}
