@@ -1,7 +1,6 @@
 \section{Relations}
 As part of the project a benchmark will be run on the database system outlined
-in \fref{chap:database}. As the paper ``Relational Algebra by way of
-Adjunctions'' had a focus on their join algorithm, so will the benchmark focus
+in \fref{chap:database}. As the paper \relalg{} had a focus on their join algorithm, so will the benchmark focus
 on the performance of join queries in particular representing the class of query
 optimisations most prominent in the paper. This section will describe some design
 decisions taken into account when constructing the relations used in the
@@ -16,7 +15,7 @@ project.
 \subparagraph{Join complexity} Queries in decision support systems typically
 have more complicated design this is caused by the need to access many
 kinds of facts in order to answer complex queries. Although the
-paper Relational Algebra by way of Adjunctions~\cite{RelationalAlgebraByWayOfAdjunctions}
+paper \relalg{}~\cite{RelationalAlgebraByWayOfAdjunctions}
 does not recommend any advice for dealing with multiple joins on a practical
 industrial scale (as the book An introduction to database
 systems~\cite{IntroToDatabaseSystems} describes with industry
@@ -28,8 +27,7 @@ queries more than other applications and as such their benchmarks test its
 ability to deal with these queries more than other applications~\cite{SetQueryBenchmark, PractitionersIntroduction}. This is a similar
 query type that is of interest for this benchmark.
 
-\subparagraph{Integrity unimportant} The paper Relational Algebra by way of
-Adjunctions does not provide any way of
+\subparagraph{Integrity unimportant} The paper \relalg{} does not provide any way of
 updating the table, only query methods. This is similar to the aspect of
 decision support systems who assume that the data is correct and
 does not deal with many updates. Therefore little or no emphasis is placed on
