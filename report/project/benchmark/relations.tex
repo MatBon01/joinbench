@@ -1,26 +1,38 @@
 \section{Relations}
-Following are some characteristics of decision support systems \cite{IntroToDatabaseSystems}
+As part of the project a benchmark will be run on the database system outlined
+in \fref{chap:database}. As the paper ``Relational Algebra by way of
+Adjunctions'' had a focus on their join algorithm, so will the benchmark focus
+on the performance of join queries in particular representing the class of query
+optimisations most prominent in the paper. This section will describe some design
+decisions taken into account when constructing the relations used in the
+benchmark and finally describe the \relation{JOINBENCH} relation which will be
+used to perform most benchmarks.
+
+\paragraph{}Following are some characteristics of decision support
+systems~\cite{IntroToDatabaseSystems}
 that make their structure and benchmarks particularly relevant to this
 project.
-% Paper in this context referes to relational algebra by way of
-% adjunctions
 
 \subparagraph{Join complexity} Queries in decision support systems typically
-have more complicated design - this is by virtue of the need to access many
-kinds of facts. Although the paper \cite{RelationalAlgebraByWayOfAdjunctions}
+have more complicated design this is caused by the need to access many
+kinds of facts in order to answer complex queries. Although the
+paper Relational Algebra by way of Adjunctions~\cite{RelationalAlgebraByWayOfAdjunctions}
 does not recommend any advice for dealing with multiple joins on a practical
-industrial scale (as \cite{IntroToDatabaseSystems} describes with industry
-standard \emph{prejoin}s), its work in central on the efficiency of joins
-(albeit under comprehension syntax).
+industrial scale (as the book An introduction to database
+systems~\cite{IntroToDatabaseSystems} describes with industry
+standard \emph{prejoin}s), its work is central on the efficiency of joins as a
+guiding example.
 
 \subparagraph{Ad hoc queries} Decision support frameworks usually rely on ad hoc
 queries more than other applications and as such their benchmarks test its
-ability to deal with these queries more than other applications
-\cite{SetQueryBenchmark, PractitionersIntroduction}.
+ability to deal with these queries more than other applications~\cite{SetQueryBenchmark, PractitionersIntroduction}. This is a similar
+query type that is of interest for this benchmark.
 
-\subparagraph{Integrity unimportant} The paper does not provide any way of
+\subparagraph{Integrity unimportant} The paper Relational Algebra by way of
+Adjunctions does not provide any way of
 updating the table, only query methods. This is similar to the aspect of
-decision support systems who assume that the data is assumed to be correct and
-do not deal with many updates, therefore little or no emphasis is placed on
+decision support systems who assume that the data is correct and
+does not deal with many updates. Therefore little or no emphasis is placed on
 testing the integrity of the system. This helps construct a benchmark that more
-accurately reflects the discoveries of the paper.
+accurately reflects the algorithmic core of the paper where the focus was on
+query optimisation.
