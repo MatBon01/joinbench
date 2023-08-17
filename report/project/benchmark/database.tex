@@ -54,3 +54,22 @@ designing queries are the specificity of the selections or joins and the cardina
 of the two relations in the operation. Therefore a relation with attributes in
 the integer domain and readable names makes should make it easier to calculate
 query selectivity as well as expected cardinality of operands.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{ll}
+        \toprule
+        Attribute & Domain \\
+        \midrule
+        \relation{unique} & Int \\
+        \relation{onePercent} & Word16 \\
+        \relation{twentyPercent} & Word16 \\
+        \relation{twentyFivePercent} & Word16 \\
+        \relation{fiftyPercent} & Word16 \\
+        \relation{evenOnePercent} & Word16 \\
+        \relation{oddOnePercent} & Word16 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Attributes and domains (specified as Haskell types) of the
+    attributes of the \relation{JOINBENCH} relation.}
+\end{table}
