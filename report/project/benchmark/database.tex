@@ -55,7 +55,37 @@ of the two relations in the operation. Therefore a relation with attributes in
 the integer domain and readable names makes should make it easier to calculate
 query selectivity as well as expected cardinality of operands.
 
-\begin{table}[h]
+The attributes of the \relation{JOINBENCH} relation can be found in
+\fref{tab:joinbenchattributes}. As can be seen, besides the
+\relationAttribute{uniqiue} attribute all other attributes are percentage based.
+
+\subparagraph{Percentage based attributes} Percentage based attributes are
+important for specifying the selectivity of joins especially. On a high level,
+the percentage in the attribute name expresses the expected proportion of the
+tuple to be selected by an equality containing only one value in the domain. For
+instance a selection using the predicate `$\relationAttribute{twentyPercent} =
+0$' is expected to select twenty percent of the relation. Precisely, given a
+percentage based attribute of percent $n$, say, the domain of such an integer
+would be the numbers $\left\{0, 1, \ldots, \frac{100}{n} - 1\right\}$ (where we
+assume that $\frac{100}{n}$ is an integer). An alternative way of thinking about
+this is that an $n$-percent attribute partitions the relation such that each
+partition has $n$ percent of the tuples.
+
+\subparagraph{The \relationAttribute{unique} attribute} The purpose of the
+\relationAttribute{unique} attribute is partly classical and partly pragmatic. In a classical
+perspective, primary keys are paramount to relations and so I thought it
+imperative to include an attribute that could fill this role. Furthermore,
+despite the implementation of relations as bags allowing duplicates (for use in
+aggregations) theoretically databases should not allow duplicate tuples and so
+giving each tuple a unique identifier is a way to ensure this. More importantly,
+the \relationAttribute{unique} attribute allows us to specify selectivity not
+based on proportion but rather given numbers. Say we want to select $n$ tuples
+(where $n$ is less than the cardinality of the relation), we can simply perform
+a selection on unique that takes the first $n$ tuples using the predicate
+`$\relationAttribute{unique} < n$'; it is clear the result is a relation with
+only $n$ tuples.
+
+\begin{table}[b]
     \centering
     \begin{tabular}{ll}
         \toprule
@@ -72,4 +102,5 @@ query selectivity as well as expected cardinality of operands.
     \end{tabular}
     \caption{Attributes and domains (specified as Haskell types) of the
     attributes of the \relation{JOINBENCH} relation.}
+    \label{tab:joinbenchattributes}
 \end{table}
