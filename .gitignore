@@ -300,6 +300,10 @@ TSWLatexianTemp*
 # Uncomment the next line to have this generated file ignored.
 #*Notes.bib
 
+# Intermediate LHS2Tex files
+report/code/allcode.tex
+*.ptb
+
 # Haskell files
 dist
 dist-*
@@ -330,6 +334,7 @@ report.html
 
 # Environment files
 .DS_Store
+
 
 # -- Python files --
 # Byte-compiled / optimized / DLL files
