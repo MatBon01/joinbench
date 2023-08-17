@@ -6,3 +6,11 @@ structures in Haskell, the algorithms compared will comprise of two alternative
 ``dummy'' solutions which may be seen as a simple implementation without the
 findings of the paper, and a solution using an indexed structure as described
 in the paper.
+
+The first algorithm to be presented has been dubbed \modularproduct{}. This name
+highlights the modular nature of the equijoin query (each part is expressesd in
+discrete steps) while telling us that we are using the non-indexed approach of taking the
+cartesian product. The \modularproduct{} class of algorithms use the
+\lstinline[language=Haskell]{productEquijoin} funciton.
+
+\lstinputlisting[language=Haskell, firstline=40, lastline=43, caption=Implementation of modular product underlying funciton]{../src/Database/Bag.hs}
