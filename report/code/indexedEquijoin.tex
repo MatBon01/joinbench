@@ -1,0 +1,21 @@
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{3}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{indexedEquijoin}\mathbin{::}(\Conid{Key}\;\Varid{k})\Rightarrow
+(\Varid{a}\to \Varid{k})\to (\Varid{b}\to \Varid{k})\to
+(\Conid{Bag}\;\Varid{a},\Conid{Bag}\;\Varid{b})\to \Conid{Bag}\;(\Varid{a},\Varid{b}){}\<[E]%
+\\
+\>[B]{}\Varid{indexedEquijoin}\;\Varid{if1}\;\Varid{if2}\;(\Varid{t1},\Varid{t2})\mathrel{=}(\Varid{reduce}\mathbin{\circ}\Varid{fmap}\;\Varid{cp}\mathbin{\circ}\Varid{merge})\;(\Varid{it1},\Varid{it2}){}\<[E]%
+\\
+\>[B]{}\hsindent{3}{}\<[3]%
+\>[3]{}\mathbf{where}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{it1}\mathrel{=}\Varid{t1}\mathbin{`\Varid{indexBy}`}\Varid{if1}{}\<[E]%
+\\
+\>[3]{}\hsindent{2}{}\<[5]%
+\>[5]{}\Varid{it2}\mathrel{=}\Varid{t2}\mathbin{`\Varid{indexBy}`}\Varid{if2}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
