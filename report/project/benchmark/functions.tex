@@ -1,5 +1,5 @@
-\section{Algorithms to benchmark}
-In this section we present an overview of the three different algorithms we will
+\section{Functions to benchmark}
+In this section we present an overview of the three functions we will
 be comparing in this benchmark. The paper \relalg{} presents a solution for
 equijoin (and arbitrary selections followed by joins) query optimisation using
 structures in Haskell, the algorithms compared will comprise of two alternative
@@ -7,14 +7,14 @@ structures in Haskell, the algorithms compared will comprise of two alternative
 findings of the paper, and a solution using an indexed structure as described
 in the paper.
 
-\paragraph{Modular product} The first algorithm to be presented has been dubbed \modularproduct{}. This name
-highlights the modular nature of the equijoin query (each part is expressesd in
-discrete steps) while telling us that we are using the non-indexed approach of taking the
-cartesian product. The \modularproduct{} class of algorithms use the
-\lstinline[language=Haskell]{productEquijoin} funciton. As outlined above the
-\lstinline[language=Haskell]{productEquijoin} works in two discrete steps, we
-expect the function to compute the product of the two relations and then filter
-based on the equijoin criteria as demonstrated by the following code.
+\paragraph{Product equijoin} The first function to be presented is
+\lstinline[language=Haskell]{productEquijoin}. This function
+expresses the modular nature of the equijoin query (each part is expressesd in
+discrete steps) while using a non-indexed approach resulting in a global
+cartesian product.
+The function has two discrete steps: first it must computer the product of the
+two relations and then it must filter the result based on the equijoin criteria.
+This is demonstrated by the following code.
 
 \input{code/productEquijoin}
 
@@ -42,10 +42,11 @@ equijoin is a join based on equality of certain attributes and therefore just as
 a record would need a transformation to compare attribute, we arbitrarily
 transform the bag.
 
-\paragraph{old comprehension} The second of the `dummy' algorithms has been
-dubbed \oldcomprehension{}. The old in the name comes, again, from the fact that
-it does not make use of the indexed structures implemented and presented. It is
-clear that the function will just name a list comprehension. We expect this
+\paragraph{Comprehension equijoin} The second of the `dummy' solutions is the
+\lstinline[language=Haskell]{comprehensionEquijoin}.
+This solution also does not make use of the indexed structures implemented and
+presented. It is
+clear that the function just names a list comprehension. We expect this
 comprehension to take an element from both bags and, if the predicates required
 by the equijoin are satisfied, form a pair. The following code demonstrates
 this.
@@ -56,17 +57,22 @@ this.
 As is to be expected, the previous code takes the form of a monad comprehension.
 This is possible using the GHC extension \verb|MonadComprehensions| and allowed by
 the fact that \lstinline[language=Haskell]{Bag} is a monad. We see many similar
-features to the \modularproduct{} algorithm. A major difference is that there is
-no explicit product operations but the pair is created manually when a matching
-pair is found (however, all pairs are still considered). The equality, though
-not named in a function, also includes the transformation described above.
+features to the \lstinline[language=Haskell]{productEquijoin} function. A major difference is that there is
+no explicit product operations but the pair is created explicitly when mathching
+results are found (however, all possible pairs are still considered). The equality, though
+not explicitly named as a helper function, also includes the transformation described above.
 
-\paragraph{Modular indexed} The final algorithm is the only of the three to use
+\paragraph{Indexed equijoin} The final function is the only of the three to use
 indexing. The indexing tested in this benchmark is basic however and further
-optimisations are not considered, hence the name `modular' as a query engine or
-customised query writing could easily tune the idea. This algorithm is by far
+optimisations are not considered. To this extent this function can also be seen as
+modular; where a query engine or
+customised query could easily tune and combine steps, this function follows an
+order putting together whole steps in a deterministic and segregated way.
+This algorithm is by far
 the most complex and is a version of what is proposed in the paper \relalg{}. In
-simple terms, we index the bags and merge the result and pairs. After the results are
+simple terms, we index the bags and merge the result and modify it to form
+another valid indexed
+structure. After the results are
 merged we wish to reduce this higher level construct back to a bag. The code for
 these operations is as follows.
 
