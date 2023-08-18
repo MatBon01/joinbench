@@ -18,16 +18,21 @@ based on the equijoin criteria as demonstrated by the following code.
 
 \input{code/productEquijoin}
 
+\noindent
 The two discrete steps are clearly visible and separated by the composition of
 functions. The first step is to computer the cartesian product using the
 \lstinline[language=Haskell]{cp} function. As a reminder the {cp} function has
 the following type signature.
 \input{code/cpTypeSignature}
+
+\noindent
 The \lstinline[language=Haskell]{cp} function simply takes a pair of bags and
 returns a bag constituting the pairs of elements as would be expected of the
 cartesian product. The second step is to select the elements from the pair of
 bags. The type signature of \lstinline[language=Haskell]{select} is as follows.
 \input{code/selectTypeSignature}
+
+\noindent
 As you can see, \lstinline[language=Haskell]{select} is simply a
 \lstinline[language=Haskell]{filter} on bags. The complexity arrives in the
 equality function. The equality function is modified to transform the bags using
