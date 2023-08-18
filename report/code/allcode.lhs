@@ -14,3 +14,9 @@ cp :: (Bag a, Bag b) -> Bag (a, b)
 \begin{code}
 select :: (a -> Bool) -> Bag a -> Bag a
 \end{code}
+
+\begin{code}
+comprehensionEquijoin :: (Eq c) => (a -> c) -> (b -> c) -> (Bag a, Bag b) ->
+Bag (a, b)
+comprehensionEquijoin fa fb (as, bs) = [(a, b) | a <- as, b <- bs, fa a == fb b]
+\end{code}

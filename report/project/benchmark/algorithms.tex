@@ -41,3 +41,22 @@ comparing certain attributes; as mentioned in \fref{sec:relationalmodel} an
 equijoin is a join based on equality of certain attributes and therefore just as
 a record would need a transformation to compare attribute, we arbitrarily
 transform the bag.
+
+\paragraph{old comprehension} The second of the `dummy' algorithms has been
+dubbed \oldcomprehension{}. The old in the name comes, again, from the fact that
+it does not make use of the indexed structures implemented and presented. It is
+clear that the function will just name a list comprehension. We expect this
+comprehension to take an element from both bags and, if the predicates required
+by the equijoin are satisfied, form a pair. The following code demonstrates
+this.
+
+\input{code/comprehensionEquijoin.tex}
+
+\noindent
+As is to be expected, the previous code takes the form of a monad comprehension.
+This is possible using the GHC extensions \verb|MonadComprehensions| and allowed by
+the fact that \lstinline[language=Haskell]{Bag} is a monad. We see many similar
+features to the \modularproduct{} algorithm. A major difference is that there is
+no explicit product operations but the pair is created manually when a matching
+pair is found (however, all pairs are still considered). The equality, though
+not named in a function, also includes the transformation described above.
