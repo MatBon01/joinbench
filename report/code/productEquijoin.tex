@@ -3,7 +3,7 @@
 \column{3}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{5}{@{}>{\hspre}l<{\hspost}@{}}%
 \column{E}{@{}>{\hspre}l<{\hspost}@{}}%
-\>[B]{}\Varid{productEquijoin}\mathbin{::}(\Conid{Eq}\;\Varid{c})\Rightarrow (\Varid{a}\to \Varid{c})\to (\Varid{b}\to \Varid{c})\to (\Conid{Table}\;\Varid{a},\Conid{Table}\;\Varid{b})\to \Conid{Table}\;(\Varid{a},\Varid{b}){}\<[E]%
+\>[B]{}\Varid{productEquijoin}\mathbin{::}(\Conid{Eq}\;\Varid{c})\Rightarrow (\Varid{a}\to \Varid{c})\to (\Varid{b}\to \Varid{c})\to (\Conid{Bag}\;\Varid{a},\Conid{Bag}\;\Varid{b})\to \Conid{Bag}\;(\Varid{a},\Varid{b}){}\<[E]%
 \\
 \>[B]{}\Varid{productEquijoin}\;\Varid{fa}\;\Varid{fb}\mathrel{=}\Varid{select}\;\Varid{equality}\mathbin{\circ}\Varid{cp}{}\<[E]%
 \\
@@ -13,4 +13,4 @@
 \>[3]{}\hsindent{2}{}\<[5]%
 \>[5]{}\Varid{equality}\;(\Varid{a},\Varid{b})\mathrel{=}\Varid{fa}\;\Varid{a}\equiv \Varid{fb}\;\Varid{b}{}\<[E]%
 \ColumnHook
-\end{hscode}
+\end{hscode}\resethooks

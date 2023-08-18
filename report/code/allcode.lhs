@@ -1,8 +1,16 @@
 %include polycode.fmt
 
-\begin{newcode}
-productEquijoin :: (Eq c) => (a -> c) -> (b -> c) -> (Table a, Table b) -> Table (a, b)
+\begin{code}
+productEquijoin :: (Eq c) => (a -> c) -> (b -> c) -> (Bag a, Bag b) -> Bag (a, b)
 productEquijoin fa fb = select equality . cp
   where
     equality (a, b) = fa a == fb b
-\end{newcode}
+\end{code}
+
+\begin{code}
+cp :: (Bag a, Bag b) -> Bag (a, b)
+\end{code}
+
+\begin{code}
+select :: (a -> Bool) -> Bag a -> Bag a
+\end{code}
