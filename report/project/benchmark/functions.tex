@@ -9,9 +9,9 @@ in the paper.
 
 \paragraph{Product equijoin} The first function to be presented is
 $productEquijoin$. This function
-expresses the modular nature of the equijoin query (each part is expressesd in
+expresses the modular nature of the equijoin query (each part is expressed in
 discrete steps) while using a non-indexed approach resulting in a global
-cartesian product.
+Cartesian product.
 The function has two discrete steps: first it must compute the product of the
 two relations and then it must filter the result based on the equijoin criteria.
 This is achieved by the following code.
@@ -58,7 +58,7 @@ As is to be expected, the previous code takes the form of a monad comprehension.
 This is possible using the GHC extension \verb|MonadComprehensions| and allowed by
 the fact that $Bag$ is a monad. We see many similar
 features to the $productEquijoin$ function. A major difference is that there is
-no explicit product operations but the pair is created explicitly when mathching
+no explicit product operations but the pair is created explicitly when matching
 results are found (however, all possible pairs are still considered). The equality, though
 not explicitly named as a helper function, also includes the transformation described above.
 
