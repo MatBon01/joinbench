@@ -1,0 +1,19 @@
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{10}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{10E}{@{}l@{}}%
+\column{14}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{indexBy}{}\<[10]%
+\>[10]{}\mathbin{::}{}\<[10E]%
+\>[14]{}(\Conid{Key}\;\Varid{k})\Rightarrow \Conid{Table}\;\Varid{a}\to (\Varid{a}\to \Varid{k})\to \Conid{Map}\;\Varid{k}\;(\Conid{Table}\;\Varid{a}){}\<[E]%
+\\
+\>[B]{}\Varid{merge}{}\<[10]%
+\>[10]{}\mathbin{::}{}\<[10E]%
+\>[14]{}(\Conid{Map}\;\Varid{k}\;\Varid{v1},\Conid{Map}\;\Varid{k}\;\Varid{v2})\to \Conid{Map}\;\Varid{k}\;(\Varid{v1},\Varid{v2}){}\<[E]%
+\\
+\>[B]{}\Varid{reduce}{}\<[10]%
+\>[10]{}\mathbin{::}{}\<[10E]%
+\>[14]{}(\Conid{PointedSet}\;\Varid{v},\Conid{CMonoid}\;\Varid{v})\Rightarrow \Conid{Map}\;\Varid{k}\;\Varid{v}\to \Varid{v}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
