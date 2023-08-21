@@ -39,3 +39,12 @@ class BenchmarkData:
 
     def get_means_of_benchmark_list(self, indices: List[int]) -> List[float]:
         return list(map(self.get_benchmark_mean, indices))
+
+    @staticmethod
+    def infer_tuple_count_from_path(path: str):
+        file_name: str = path.split("/")[-1]
+        if file_name.startswith("joinbench"):
+            file_name_without_extension: str = file_name.split(".")[0]
+            tuple_count_in_name: str = file_name_without_extension[len("joinbench") :]
+            return BenchmarkData(path, int(tuple_count_in_name))
+        raise Exception("Could not infer tuple count from path")

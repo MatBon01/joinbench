@@ -16,7 +16,10 @@ def get_test_benchmarks() -> List[Benchmark]:
 
 
 def get_test_data_location() -> str:
-    return "test/joinbench/test_data.json"
+    return f"{get_joinbench_test_data_directory_path()}test_data.json"
+
+def get_joinbench_test_data_directory_path() -> str:
+    return "test/joinbench/test_data/"
 
 
 def get_test_benchmark_data() -> BenchmarkData:

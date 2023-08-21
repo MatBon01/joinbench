@@ -1,8 +1,9 @@
 from typing import Dict, List, Set, Tuple
 
+import pytest
 from test_utils.benchmark_utils import (
-    get_list_of_data_report_names, get_test_benchmark_data,
-    get_test_benchmark_data_number_of_tuples,
+    get_joinbench_test_data_directory_path, get_list_of_data_report_names,
+    get_test_benchmark_data, get_test_benchmark_data_number_of_tuples,
     get_test_data_benchmark_group_and_benchmark_mapping,
     get_test_data_benchmark_group_names, get_test_data_location)
 
@@ -76,3 +77,11 @@ class TestBenchmarkData:
         expected: List[float] = [0.00000003142288461705547, 0.000000029314520320675693]
 
         assert benchmark_data.get_means_of_benchmark_list([0, 1]) == expected
+
+    @pytest.mark.parametrize(
+        "name,expected", [("joinbench127.json", 127), ("joinbench1000.json", 1000)]
+    )
+    def test_can_infer_tuple_count_from_path(self, name, expected):
+        name = get_joinbench_test_data_directory_path() + name
+        benchmark_data: BenchmarkData = BenchmarkData.infer_tuple_count_from_path(name)
+        assert benchmark_data.number_of_tuples == expected
