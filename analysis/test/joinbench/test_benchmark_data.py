@@ -84,4 +84,10 @@ class TestBenchmarkData:
     def test_can_infer_tuple_count_from_path(self, name, expected):
         name = get_joinbench_test_data_directory_path() + name
         benchmark_data: BenchmarkData = BenchmarkData.infer_tuple_count_from_path(name)
-        assert benchmark_data.number_of_tuples == expected
+        assert benchmark_data.get_tuple_count() == expected
+
+    @pytest.mark.parametrize("count", [127, 1000])
+    def test_can_get_tuple_count(self, count):
+        benchmark_data_path: str = get_test_data_location()
+        benchmark_data: BenchmarkData = BenchmarkData(benchmark_data_path, count)
+        assert benchmark_data.get_tuple_count() == count

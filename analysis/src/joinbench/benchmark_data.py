@@ -5,9 +5,9 @@ import pandas as pd
 
 
 class BenchmarkData:
-    def __init__(self, data_path: str, number_of_tuples: int):
+    def __init__(self, data_path: str, tuple_count: int):
         self.data = pd.read_json(data_path)
-        self.number_of_tuples: int = number_of_tuples
+        self.tuple_count: int = tuple_count
 
     def get_report_names_in_order(self) -> List[str]:
         return list(self.data["reportName"])
@@ -39,6 +39,9 @@ class BenchmarkData:
 
     def get_means_of_benchmark_list(self, indices: List[int]) -> List[float]:
         return list(map(self.get_benchmark_mean, indices))
+
+    def get_tuple_count(self) -> int:
+        return self.tuple_count
 
     @staticmethod
     def infer_tuple_count_from_path(path: str):
