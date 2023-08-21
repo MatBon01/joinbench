@@ -20,7 +20,13 @@ def get_test_data_location() -> str:
 
 
 def get_test_benchmark_data() -> BenchmarkData:
-    return BenchmarkData(get_test_data_location())
+    return BenchmarkData(
+        get_test_data_location(), get_test_benchmark_data_number_of_tuples()
+    )
+
+
+def get_test_benchmark_data_number_of_tuples() -> int:
+    return 100
 
 
 def get_list_of_data_report_names() -> List[str]:

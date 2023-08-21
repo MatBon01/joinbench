@@ -5,8 +5,9 @@ import pandas as pd
 
 
 class BenchmarkData:
-    def __init__(self, data_path: str):
+    def __init__(self, data_path: str, number_of_tuples: int):
         self.data = pd.read_json(data_path)
+        self.number_of_tuples: int = number_of_tuples
 
     def get_report_names_in_order(self) -> List[str]:
         return list(self.data["reportName"])

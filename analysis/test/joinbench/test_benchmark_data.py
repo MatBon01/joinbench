@@ -2,6 +2,7 @@ from typing import Dict, List, Set, Tuple
 
 from test_utils.benchmark_utils import (
     get_list_of_data_report_names, get_test_benchmark_data,
+    get_test_benchmark_data_number_of_tuples,
     get_test_data_benchmark_group_and_benchmark_mapping,
     get_test_data_benchmark_group_names, get_test_data_location)
 
@@ -9,9 +10,10 @@ from joinbench.benchmark_data import BenchmarkData
 
 
 class TestBenchmarkData:
-    def test_can_initialise_with_valid_benchmark_data(self):
+    def test_can_initialise_with_valid_benchmark_data_and_tuple_number(self):
         test_data_location: str = get_test_data_location()
-        assert BenchmarkData(test_data_location)
+        number_of_tuples: int = get_test_benchmark_data_number_of_tuples()
+        assert BenchmarkData(test_data_location, number_of_tuples)
 
     def test_can_get_report_names(self):
         benchmark_data: BenchmarkData = get_test_benchmark_data()
@@ -54,8 +56,7 @@ class TestBenchmarkData:
         assert actual == expected
 
     def test_can_get_correct_benchmark_group_names(self):
-        test_data_location: str = get_test_data_location()
-        benchmark_data: BenchmarkData = BenchmarkData(test_data_location)
+        benchmark_data: BenchmarkData = get_test_benchmark_data()
 
         expected: Set[str] = get_test_data_benchmark_group_names()
 
@@ -64,8 +65,7 @@ class TestBenchmarkData:
         assert actual == expected
 
     def test_can_retrieve_mean_for_a_benchmark(self):
-        test_data_location: str = get_test_data_location()
-        benchmark_data: BenchmarkData = BenchmarkData(test_data_location)
+        benchmark_data: BenchmarkData = get_test_benchmark_data()
 
         expected: float = 0.000000029314520320675693
         assert benchmark_data.get_benchmark_mean(1) == expected
