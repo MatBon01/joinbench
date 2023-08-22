@@ -65,11 +65,11 @@ class TestBenchmarkData:
 
         assert actual == expected
 
-    def test_can_retrieve_mean_for_a_benchmark(self):
+    def test_can_retrieve_mean_for_a_benchmark_from_index(self):
         benchmark_data: BenchmarkData = get_test_benchmark_data()
 
         expected: float = 0.000000029314520320675693
-        assert benchmark_data.get_benchmark_mean(1) == expected
+        assert benchmark_data.get_benchmark_mean_from_index(1) == expected
 
     def test_can_retrieve_multiple_means(self):
         benchmark_data: BenchmarkData = get_test_benchmark_data()
