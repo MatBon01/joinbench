@@ -18,6 +18,7 @@ def get_test_benchmarks() -> List[Benchmark]:
 def get_test_data_location() -> str:
     return f"{get_joinbench_test_data_directory_path()}test_data.json"
 
+
 def get_joinbench_test_data_directory_path() -> str:
     return "test/joinbench/test_data/"
 
@@ -87,3 +88,7 @@ def get_test_data_benchmark_group_and_benchmark_mapping() -> (
             (11, "modular indexed"),
         ],
     }
+
+
+def get_function_names() -> List[str]:
+    return ["modular product", "old comprehension", "modular indexed"]

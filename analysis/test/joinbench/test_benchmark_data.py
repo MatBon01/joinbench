@@ -2,8 +2,9 @@ from typing import Dict, List, Set, Tuple
 
 import pytest
 from test_utils.benchmark_utils import (
-    get_joinbench_test_data_directory_path, get_list_of_data_report_names,
-    get_test_benchmark_data, get_test_benchmark_data_number_of_tuples,
+    get_function_names, get_joinbench_test_data_directory_path,
+    get_list_of_data_report_names, get_test_benchmark_data,
+    get_test_benchmark_data_number_of_tuples,
     get_test_data_benchmark_group_and_benchmark_mapping,
     get_test_data_benchmark_group_names, get_test_data_location)
 
@@ -116,3 +117,7 @@ class TestBenchmarkData:
             BenchmarkData.get_function_name_from_experiment("group/function")
             == "function"
         )
+
+    def test_can_get_a_list_of_function_names(self):
+        benchmark_data: BenchmarkData = get_test_benchmark_data()
+        assert set(benchmark_data.get_function_name_list()) == set(get_function_names())

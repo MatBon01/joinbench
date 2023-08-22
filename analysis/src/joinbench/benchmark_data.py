@@ -69,3 +69,15 @@ class BenchmarkData:
                 return index
 
         raise Exception("Could not find benchmark index")
+
+    def get_function_name_list(self) -> List[str]:
+        return list(
+            set(
+                map(
+                    lambda experiment: BenchmarkData.get_function_name_from_experiment(
+                        experiment
+                    ),
+                    self.get_report_names_in_order(),
+                )
+            )
+        )
