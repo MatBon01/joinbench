@@ -13,9 +13,14 @@ class BenchmarkData:
         return list(self.data["reportName"])
 
     @staticmethod
-    def separate_benchmark_group_and_name(reportName: str) -> Tuple[str, str]:
+    def separate_benchmark_group_and_function(reportName: str) -> Tuple[str, str]:
         groupBenchmarkNames = reportName.split("/")
         return groupBenchmarkNames[0], groupBenchmarkNames[1]
+
+    @staticmethod
+    def get_function_name_from_experiment(experiment: str) -> str:
+        _, name = BenchmarkData.separate_benchmark_group_and_function(experiment)
+        return name
 
     def map_benchmark_groups_and_benchmark_indices(
         self,
@@ -25,7 +30,7 @@ class BenchmarkData:
         for i, name in enumerate(names):
             group: str
             name: str
-            group, name = BenchmarkData.separate_benchmark_group_and_name(name)
+            group, name = BenchmarkData.separate_benchmark_group_and_function(name)
 
             groups[group].append((i, name))
 

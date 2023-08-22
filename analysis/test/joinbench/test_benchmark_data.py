@@ -24,7 +24,9 @@ class TestBenchmarkData:
         )
 
     def test_can_correctly_separate_report_name(self):
-        assert BenchmarkData.separate_benchmark_group_and_name("group/benchmark") == (
+        assert BenchmarkData.separate_benchmark_group_and_function(
+            "group/benchmark"
+        ) == (
             "group",
             "benchmark",
         )
@@ -107,4 +109,10 @@ class TestBenchmarkData:
                 "join onePercent and twentyPercent", "old comprehension"
             )
             == 4
+        )
+
+    def test_can_get_function_name_from_experiment(self):
+        assert (
+            BenchmarkData.get_function_name_from_experiment("group/function")
+            == "function"
         )
