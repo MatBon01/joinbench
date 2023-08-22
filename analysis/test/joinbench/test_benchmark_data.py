@@ -71,6 +71,14 @@ class TestBenchmarkData:
         expected: float = 0.000000029314520320675693
         assert benchmark_data.get_benchmark_mean_from_index(1) == expected
 
+    def test_can_retrieve_mean_from_experiment_informxtion(self):
+        benchmark_data: BenchmarkData = get_test_benchmark_data()
+        expected: float = 0.000000029314520320675693
+        assert (
+            benchmark_data.get_benchmark_mean("join on onePercent", "old comprehension")
+            == expected
+        )
+
     def test_can_retrieve_multiple_means(self):
         benchmark_data: BenchmarkData = get_test_benchmark_data()
 
