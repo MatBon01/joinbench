@@ -51,3 +51,12 @@ class BenchmarkData:
             tuple_count_in_name: str = file_name_without_extension[len("joinbench") :]
             return BenchmarkData(path, int(tuple_count_in_name))
         raise Exception("Could not infer tuple count from path")
+
+    def get_benchmark_index(self, group: str, function: str) -> int:
+        map = self.map_benchmark_groups_and_benchmark_indices()
+        indexed_function_list = map[group]
+        for index, name in indexed_function_list:
+            if name == function:
+                return index
+
+        raise Exception("Could not find benchmark index")

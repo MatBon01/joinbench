@@ -91,3 +91,12 @@ class TestBenchmarkData:
         benchmark_data_path: str = get_test_data_location()
         benchmark_data: BenchmarkData = BenchmarkData(benchmark_data_path, count)
         assert benchmark_data.get_tuple_count() == count
+
+    def test_can_work_out_benchmark_index_from_group_and_function_name(self):
+        benchmark_data: BenchmarkData = get_test_benchmark_data()
+        assert (
+            benchmark_data.get_benchmark_index(
+                "join onePercent and twentyPercent", "old comprehension"
+            )
+            == 4
+        )
