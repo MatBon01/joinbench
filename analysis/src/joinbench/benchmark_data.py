@@ -81,3 +81,7 @@ class BenchmarkData:
                 )
             )
         )
+
+    @staticmethod
+    def load_with_count(count: int, path: str = ""):
+        return BenchmarkData.infer_tuple_count_from_path(f"{path}joinbench{count}.json")

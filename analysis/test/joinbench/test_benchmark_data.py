@@ -121,3 +121,10 @@ class TestBenchmarkData:
     def test_can_get_a_list_of_function_names(self):
         benchmark_data: BenchmarkData = get_test_benchmark_data()
         assert set(benchmark_data.get_function_name_list()) == set(get_function_names())
+
+    def test_loading_with_count(self):
+        path: str = get_joinbench_test_data_directory_path()
+        benchmark127: BenchmarkData = BenchmarkData.load_with_count(127, path=path)
+        assert benchmark127.get_tuple_count() == 127
+        benchmark1000: BenchmarkData = BenchmarkData.load_with_count(1000, path=path)
+        assert benchmark1000.get_tuple_count() == 1000

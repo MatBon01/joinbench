@@ -19,3 +19,12 @@ class BenchmarkGroup:
                 self.benchmarks,
             )
         )
+
+    @staticmethod
+    def load_with_counts(counts: List[int], path: str = ""):
+        assert counts
+        benchmarks: List[BenchmarkData] = list(
+            map(lambda count: BenchmarkData.load_with_count(count, path), counts)
+        )
+
+        return BenchmarkGroup(benchmarks)
