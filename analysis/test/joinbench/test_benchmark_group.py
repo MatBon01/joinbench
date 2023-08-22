@@ -49,3 +49,7 @@ class TestBenchmarkGroup:
     def test_cannot_load_with_empty_list_of_tuple_counts(self):
         with pytest.raises(AssertionError):
             BenchmarkGroup.load_with_counts([], path="")
+
+    def test_can_get_tuple_count_for_benchmarks(self):
+        group: BenchmarkGroup = get_joinbench_benchmark_group()
+        assert group.get_tuple_counts() == [127, 1000]

@@ -28,3 +28,6 @@ class BenchmarkGroup:
         )
 
         return BenchmarkGroup(benchmarks)
+
+    def get_tuple_counts(self) -> List[int]:
+        return list(map(lambda benchmark: benchmark.get_tuple_count(), self.benchmarks))
