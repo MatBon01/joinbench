@@ -53,3 +53,14 @@ class TestBenchmarkGroup:
     def test_can_get_tuple_count_for_benchmarks(self):
         group: BenchmarkGroup = get_joinbench_benchmark_group()
         assert group.get_tuple_counts() == [127, 1000]
+
+    def test_can_get_benchmark_by_tuple_count(self):
+        group: BenchmarkGroup = get_joinbench_benchmark_group()
+        assert group.get_benchmark_with_count(1000).get_tuple_count() == 1000
+        assert group.get_benchmark_with_count(127).get_tuple_count() == 127
+
+    def test_raises_an_exceptioin_if_tuple_count_not_in_group(self):
+        group: BenchmarkGroup = get_joinbench_benchmark_group()
+        with pytest.raises(Exception):
+            # Where the count is not in the group
+            group.get_benchmark_with_count(10)

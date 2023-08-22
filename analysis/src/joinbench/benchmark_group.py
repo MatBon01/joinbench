@@ -31,3 +31,11 @@ class BenchmarkGroup:
 
     def get_tuple_counts(self) -> List[int]:
         return list(map(lambda benchmark: benchmark.get_tuple_count(), self.benchmarks))
+
+    def get_benchmark_with_count(self, count: int) -> BenchmarkData:
+        # Assume that there is only one benchmark with the given count
+        for benchmark in self.benchmarks:
+            if benchmark.get_tuple_count() == count:
+                return benchmark
+
+        raise Exception("Could not find benchmark with given tuple count")
