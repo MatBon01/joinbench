@@ -1,6 +1,5 @@
 from typing import List, Tuple
 
-import matplotlib.pyplot as plt
 import numpy as np
 
 from .benchmark_data import BenchmarkData
