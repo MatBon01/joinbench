@@ -1,6 +1,7 @@
 from typing import Dict, List, Set, Tuple
 
 from joinbench.benchmark_data import BenchmarkData
+from joinbench.benchmark_group import BenchmarkGroup
 
 
 def get_test_data_location() -> str:
@@ -17,6 +18,11 @@ def get_joinbench_benchmarks() -> List[BenchmarkData]:
         BenchmarkData(f"{path}joinbench127.json", 127),
         BenchmarkData(f"{path}joinbench1000.json", 1000),
     ]
+
+
+def get_joinbench_benchmark_group() -> BenchmarkGroup:
+    benchmarks: List[BenchmarkData] = get_joinbench_benchmarks()
+    return BenchmarkGroup(benchmarks)
 
 
 def get_test_benchmark_data() -> BenchmarkData:
