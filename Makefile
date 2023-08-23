@@ -7,6 +7,7 @@ data_path = data
 
 benchmark:
 	make joinbench10
+	make joinbench25
 	make joinbench50
 	make joinbench100
 	make joinbench250
