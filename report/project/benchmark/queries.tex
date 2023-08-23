@@ -70,3 +70,11 @@ that the orders the attributes are given to the equijoin matters computationally
 and is present to test the difference in performance depending on the order. All
 the other statistics are the same as the query `join onePercent and
 twentyPercent'.
+
+\paragraph{'join evenOnePercent and oddOnePercent'} This query is drastically
+different to the others discussed and tests an edge case of selectivity. As
+evenOnePercent and oddOnePercent only have even and odd numbers respectively,
+the intersection of their domains is empty and therefore the resulting table is
+also expected to be empty. This query is present to test the performance of the
+different functions under such a bizarre and edge condition to see which can do
+the least pointless computation.
