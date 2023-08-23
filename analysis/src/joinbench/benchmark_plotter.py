@@ -1,5 +1,7 @@
 from typing import Dict, List, Tuple
 
+import numpy as np
+
 from .benchmark_data import BenchmarkData
 
 
@@ -27,3 +29,33 @@ class BenchmarkPlotter:
         ax.bar(names, means)
 
         return ax
+
+    def plot_given_queries(self, ax, queries_to_display: List[str]):
+        # NOTE: groups_to_display may have \n in the string for
+        # display purposes
+        functions = self.data.get_function_name_list()
+        queries = list(
+            map(lambda query: "".join(query.split("\n")), queries_to_display)
+        )
+
+        function_means = {
+            function: self.data.get_means_of_function_for_groups(function, queries)
+            for function in functions
+        }
+
+        x = np.arange(len(queries))  # the label locations
+        width = 0.25  # the width of the bars
+        multiplier = 0
+
+        for function, mean in function_means.items():
+            offset = width * multiplier
+            ax.bar(x + offset, mean, width, label=function)
+            multiplier += 1
+
+        ax.set_ylabel("Mean time (s)")
+        ax.set_xlabel("Query")
+        ax.set_title(
+            f"Mean time to complete given queries with {self.data.get_tuple_count()} tuples"
+        )
+        ax.set_xticks(x + width, queries_to_display)
+        ax.legend(loc="upper left")

@@ -39,6 +39,9 @@ class BenchmarkData:
     def get_benchmark_group_names(self) -> Set[str]:
         return set(self.map_benchmark_groups_and_benchmark_indices().keys())
 
+    def get_benchmark_group_name_list(self) -> List[str]:
+        return list(self.map_benchmark_groups_and_benchmark_indices().keys())
+
     def get_benchmark_mean_from_index(self, index: int) -> float:
         return self.data["reportAnalysis"][index]["anMean"]["estPoint"]
 
@@ -48,6 +51,14 @@ class BenchmarkData:
 
     def get_means_of_benchmark_list(self, indices: List[int]) -> List[float]:
         return list(map(self.get_benchmark_mean_from_index, indices))
+
+    def get_means_of_function_for_groups(self, function: str, groups: List[str]):
+        return list(
+            map(
+                lambda group: self.get_benchmark_mean(group, function),
+                groups,
+            )
+        )
 
     def get_tuple_count(self) -> int:
         return self.tuple_count
