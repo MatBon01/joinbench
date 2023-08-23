@@ -82,3 +82,15 @@ class TestBenchmarkGroup:
         assert (
             BenchmarkGroup.order_benchmarks_by_tuple_count(unordered_bs) == ordered_bs
         )
+
+    def test_can_get_benchmark_group_ordered_by_tuple_count(self):
+        bg: BenchmarkGroup = get_joinbench_benchmark_group()
+        b127 = bg.get_benchmark_with_count(127)
+        b1000 = bg.get_benchmark_with_count(1000)
+        unordered_bs: List[BenchmarkData] = [b1000, b127]
+        unordered_bg: BenchmarkGroup = BenchmarkGroup(unordered_bs)
+        ordered_bs_count: List[int] = [127, 1000]
+        assert (
+            unordered_bg.get_group_ordered_by_tuple_count().get_tuple_counts()
+            == ordered_bs_count
+        )
