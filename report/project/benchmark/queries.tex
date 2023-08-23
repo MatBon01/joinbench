@@ -45,7 +45,7 @@ products when done optimally, all with 0.2\% of the result. To summarise, this
 is the equivalent of running a selection with selectivity factor of 1\% on the
 first table then a product of 5 equally sized groups.
 
-\paragraph{'join onePercent and onePercent'} This query is symmetric and an
+\paragraph{`join onePercent and onePercent'} This query is symmetric and an
 example that cannot be optimised by an initial selection as the domains of both
 attributes are the same. This query joins two partitions of 1\% of the table
 together 100 times. Therefore we expect the total tuple count to be $100 \cdot
@@ -55,7 +55,7 @@ tuples as above but the distinction is in the number and size of local products.
 We expect 100 local products all which create 1\% of the result and 0.01\% of
 the total number of possible pairs of tuples.
 
-\paragraph{'join onePercent and fiftyPercent'} This query follows a similar
+\paragraph{`join onePercent and fiftyPercent'} This query follows a similar
 structure to the previous two, again varying only in number and size of local
 Cartesian products. It is worth noting that, similar to `join onePercent and
 twentyPercent', this query is not symmetric and the domains do not match. We
@@ -64,3 +64,9 @@ expect the total tuple count to be $\frac{n^2}{100}$ when the
 that match for the equijoin and every tuple that matches with
 \relationAttribute{onePercent} will be paired with around half of all tuples in
 the second table, making a substantially large difference in tuple count.
+
+\paragraph{`join twentyPercent and onePercent'} This query exploits the fact
+that the orders the attributes are given to the equijoin matters computationally
+and is present to test the difference in performance depending on the order. All
+the other statistics are the same as the query `join onePercent and
+twentyPercent'.
