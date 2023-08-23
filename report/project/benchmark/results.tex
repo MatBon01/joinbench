@@ -1,1 +1,8 @@
 \section{Results}
+The results clearly show the expected pattern. In most cases indexed equijoin
+shows a clear time advantage over both other methods completely independent to
+the query asked. The justification for this is clearly the localised Cartesian
+products. Methods that consider all possible pairs must select through $n^2$
+pairs whereas in order to index only $2n$ searches are required and the
+Cartesian product is localised to strictly only the required pairs. This is a
+large advantage for any reasonable number of tuples.
