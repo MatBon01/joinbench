@@ -1,1 +1,18 @@
 \section{Queries}
+This section will present the queries explored during the benchmarking of the
+database system. Along with each query an analysis of its purpose will also be
+presented. The benchmark will run each query a number of times against each of
+the functions presented in \fref{sec:benchmark:functions} and the mean results
+will be analysed and compared during the rest of this chapter.
+
+The queries presented all have a similar structure in how they are presented and
+form. They are all equijoins, as equijoins are the focus of this project and a
+good way to judge the optimisation of a join followed by a select. Each join
+will be given a name of the form ``join \relationAttribute{x} and
+\relationAttribute{y}'' where \relationAttribute{x} and \relationAttribute{y}
+are the names of attributes that the equijoin is performed on; the special font
+for attributes will be dropped in the query names. It is worth noting that
+``join \relationAttribute{x} and \relationAttribute{y}'' is not the same as
+``join \relationAttribute{y} and \relationAttribute{x}'' as the order that the
+attributes appear in the name is the order they are entered into the function
+and this may be significant computationally.
