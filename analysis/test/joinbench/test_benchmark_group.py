@@ -64,3 +64,11 @@ class TestBenchmarkGroup:
         with pytest.raises(Exception):
             # Where the count is not in the group
             group.get_benchmark_with_count(10)
+
+    def test_can_make_benchmark_subgroup(self):
+        group: BenchmarkGroup = get_joinbench_benchmark_group()
+        subgroup: BenchmarkGroup = group.make_subgroup_with_counts([127])
+        assert subgroup.get_benchmark_with_count(127).get_tuple_count() == 127
+        with pytest.raises(Exception):
+            # Where the count is not in the group
+            subgroup.get_benchmark_with_count(1000)

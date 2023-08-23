@@ -39,3 +39,10 @@ class BenchmarkGroup:
                 return benchmark
 
         raise Exception("Could not find benchmark with given tuple count")
+
+    def make_subgroup_with_counts(self, counts: List[int]):
+        benchmarks: List[BenchmarkData] = list(
+            map(lambda count: self.get_benchmark_with_count(count), counts)
+        )
+
+        return BenchmarkGroup(benchmarks)
