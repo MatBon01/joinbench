@@ -72,3 +72,13 @@ class TestBenchmarkGroup:
         with pytest.raises(Exception):
             # Where the count is not in the group
             subgroup.get_benchmark_with_count(1000)
+
+    def test_can_order_list_of_benchmarks_by_tuple_count(self):
+        bg: BenchmarkGroup = get_joinbench_benchmark_group()
+        b127 = bg.get_benchmark_with_count(127)
+        b1000 = bg.get_benchmark_with_count(1000)
+        unordered_bs: List[BenchmarkData] = [b1000, b127]
+        ordered_bs: List[BenchmarkData] = [b127, b1000]
+        assert (
+            BenchmarkGroup.order_benchmarks_by_tuple_count(unordered_bs) == ordered_bs
+        )

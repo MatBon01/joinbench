@@ -46,3 +46,9 @@ class BenchmarkGroup:
         )
 
         return BenchmarkGroup(benchmarks)
+
+    @staticmethod
+    def order_benchmarks_by_tuple_count(
+        benchmarks: List[BenchmarkData],
+    ) -> List[BenchmarkData]:
+        return sorted(benchmarks, key=lambda benchmark: benchmark.get_tuple_count())
