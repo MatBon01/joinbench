@@ -57,3 +57,13 @@ class BenchmarkGroup:
         return BenchmarkGroup(
             BenchmarkGroup.order_benchmarks_by_tuple_count(self.benchmarks)
         )
+
+    def get_largest_mean_from_experiment_group(self, group: str) -> float:
+        return max(
+            list(
+                map(
+                    lambda benchmark: benchmark.get_largest_mean_from_group(group),
+                    self.benchmarks,
+                )
+            )
+        )

@@ -85,3 +85,10 @@ class BenchmarkData:
     @staticmethod
     def load_with_count(count: int, path: str = ""):
         return BenchmarkData.infer_tuple_count_from_path(f"{path}joinbench{count}.json")
+
+    def get_largest_mean_from_group(self, group: str) -> float:
+        functions: List[str] = self.get_function_name_list()
+        means: List[float] = list(
+            map(lambda function: self.get_benchmark_mean(group, function), functions)
+        )
+        return max(means)

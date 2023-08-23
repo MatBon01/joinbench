@@ -1,7 +1,8 @@
 from typing import List
 
 import pytest
-from test_utils.benchmark_utils import (get_joinbench_benchmark_group,
+from test_utils.benchmark_utils import (compare_floats,
+                                        get_joinbench_benchmark_group,
                                         get_joinbench_benchmarks,
                                         get_joinbench_test_data_directory_path)
 
@@ -93,4 +94,13 @@ class TestBenchmarkGroup:
         assert (
             unordered_bg.get_group_ordered_by_tuple_count().get_tuple_counts()
             == ordered_bs_count
+        )
+
+    def test_can_get_largest_mean_from_experiment_group(self):
+        # TODO:: improve test data as both means are the same
+        bg: BenchmarkGroup = get_joinbench_benchmark_group()
+        group: str = "join on onePercent"
+        expected: float = 0.002630475582435891
+        compare_floats(
+            bg.get_largest_mean_from_experiment_group(group), expected, 0.0001
         )
