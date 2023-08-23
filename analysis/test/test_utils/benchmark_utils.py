@@ -94,3 +94,6 @@ def get_test_data_benchmark_group_and_benchmark_mapping() -> (
 
 def get_function_names() -> List[str]:
     return ["modular product", "old comprehension", "modular indexed"]
+
+def compare_floats(f1: float, f2: float, error_scale: float):
+    assert f2 * (1 - error_scale) < f1 and f1 < f2 * (1 + error_scale)

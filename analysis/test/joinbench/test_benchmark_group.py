@@ -1,7 +1,8 @@
 from typing import List
 
 import pytest
-from test_utils.benchmark_utils import (get_joinbench_benchmark_group,
+from test_utils.benchmark_utils import (compare_floats,
+                                        get_joinbench_benchmark_group,
                                         get_joinbench_benchmarks,
                                         get_joinbench_test_data_directory_path)
 
@@ -64,3 +65,42 @@ class TestBenchmarkGroup:
         with pytest.raises(Exception):
             # Where the count is not in the group
             group.get_benchmark_with_count(10)
+
+    def test_can_make_benchmark_subgroup(self):
+        group: BenchmarkGroup = get_joinbench_benchmark_group()
+        subgroup: BenchmarkGroup = group.make_subgroup_with_counts([127])
+        assert subgroup.get_benchmark_with_count(127).get_tuple_count() == 127
+        with pytest.raises(Exception):
+            # Where the count is not in the group
+            subgroup.get_benchmark_with_count(1000)
+
+    def test_can_order_list_of_benchmarks_by_tuple_count(self):
+        bg: BenchmarkGroup = get_joinbench_benchmark_group()
+        b127 = bg.get_benchmark_with_count(127)
+        b1000 = bg.get_benchmark_with_count(1000)
+        unordered_bs: List[BenchmarkData] = [b1000, b127]
+        ordered_bs: List[BenchmarkData] = [b127, b1000]
+        assert (
+            BenchmarkGroup.order_benchmarks_by_tuple_count(unordered_bs) == ordered_bs
+        )
+
+    def test_can_get_benchmark_group_ordered_by_tuple_count(self):
+        bg: BenchmarkGroup = get_joinbench_benchmark_group()
+        b127 = bg.get_benchmark_with_count(127)
+        b1000 = bg.get_benchmark_with_count(1000)
+        unordered_bs: List[BenchmarkData] = [b1000, b127]
+        unordered_bg: BenchmarkGroup = BenchmarkGroup(unordered_bs)
+        ordered_bs_count: List[int] = [127, 1000]
+        assert (
+            unordered_bg.get_group_ordered_by_tuple_count().get_tuple_counts()
+            == ordered_bs_count
+        )
+
+    def test_can_get_largest_mean_from_experiment_group(self):
+        # TODO:: improve test data as both means are the same
+        bg: BenchmarkGroup = get_joinbench_benchmark_group()
+        group: str = "join on onePercent"
+        expected: float = 0.002630475582435891
+        compare_floats(
+            bg.get_largest_mean_from_experiment_group(group), expected, 0.0001
+        )

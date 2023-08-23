@@ -2,7 +2,7 @@ from typing import Dict, List, Set, Tuple
 
 import pytest
 from test_utils.benchmark_utils import (
-    get_function_names, get_joinbench_test_data_directory_path,
+    compare_floats, get_function_names, get_joinbench_test_data_directory_path,
     get_list_of_data_report_names, get_test_benchmark_data,
     get_test_benchmark_data_number_of_tuples,
     get_test_data_benchmark_group_and_benchmark_mapping,
@@ -128,3 +128,11 @@ class TestBenchmarkData:
         assert benchmark127.get_tuple_count() == 127
         benchmark1000: BenchmarkData = BenchmarkData.load_with_count(1000, path=path)
         assert benchmark1000.get_tuple_count() == 1000
+
+    def test_can_get_largest_mean_from_group(self):
+        benchmark_data: BenchmarkData = get_test_benchmark_data()
+        group: str = "join on onePercent"
+        expected: float = 0.002630475582435891
+        compare_floats(
+            benchmark_data.get_largest_mean_from_group(group), expected, 0.00001
+        )

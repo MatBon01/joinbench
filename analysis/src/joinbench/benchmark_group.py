@@ -39,3 +39,31 @@ class BenchmarkGroup:
                 return benchmark
 
         raise Exception("Could not find benchmark with given tuple count")
+
+    def make_subgroup_with_counts(self, counts: List[int]):
+        benchmarks: List[BenchmarkData] = list(
+            map(lambda count: self.get_benchmark_with_count(count), counts)
+        )
+
+        return BenchmarkGroup(benchmarks)
+
+    @staticmethod
+    def order_benchmarks_by_tuple_count(
+        benchmarks: List[BenchmarkData],
+    ) -> List[BenchmarkData]:
+        return sorted(benchmarks, key=lambda benchmark: benchmark.get_tuple_count())
+
+    def get_group_ordered_by_tuple_count(self):
+        return BenchmarkGroup(
+            BenchmarkGroup.order_benchmarks_by_tuple_count(self.benchmarks)
+        )
+
+    def get_largest_mean_from_experiment_group(self, group: str) -> float:
+        return max(
+            list(
+                map(
+                    lambda benchmark: benchmark.get_largest_mean_from_group(group),
+                    self.benchmarks,
+                )
+            )
+        )

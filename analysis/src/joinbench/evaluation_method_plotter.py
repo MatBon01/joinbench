@@ -35,7 +35,7 @@ class EvaluationMethodPlotter:
         ax.set_ylabel("Time (s)")
         ax.set_xlabel("Function")
         ax.set_title(
-            f"Mean time to complete '{group_name}' by evaluation method"
+            f"Mean time to complete `{group_name}' by evaluation method"
         )
         ax.set_xticks(experiment_positions + bar_width, experiment_names)
         ax.legend(title="Evaluation method", loc="upper right", ncols=3)
