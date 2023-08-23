@@ -104,3 +104,10 @@ class TestBenchmarkGroup:
         compare_floats(
             bg.get_largest_mean_from_experiment_group(group), expected, 0.0001
         )
+
+    def test_can_get_multiple_benchmarks_with_counts(self):
+        bg: BenchmarkGroup = get_joinbench_benchmark_group()
+        counts: List[int] = [127, 1000]
+        results = bg.get_list_of_benchmarks_with_counts(counts)
+        for i, count in enumerate(counts):
+            assert results[i].get_tuple_count() == count
