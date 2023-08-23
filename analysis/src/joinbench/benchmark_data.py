@@ -82,16 +82,20 @@ class BenchmarkData:
         raise Exception("Could not find benchmark index")
 
     def get_function_name_list(self) -> List[str]:
-        return list(
-            set(
-                map(
-                    lambda experiment: BenchmarkData.get_function_name_from_experiment(
-                        experiment
-                    ),
-                    self.get_report_names_in_order(),
-                )
+        names_with_duplicates: List[str] = list(
+            map(
+                lambda experiment: BenchmarkData.get_function_name_from_experiment(
+                    experiment
+                ),
+                self.get_report_names_in_order(),
             )
         )
+        names = []
+        for name in names_with_duplicates:
+            if name not in names:
+                names.append(name)
+
+        return names
 
     @staticmethod
     def load_with_count(count: int, path: str = ""):
