@@ -8,7 +8,7 @@ class BenchmarkGroupPlotter:
         self.benchmarks: BenchmarkGroup = benchmarks
 
     def plot_mean_time_of_group_by_tuple_count(self, ax, group: str) -> None:
-        ax.set_title(f"Mean time to complete '{group}' query according to tuple count")
+        ax.set_title(f"Mean time to complete `{group}' query according to tuple count")
         ax.set_xlabel("Tuple count")
         ax.set_ylabel("Mean time (s)")
         xs: List[int] = self.benchmarks.get_tuple_counts()

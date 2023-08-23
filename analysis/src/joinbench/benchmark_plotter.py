@@ -19,7 +19,7 @@ class BenchmarkPlotter:
         means = self.data.get_means_of_benchmark_list(indices)
 
         ax.set_title(
-            f"Mean time to complete '{group_name}' with {self.data.get_tuple_count()} tuples"
+            f"Mean time to complete `{group_name}' with {self.data.get_tuple_count()} tuples"
         )
         ax.set_ylabel("Time (s)")
         ax.set_xlabel("Function")
