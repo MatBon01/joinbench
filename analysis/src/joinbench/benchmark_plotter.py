@@ -69,7 +69,7 @@ class BenchmarkPlotter:
         }
 
         x = np.arange(len(functions))  # the label locations
-        width = 0.25  # the width of the bars
+        width = 0.25 * (3 / len(queries))# the width of the bars
         multiplier = 0
 
         for query, mean in query_means.items():
@@ -82,5 +82,5 @@ class BenchmarkPlotter:
         ax.set_title(
             f"Mean time to complete given queries with {self.data.get_tuple_count()} tuples"
         )
-        ax.set_xticks(x + width, functions)
+        ax.set_xticks(x + ((width * (len(queries) - 1) / 2)), functions)
         ax.legend(loc="upper left")

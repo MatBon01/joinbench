@@ -106,3 +106,38 @@ Visualisations of the results can be found in
     \caption{Mean times to complete miscellaneous joins queries with relations of 10000 tuples.}
     \label{fig:non-standard-10000}
 \end{figure}
+
+The results for the queries `join onePercent and twentyPercent' and `join
+twentyPercent and onePercent' when compared together are surprising. A visual
+representation of each function's performance in mean time to complete these
+queries when applied to relations with 5000 tuples can be found in 
+\fref{fig:benchmark:onePercent-twentyPercent-flipped-5000}. As mentioned before,
+I thought that the lack of symmetry in the computation of the function would
+play a larger effect than can be observed. It is clear from the graph that this
+was not the case to a significant proportion. Most surprisingly I thought that,
+despite not being too drastic, the difference would be most notable in the
+comprehension equijoin function; though from further inspection there does not
+seem to be any particular difference between all functions. It is clear that the
+product equijoin would have the largest indfference to the order of operations
+as it was designed to be modular and not take circumstance into much
+consideration, in fact the statistics support this and in the case with 5000
+tuples the mean time to complete `join twentyPercent and onePercent' was only
+2\% faster than the time to compute the contrary. Surprisingly however, the
+indexed equijoin function had the largest relative decrease in order of operands
+with a 9\% decrease, closely followed by the expected victor comprehension
+equijoin with 8\%. This seems to be an act of chance, as varying the tuple count
+(and tables generated with each tuple count) has a drastic effect on the
+percentage change experienced by the indexed equijoin. The indexed equijoin
+actually has an increase in mean time for tuple counts of 6000, 7000, 8000 and
+9000 whereas the comprehension equijoin has a similar order of decrease at all
+counts (as does the product equijoin). This suggests that the pattern of
+optimisation in the comprehension equijoin may be there but in my opinion the
+results are not significant and more research will need to be done in this area
+as well as a more thorough analysis on the lower levels of the Haskell compiler.
+
+\begin{figure}[p]
+    \input{figures/join-onePercent-and-twentyPercent-flipped-5000-tuples.pgf}
+    \caption{A comparison of the mean time to complete the queries `join
+    onePercent and twentyPercent' and `join twentyPercent and onePercent'.}
+    \label{fig:benchmark:onePercent-twentyPercent-flipped-5000}
+\end{figure}
