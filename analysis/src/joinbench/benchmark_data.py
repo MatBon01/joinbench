@@ -45,18 +45,26 @@ class BenchmarkData:
     def get_benchmark_mean_from_index(self, index: int) -> float:
         return self.data["reportAnalysis"][index]["anMean"]["estPoint"]
 
-    def get_benchmark_mean(self, group: str, function: str) -> float:
-        index: int = self.get_benchmark_index(group, function)
+    def get_benchmark_mean(self, query: str, function: str) -> float:
+        index: int = self.get_benchmark_index(query, function)
         return self.get_benchmark_mean_from_index(index)
 
     def get_means_of_benchmark_list(self, indices: List[int]) -> List[float]:
         return list(map(self.get_benchmark_mean_from_index, indices))
 
-    def get_means_of_function_for_groups(self, function: str, groups: List[str]):
+    def get_means_of_function_for_queries(self, function: str, queries: List[str]):
         return list(
             map(
-                lambda group: self.get_benchmark_mean(group, function),
-                groups,
+                lambda query: self.get_benchmark_mean(query, function),
+                queries,
+            )
+        )
+
+    def get_means_of_query_for_functions(self, query: str, functions: List[str]):
+        return list(
+            map(
+                lambda function: self.get_benchmark_mean(query, function),
+                functions,
             )
         )
 

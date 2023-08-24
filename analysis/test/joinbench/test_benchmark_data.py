@@ -144,11 +144,20 @@ class TestBenchmarkData:
             == get_test_data_benchmark_group_names()
         )
 
-    def test_can_get_means_of_function_for_groups(self):
+    def test_can_get_means_of_function_for_queries(self):
         benchmark: BenchmarkData = get_test_benchmark_data()
         expected: List[float] = [0.00000003142288461705547, 0.00007178405946457214]
-        groups: List[str] = ["join on onePercent", "join onePercent and twentyPercent"]
+        queries: List[str] = ["join on onePercent", "join onePercent and twentyPercent"]
         assert (
-            benchmark.get_means_of_function_for_groups("modular product", groups)
+            benchmark.get_means_of_function_for_queries("modular product", queries)
+            == expected
+        )
+
+    def test_can_get_means_of_query_for_functions(self):
+        benchmark: BenchmarkData = get_test_benchmark_data()
+        expected: List[float] = [0.00000003142288461705547, 0.000000029314520320675693]
+        functions: List[str] = ["modular product", "old comprehension"]
+        assert (
+            benchmark.get_means_of_query_for_functions("join on onePercent", functions)
             == expected
         )

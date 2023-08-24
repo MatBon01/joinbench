@@ -31,7 +31,7 @@ class BenchmarkPlotter:
         return ax
 
     def plot_given_queries(self, ax, queries_to_display: List[str]):
-        # NOTE: groups_to_display may have \n in the string for
+        # NOTE: queries_to_display may have \n in the string for
         # display purposes
         functions = self.data.get_function_name_list()
         queries = list(
@@ -39,7 +39,7 @@ class BenchmarkPlotter:
         )
 
         function_means = {
-            function: self.data.get_means_of_function_for_groups(function, queries)
+            function: self.data.get_means_of_function_for_queries(function, queries)
             for function in functions
         }
 
@@ -58,4 +58,29 @@ class BenchmarkPlotter:
             f"Mean time to complete given queries with {self.data.get_tuple_count()} tuples"
         )
         ax.set_xticks(x + width, queries_to_display)
+        ax.legend(loc="upper left")
+
+    def compare_query_means(self, ax, queries: str) -> None:
+        functions = self.data.get_function_name_list()
+
+        query_means = {
+            query: self.data.get_means_of_query_for_functions(query, functions)
+            for query in queries
+        }
+
+        x = np.arange(len(functions))  # the label locations
+        width = 0.25  # the width of the bars
+        multiplier = 0
+
+        for query, mean in query_means.items():
+            offset = width * multiplier
+            ax.bar(x + offset, mean, width, label=query)
+            multiplier += 1
+
+        ax.set_ylabel("Mean time (s)")
+        ax.set_xlabel("Function")
+        ax.set_title(
+            f"Mean time to complete given queries with {self.data.get_tuple_count()} tuples"
+        )
+        ax.set_xticks(x + width, functions)
         ax.legend(loc="upper left")
