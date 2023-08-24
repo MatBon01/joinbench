@@ -25,7 +25,7 @@ respectively when considering the standard queries that join attributes to
     \centering
     \input{tables/percentage-change-of-means-join-onePercent-and-onePercent.tex}
     \caption{Percentage change of mean time to complete query `join onePercent
-        and onePercent' has when using indexed equijoin compared to other
+        and onePercent' when using indexed equijoin compared to other
     functions.}
     \label{tab:percentage-change-of-means-join-onePercent-and-onePercent}
 \end{table}
@@ -52,4 +52,57 @@ respectively when considering the standard queries that join attributes to
     \caption{Mean times to complete standard joins of
     \relationAttribute{onePercent} attribute with relations of 10000 tuples.}
     \label{fig:benchmark:onePercent-10000}
+\end{figure}
+
+The results for the join queries `join twentyPercent and onePercent' and `join
+evenOnePercent and oddOnePercent' are very similar to the above
+where indexed equijoin far outperforms the alternatives; tables comparing
+results with 1000, 5000 and 10000 tuples can be found in
+\fref{tab:percentage-change-of-means-join-evenOnePercent-and-oddOnePercent} and
+\fref{tab:percentage-change-of-means-join-twentyPercent-and-onePercent}. Interestingly,
+the gains for 'join evenOnePercent and oddOnePercent' are significantly larger
+than the other queries and grow to be more extreme as tuple count increases; it
+is in these queries that we also find such an extreme improvement over
+comprehension equijoin. As the query is an edge case I feel it clearly
+demonstrates the strength of the indexed equijoin method not participating in as
+much unnecessary work. Although indexed equijoin must still search all tuples in
+order to index them, no Cartesian products are performed at all. It is clear why
+this is such an advantage over the product equijoin, however comprehensions do
+not perform Cartesian products either. I believe that the advantage could come
+from poor optimisation of such an unlikely edge case by GHC or an idea of
+balancedness between both relations, an idea that will be explored later.
+Visualisations of the results can be found in
+\fref{fig:non-standard-1000}, \fref{fig:non-standard-5000} and
+\fref{fig:non-standard-10000} for 1000, 5000 and 10000 tuples respectively.
+
+\begin{table}[b]
+    \centering
+    \input{tables/percentage-change-of-means-join-evenOnePercent-and-oddOnePercent.tex}
+    \caption{Percentage change of mean time to complete query `join evenOnePercent and oddOnePercent' when using indexed equijoin compared to other functions.}
+    \label{tab:percentage-change-of-means-join-evenOnePercent-and-oddOnePercent}
+\end{table}
+
+\begin{table}[b]
+    \centering
+    \input{tables/percentage-change-of-means-join-twentyPercent-and-onePercent.tex}
+    \caption{Percentage change of mean time to complete query `join twentyPercent and onePercent' when using indexed equijoin compared to other functions.}
+    \label{tab:percentage-change-of-means-join-twentyPercent-and-onePercent}
+\end{table}
+
+\begin{figure}[p]
+    \input{figures/non-standard-query-with-1000-tuples.pgf}
+    \caption{Mean times to complete miscellaneous joins queries with relations of 10000 tuples.}
+    \label{fig:non-standard-1000}
+\end{figure}
+
+\begin{figure}[p]
+    \input{figures/non-standard-query-with-5000-tuples.pgf}
+    \caption{Mean times to complete miscellaneous joins queries with relations of 10000 tuples.}
+    \label{fig:non-standard-5000}
+\end{figure}
+
+\begin{figure}[p]
+    \input{figures/non-standard-query-with-10000-tuples.pgf}
+    \caption{Mean times to complete miscellaneous joins queries with relations of 10000 tuples.}
+    \label{fig:non-standard-10000}
 \end{figure}
