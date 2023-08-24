@@ -5,4 +5,51 @@ the query asked. The justification for this is clearly the localised Cartesian
 products. Methods that consider all possible pairs must select through $n^2$
 pairs whereas in order to index only $2n$ searches are required and the
 Cartesian product is localised to strictly only the required pairs. This is a
-large advantage for any reasonable number of tuples.
+large advantage for any reasonable number of tuples. This can be seen for tuple
+counts of 1000, 5000 and 10000 where indexed join performs significantly better.
+Considering the query `join onePercent and onePercent' when using indexed
+equijoin over product equijoin the mean time to complete each query is over 70\% faster
+with both 5000 and 10000 tuples recording a mean time above 90\% faster. This
+is very significant and the table of results can be found in
+\fref{tab:percentage-change-of-means-join-onePercent-and-onePercent}. Similarly, compared to the comprehension
+equijoin the mean time to complete is above 40\% faster for 1000 tuples which is
+admittedly smaller than expected but for 5000 and 10000 tuples there are
+improvements of well over 80\%. A visual representation of the results can be
+found in \fref{fig:benchmark:onePercent-1000},
+\fref{fig:benchmark:onePercent-5000},
+\fref{fig:benchmark:onePercent-10000} for 1000, 5000 and 10000 tuples
+respectively when considering the standard queries that join attributes to
+\relationAttribute{onePercent}.
+
+\begin{table}[b]
+    \centering
+    \input{tables/percentage-change-of-means-join-onePercent-and-onePercent.tex}
+    \caption{Percentage change of mean time to complete query `join onePercent
+        and onePercent' has when using indexed equijoin compared to other
+    functions.}
+    \label{tab:percentage-change-of-means-join-onePercent-and-onePercent}
+\end{table}
+
+\begin{figure}[p]
+    \centering
+    \input{figures/onePercent-joins-with-1000-tuples.pgf}
+    \caption{Mean times to complete standard joins of
+    \relationAttribute{onePercent} attribute with relations of 1000 tuples.}
+    \label{fig:benchmark:onePercent-1000}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \input{figures/onePercent-joins-with-5000-tuples.pgf}
+    \caption{Mean times to complete standard joins of
+    \relationAttribute{onePercent} attribute with relations of 5000 tuples.}
+    \label{fig:benchmark:onePercent-5000}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \input{figures/onePercent-joins-with-10000-tuples.pgf}
+    \caption{Mean times to complete standard joins of
+    \relationAttribute{onePercent} attribute with relations of 10000 tuples.}
+    \label{fig:benchmark:onePercent-10000}
+\end{figure}
