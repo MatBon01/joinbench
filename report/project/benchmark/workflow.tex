@@ -50,3 +50,20 @@ others $Word16$s for limitations discussed in \fref{ch:implementation}. For
 readability of benchmarks during development the final type the
 \relation{JOINBENCH} relation takes is a bag of records as specified in
 \fref{sec:benchmark:database}.
+
+After the database has been parsed the necessary benchmarks are run by the
+\verb|Criterion| library and a file is produced in a JSON format (as can be seen
+in the Makefile). This file is stored in a designated \verb|data| directory and
+can be automatically loaded in by my statistical analysis python module. This
+module describes some useful abstractions to reference parts of the data used
+most often and utility functions for automatically loading, grouping and finding
+data. Furthermore, there are some graphing classes that have been created to
+automatically generate graphs in this paper and other that help understand the
+data before writing. In order to run this code I used an non-automated approach
+by creating a Jupyter notebook. Originally the notebook was meant to be used for
+preliminary data analysis and I planned to easily write a script to automate the
+generation of figures in my CICD pipeline made easier by virtue of the fact that 
+all of the difficult code was written in a dedicated python module so would not
+need to be duplicated. However, I found the ability to check the quality of the
+graphs in an interactive environment before producing an output to be very
+useful and so kept the notebook as a quality assurance mechanism.
