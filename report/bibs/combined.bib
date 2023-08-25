@@ -513,4 +513,45 @@
     title = {An introduction to database systems},
     year = {2004},
 }
-
+@inproceedings{DataSynthesizer,
+	author={Haoyue Ping and Julia Stoyanovich and Bill Howe},
+	year={2017},
+	title={DataSynthesizer: Privacy-Preserving Synthetic Datasets},
+	booktitle={Proceedings of the 29th International Conference on Scientific and Statistical Database Management},
+	series={SSDBM '17},
+	publisher={Association for Computing Machinery},
+	address={New York, NY, USA},
+	location={Chicago, IL, USA},
+	abstract={To facilitate collaboration over sensitive data, we present DataSynthesizer, a tool that takes a sensitive dataset as input and generates a structurally and statistically similar synthetic dataset with strong privacy guarantees. The data owners need not release their data, while potential collaborators can begin developing models and methods with some confidence that their results will work similarly on the real dataset. The distinguishing feature of DataSynthesizer is its usability --- the data owner does not have to specify any parameters to start generating and sharing data safely and effectively.DataSynthesizer consists of three high-level modules --- DataDescriber, DataGenerator and ModelInspector. The first, DataDescriber, investigates the data types, correlations and distributions of the attributes in the private dataset, and produces a data summary, adding noise to the distributions to preserve privacy. DataGenerator samples from the summary computed by DataDescriber and outputs synthetic data. ModelInspector shows an intuitive description of the data summary that was computed by DataDescriber, allowing the data owner to evaluate the accuracy of the summarization process and adjust any parameters, if desired.We describe DataSynthesizer and illustrate its use in an urban science context, where sharing sensitive, legally encumbered data between agencies and with outside collaborators is reported as the primary obstacle to data-driven governance.The code implementing all parts of this work is publicly available at https://github.com/DataResponsibly/DataSynthesizer.},
+	keywords={Synthetic Data; Data Sharing; Differential Privacy},
+	isbn={9781450352826},
+	url={https://doi.org/10.1145/3085504.3091117},
+	doi={10.1145/3085504.3091117}
+}
+@misc{Faker,
+	title={Welcome to Faker's documentation! - Faker 18.13.0 documentation},
+	volume={2023},
+	number={August 7},
+	url={https://faker.readthedocs.io/en/master/}
+}
+@misc{pydbgen,
+	author={Tirthajyoti Sarkar},
+	title={Random database/dataframe generator - pydbgen 1.0.5 documentation},
+	volume={2023},
+	number={August 7},
+	url={https://pydbgen.readthedocs.io/en/latest/}
+}
+@article{GenLargeSynthDB,
+	author={Jim Gray and Prakash Sundaresan and Susanne Englert and Ken Baclawski and Peter J. Weinberger},
+	year={1994},
+	month={may},
+	title={Quickly Generating Billion-Record Synthetic Databases},
+	journal={SIGMOD Rec.},
+	volume={23},
+	number={2},
+	pages={243–252},
+	abstract={Evaluating database system performance often requires generating synthetic databases—ones having certain statistical properties but filled with dummy information. When evaluating different database designs, it is often necessary to generate several databases and evaluate each design. As database sizes grow to terabytes, generation often takes longer than evaluation. This paper presents several database generation techniques. In particular it discusses: (1) Parallelism to get generation speedup and scaleup. (2) Congruential generators to get dense unique uniform distributions. (3) Special-case discrete logarithms to generate indices concurrent to the base table generation. (4) Modification of (2) to get exponential, normal, and self-similar distributions.The discussion is in terms of generating billion-record SQL databases using C programs running on a shared-nothing computer system consisting of a hundred processors, with a thousand discs. The ideas apply to smaller databases, but large databases present the more difficult problems.},
+	isbn={0163-5808},
+	url={https://doi.org/10.1145/191843.191886},
+	doi={10.1145/191843.191886}
+}

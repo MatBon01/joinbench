@@ -126,6 +126,13 @@ twentyFivePercent
 CounterCell
 RandomChoiceCell
 nums
+syntheticdatabase
+pydbgen
+DataSynthesizer
+DataDescriber
+DataGenerator
+ModelInspector
+RecordCell
 dbbenchmarking
 joinbenchattributes
 Word16

@@ -1,0 +1,158 @@
+\section{Synthetic database creation}
+This section evaluates the design decisions and outcomes in creating a synthetic
+database generator as outlined in \fref{sec:benchmark:syntheticdatabase}. This
+project introduced a framework to generate database to fit a custom schema. The
+benefits of synthetic data are vast and include the ability to define schemas
+that are specialised in benchmarking and readability while controlling frequency
+of values and other important properties.
+
+\paragraph{Comparison to existing solutions} Overall the result was quite different from other technologies available,
+offering a low-level bare-bones solution. Many existing solutions equally support
+qualitative data to quantitative with selling points based on the
+\lstinline{Faker} python module \cite{Faker}. Although \lstinline{Faker} did not come to my
+attention while designing the framework, it would not have been much use for the
+\database{JOINBENCH} database in its final form as well. Additionally, much
+infrastructure would still need to be made around the \lstinline{Faker} module
+for easy exporting and specification, therefore it would not have saved much
+time and allowed me to develop a more customised solution for the problem.
+Advantages of the \lstinline{Faker} framework over my solution is the vast
+amount of data available for attributes that were considered to be qualitative,
+although there would still be time necessary in order to do due diligence on its
+copyright and licensing creating further ethical considerations. The \lstinline{Faker} module has made interesting
+design decisions, favouring a \lstinline{unique} attribute to composition for
+uniqueness which itself comes with benefits and drawbacks. The \lstinline{Faker}
+module does present interesting opportunities to enhance my solution however:
+Using an adapter design pattern a faker object could easily be converted into
+using the cell API and enrich my solution with a larger variety of data,
+although I would accept the argument that it might be a waste of the set of rich
+features implemented by the module. Using the \lstinline{Faker} module implicitly
+with other data synthesising modules that depend on
+it, such as \lstinline{pydbgen} \cite{pydbgen}, can give a more complete solution even in
+comparison to my framework. In essence, it uses the variety of data sources
+provided by framework compiled into a variety of different outputs formats.
+
+Moreover, other solutions with very different aims exist. Academics in the US
+have developed DataSynthesizer \cite{DataSynthesizer} which is a privacy
+oriented synthetic data generator for collaborating with sensitive data. Given
+an input of a sensitive data the technology comes in three parts, a
+\lstinline{DataDescriber} which analyses the data and describes its form, a
+\lstinline{DataGenerator} which takes this information and creates a
+predetermined number of rows, and finally a \lstinline{ModelInspector} for
+determining the similarity of the produced data to the private data. It is clear
+in order to use the technology as intended I would already require a dataset to
+reproduce. Hypothetically, singling out the \lstinline{DataGenerator} and
+providing a hand-written description may also not be a very specialised
+solution. Despite the fact that it is not the intended purpose of the system,
+the generation is clearly created to be able to represent real world data, which
+the \relation{JOINBENCH} relation is far from. Therefore, other more specialised
+solutions may be more useful.
+
+In conclusion, despite the rich variety of tools already available for the
+problem domain I believe the infrastructure created during this project for
+synthetic database creation is a useful contribution. Although, when taken for
+their intended purpose most alternate solution provide a more complete and
+beneficial solution, I believe the framework created by me is low level enough
+to be manipulatable in a clean way to express a wide range of properties that
+might be needed for a benchmark. Benchmarks are characterised by the need to
+strictly control the data and express properties on the data easily and
+specifically, this may suggest that a low level solution may be better suited
+and when organised as such may result in cleaner code than trying to adapt
+higher level solutions. Although, ``low-level'' and ``bare-bones''
+might sound like drawbacks of deliverable it was intentionally designed and serves
+as a different style of implementation to the other solutions available; a style
+I believe suits the intricacies of the project and leaves much room for
+extensions if necessary in future.
+
+
+\paragraph{Evaluation of overall design and potential future work} The framework
+was designed from a pragmatic point of view for the task at hand; as such,
+despite my best efforts to keep the tool general and open for future use, some
+limitations in the scope currently developed have risen. My concerns lie in two
+main categories, interactions and overall system knowledge by the program.
+
+\subparagraph{Interactions} Especially as cell composition became more prevalent
+in the design or other potential dependencies between cells arose the potential
+untidiness of the solution lurked in. An example currently in the system is the
+way \lstinline{RecordCell} strays from the simple \lstinline{Cell} API. Although
+the solution prides itself in being low level and customisable by code, it
+feels like a stray away from a uniformity that in future may be exploited for
+different spin off solutions as may be described later in this section. Other
+instances of when extra code may need to be introduced due to unforeseen
+dependencies between components may be cells that require a larger context to
+function such as
+the total number of records to be generated. In current implementations, only
+higher levels of the system are made aware of this, also at the last possible
+moment. Again, these are not large issues but concerns of difficulties as
+use cases may scale; a client could simply initialise the needed
+\lstinline{Cell}s with the needed context at runtime. Therefore this may only
+be an obstacle for potential automation and better message passing mechanisms
+might need to be developed between client and framework or within the framework
+itself to allow for cleaner solutions.
+
+\subparagraph{System knowledge} The framework currently is lacking in knowledge
+of the system larger than what it was primarily created for, the generation of
+data. In other words, the program is not aware of the context it is running in,
+such as the schema of the database as a whole. Many extensions could be created
+by giving the program more knowledge, unnecessary for just the synthesis of
+data.
+
+In the current implementation the data generated comes entirely from the
+\lstinline{RecordGenerator} and larger structures defined by the user. Notably,
+this lacks a larger knowledge, such as the exact domain of the attributes the
+cells are working in and attribute names. The return type of \lstinline{Cell}'s
+\lstinline{generate} function is \lstinline[language=Python]{str} as it is what
+it is needed to output the data into a plaintext CSV file. If design changes
+were made to give the system a greater knowledge of the larger context and
+environment it is contributing to it can generate more useful structures; an
+example that would benefit this project would be automatically generating
+Haskell parsers to read the database into memory. Another more general example of when
+knowledge of the larger context may be useful is in automatic generation of SQL
+statements to create the database that output methods then might be able to
+populate during data synthesis. On the other hand, if implemented incorrectly,
+requiring a greater description of the system in order to generate data obscures
+its initial purpose and adds more bloat when using the software; the cell class
+should not need to know that the attribute is called ``evenOnePercent'' in order
+to generate even numbers.
+
+\paragraph{Component evaluation} We now briefly evaluate the implementations of
+components within the framework as some interesting challenges and limitations
+appeared while designing the system.
+
+\subparagraph{Cells} Cells are the most important component of the system design
+wise and, in my opinion, introduce the largest surface for design difficulties.
+Even, as mentioned in the previous paragraph, deciding the return types and
+number of abstract methods in the class can either introduce a whole level of
+extremely useful functionality or bloat the system. This part of the report will
+evaluate some more difficult design decisions made in cells and cell examples.
+
+Composition of cells was introduced in the project as a way of adding another
+level of complexity to the decisions developers were able to make. The examples
+coded during the project, however, tended to be quite inefficient and general;
+they would definitely need to be redefined and optimised to work at scale.
+Despite the early inefficient implementations of composition the generality they
+must improve is a systematic problem prescribed by the type of solution that may result in unreadable, yet
+efficient, solutions if taken seriously in further development. The
+generality described here is found in the inability to apply different
+algorithms when different properties are given in the domain. Going back to the
+example in \fref{sec:benchmark:syntheticdatabase} for cell composition,
+\lstinline{unique_nums}. The algorithm used in \lstinline{unique_nums}, which
+to remind you is simply a \lstinline{RandomModularIntegerCell} in a
+\lstinline{UniqueCell} is quite inefficient and generates new values until an unseen
+integer is found. It has been widely known for decades that algorithms to
+produce a random permutations of integers are prevalent and a large discussion
+of methods to generate dense
+unique random data can be found in Gray's paper ``Quickly Generation
+Billion-Record Synthetic Databases'' \cite{GenLargeSynthDB}. This shows that
+many more suitable ways of generating unique dense integers exist and open the
+question as to other optimisations that may be made to \lstinline{UniqueCell}
+for other more specialised areas. A potential solution may be to define a range
+of specialised cells (and not using composition in these cases) as problems
+arise. I find this solution to be acceptable as I can personally justify new
+classes for unique cases. It is clear, however, that the number of cells may
+grow greatly as the framework is extended in this way and the correct times to
+use cell composition may become more confusing; it is
+clearly a trade off between optimisation and readability. I believe that this
+issue also highlights the strength my solution has in extensibility as the
+question is not whether the framework allows such structures, but whether we
+should and users of this system can make their own decisions and implement such
+cells for themselves and their use cases.
