@@ -38,3 +38,15 @@ joinbench150} is run, a benchmark will be run on a database with 150 tuples. In
 order to run the benchmark, the prerequisite of the target must be satisfied and
 so if there is not a table with 150 tuples already in the tables directory
 another is made.
+
+As you can see from the Makefile, the tables generated are in csv form. This is
+not a form which can be directly loaded into the database management system and
+so a parser is required to convert the csv file into bags that are expected from
+my implementation of the Haskell program. The parser is written in Haskell and
+separates lines as elements of the bag and ``cells'' (values separated by
+commas) to be either integers or $Word16$s. As I will not join on the
+\relationAttribute{unique} attribute, it is specified as an integer and all
+others $Word16$s for limitations discussed in \fref{ch:implementation}. For
+readability of benchmarks during development the final type the
+\relation{JOINBENCH} relation takes is a bag of records as specified in
+\fref{sec:benchmark:database}.
