@@ -20,10 +20,11 @@ main = do
     args <- getArgs
     withArgs (drop numArgs args) $
         defaultMain
-            [ equijoinBenchmark "join on onePercent" onePercent onePercent table table
+            [ equijoinBenchmark "join onePercent and onePercent" onePercent onePercent table table
             , equijoinBenchmark "join onePercent and twentyPercent" onePercent twentyPercent table table
+            , equijoinBenchmark "join twentyPercent and onePercent" twentyPercent onePercent table table
             , equijoinBenchmark "join onePercent and fiftyPercent" onePercent fiftyPercent table table
-            , equijoinBenchmark "join even and odd" evenOnePercent oddOnePercent table table
+            , equijoinBenchmark "join evenOnePercent and oddOnePercent" evenOnePercent oddOnePercent table table
             ]
 
 getJoinBenchTableName :: IO String

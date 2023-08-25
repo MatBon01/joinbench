@@ -15,7 +15,6 @@
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
 \usepackage{comment}
 \usepackage[numbers]{natbib}
-\usepackage{fancyref}
 \usepackage{wrapfig}
 
 %% Math
@@ -29,3 +28,13 @@
 
 %% Utils
 \usepackage{background/utils}
+
+%% Referencing
+\usepackage{fancyref}
+\renewcommand{\fancyrefdefaultformat}{plain}
+\renewcommand{\fref}{\Fref}
+
+%% Code formatting
+\input{code/lhs2tex}
+
+\usepackage{pgf}

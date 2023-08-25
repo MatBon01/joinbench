@@ -21,7 +21,7 @@ whnfEquijoinBenchmark name fa fb as bs =
 
 equijoinNameAndMethod :: forall k a b. (Eq k, Key k) => [(String, (a -> k) -> (b -> k) -> (Table a, Table b) -> Table (a, b))]
 equijoinNameAndMethod =
-    [ ("modular product", productEquijoin)
-    , ("old comprehension", comprehensionEquijoin)
-    , ("modular indexed", indexedEquijoin)
+    [ ("Product equijoin", productEquijoin)
+    , ("Comprehension equijoin", comprehensionEquijoin)
+    , ("Indexed equijoin", indexedEquijoin)
     ]

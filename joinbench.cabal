@@ -72,21 +72,21 @@ executable invoice-new-comprehension
     hs-source-dirs: app/examples/invoice
     main-is: NewComprehensionExample.hs
 
-executable invoice-old-comprehension
+executable invoice-comprehension
     import: invoice-example
     hs-source-dirs: app/examples/invoice
-    main-is: OldComprehensionExample.hs
+    main-is: ComprehensionEquijoinExample.hs
 
 
-executable invoice-modular-product
+executable invoice-product
     import: invoice-example
     hs-source-dirs: app/examples/invoice
-    main-is: ModularProductExample.hs
+    main-is: ProductEquijoinExample.hs
 
-executable invoice-modular-index
+executable invoice-indexed
     import: invoice-example
     hs-source-dirs: app/examples/invoice
-    main-is: ModularIndexExample.hs
+    main-is: IndexedEquijoinExample.hs
 
 common joinbench-example
     build-depends:
@@ -101,20 +101,20 @@ common joinbench-example
         -fprof-auto
         "-with-rtsopts=-hy -p"
 
-executable old-comprehension
+executable comprehension
     import: joinbench-example
     hs-source-dirs: app/examples/joinbench
-    main-is: OldComprehensionExample.hs
+    main-is: ComprehensionEquijoinExample.hs
 
-executable modular-product
+executable product
     import: joinbench-example
     hs-source-dirs: app/examples/joinbench
-    main-is: ModularProductExample.hs
+    main-is: ProductEquijoinExample.hs
 
-executable modular-index
+executable indexed
     import: joinbench-example
     hs-source-dirs: app/examples/joinbench
-    main-is: ModularIndexExample.hs
+    main-is: IndexedEquijoinExample.hs
 
 
 common benchmark
