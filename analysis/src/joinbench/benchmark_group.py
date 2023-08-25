@@ -40,6 +40,11 @@ class BenchmarkGroup:
 
         raise Exception("Could not find benchmark with given tuple count")
 
+    def get_list_of_benchmarks_with_counts(
+        self, counts: List[int]
+    ) -> List[BenchmarkData]:
+        return list(map(lambda count: self.get_benchmark_with_count(count), counts))
+
     def make_subgroup_with_counts(self, counts: List[int]):
         benchmarks: List[BenchmarkData] = list(
             map(lambda count: self.get_benchmark_with_count(count), counts)
@@ -67,3 +72,7 @@ class BenchmarkGroup:
                 )
             )
         )
+
+    def get_query_list(self) -> List[str]:
+        # Assume all benchmarks have the same query list
+        return self.benchmarks[0].get_query_list()

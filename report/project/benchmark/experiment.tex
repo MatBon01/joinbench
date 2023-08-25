@@ -1,0 +1,21 @@
+\section{Experiment details}
+This section will briefly describe the specifics about the experiment so that
+reproducibly is more likely and the results are placed within their context.
+
+The benchmark uses the \verb|Criterion| library to collect all data (version
+1.6.2.0). Sampling was left to default behaviour of the library and results were
+read directly without further processing. Results were read using Python's
+\verb|pandas| library (version 1.5.3) and may be the source of very minor floating point
+rounding errors as has been observed in extremely small orders.
+
+The benchmark was run on a ZSH shell environment running on an iTerm2 terminal
+emulator. The hardware running the benchmarks was a MacBook Pro with an M1 chip.
+The M1 chip had a total of 8 cores (6 performance and 2 efficiency) and the
+laptop had 16GB of RAM. Before running the benchmark effort was made to turn off
+connectivity and close a reasonable number of idle applications. Furthermore,
+all benchmarks were run in one sitting and therefore subject to a similar
+environment with no interventions; left only to the natural fluctuations in idle
+computation and external factors such as temperature.
+
+The code was compiled using GHC 9.2.7 with the \verb|O1| optimisation flag.
+Execution and compilation was managed by Cabal 3.6.2.0.

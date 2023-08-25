@@ -74,7 +74,7 @@ class TestBenchmarkData:
         expected: float = 0.000000029314520320675693
         assert benchmark_data.get_benchmark_mean_from_index(1) == expected
 
-    def test_can_retrieve_mean_from_experiment_informxtion(self):
+    def test_can_retrieve_mean_from_experiment_information(self):
         benchmark_data: BenchmarkData = get_test_benchmark_data()
         expected: float = 0.000000029314520320675693
         assert (
@@ -135,4 +135,29 @@ class TestBenchmarkData:
         expected: float = 0.002630475582435891
         compare_floats(
             benchmark_data.get_largest_mean_from_group(group), expected, 0.00001
+        )
+
+    def test_can_get_benchmark_group_name_list(self):
+        benchmark: BenchmarkData = get_test_benchmark_data()
+        assert (
+            set(benchmark.get_benchmark_group_names())
+            == get_test_data_benchmark_group_names()
+        )
+
+    def test_can_get_means_of_function_for_queries(self):
+        benchmark: BenchmarkData = get_test_benchmark_data()
+        expected: List[float] = [0.00000003142288461705547, 0.00007178405946457214]
+        queries: List[str] = ["join on onePercent", "join onePercent and twentyPercent"]
+        assert (
+            benchmark.get_means_of_function_for_queries("modular product", queries)
+            == expected
+        )
+
+    def test_can_get_means_of_query_for_functions(self):
+        benchmark: BenchmarkData = get_test_benchmark_data()
+        expected: List[float] = [0.00000003142288461705547, 0.000000029314520320675693]
+        functions: List[str] = ["modular product", "old comprehension"]
+        assert (
+            benchmark.get_means_of_query_for_functions("join on onePercent", functions)
+            == expected
         )

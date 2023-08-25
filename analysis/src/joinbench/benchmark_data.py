@@ -39,15 +39,34 @@ class BenchmarkData:
     def get_benchmark_group_names(self) -> Set[str]:
         return set(self.map_benchmark_groups_and_benchmark_indices().keys())
 
+    def get_query_list(self) -> List[str]:
+        return list(self.map_benchmark_groups_and_benchmark_indices().keys())
+
     def get_benchmark_mean_from_index(self, index: int) -> float:
         return self.data["reportAnalysis"][index]["anMean"]["estPoint"]
 
-    def get_benchmark_mean(self, group: str, function: str) -> float:
-        index: int = self.get_benchmark_index(group, function)
+    def get_benchmark_mean(self, query: str, function: str) -> float:
+        index: int = self.get_benchmark_index(query, function)
         return self.get_benchmark_mean_from_index(index)
 
     def get_means_of_benchmark_list(self, indices: List[int]) -> List[float]:
         return list(map(self.get_benchmark_mean_from_index, indices))
+
+    def get_means_of_function_for_queries(self, function: str, queries: List[str]):
+        return list(
+            map(
+                lambda query: self.get_benchmark_mean(query, function),
+                queries,
+            )
+        )
+
+    def get_means_of_query_for_functions(self, query: str, functions: List[str]):
+        return list(
+            map(
+                lambda function: self.get_benchmark_mean(query, function),
+                functions,
+            )
+        )
 
     def get_tuple_count(self) -> int:
         return self.tuple_count
@@ -71,16 +90,20 @@ class BenchmarkData:
         raise Exception("Could not find benchmark index")
 
     def get_function_name_list(self) -> List[str]:
-        return list(
-            set(
-                map(
-                    lambda experiment: BenchmarkData.get_function_name_from_experiment(
-                        experiment
-                    ),
-                    self.get_report_names_in_order(),
-                )
+        names_with_duplicates: List[str] = list(
+            map(
+                lambda experiment: BenchmarkData.get_function_name_from_experiment(
+                    experiment
+                ),
+                self.get_report_names_in_order(),
             )
         )
+        names = []
+        for name in names_with_duplicates:
+            if name not in names:
+                names.append(name)
+
+        return names
 
     @staticmethod
     def load_with_count(count: int, path: str = ""):
