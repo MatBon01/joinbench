@@ -2,3 +2,16 @@
 In order to efficiently benchmark and analyse the performance of the database
 management system a workflow system was created to automate many of the tasks
 involved. This section will briefly describe the workflow and its creation.
+
+There are multiple steps involved in the benchmarking of the database management
+systems. The first step is to create synthetic version of the
+\relation{JOINBENCH} relation up to the specifications of the benchmark.
+Alternatively, one relation at least as large as the highest cardinality
+interested in benchmarking can be made and then selections the
+\relationAttribute{unique} attributes can be used to alter the cardinality;
+however, this involved extra computation on the side of the system to benchmark
+and therefore I decided to create a synthetic relation for each tuple count.
+After the relations are created, they must be parsed into the Haskell program
+and loaded into the database. All the queries can then be run and benchmarked.
+Finally, the data is processed and the relevant statistics and figures are
+extracted and created.
