@@ -35,7 +35,7 @@ respectively when considering the standard queries that join attributes to
     \caption{Mean times to complete standard joins of
     \relationAttribute{onePercent} attribute with relations of 1000 tuples. This
 shows the smallest relative improvement of indexed equijoin over the other
-functions but still a demonstrabale advantage.}
+functions but still a non-trivial advantage.}
     \label{fig:benchmark:onePercent-1000}
 \end{figure}
 
@@ -130,7 +130,7 @@ was not the case to a significant proportion. Most surprisingly I thought that,
 despite not being too drastic, the difference would be most notable in the
 comprehension equijoin function; though from further inspection there does not
 seem to be any particular difference between all functions. It is clear that the
-product equijoin would have the largest indfference to the order of operations
+product equijoin would have the largest indifference to the order of operations
 as it was designed to be modular and not take circumstance into much
 consideration, in fact the statistics support this and in the case with 5000
 tuples the mean time to complete `join twentyPercent and onePercent' was only
@@ -195,7 +195,7 @@ space into roughly 5 groups with 20\%. This equates to 5 medium sized Cartesian
 products (the operation that contains the largest algorithmic complexity). If
 you compare the graphs for the query `join onePercent and fiftyPercent' (in
 \fref{fig:benchmark:onePercent-fiftyPercent-tuples}) you will see that the slope
-fo the line for comprehension equijoin is comparatively steep. As a reminder,
+of the line for comprehension equijoin is comparatively steep. As a reminder,
 the query `join onePercent and fiftyPercent' only has two local Cartesian
 products, each holding 50\% of the second relation. This is a clear suggestion
 as to why it grows more unfavourably than the other queries: the local Cartesian
