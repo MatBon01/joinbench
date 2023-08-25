@@ -15,3 +15,26 @@ After the relations are created, they must be parsed into the Haskell program
 and loaded into the database. All the queries can then be run and benchmarked.
 Finally, the data is processed and the relevant statistics and figures are
 extracted and created.
+
+The workflow is largely managed through use of a Makefile. The advantage of this
+approach is making sure that a table is always generated for the benchmark to
+run and that unneccesary computation is kept at a minimum. Below is an example
+of the most important rules in the Makefile; a rule to run the benchmark and a
+rule to generate the tables.
+
+\begin{lstlisting}[language=make]
+joinbench%: $(tables_path)/joinbenchtable%.csv
+	cabal run joinbench-benchmark -- $(tables_path)/joinbenchtable$*.csv \ 
+    --template json --output data/joinbench$*.json
+
+$(tables_path)/joinbenchtable%.csv:
+	python3 $(database_gen_path)/generate_JOINBENCH_database.py \
+    $* ${tables_path}/joinbenchtable$*.csv
+\end{lstlisting}
+
+The target of the first rule is a phony target set to run a benchmark with a
+given number of tuples. If the command \lstinline[language=bash]{make
+joinbench150} is run, a benchmark will be run on a database with 150 tuples. In
+order to run the benchmark, the prerequisite of the target must be satisfied and
+so if there is not a table with 150 tuples already in the tables directory
+another is made.
