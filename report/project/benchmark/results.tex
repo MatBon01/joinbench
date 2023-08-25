@@ -31,26 +31,30 @@ respectively when considering the standard queries that join attributes to
 \end{table}
 
 \begin{figure}[p]
-    \centering
     \input{figures/onePercent-joins-with-1000-tuples.pgf}
     \caption{Mean times to complete standard joins of
-    \relationAttribute{onePercent} attribute with relations of 1000 tuples.}
+    \relationAttribute{onePercent} attribute with relations of 1000 tuples. This
+shows the smallest relative improvement of indexed equijoin over the other
+functions but still a demonstrabale advantage.}
     \label{fig:benchmark:onePercent-1000}
 \end{figure}
 
 \begin{figure}[p]
-    \centering
     \input{figures/onePercent-joins-with-5000-tuples.pgf}
-    \caption{Mean times to complete standard joins of
-    \relationAttribute{onePercent} attribute with relations of 5000 tuples.}
+    \caption{Mean times to complete standard joins of 
+    \relationAttribute{onePercent} attribute with relations of 5000 tuples. This
+graph demonstrates sizeable improvements of indexed equijoin over the
+alternatives but not a terrible showing of the comprehension equijoin either.}
     \label{fig:benchmark:onePercent-5000}
 \end{figure}
 
 \begin{figure}[p]
-    \centering
     \input{figures/onePercent-joins-with-10000-tuples.pgf}
     \caption{Mean times to complete standard joins of
-    \relationAttribute{onePercent} attribute with relations of 10000 tuples.}
+    \relationAttribute{onePercent} attribute with relations of 10000 tuples.
+This graph also shows significant improvements of indexed equijoin over
+alternative methods in much larger relations where the scale of the time axis is
+much larger and improvements more meaningful.}
     \label{fig:benchmark:onePercent-10000}
 \end{figure}
 
@@ -91,19 +95,27 @@ Visualisations of the results can be found in
 
 \begin{figure}[p]
     \input{figures/non-standard-query-with-1000-tuples.pgf}
-    \caption{Mean times to complete miscellaneous joins queries with relations of 10000 tuples.}
+    \caption{Mean times to complete miscellaneous joins queries with relations
+    of 1000 tuples. This shows moderate improvements of the indexed equijoin
+over product equijoin and slight improvements over comprehension equijoin.}
     \label{fig:non-standard-1000}
 \end{figure}
 
 \begin{figure}[p]
     \input{figures/non-standard-query-with-5000-tuples.pgf}
-    \caption{Mean times to complete miscellaneous joins queries with relations of 10000 tuples.}
+    \caption{Mean times to complete miscellaneous joins queries with relations
+    of 10000 tuples. This shows more substantial improvements of the indexed
+equijoin over other functions.}
     \label{fig:non-standard-5000}
 \end{figure}
 
 \begin{figure}[p]
     \input{figures/non-standard-query-with-10000-tuples.pgf}
-    \caption{Mean times to complete miscellaneous joins queries with relations of 10000 tuples.}
+    \caption{Mean times to complete miscellaneous joins queries with relations
+    of 10000 tuples. This shows large improvements of indexed equijoin over
+other functions similar to the case with 5000 tuples. It is worth noting the
+larger scale in question, however, and therefore the larger time save for
+similar percentage improvement.}
     \label{fig:non-standard-10000}
 \end{figure}
 
@@ -138,7 +150,10 @@ as well as a more thorough analysis on the lower levels of the Haskell compiler.
 \begin{figure}[p]
     \input{figures/join-onePercent-and-twentyPercent-flipped-5000-tuples.pgf}
     \caption{A comparison of the mean time to complete the queries `join
-    onePercent and twentyPercent' and `join twentyPercent and onePercent'.}
+    onePercent and twentyPercent' and `join twentyPercent and onePercent'. The
+results are surprising in that the order of operands does not have as
+significant of an effect as expected, especially in the case of the
+comprehension equijoin.}
     \label{fig:benchmark:onePercent-twentyPercent-flipped-5000}
 \end{figure}
 
