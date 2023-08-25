@@ -39,7 +39,7 @@ class BenchmarkData:
     def get_benchmark_group_names(self) -> Set[str]:
         return set(self.map_benchmark_groups_and_benchmark_indices().keys())
 
-    def get_benchmark_group_name_list(self) -> List[str]:
+    def get_query_list(self) -> List[str]:
         return list(self.map_benchmark_groups_and_benchmark_indices().keys())
 
     def get_benchmark_mean_from_index(self, index: int) -> float:

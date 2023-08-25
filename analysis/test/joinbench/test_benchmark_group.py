@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Set
 
 import pytest
 from test_utils.benchmark_utils import (compare_floats,
@@ -111,3 +111,13 @@ class TestBenchmarkGroup:
         results = bg.get_list_of_benchmarks_with_counts(counts)
         for i, count in enumerate(counts):
             assert results[i].get_tuple_count() == count
+
+    def test_can_get_list_of_queries(self):
+        bg: BenchmarkGroup = get_joinbench_benchmark_group()
+        expected: Set[str] = {
+            "join on onePercent",
+            "join onePercent and twentyPercent",
+            "join onePercent and fiftyPercent",
+            "join even and odd",
+        }
+        assert set(bg.get_query_list()) == expected

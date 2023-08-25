@@ -8,7 +8,7 @@ class BenchmarkGroupPlotter:
         self.benchmarks: BenchmarkGroup = benchmarks
 
     def plot_mean_time_of_group_by_tuple_count(self, ax, group: str) -> None:
-        ax.set_title(f"Mean time to complete `{group}' query according to tuple count")
+        ax.set_title(f"Mean time to complete `{group}' query\naccording to tuple count")
         ax.set_xlabel("Tuple count")
         ax.set_ylabel("Mean time (s)")
         self.bare_plot_mean_time_of_group_by_tuple_count(ax, group)
@@ -49,3 +49,15 @@ class BenchmarkGroupPlotter:
         )
 
         ax.indicate_inset_zoom(axins, edgecolor="black")
+
+    def plot_mean_time_by_tuples_for_function(self, ax, function: str):
+        xs: List[int] = self.benchmarks.get_tuple_counts()
+        queries: List[str] = self.benchmarks.get_query_list()
+        for query in queries:
+            ys = self.benchmarks.get_benchmark_means(query, function)
+            ax.plot(xs, ys, "o-", label=query)
+
+        ax.legend()
+        ax.set_title(f"Mean time for `{function.lower()}' function\nto complete queries by tuple count")
+        ax.set_xlabel("Tuple count")
+        ax.set_ylabel("Mean time (s)")
