@@ -25,7 +25,7 @@ module does present interesting opportunities to enhance my solution however:
 Using an adapter design pattern a faker object could easily be converted into
 using the cell API and enrich my solution with a larger variety of data,
 although I would accept the argument that it might be a waste of the set of rich
-features implemented by the module. Using the \lstinline{Faker} module implicity
+features implemented by the module. Using the \lstinline{Faker} module implicitly
 with other data synthesising modules that depend on
 it, such as \lstinline{pydbgen} \cite{pydbgen}, can give a more complete solution even in
 comparison to my framework. In essence, it uses the variety of data sources
@@ -105,13 +105,13 @@ it is needed to output the data into a plaintext CSV file. If design changes
 were made to give the system a greater knowledge of the larger context and
 environment it is contributing to it can generate more useful structures; an
 example that would benefit this project would be automatically generating
-haskell parsers to read the database into memory. Another more general example of when
+Haskell parsers to read the database into memory. Another more general example of when
 knowledge of the larger context may be useful is in automatic generation of SQL
 statements to create the database that output methods then might be able to
 populate during data synthesis. On the other hand, if implemented incorrectly,
 requiring a greater description of the system in order to generate data obscures
 its initial purpose and adds more bloat when using the software; the cell class
-should not need to know that the attribute is called ``evenOneHundred'' in order
+should not need to know that the attribute is called ``evenOnePercent'' in order
 to generate even numbers.
 
 \paragraph{Component evaluation} We now briefly evaluate the implementations of
@@ -134,12 +134,12 @@ must improve is a systematic problem prescribed by the type of solution that may
 efficient, solutions if taken seriously in further development. The
 generality described here is found in the inability to apply different
 algorithms when different properties are given in the domain. Going back to the
-example in \fref{sec:benchark:synthetic-database} for cell composition,
-\lstinline{unique_nums}. The algorithm used in \lstinline{uniqiue_nums}, which
+example in \fref{sec:benchmark:syntheticdatabase} for cell composition,
+\lstinline{unique_nums}. The algorithm used in \lstinline{unique_nums}, which
 to remind you is simply a \lstinline{RandomModularIntegerCell} in a
 \lstinline{UniqueCell} is quite inefficient and generates new values until an unseen
 integer is found. It has been widely known for decades that algorithms to
-produce a random permutations of integers are prevelant and a large discussion
+produce a random permutations of integers are prevalent and a large discussion
 of methods to generate dense
 unique random data can be found in Gray's paper ``Quickly Generation
 Billion-Record Synthetic Databases'' \cite{GenLargeSynthDB}. This shows that
