@@ -14,7 +14,8 @@ and therefore I decided to create a synthetic relation for each tuple count.
 After the relations are created, they must be parsed into the Haskell program
 and loaded into the database. All the queries can then be run and benchmarked.
 Finally, the data is processed and the relevant statistics and figures are
-extracted and created.
+extracted and created. An overview of the workflow can be found in
+\fref{fig:benchamrk:workflow}.
 
 The workflow is largely managed through use of a Makefile. The advantage of this
 approach is making sure that a table is always generated for the benchmark to
@@ -24,7 +25,8 @@ rule to generate the tables.
 
 \begin{lstlisting}[language=make]
 joinbench%: $(tables_path)/joinbenchtable%.csv
-	cabal run joinbench-benchmark -- $(tables_path)/joinbenchtable$*.csv \ 
+	cabal run joinbench-benchmark -- \
+    $(tables_path)/joinbenchtable$*.csv \ 
     --template json --output data/joinbench$*.json
 
 $(tables_path)/joinbenchtable%.csv:
@@ -33,8 +35,8 @@ $(tables_path)/joinbenchtable%.csv:
 \end{lstlisting}
 
 The target of the first rule is a phony target set to run a benchmark with a
-given number of tuples. If the command \lstinline[language=bash]{make
-joinbench150} is run, a benchmark will be run on a database with 150 tuples. In
+given number of tuples. If the command \lstinline[language=bash]{make joinbench150}
+is run, a benchmark will be run on a database with 150 tuples. In
 order to run the benchmark, the prerequisite of the target must be satisfied and
 so if there is not a table with 150 tuples already in the tables directory
 another is made.
@@ -46,7 +48,7 @@ my implementation of the Haskell program. The parser is written in Haskell and
 separates lines as elements of the bag and ``cells'' (values separated by
 commas) to be either integers or $Word16$s. As I will not join on the
 \relationAttribute{unique} attribute, it is specified as an integer and all
-others $Word16$s for limitations discussed in \fref{ch:implementation}. For
+others $Word16$s for limitations discussed in \fref{chap:implementation}. For
 readability of benchmarks during development the final type the
 \relation{JOINBENCH} relation takes is a bag of records as specified in
 \fref{sec:benchmark:database}.
@@ -67,3 +69,21 @@ all of the difficult code was written in a dedicated python module so would not
 need to be duplicated. However, I found the ability to check the quality of the
 graphs in an interactive environment before producing an output to be very
 useful and so kept the notebook as a quality assurance mechanism.
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[node distance=2cm]
+        \node(command)[process]{Shell command to run benchmark (`make joinbench150')};
+        \node(tablegen)[process, below of=command]{Generate table};
+        \node(parse)[process, below of=tablegen]{Parse table};
+        \node(benchmark)[process, below of=parse]{Run benchmark on queries};
+        \node(data)[process, below of=benchmark]{Run statistical analysis and generate figures};
+
+        \draw [arrow] (command) -- (tablegen);
+        \draw [arrow] (tablegen) -- node[anchor=west] {CSV file} (parse);
+        \draw [arrow] (parse) -- node[anchor=west] {$Bag\ JoinBenchRecord$} (benchmark);
+        \draw [arrow] (benchmark) -- node[anchor=west] {JSON file} (data);
+    \end{tikzpicture}
+    \caption{Workflow of benchmarking system.}
+    \label{fig:benchmark:workflow}
+\end{figure}
