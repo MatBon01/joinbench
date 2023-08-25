@@ -15,11 +15,11 @@ After the relations are created, they must be parsed into the Haskell program
 and loaded into the database. All the queries can then be run and benchmarked.
 Finally, the data is processed and the relevant statistics and figures are
 extracted and created. An overview of the workflow can be found in
-\fref{fig:benchamrk:workflow}.
+\fref{fig:benchmark:workflow}.
 
 The workflow is largely managed through use of a Makefile. The advantage of this
 approach is making sure that a table is always generated for the benchmark to
-run and that unneccesary computation is kept at a minimum. Below is an example
+run and that unnecessary computation is kept at a minimum. Below is an example
 of the most important rules in the Makefile; a rule to run the benchmark and a
 rule to generate the tables.
 
