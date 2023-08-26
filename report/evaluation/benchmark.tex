@@ -48,3 +48,49 @@ already gives enough understanding to extrapolate and model into the
 non-standard cases.
 
 \subsection{Results}
+This subsection will evaluate the results presented in
+\fref{sec:benchmark:results} and the processes that obtained them.
+At first glance the results of the benchmark seem to be very reasonable and
+trends are smooth, expected and clear. A more thorough analysis can be completed
+by checking the standard deviations associated with the results. Tables with the
+mean and standard deviation for a select number of queries can be found in
+\fref{tab:evaluation:std-dev-comparison-onePercent-onePercent},
+\fref{tab:evaluation:std-dev-comparison-onePercent-fiftyPercent} and
+\fref{tab:evaluation:std-dev-comparison-evenOnePercent-oddOnePercent}. I have
+chosen these queries as I believe they most accurately sample the space of
+queries and edge cases. I have included the means in this result to give a
+comparison of order between the results and spread. It is clear that the
+standard deviation in most cases are 3 orders of magnitude smaller than the
+mean, potentially indicating that the `quiet' computational environment
+(described in \fref{sec:benchmark:experiment}) the
+results were gathered in was successful in producing reproducible data. It is
+worth noting that the function indexed equijoin continuously seems to have an
+order of magnitude higher standard deviation, suggesting a larger spread of
+data. This could be due to the fact that the function is more computationally
+complex and therefore more sensitive the runtime environment. Most importantly,
+due to the nature of such a small spread, it is unlikely that results wrong
+relative to each other (no lines overlap) and therefore the conclusions drawn
+may be more confidently accepted despite any statistical noise and uncertainty.
+
+\begin{table}[h]
+\centering
+\input{tables/std-dev-comparison-join-onePercent-and-onePercent.tex}
+\caption{A table showing the mean time (s) and standard deviation (s) to complete the query `join onePercent and onePercent' for each function.}
+\label{tab:evaluation:std-dev-comparison-onePercent-onePercent}
+\end{table}
+
+\begin{table}[h]
+\centering
+\input{tables/std-dev-comparison-join-onePercent-and-fiftyPercent.tex}
+\caption{A table showing the mean time (s) and standard deviation (s) to
+complete the query `join onePercent and fiftyPercent' for each function.}
+\label{tab:evaluation:std-dev-comparison-onePercent-fiftyPercent}
+\end{table}
+
+\begin{table}[h]
+\centering
+\input{tables/std-dev-comparison-join-evenOnePercent-and-oddOnePercent.tex}
+\caption{A table showing the mean time (s) and standard deviation (s) to
+complete the query `join evenOnePercent and oddOnePercent' for each function.}
+\label{tab:evaluation:std-dev-comparison-evenOnePercent-oddOnePercent}
+\end{table}

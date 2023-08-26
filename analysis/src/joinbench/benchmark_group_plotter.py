@@ -61,3 +61,12 @@ class BenchmarkGroupPlotter:
         ax.set_title(f"Mean time for `{function.lower()}' function\nto complete queries by tuple count")
         ax.set_xlabel("Tuple count")
         ax.set_ylabel("Mean time (s)")
+
+    def plot_mean_time_by_tuples_with_standard_deviation_for_query(self, ax,
+                                                                   query: str):
+        xs: List[int] = self.benchmarks.get_tuple_counts()
+        functions: List[str] = self.benchmarks.get_function_name_list()
+        for function in functions:
+            ys = self.benchmarks.get_benchmark_means(query, function)
+            yerr = self.benchmarks.get_standard_deviations(query, function)
+            ax.errorbar(xs, ys, yerr=yerr, fmt="o-", label=function)

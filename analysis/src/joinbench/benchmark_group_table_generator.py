@@ -1,7 +1,8 @@
-from typing import List
+from typing import List, Tuple
 
 import pandas as pd
 
+from joinbench.benchmark_data import BenchmarkData
 from joinbench.benchmark_group import BenchmarkGroup
 
 
@@ -34,3 +35,32 @@ class BenchmarkGroupTableGenerator:
             ]
 
         return percentage_change_of_means
+
+    def get_mean_and_std_dev_for_query_and_counts(
+        self, query: str, counts: List[int]
+    ) -> pd.DataFrame:
+        functions: List[str] = self.benchmark_group.get_function_name_list()
+        mean_with_sd: pd.DataFrame = pd.DataFrame(index=functions)
+        count: int
+        for count in counts:
+            benchmark: BenchmarkData = self.benchmark_group.get_benchmark_with_count(
+                count
+            )
+            means: List[float] = list(
+                map(
+                    lambda function: benchmark.get_benchmark_mean(query, function),
+                    functions,
+                )
+            )
+            std_devs: List[float] = list(
+                map(
+                    lambda function: benchmark.get_standard_deviation(query, function),
+                    functions,
+                )
+            )
+            combined: List[Tuple[float, float]] = list(zip(means, std_devs))
+            formatted: List[str] = list(
+                map(lambda pair: f"{pair[0]:.3g} ± {pair[1]:.3g}", combined)
+            )
+            mean_with_sd[f"{count} tuples"] = formatted
+        return mean_with_sd

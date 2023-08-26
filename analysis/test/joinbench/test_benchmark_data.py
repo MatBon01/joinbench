@@ -161,3 +161,16 @@ class TestBenchmarkData:
             benchmark.get_means_of_query_for_functions("join on onePercent", functions)
             == expected
         )
+
+    def test_can_get_standard_deviation_from_index(self):
+        benchmark: BenchmarkData = get_test_benchmark_data()
+        index: int = 2
+        expected: float = 0.00004253311176735899
+        assert benchmark.get_standard_deviation_from_index(index) == expected
+
+    def test_can_get_standard_deviation(self):
+        benchmark: BenchmarkData = get_test_benchmark_data()
+        query: str = "join on onePercent"
+        function: str = "modular indexed"
+        expected: float = 0.00004253311176735899
+        assert benchmark.get_standard_deviation(query, function) == expected

@@ -76,3 +76,11 @@ class BenchmarkGroup:
     def get_query_list(self) -> List[str]:
         # Assume all benchmarks have the same query list
         return self.benchmarks[0].get_query_list()
+
+    def get_standard_deviations(self, query: str, function: str) -> List[float]:
+        return list(
+            map(
+                lambda benchmark: benchmark.get_standard_deviation(query, function),
+                self.benchmarks,
+            )
+        )

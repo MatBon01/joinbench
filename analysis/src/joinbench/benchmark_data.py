@@ -115,3 +115,11 @@ class BenchmarkData:
             map(lambda function: self.get_benchmark_mean(group, function), functions)
         )
         return max(means)
+
+    def get_standard_deviation_from_index(self, index: int) -> float:
+        return self.data["reportAnalysis"][index]["anStdDev"]["estPoint"]
+
+    def get_standard_deviation(self, query: str, function: str) -> float:
+        benchmark_index: int = self.get_benchmark_index(query, function)
+        return self.get_standard_deviation_from_index(benchmark_index)
+
