@@ -10,3 +10,22 @@ project is a library based off of the code in
 \relalg{}~\cite{RelationalAlgebraByWayOfAdjunctions} especially the appendix.
 This chapter describes the code needed to create a fully functioning
 system as well as highlights my contributions.
+
+\paragraph{Bags} In order to construct the database system an
+implementation of a bag (also known as multiset) data structure is
+required. Fleshing out the $Bag$ type is one of the main challenges and
+contributions of this project in the area of implementing the database. We
+base the bag type off a list as the list allows multiple elements and
+define an equality function.
+
+\input{code/bagDefAndEquality.tex}
+
+\noindent
+It is worth noting that the equality must be defined in such a way that does not
+pay attention to the order of elements in the bag. We first create a helper
+function $eq'$ that checks equality on lists $xs$ and $ys$ up to permutation.
+Given that $xs$ is not empty we check whether $ys$ is non-empty as otherwise
+equality would not be possible. If $ys$ has an element, we split the list into
+two parts where the head of $xs$ is the first element of the second half of
+$ys$. We can then `remove' that element from $ys$, reconstruct the list and
+recursively check equality.

@@ -1,0 +1,48 @@
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{7}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{9}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{11}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{13}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{17}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{26}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{26E}{@{}l@{}}%
+\column{29}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{newtype}\;\Conid{Bag}\;\Varid{a}\mathrel{=}\Conid{Bag}\;\{\mskip1.5mu \Varid{elements}\mathbin{::}[\mskip1.5mu \Varid{a}\mskip1.5mu]\mskip1.5mu\}{}\<[E]%
+\\[\blanklineskip]%
+\>[B]{}\mathbf{instance}\;(\Conid{Eq}\;\Varid{a})\Rightarrow \Conid{Eq}\;(\Conid{Bag}\;\Varid{a})\;\mathbf{where}{}\<[E]%
+\\
+\>[B]{}\hsindent{5}{}\<[5]%
+\>[5]{}\Varid{b1}\equiv \Varid{b2}\mathrel{=}\Varid{eq'}\;(\Varid{elements}\;\Varid{b1})\;(\Varid{elements}\;\Varid{b2}){}\<[E]%
+\\
+\>[5]{}\hsindent{2}{}\<[7]%
+\>[7]{}\mathbf{where}{}\<[E]%
+\\
+\>[7]{}\hsindent{2}{}\<[9]%
+\>[9]{}\Varid{eq'}\mathbin{::}{}\<[17]%
+\>[17]{}(\Conid{Eq}\;\Varid{a})\Rightarrow [\mskip1.5mu \Varid{a}\mskip1.5mu]\to [\mskip1.5mu \Varid{a}\mskip1.5mu]\to \Conid{Bool}{}\<[E]%
+\\
+\>[7]{}\hsindent{2}{}\<[9]%
+\>[9]{}\Varid{eq'}\;(\Varid{x}\mathbin{:}\Varid{xs})\;\Varid{ys}{}\<[26]%
+\>[26]{}\mathrel{=}{}\<[26E]%
+\>[29]{}\neg \;(\Varid{null}\;\Varid{ys2})\mathrel{\wedge}\Varid{eq'}\;\Varid{xs}\;(\Varid{ys1}\plus \Varid{tail}\;\Varid{ys2}){}\<[E]%
+\\
+\>[9]{}\hsindent{2}{}\<[11]%
+\>[11]{}\mathbf{where}{}\<[E]%
+\\
+\>[11]{}\hsindent{2}{}\<[13]%
+\>[13]{}(\Varid{ys1},\Varid{ys2})\mathrel{=}\Varid{break}\;(\equiv \Varid{x})\;\Varid{ys}{}\<[E]%
+\\
+\>[7]{}\hsindent{2}{}\<[9]%
+\>[9]{}\Varid{eq'}\;[\mskip1.5mu \mskip1.5mu]\;[\mskip1.5mu \mskip1.5mu]{}\<[26]%
+\>[26]{}\mathrel{=}{}\<[26E]%
+\>[29]{}\Conid{True}{}\<[E]%
+\\
+\>[7]{}\hsindent{2}{}\<[9]%
+\>[9]{}\Varid{eq'}\;\anonymous \;\anonymous {}\<[26]%
+\>[26]{}\mathrel{=}{}\<[26E]%
+\>[29]{}\Conid{False}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
