@@ -7,6 +7,7 @@ from .benchmark_data import BenchmarkData
 
 class EvaluationMethodPlotter:
     def __init__(self, nf_data: BenchmarkData, whnf_data: BenchmarkData):
+        # assume nf and whfn have same tuple count
         self.nf_data = nf_data
         self.whnf_data = whnf_data
 
@@ -32,10 +33,10 @@ class EvaluationMethodPlotter:
             ax.bar(experiment_positions + offset, mean, bar_width, label=method)
             method_pos += 1
 
-        ax.set_ylabel("Time (s)")
+        ax.set_ylabel("Mean time (s)")
         ax.set_xlabel("Function")
         ax.set_title(
-            f"Mean time to complete `{group_name}' by evaluation method"
+            f"Mean time to execute `{group_name}'\nquery by evaluation method with {self.nf_data.get_tuple_count()} tuples"
         )
         ax.set_xticks(experiment_positions + bar_width, experiment_names)
         ax.legend(title="Evaluation method", loc="upper right", ncols=3)
