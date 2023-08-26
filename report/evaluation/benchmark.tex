@@ -192,3 +192,13 @@ the query `join onePercent and onePercent'.}
 the nf evaluation strategy.}
     \label{fig:evaluation:nf-whnf-join-evenOnePercent-and-oddOnePercent}
 \end{figure}
+
+On the other hand, the implementation has not been thoroughly checked for space
+leaks. The problem with space leaks in this domain is that when benchmarking
+higher tuple counts this could lead to much time being wasted in the garbage
+collector and therefore artificially increasing the time reported depending on
+the memory used by a function (including expressions that have not been fully
+evaluated, otherwise known as thonks). This is clearly a downfall of the
+experiment and despite preliminary checks for space leaks, more effort should be
+put into it to ensure that not only larger tuple counts can be considered but
+the results are more reliable and not impacted by garbage collection.
