@@ -30,8 +30,9 @@ two parts where the head of $xs$ is the first element of the second half of
 $ys$. We can then `remove' that element from $ys$, reconstruct the list and
 recursively check equality.
 
-As well as defining equality it is also important create instances of Monad and
-Functor classes for the bag type. A bag's status as a functor allows $fmap$s to be performed on
+As well as defining equality it is also important create instances of $Monad$ and
+$Functor$ type classes for the bag type. A bag's status as a functor allows $fmap$s
+(the parallel to a projection as seen in \fref{sec:background:dbrep}) to be performed on
 them and monad type is important to allow monad comprehensions which was a key
 motivating factor for the paper \relalg{}. Details of the implementations are
 left out of this paper as they follow the structure of using the instances on
