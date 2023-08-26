@@ -1,3 +1,31 @@
 \section{Benchmark methodology and results}
-\subsection{\relation{JOINBENCH} relation}
+\subsection{\relation{JOINBENCH} relation and queries}
+The \relation{JOINBENCH} relation is a fundamental step in the design of
+the benchmark as it singlehandedly determines the possible complexity of the
+possible queries. In this regard I think the \relation{JOINBENCH} was mostly
+sufficient, it was largely based on previously designed benchmarks with slight
+modifications to make it more specialised for the type of interesting
+selection and join based queries that would be interesting in this project. One
+attribute and family of queries that I found to be missing during my analysis,
+however, revolved around the idea of letting the local Cartesian products grow
+to be the same size as a normal product on the relations. This could be solved
+by adding an attribute \relationAttribute{oneHundredPercent} whose domain only
+contained one value (thus containg 100\% of the relation). I believe that this
+would more interestingly highlight the disadvantages of the indexed approach as
+it is likely to be reduced to a normal product. Admittedly I speculate that the lack of a need
+for a filter on $n^2$ elements would still make the indexed equijoin dominant
+over the product equijoin; however, I believe it would be much closer to the
+comprehension equijoin. Alternatively, this could be done by conducting a
+selection on an existing attribute and then joining that attribute to itself,
+but I believe this goes against the design decisions expressed in
+\fref{sec:background:benchmarkbestpractices}. Taken to the extreme, all
+attributes in the relation could be created by various selections on the
+\relationAttribute{onePercent} but this not only makes standardising relation
+cardinality more difficult, it destroys the readability synthetic data sets are
+meant to express. It may be interesting to include attributes in future that
+cannot be derived from \relationAttribute{onePercent}, for instance other
+multiples such as \relationAttribute{oneThird}, but I am not sure how much more
+information this would provide in this case. These suggestion may be taken
+forward as future work on designing the \relation{JOINBENCH} relation.
+
 \subsection{Results}
