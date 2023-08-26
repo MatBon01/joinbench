@@ -1,7 +1,7 @@
 \section{Benchmark methodology and results}
 \subsection{\relation{JOINBENCH} relation and queries}
 The \relation{JOINBENCH} relation is a fundamental step in the design of
-the benchmark as it singlehandedly determines the possible complexity of the
+the benchmark as it single-handedly determines the possible complexity of the
 possible queries. In this regard I think the \relation{JOINBENCH} was mostly
 sufficient, it was largely based on previously designed benchmarks with slight
 modifications to make it more specialised for the type of interesting
@@ -10,7 +10,7 @@ attribute and family of queries that I found to be missing during my analysis,
 however, revolved around the idea of letting the local Cartesian products grow
 to be the same size as a normal product on the relations. This could be solved
 by adding an attribute \relationAttribute{oneHundredPercent} whose domain only
-contained one value (thus containg 100\% of the relation). I believe that this
+contained one value (thus containing 100\% of the relation). I believe that this
 would more interestingly highlight the disadvantages of the indexed approach as
 it is likely to be reduced to a normal product. Admittedly I speculate that the lack of a need
 for a filter on $n^2$ elements would still make the indexed equijoin dominant
@@ -113,7 +113,7 @@ could have been made to statistics considered and ways in which the tools in
 question were understood and used. The mean average can easily be swayed by
 outliers and, although the spread suggests the data was quite tight and
 outliers not too extreme, this could have been a heavy issue. Computer
-benchmarking can be prone to outliars for a variety of factors from noise on the
+benchmarking can be prone to outliers for a variety of factors from noise on the
 system resources to caching effects and therefore more care should have been
 taken to mitigate these risks. However a quick heuristic analysis of the median
 and means shows that in this case they are not far apart. Moreover, the
