@@ -11,7 +11,16 @@ data JoinBenchRecord = B {uid :: Int, onePercent :: Word16, twentyPercent :: Wor
     deriving (Show, Eq)
 
 instance NFData JoinBenchRecord where
-    rnf a = rnf (uid a, onePercent a, twentyPercent a, twentyfivePercent a, fiftyPercent a, evenOnePercent a, oddOnePercent a)
+    rnf a =
+        rnf
+            ( uid a
+            , onePercent a
+            , twentyPercent a
+            , twentyfivePercent a
+            , fiftyPercent a
+            , evenOnePercent a
+            , oddOnePercent a
+            )
 
 csvFile :: GenParser Char st (Bag JoinBenchRecord)
 csvFile = do

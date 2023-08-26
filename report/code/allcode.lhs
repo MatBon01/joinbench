@@ -34,3 +34,21 @@ indexBy  ::  (Key k) => Table a -> (a -> k) -> Map k (Table a)
 merge    ::  (Map k v1, Map k v2) -> Map k (v1, v2)
 reduce   ::  (PointedSet v, CMonoid v) => Map k v -> v
 \end{code}
+
+\begin{code}
+instance (NFData a) => NFData (Bag a) where
+    rnf (Bag xs) = rnf xs
+
+instance NFData JoinBenchRecord where
+    rnf a =
+        rnf
+            ( uid a
+            , onePercent a
+            , twentyPercent a
+            , twentyfivePercent a
+            , fiftyPercent a
+            , evenOnePercent a
+            , oddOnePercent a
+            )
+
+\end{code}

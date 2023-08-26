@@ -130,3 +130,65 @@ considerations when choosing a query function and standard practice in the acade
 database benchmarking community as discussed in
 \fref{sec:background:benchmarkbestpractices}.
 
+\section{Haskell considerations}
+As Haskell is a lazy language many considerations, especially when benchmarking,
+must be made to ensure that answers are evaluated at the correct time. In the
+context of benchmarking, we want to ensure that all results are fully evaluated
+in the duration of the benchmark. In order to ensure the full evaluation of the
+function we define a normal form for all the new data structures introduced by
+this database implementation (detailed in \fref{chap:implementation}). During the
+benchmarking we can then use the $nf$ function, along with a function missing an
+argument, to let \verb|Criterion| ensure that the results are fully evaluated.
+An example of a definition of a normal form can be found below.
+
+\input{code/normalForm}
+
+\noindent
+The first instance declaration defines a normal form for a bag given that the
+type contained within the bag also has a normal form. To fully evaluate the bag
+you simply fully evaluate its underlying list. Similarly, a record type can be
+fully evaluated by evaluating a tuple of all its fields. The notion of a weak
+head normal form also exists which does not require these extra definitions,
+however I do not believe that it is strong enough for the purposes of this
+benchmark. Although more than enough for some queries, the weak head normal form
+does not typically come close to fully evaluating the expressions and this can
+be seen in the mean times reported by the benchmark, this can be seen in
+\fref{fig:evaluation:nf-whnf-join-onePercent-and-onePercent}
+and \fref{fig:evaluation:nf-whnf-join-onePercent-and-fiftyPercent}. Interestingly, the whnf was
+adequate enough when evaluating the query `join evenOnePercent and
+oddOnePercent' and I believe this is due to the special nature of the query
+where the result is empty though I would need to further study the lazy
+evaluation of the Haskell language for further comment; this data can be seen in
+\fref{fig:evaluation:nf-whnf-join-evenOnePercent-and-oddOnePercent}.
+Interestingly, it can be seen that the mean time to run the weak head normal
+form increases in queries where one tuple matches with a larger proportion of
+the other relation (e.g. `join onePercent and fiftyPercent' takes longer than
+`join onePercent and onePercent'). 
+
+\begin{figure}[p]
+    \centering
+    \input{figures/eval-method-join-onePercent-and-onePercent-1000.pgf}
+    \caption{The mean time to run the query `join onePercent and onePercent' on
+    two relations with 1000 tuples. Note the especially low times reported when
+using the whnf evaluation strategy.}
+    \label{fig:evaluation:nf-whnf-join-onePercent-and-onePercent}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \input{figures/eval-method-join-onePercent-and-fiftyPercent-1000.pgf}
+    \caption{The mean time to run the query `join onePercent and fiftyPercent' on
+    two relations with 1000 tuples. Note the low times reported when
+using the whnf evaluation strategy yet an increase to the mean times reported by
+the query `join onePercent and onePercent'.}
+    \label{fig:evaluation:nf-whnf-join-onePercent-and-fiftyPercent}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \input{figures/eval-method-join-evenOnePercent-and-oddOnePercent-1000.pgf}
+    \caption{The mean time to run the query `join evenOnePercent and oddOnePercent' on
+    relations with 1000 tuples. Note that there is almost no difference compared
+the nf evaluation strategy.}
+    \label{fig:evaluation:nf-whnf-join-evenOnePercent-and-oddOnePercent}
+\end{figure}
