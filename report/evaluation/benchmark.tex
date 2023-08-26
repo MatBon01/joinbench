@@ -28,4 +28,23 @@ multiples such as \relationAttribute{oneThird}, but I am not sure how much more
 information this would provide in this case. These suggestion may be taken
 forward as future work on designing the \relation{JOINBENCH} relation.
 
+On the topic of readability of attributes, I feel that the naming scheme has
+mixed success. The attributes were names after similar attributes in the updated
+Wisconsin relation but were kept due to the importance of the cardinality of
+partitions to this domain. However, I do find that the attributes names struggle
+to easily convey the values in their domains somewhat limiting the expression of
+the database. I do feel, however, that if the name gave more information about
+the domain it would conversely be more difficult to figure out the partition
+sizes. Similarly, all queries are based on uniform sizing and partitions. It
+would be a very interesting piece of future work to see how dynamic sized local
+joins impact indexing; we could ask questions such as whether a joins with one
+partition with a larger cardinality and few other small ones may be faster than
+a join with relations with larger tuple counts but many small local partitions.
+Having non uniform sizes in the queries would make the benchmark more realistic
+to real world scenarios but I also struggle to see a scientific question that
+may be asked. Furthermore, I feel the theoretical explanations of the results
+obtained in this experiment as described in \fref{sec:benchmark:results}
+already gives enough understanding to extrapolate and model into the
+non-standard cases.
+
 \subsection{Results}
