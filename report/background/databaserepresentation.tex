@@ -4,8 +4,12 @@ defining the relational model. It is useful to help understand the structure in
 \fref{chap:database}.
 
 \subsection{Bags}
-\paragraph{Characteristics of a database}We expect our database approximation to not be ordered and admit multiplicities and a finite bag of values is one of the simplest constructions that does so. Like a finite set, a bag contains a collection of unordered values. However, unlike a set, bags can contain duplicate elements \cite{RelationalAlgebraByWayOfAdjunctions}.  This multiplicity is key for processing non-idempotent aggregations. For instance, if summing up the ages of a database of people, without admitting multiplicity we would only sum each unique age once.
-\subparagraph{Generalisation}Furthermore, going forward we generalise to bags of any types instead of the classical ``bags of records''. This also allows us to deal with intermediate tables that contain non-record values.
+\paragraph{Characteristics of a database} We expect our database approximation to not be ordered and admit multiplicities and a finite bag of values is one of the simplest constructions that does so. Like a finite set, a bag contains a collection of unordered values. However, unlike a set, bags can contain duplicate elements.  This multiplicity is key for processing non-idempotent aggregations. For instance, if summing up the ages of a database of people, without admitting multiplicity we would only sum each unique age once.
+
+\subparagraph{Generalisation} Furthermore, going forward we generalise to bags
+of any types instead of the classical ``bags of records''. This also allows us
+to deal with intermediate tables that contain non-record values which, again,
+may be useful for describing intermediate states of aggergations or projections.
 
 In \fref{tab:BagRelAlgOps} we summarise the implementation of relational algebra operators with bags
 as their bulk type \cite{RelationalAlgebraByWayOfAdjunctions}.
