@@ -42,7 +42,7 @@ in order to evaluate its performance.
 
 Going back to the example, say you could instead index both tables by their
 $uid$ and $sid$ respectively. You would not need to consider all possible pair
-of elements to find the matching pairs anymore as you would already know which
+of elements to find the matching attributes any more as you would already know which
 tuples share the same indexed element. This will allow you to greatly reduce the
 order at which you are taking products and, in effect, `making more work for
 yourself'. How might this be achieved? The authors of the paper \relalg{},
@@ -81,11 +81,11 @@ form in order to help the reader see how they apply in this restricted context.
 
 \noindent
 As you can see, the need for a global Cartesian product is removed by localising
-the operation on to values that definitely require it. This is accompolished by
+the operation on to values that definitely require it. This is accomplished by
 indexing both relations entirely, to an intermediate $Map$ form. The merging of
 these maps is responsible for matching the keys, the values requested in the
 equijoin, and then a Cartesian product is conducted on each of these pairings
-individually through the $fmap$. In order to be a valid relatinal operation,
+individually through the $fmap$. In order to be a valid relational operation,
 however, the result must be reduced back to the database implementation and
 therefore the $Map$ is transformed back to a $Bag$.
 
@@ -100,7 +100,7 @@ to benchmark the database. We introduce the \relation{JOINBENCH} relation, a
 specialised version of past academic benchmarking database schemas made with
 testing equijoins in mind. After this, the report will describe the design of
 an extensible tool created in order to generate synthetic databases to run the
-bechmarks on. This tool can be very easily customised and is made with enforcing
+benchmarks on. This tool can be very easily customised and is made with enforcing
 mathematical properties of data in mind so that interesting patterns can emerge
 from the \relation{JOINBENCH} relation. Next, an overview of the benchmarking
 workflow and experiment designs is given to be open and encourage readers to try
