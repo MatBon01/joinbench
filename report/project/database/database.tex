@@ -69,4 +69,8 @@ The advantage of pattern matching instead of comparing when defining a
 $PointedSet$ for $Bag$ is that it does not force $Eq$ on the type in the $Bag$.
 This is unlikely to be a problem in the very controlled environment of the
 benchmark but I appreciated the more general approach so modified the instance
-to allow for this behaviour.
+to allow for this behaviour. To restate the power of letting $Maybe;a$ be an
+instance of $PointedSet$, it allows us to promote any type to a $PointedSet$ and
+therefore be the value to a map. This means that when we want a `null' value for
+any type we can accept $Nothing$ but in return any non-null value must be of the
+form $Just a$ where $a$ has the promoted type.
