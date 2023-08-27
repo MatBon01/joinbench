@@ -107,6 +107,21 @@ workflow and experiment designs is given to be open and encourage readers to try
 and reproduce results. Finally, a discussion of the results is given and the
 efficacy of replacing such a solution is discussed.
 
+Synthetic data generation is key to creating a readable and reproducible
+benchmark. Generating synthetic data allows us to specify the properties of
+attributes and thereby conduct specific experiments determining the pitfalls and
+strengths of functions depending on the shape of the data. Of course there is
+the argument to be made that the results are not `life-like' as they do not take
+the form of real world data, however I believe that this way of doing it is not
+only more archetypal and therefore gives us an insight to the underlying trends
+and lesson to be learned about the query optimisation but it counter-intuitively
+is more readable. In order to synthesise such data, a low level synthetic
+database generating library was created within the scope of the project. This is
+a framework that allows users to specify trends between attributes and control
+the generation of cells within their domain. Furthermore, a \relation{JOINBENCH}
+relation was inspired from similar work in the past to include attributes that I
+believe most suitable tested and described join based benchmarking queries.
+
 To summarise, the main contributions of this project are:
 \begin{itemize}
     \item a working implementation of the database system outlined in the paper
