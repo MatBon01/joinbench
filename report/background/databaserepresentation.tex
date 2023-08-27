@@ -1,7 +1,15 @@
 \section{Evolution of database representation}\label{sec:background:dbrep}
+This section introduces the mathematical framework presented in \relalg{} for
+defining the relational model. It is useful to help understand the structure in
+\fref{chap:database}.
+
 \subsection{Bags}
-\paragraph{Characteristics of a database}We expect our database approximation to not be ordered and admit multiplicities and a finite bag of values is one of the simplest constructions that does so. Like a finite set, a bag contains a collection of unordered values. However, unlike a set, bags can contain duplicate elements \cite{RelationalAlgebraByWayOfAdjunctions}.  This multiplicity is key for processing non-idempotent aggregations. For instance, if summing up the ages of a database of people, without admitting multiplicity we would only sum each unique age once.
-\subparagraph{Generalisation}Furthermore, going forward we generalise to bags of any types instead of the classical ``bags of records''. This also allows us to deal with intermediate tables that contain non-record values.
+\paragraph{Characteristics of a database} We expect our database approximation to not be ordered and admit multiplicities and a finite bag of values is one of the simplest constructions that does so. Like a finite set, a bag contains a collection of unordered values. However, unlike a set, bags can contain duplicate elements.  This multiplicity is key for processing non-idempotent aggregations. For instance, if summing up the ages of a database of people, without admitting multiplicity we would only sum each unique age once.
+
+\subparagraph{Generalisation} Furthermore, going forward we generalise to bags
+of any types instead of the classical ``bags of records''. This also allows us
+to deal with intermediate tables that contain non-record values which, again,
+may be useful for describing intermediate states of aggergations or projections.
 
 In \fref{tab:BagRelAlgOps} we summarise the implementation of relational algebra operators with bags
 as their bulk type \cite{RelationalAlgebraByWayOfAdjunctions}.
@@ -19,7 +27,7 @@ as their bulk type \cite{RelationalAlgebraByWayOfAdjunctions}.
         aggregation in monoid $\monoid{M}$ & $reduce\ \monoid{M}$\\
     \end{tabular}
     \caption{Relational algebra operators implemented for bags}
-    \label{tab:BagRelAlgOps}
+    \label{tab:indexedTableRelAlgOps}
 \end{table}
 
 \subsection{Indexed tables}
@@ -29,6 +37,7 @@ equijoin by indexing. In this section we introduce the mathematical concepts req
 \theoremstyle{definition}\newtheorem*{ppfuncdef}{Point-preserving function}
 \theoremstyle{definition}\newtheorem*{mapdef}{Map}
 \theoremstyle{definition}\newtheorem*{finitemapdef}{Finite map}
+\theoremstyle{definition}\newtheorem*{indexedtabledef}{Indexed Table}
 \begin{psetdef}\label{def:pset}
   A pointed set $\pset{A}{a}$ is a set $A$ with a distinguished element $a \in A$.
 \end{psetdef}
@@ -47,3 +56,52 @@ Let $\keyset$ be a set and $\valset$ a pointed set. To those already familiar wi
   A finite map of type \finitemap{\keyset}{\valset} is a map where only a finite number of keys are mapped to $null_\valset$ (where $null_\valset$ is the distinguished element of \valset). 
 \end{finitemapdef}
 The advantage of using a finite map in a database is to allow aggregation.
+Furthermore, we note the following
+isomorphisms~\cite{RelationalAlgebraByWayOfAdjunctions} where $1$ is the unit
+type and pointed.
+
+\begin{equation*}
+\begin{split}
+    & empty: 1 \rightarrow \finitemap{\keyset}{1} \\
+    & empty = \lambda\:k \rightarrow () \\
+    \\
+    & merge: \finitemap{\keyset}{\valset_1} \times \finitemap{\keyset}{\valset_2}
+             \rightarrow \finitemap{\keyset}{\valset_1 \times \valset_2} \\
+    & merge\ (s,\;t) = \lambda\:k \rightarrow (s\:k,\;t\:k) \\
+\end{split}
+\end{equation*}
+
+The functions above tell us some extremely important information on creating
+empty maps and calculating their unions. As you can see $empty$ returns a
+function that maps any key to the neutral element $()$. This is to be expected
+as there are no values in an empty map. More interestingly, we see the merge
+of two maps as a function that returns a function that maps a key to a pair of
+values, each of which holds the result of the key lookup in the respective
+table.
+
+We now have the correct machinery to define an indexed table.
+
+\begin{indexedtabledef}
+    An indexed table \indexedTable{\keyset}{\valset} is simply \finitemap{K}{\bag{V}}.
+\end{indexedtabledef}
+
+Set with the definitions above, \fref{tab:indexedTableRelAlgOps} can be referred
+to for a summary of relational algebra operations implemented for a bulk type of
+indexed tables~\cite{RelationalAlgebraByWayOfAdjunctions}.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{r|l}
+        \keyset{}-indexed table of \valset{} values & \indexedTable{\keyset}{\valset} \\
+        empty table & $empty$ \\
+        singleton table $(k, v)$ & $k \mapsto \lbag v \rbag$ \\
+        union of tables & $\finitemap{\keyset}{(\uplus)}\ \cdot\ merge$ \\
+        projection $\projsymb{f}$ & $\finitemap{\keyset}{(\finitebag{f})}$ \\
+        selection $\selectsymb{p}$ & $\finitemap{\keyset}{(filter\ p)}$ \\
+        aggregation in monoid $\monoid{M}$ & $\finitemap{\keyset}{(reduce\
+        \monoid{M})}$\\
+            natural join & \finitemap{\keyset}{(\times)}\ $\cdot\ merge$ \\
+    \end{tabular}
+    \caption{Relational algebra operators implemented for bags}
+    \label{tab:BagRelAlgOps}
+\end{table}
