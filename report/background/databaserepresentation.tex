@@ -55,8 +55,29 @@ Let $\keyset$ be a set and $\valset$ a pointed set. To those already familiar wi
 \begin{finitemapdef}
   A finite map of type \finitemap{\keyset}{\valset} is a map where only a finite number of keys are mapped to $null_\valset$ (where $null_\valset$ is the distinguished element of \valset). 
 \end{finitemapdef}
-The advantage of using a finite map in a database is to allow aggregation. We
-now have the correct machinery to define an indexed table.
+The advantage of using a finite map in a database is to allow aggregation.
+Furthermore, we note the following
+isomorphisms~\cite{RelationalAlgebraByWayOfAdjunctions} where $1$ is the unit
+type and pointed.
+
+\begin{equation*}
+\begin{split}
+    & empty: 1 \rightarrow \finitemap{\keyset}{1} \\
+    & empty = \lambda\:k \rightarrow () \\
+    \\
+    & merge: \finitemap{\keyset}{\valset_1} \times \finitemap{\keyset}{\valset_2}
+             \rightarrow \finitemap{\keyset}{\valset_1 \times \valset_2} \\
+    & merge (s, t) = \lambda\:k \rightarrow (s k, t k) \\
+\end{split}
+\end{equation*}
+
+The functions above tell us some extremely important information on creating
+empty maps and calculating their unions. As you can see $empty$ returns a
+function that maps any key to the neutral element $()$. This is to be expected
+as there are no values in an empty map. More interestingly, we see the merge
+of two maps as a function that returns a pair of key lookups in each table.
+
+We now have the correct machinery to define an indexed table.
 
 \begin{indexedtabledef}
     An indexed table \indexedTable{\keyset}{\valset} is simply \finitemap{K}{\bag{V}}.
