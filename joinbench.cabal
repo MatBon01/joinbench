@@ -1,0 +1,170 @@
+cabal-version:      2.4
+name:               joinbench
+version:            0.1.0.0
+synopsis:
+    Benchmarking and expanding on the paper "Relational Algebra by way of Adjunctions"
+
+-- A longer description of the package.
+-- description:
+homepage:
+
+-- A URL where users can report bugs.
+-- bug-reports:
+license:            NONE
+author:             Matteo Bongiovanni
+maintainer:         40599507+MatBon01@users.noreply.github.com
+
+-- A copyright notice.
+-- copyright:
+-- category:
+extra-source-files:
+    CHANGELOG.md
+    README.md
+
+library
+    exposed-modules:
+        Data.Bag,
+        Data.PointedSet,
+        Data.Key,
+        Database.Bag,
+        Database.IndexedTable,
+        Text.Parser.Customers,
+        Text.Parser.Invoices,
+        Text.Parser.JoinBenchTable
+
+    -- Modules included in this library but not exported.
+    other-modules:
+        Data.CMonoid
+        Text.Parser.Utils
+
+    -- LANGUAGE extensions used by modules in this package.
+    other-extensions:
+        InstanceSigs, TypeFamilies, FlexibleContexts,
+        FlexibleInstances, TupleSections
+    build-depends:
+        base >=4.16.4.0,
+        array >= 0.5.4.0,
+        parsec >= 0.3.1.15,
+        deepseq >= 1.4.6.1
+    hs-source-dirs:   src
+    default-language: Haskell2010
+
+executable appendix-example
+    main-is:          AppendixExample.hs
+    build-depends:
+        base >=4.16.4.0,
+        joinbench
+
+    hs-source-dirs:   app/examples
+    default-language: Haskell2010
+
+common invoice-example
+    build-depends:
+        base >=4.16.4.0,
+        joinbench
+
+    default-language: Haskell2010
+
+    other-modules: Utils
+
+executable invoice-new-comprehension
+    import: invoice-example
+    hs-source-dirs: app/examples/invoice
+    main-is: NewComprehensionExample.hs
+
+executable invoice-comprehension
+    import: invoice-example
+    hs-source-dirs: app/examples/invoice
+    main-is: ComprehensionEquijoinExample.hs
+
+
+executable invoice-product
+    import: invoice-example
+    hs-source-dirs: app/examples/invoice
+    main-is: ProductEquijoinExample.hs
+
+executable invoice-indexed
+    import: invoice-example
+    hs-source-dirs: app/examples/invoice
+    main-is: IndexedEquijoinExample.hs
+
+common joinbench-example
+    build-depends:
+        base >=4.16.4.0,
+        joinbench
+
+    default-language: Haskell2010
+
+    ghc-options:
+        -fprof-cafs
+        -fforce-recomp
+        -fprof-auto
+        "-with-rtsopts=-hy -p"
+
+executable comprehension
+    import: joinbench-example
+    hs-source-dirs: app/examples/joinbench
+    main-is: ComprehensionEquijoinExample.hs
+
+executable product
+    import: joinbench-example
+    hs-source-dirs: app/examples/joinbench
+    main-is: ProductEquijoinExample.hs
+
+executable indexed
+    import: joinbench-example
+    hs-source-dirs: app/examples/joinbench
+    main-is: IndexedEquijoinExample.hs
+
+
+common benchmark
+    build-depends:
+        base >=4.16.4.0,
+        joinbench,
+        criterion >= 1.6.2.0,
+
+    other-modules: BenchmarkUtils
+
+    other-extensions: ExplicitForAll
+
+    default-language: Haskell2010
+
+executable invoice-benchmark
+    import: benchmark
+    main-is: InvoiceBenchmark.hs
+    hs-source-dirs:   app
+
+executable joinbench-benchmark
+    import: benchmark
+    main-is: JoinBenchBenchmark.hs
+    hs-source-dirs:   app
+
+executable whnf-joinbench-benchmark
+    import: benchmark
+    main-is: JoinBenchWHNFBenchmark.hs
+    hs-source-dirs: app
+
+test-suite spec
+    default-language:   Haskell2010
+    type:               exitcode-stdio-1.0
+    hs-source-dirs:     test
+    main-is:            Spec.hs
+    other-modules:
+        Data.BagSpec,
+        Data.CMonoidSpec,
+        Data.PointedSetSpec,
+        Data.KeySpec,
+        Database.BagSpec,
+        Database.IndexedTableSpec,
+        Text.Parser.CustomersSpec,
+        Text.Parser.InvoicesSpec,
+        Text.Parser.JoinBenchTableSpec,
+        Database.BagSpecData
+    build-depends:
+        base >=4.16.4.0,
+        hspec ^>=2.10,
+        joinbench,
+        array >= 0.5.4.0,
+        parsec >= 0.3.1.15,
+        deepseq >= 1.4.6.1
+    build-tool-depends: hspec-discover:hspec-discover == 2.*

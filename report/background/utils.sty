@@ -43,6 +43,7 @@
 \newcommand{\finitemap}[2]{\ensuremath{\mathrm{Map}_*\ #1\;#2}}
 
 % Relational model
+\newcommand{\database}[1]{\ensuremath{\mathtt{#1}}}
 \newcommand{\relation}[1]{\ensuremath{\mathtt{#1}}}
 \newcommand{\relationAttribute}[1]{\ensuremath{\mathtt{#1}}}
 \newcommand{\projsymb}[1]{\ensuremath{\pi_{#1}}}
@@ -71,6 +72,31 @@
 
 \newcommand{\WisconsinXSubstring}[0]{\ensuremath{\mathrm{xx\ldots xx}}}
 
+\newcommand{\NewWisconsinUString}[0]{\ensuremath{\NewGeneralWisconsinUStringTemplate{\$_1}{\$_2}{\$_3}{\$_4}{\$_5}{\$_6}{\$_7},\
+\$_i \in \NewWisconsinUStringCharDomain{}, i \in \left\{1, \ldots, 7\right\}}}
+
+\newcommand{\NewWisconsinUStringCharDomain}[0]{\ensuremath{\left\{\mathrm{A,
+\ldots, Z}\right\}}}
+
+\newcommand{\NewGeneralWisconsinUString}[8]{\ensuremath{\NewGeneralWisconsinUStringTemplate{#1}{#2}{#3}{#4}{#5}{#6}{#7},\ #1, #2, #3, #4, #5, #6, #7 \in #8}}
+
+\newcommand{\NewGeneralWisconsinUStringTemplate}[7]{\ensuremath{#1 #2 #3 #4 #5 #6 #7\WisconsinLabelledXSubstring{45}}}
+
+\newcommand{\NewWisconsinCyclicStringDef}[0]{\ensuremath{\NewWisconsinGeneralCyclicStringDef{\$}{\NewWisconsinCyclicStringCharDomain{}}}}
+\newcommand{\NewWisconsinGeneralCyclicStringDef}[2]{\ensuremath{\NewWisconsinGeneralCyclicStringDefTemplate{#1}{#1}{#1}{#1},\ #1 \in #2}}
+\newcommand{\NewWisconsinGeneralCyclicStringDefTemplate}[4]{\ensuremath{#1 #2 #3
+#4}\WisconsinLabelledXSubstring{48}}
+\newcommand{\NewWisconsinCyclicStringCharDomain}[0]{\ensuremath{\left\{\mathrm{A}, \mathrm{H}, \mathrm{O}, \mathrm{V}\right\}}}
+
+
+\newcommand{\NewWisconsinCyclicIntegerDef}[1]{\ensuremath{\NewWisconsinCyclicIntegerGeneralDef{\relationAttribute{unique1}}{#1}}}
+\newcommand{\NewWisconsinCyclicIntegerGeneralDef}[2]{\ensuremath{\left(#1\
+\NewWisconsinModSymbol\ #2\right)}}
+\newcommand{\NewWisconsinModSymbol}[0]{\ensuremath{\mathrm{mod}}}
+
 % Temporary function to show italicised code similar to maths
 % TODO: Change
 \newcommand{\mathcodefunc}[1]{\ensuremath{\mathit{#1}}}
+
+% Papers
+\newcommand{\relalg}[0]{``Relational Algebra by way of Adjunctions''}

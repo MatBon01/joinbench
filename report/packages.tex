@@ -15,13 +15,31 @@
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
 \usepackage{comment}
 \usepackage[numbers]{natbib}
-\usepackage{fancyref}
+\usepackage{wrapfig}
 
 %% Math
 \usepackage{mathtools}
 \usepackage{stmaryrd}
 
+%% Diagrams and graphics
+\usepackage{pgf-umlcd}
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
 \usepackage{title/titlestructure}
 
 %% Utils
 \usepackage{background/utils}
+
+%% Referencing
+\usepackage{fancyref}
+\renewcommand{\fancyrefdefaultformat}{plain}
+\renewcommand{\fref}{\Fref}
+
+%% Code formatting
+\input{code/lhs2tex}
+
+%$

@@ -1,0 +1,102 @@
+\section{Functions to benchmark}\label{sec:benchmark:functions}
+In this section we present an overview of the three functions we will
+be comparing in this benchmark. The paper \relalg{} presents a solution for
+equijoin (and arbitrary selections followed by joins) query optimisation using
+structures in Haskell, the algorithms compared will comprise of two alternative
+``dummy'' solutions which may be seen as a simple implementation without the
+findings of the paper, and a solution using an indexed structure as described
+in the paper.
+
+\paragraph{Product equijoin} The first function to be presented is
+$productEquijoin$. This function
+expresses the modular nature of the equijoin query (each part is expressed in
+discrete steps) while using a non-indexed approach resulting in a global
+Cartesian product.
+The function has two discrete steps: first it must compute the product of the
+two relations and then it must filter the result based on the equijoin criteria.
+This is achieved by the following code.
+
+\input{code/productEquijoin}
+
+\noindent
+The two discrete steps are clearly visible and separated by the composition of
+functions. The first step is to compute the Cartesian product using the
+$cp$ function. As a reminder the $cp$ function has
+the following type signature.
+\input{code/cpTypeSignature}
+
+\noindent
+The $cp$ function works as any Cartesian product would and simply takes a pair of bags and
+returns a bag constituting the pairs of elements their elements.
+The second step is to select the elements from the pair of
+bags. The type signature of $select$ is as follows.
+\input{code/selectTypeSignature}
+
+\noindent
+As you can see, $select$ is simply a
+$filter$ on bags. The complexity of the function is housed in the
+equality function. The equality function is modified to transform the bags using
+the given functions before comparison. This is to generalise the idea of
+comparing certain attributes; as mentioned in \fref{sec:relationalmodel} an
+equijoin is a join based on equality of certain attributes and therefore just as
+a record would need a transformation to compare attribute, we arbitrarily
+transform the bag.
+
+\paragraph{Comprehension equijoin} The second of the `dummy' solutions is the
+$comprehensionEquijoin$.
+This solution also does not make use of the indexed structures implemented and
+presented. It is
+clear that the function just names a list comprehension. We expect this
+comprehension to take an element from both bags and, if the predicate required
+by the equijoin is satisfied, form a pair. The following code demonstrates
+this.
+
+\input{code/comprehensionEquijoin.tex}
+
+\noindent
+As is to be expected, the previous code takes the form of a monad comprehension.
+This is possible using the GHC extension \verb|MonadComprehensions| and allowed by
+the fact that $Bag$ is a monad. We see many similar
+features to the $productEquijoin$ function. A major difference is that there is
+no explicit product operations but the pair is created explicitly when matching
+results are found (however, all possible pairs are still considered). The equality, though
+not explicitly named as a helper function, also includes the transformation described above.
+
+\paragraph{Indexed equijoin} The final function is the only of the three to use
+indexing. The indexing tested in this benchmark is basic however and further
+optimisations are not considered. To this extent this function can also be seen as
+modular; where a query engine or
+custom written query could easily tune and combine steps, this function follows an
+order putting together whole steps in a deterministic and segregated way.
+This algorithm is by far
+the most complex and is a version of what is proposed in the paper \relalg{}. In
+simple terms, we index the bags and merge the result. After modification it to form
+another valid indexed
+structure we reduce this higher level construct back to a bag. The code for
+these operations is as follows.
+
+\input{code/indexedEquijoin}
+
+\noindent
+In order to understand the code it may be useful to explain some naming
+conventions. Preceding $i$s are used to denote indexed or indexing structures,
+for instance $if1$ is an `indexing function'. Furthermore, the letter $t$
+refers to tables. As with previous functions it operates on two bags and
+so the indices in variables refer to which bag the function is referring to.
+
+As discussed above, the first step is to index the bags. This is achieved using
+an inline form of the $indexBy$ function whose type
+signature can be seen below. The $indexBy$ function
+takes a table and a function that can transform the table to a key and indexes
+the table by the key. The result of indexing a bag is simply a structure that
+associates to each key a bag of the values that share that key. Now, with a pair of indexed tables
+$merge$, whose type signature can be seen below,
+combines the two indexed tables to one such that for each key a pair of bags is
+associated to it. In order to complete reach a usable structure we must perform
+a local Cartesian product (hence the $fmap cp$) on
+each pair of bags to finally reach a single bag per key. Now we have a simple
+indexed table again we can reduce it back to a bag (of pairs) using the reduce function
+(whose type signature is below). More details on the structures used here can be
+found in \fref{chap:database}.
+
+\input{code/indexedEquijoinTypeSignatures}

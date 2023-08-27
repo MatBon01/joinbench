@@ -1,4 +1,4 @@
-\section{Benchmarking databases}
+\section{Benchmarking databases}\label{sec:background:dbbenchmarking}
 Databases are pervasive to modern society and thus standards have arisen over
 the last few decades to ensure that customers are able to pick their preferred
 DBMS vendor.
@@ -253,15 +253,15 @@ attributes, 12 cyclic integer attributes with varying domains and 3 string attri
         primary \\
         \midrule
 
-        \relationAttribute{two} & integer & $\{0, 1\}$ & random \\
-        \relationAttribute{four} & integer & $\{0, \ldots, 3\}$ & random \\
-        \relationAttribute{ten} & integer & $\{0, \ldots, 9\}$ & random \\
-        \relationAttribute{twenty} & integer & $\{0, \ldots, 19\}$ & random \\
-        \relationAttribute{hundred} & integer & $\{0, \ldots, 99\}$ & random \\
-        \relationAttribute{thousand} & integer & $\{0, \ldots, 999\}$ & random \\
-        \relationAttribute{twothous} & integer & $\{0, \ldots, 1999\}$ & random \\
-        \relationAttribute{fivethous} & integer & $\{0, \ldots, 4999\}$ & random \\
-        \relationAttribute{tenthous} & integer & $\{0, \ldots, 9999\}$ & random \\
+        \relationAttribute{two} & integer & $\{0, 1\}$ & cyclic \\
+        \relationAttribute{four} & integer & $\{0, \ldots, 3\}$ & cyclic \\
+        \relationAttribute{ten} & integer & $\{0, \ldots, 9\}$ & cyclic \\
+        \relationAttribute{twenty} & integer & $\{0, \ldots, 19\}$ & cyclic \\
+        \relationAttribute{hundred} & integer & $\{0, \ldots, 99\}$ & cyclic \\
+        \relationAttribute{thousand} & integer & $\{0, \ldots, 999\}$ & cyclic \\
+        \relationAttribute{twothous} & integer & $\{0, \ldots, 1999\}$ & cyclic \\
+        \relationAttribute{fivethous} & integer & $\{0, \ldots, 4999\}$ & cyclic \\
+        \relationAttribute{tenthous} & integer & $\{0, \ldots, 9999\}$ & cyclic \\
         \relationAttribute{odd100} & integer & $\left\{n\ |\ n \leftarrow \{0, \ldots, 99\},\
         \mathrm{odd}\  n\right\}$ & random \\
         \relationAttribute{even100} & integer & $\left\{n\ |\ n \leftarrow \{0, \ldots, 99\},\
@@ -299,10 +299,8 @@ sort the relation. As the name suggests, both fields are unique.
 named after the number of values they can take and any properties; for instance
 ``\relationAttribute{four}'' can take 4 values from 0 to 3, and ``\relationAttribute{even100}''
 can take any even number between 0 and 99 (the first 100 numbers counting from
-0). Despite following a uniform distribution in Bitton's original paper, these
-integers have been dubbed cyclic as they are designed to be non-unique and some
-implementations \cite{PractitionersIntroduction} derive their value from a
-modulo operation on \relationAttribute{unique1}. These attributes are key to the
+0). The possible values for each of these attributes are cycled through while
+generating the table. These attributes are key to the
 advantages of using a synthetic database as, given the relation cardinality, you
 can use it to specify any number of selectivity factors. For instance a
 selection operation on \relationAttribute{two} relation would result in a selectivity
@@ -383,6 +381,109 @@ The components of \relationAttribute{string4} simply cycle through the 4 values
 If any ordering is required it is done on \relationAttribute{unique2} (or equivalently
 \relationAttribute{stringu2}).
 
+\paragraph{Improvements to the Wisconsin Database} As one of the first
+standard ways of testing database systems the Wisconsin database has been
+criticised throughout the years and been subject to multiple retrospectives by
+the original authors \cite{Wisconsin2}. Among other comments there were emphases
+on criticism revolving around the single user limitation of the benchmark, its
+lack of scalability and string design. Not addressing the single user concerns
+in this benchmark improvements were suggested for the latter two issues. In
+order to address the scalability concerns and string design Bitton introduces a
+change to a few of their attributes in \cite{Wisconsin2} as well as rework which
+can be seen in \fref{tab:WisconsinImprovedAttributes}. A brief non-exhaustive
+description of the changes follow.
+
+\subparagraph{Unique attributes} The unique attributes were changed so that only
+\relationAttribute{unique1} is randomly generated and
+\relationAttribute{unique2} is sequential.
+
+\subparagraph{Cyclic integer attributes} The cyclic integer attributes such as
+\relationAttribute{two} and \relationAttribute{hundred} were mostly replaced
+with percentages. The cardinalities stay the same, but the method of generation
+also differs: instead of cycling through values, they are now randomly generated
+by using the appropriate modulo operation on \relationAttribute{unique1}. The
+reason for the change is that you can exactly tell the selectivity of a query;
+for example, as described by Bitton, you know that a selection on
+\relationAttribute{twentyPercent}, say $\relationAttribute{twentyPercent} = 2$,
+will give 20\% of the table no matter the cardinality.
+
+\subparagraph{String attributes} The string attributes remained the same size
+but their template and methods of generation changed. The justification for the
+fixed-length strings was so that each disk page could hold the same number of
+tuples. An an overview of the template for \relationAttribute{stringu1} and
+\relationAttribute{stringu2} can be found in \fref{fig:NewWisconsinUniqueString}
+and for \relationAttribute{string4} in \fref{fig:NewWisconsinCyclicString}. The
+generation are not described but it suffices to know that
+\relationAttribute{stringu1} and \relationAttribute{stringu2} are generated
+based on \relationAttribute{unique1} and \relationAttribute{unique2}
+respectively, whereas \relationAttribute{string4} continues to be cyclic.
+
+\begin{figure}[h]
+    \centering
+    \NewWisconsinUString
+
+    \caption{Template for the unique strings in the updated Wisconsin database.}
+    \label{fig:NewWisconsinUniqueString}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \NewWisconsinCyclicStringDef{}
+
+    \caption{Template for \relationAttribute{string4} in the updated Wisconsin database.}
+    \label{fig:NewWisconsinCyclicString}
+\end{figure}
+
+
+\begin{table}[t]
+
+    \begin{tabular}{l c l}
+        \toprule
+        Attribute & Values & Properties \\
+        \midrule
+
+        \relationAttribute{unique1} & $\{0, \ldots, K - 1\}$ & random, unique \\
+        \relationAttribute{unique2} & $\{0, \ldots, K - 1\}$ & sequential, unique \\
+        \midrule
+
+        \relationAttribute{two} & $\{0, 1\}$ & random,
+        \NewWisconsinCyclicIntegerDef{2} \\
+        \relationAttribute{four} & $\{0, \ldots, 3\}$ & random,
+        \NewWisconsinCyclicIntegerDef{4} \\
+        \relationAttribute{ten} & $\{0, \ldots, 9\}$ & random,
+        \NewWisconsinCyclicIntegerDef{10} \\
+        \relationAttribute{twenty} & $\{0, \ldots, 19\}$ & random,
+        \NewWisconsinCyclicIntegerDef{20} \\
+        \relationAttribute{onePercent} & $\{0, \ldots, 99\}$ & random,
+        \NewWisconsinCyclicIntegerDef{100} \\
+        \relationAttribute{tenPercent} & $\{0, \ldots, 9\}$ & random,
+        \NewWisconsinCyclicIntegerDef{10} \\
+        \relationAttribute{twentyPercent} & $\{0, \ldots, 4\}$ & random,
+        \NewWisconsinCyclicIntegerDef{5} \\
+        \relationAttribute{fiftyPercent} & $\{0, 1\}$ & random,
+        \NewWisconsinCyclicIntegerDef{2} \\
+        \relationAttribute{unique3} & $\{0, \ldots, K - 1\}$ & random,
+        \relationAttribute{unique1} \\
+        \relationAttribute{evenOnePercent} & $\{0, 2, \ldots, 198\}$ & random,
+        $\left(\relationAttribute{onePercent} \cdot 2\right)$ \\
+        \relationAttribute{oddOnePercent} & $\{1, 3, \ldots, 199\}$ & random,
+        $\left(\relationAttribute{onePercent} \cdot 2\right) + 1$ \\
+        \midrule
+
+        \relationAttribute{stringu1} & \NewWisconsinUString{} & random, based on
+        \relationAttribute{unique1} \\
+        \relationAttribute{stringu2} & \NewWisconsinUString{} & random, based on
+        \relationAttribute{unique2} \\
+        \relationAttribute{string4} & \NewWisconsinCyclicStringDef{} & cyclic \\
+        \bottomrule
+    \end{tabular}
+
+
+    \caption{The improved attributes of the Wisconsin database as seen in
+    \cite{Wisconsin2}.}
+    \label{tab:WisconsinImprovedAttributes}
+\end{table}
+
 \paragraph{Queries} Along with a synthetic database, the Wisconsin benchmark
 also provides a set of queries to benchmark different relational operators.
 Bitton's queries attempt to measure the performance of the following (as stated
@@ -397,3 +498,132 @@ in \cite{Wisconsin})
     \item Updates
 \end{enumerate}
 Many queries contain version for using both primary and secondary indices.
+
+\subsubsection{Set Query Benchmark}
+The Set Query Benchmark as described by O'Neil \cite{SetQueryBenchmark} is a
+benchmark that aims to use a more realistic set of operations for decision
+support benchmarks than TPC and DebitCredit, namely the \emph{set queries}. Set queries
+are queries which potentially need information from a large set of tuples.
+
+\paragraph{The BENCH relation} The table used in the set benchmark, named
+\relation{BENCH}, is synthetically generated with 21 columns. Similarly to the
+Wisconsin benchmark there are a mixture of integer and string attributes; Namely
+13 indexed attributes and eight character columns. The \relation{BENCH} table
+always has a multiple of 1 million rows, and for the information below we assume
+the default of 1 million rows. Each row has 200 bytes each.
+
+\paragraph{Indexed columns} The thirteen indexed columns are all integers,
+twelve of which are ordered. The attributes are as follows
+\relationAttribute{KSEQ}, \relationAttribute{K500K},
+\relationAttribute{K250K}, \relationAttribute{K100K},
+\relationAttribute{K40K}, \relationAttribute{K10K},
+\relationAttribute{K1K}, \relationAttribute{K100},
+\relationAttribute{K25}, \relationAttribute{K10}, \relationAttribute{K5},
+\relationAttribute{K4}, \relationAttribute{K2}. All columns except
+\relationAttribute{KSEQ} are unordered (randomly generated) whereas
+\relationAttribute{KSEQ} enumerates the columns in order from 1. For the
+unordered columns, such as \relationAttribute{K100} the number denotes its
+cardinality (where if a number ends with a ``K'' it denotes a multiple of 1000,
+such as \relationAttribute{K40K} having a cardinality of $40,000$). If a column
+has a cardinality of $N$, then components can take any value between $1$ and
+$N$ inclusive. In order to allow the scaling of tables the cardinality of the
+two largest ordered columns, \relationAttribute{K500K} and
+\relationAttribute{K250K}, increase proportionally to the number of rows; as
+\relationAttribute{KSEQ} enumerates the rows it is clear that its
+cardinality also increases as the number of rows increases.
+
+\paragraph{Character columns} The character columns in the Set Query Benchmark
+serve a very different purpose to the strings in the Wisconsin database and are
+there simply to pad out a row to 200 bytes. The columns are named simply
+\relationAttribute{S1}, \relationAttribute{S2}, \ldots, \relationAttribute{S8}.
+The relation
+\relationAttribute{S1} is an 8 character string, whereas \relationAttribute{S2} through to
+\relationAttribute{S8} are 20 character strings. The strings are not used for retrievals
+and so O'Neil says they can all be set to the same value; interestingly, O'Neil
+writes that the reason they are not used in retrievals is to mirror the fact
+that
+retrievals in a large database system with scarce writes on columns without
+indexing is generally not advised.
+
+\subsubsection{TPC-H}
+The TPC-H benchmark is one of the more recent benchmarks for decision support
+systems designed by the Transaction Processing Performance Council (TPC). The
+benchmark contains a bigger emphasis on updates compared to Wisconsin and Set
+Query Benchmark (specifically concurrent updates) while still focusing on
+ad-hoc business related queries. This benchmark is meant to represent a more
+modern and authoritative benchmarking system in this literature review but is
+not to be discussed in depth as it is beyond the scope of this project.
+
+\paragraph{Overall Structure} The TPC-H benchmark takes a different, perhaps more
+realistic, approach to their database model. The benchmark consists of eight
+``separate and individual tables'' which have varying relationships to each
+other. The database has some constraints on size, such as a minimum on data from
+10,000 suppliers which leads to a database of almost ten million rows
+(approximately a raw storage capacity of 1 GB). This is default size not
+comparable to either the Wisconsin benchmark and the set query benchmark; it is
+worth arguing that both can be scaled up, but so too can the TPC-H benchmark be
+scaled to much larger datasets.
+
+\paragraph{The relations} The table definition clearly has parallels to the business world with
+tables not only being assigned varying structures and cardinalities, but
+real-life applications too. We see, for instance, the \relation{SUPPLIER}
+relation, with attributes such as \relationAttribute{SUPPKEY},
+\relationAttribute{NAME} and \relationAttribute{ACCTBAL}. The cardinality of
+\relation{SUPPLIER} is also specified as $\mathrm{SF} \cdot 10,000$ where
+$\mathrm{SF}$ is the scale factor for the chosen database size. This contrasts
+the \relation{ORDERS} relation with attributes such as
+\relationAttribute{TOTALPRICE} and
+a cardinality of $\mathrm{SF} \cdot 1,500,000$.
+
+\subsection{Best practices}\label{sec:background:benchmarkbestpractices}
+It is clear that after the idea worked so well in the Wisconsin benchmark, a
+synthetic database is vital to a well done benchmark of DBMS. Despite the wide
+array of different takes to benchmarking, both due to progressions in the field
+and difference in requirements there is a large overlap in what values each
+designer chose. This subsection is designed to condense the lessons in the
+previous section.
+
+\paragraph{Synthetic databases} Synthetic databases are key to give benchmarks
+the customisation, standards, readability and structure necessary to provide any
+sort of useful result. We see many approaches to the synthetic database
+structure, the multiple tables for relation sizes seen in
+Set Query Benchmark \cite{SetQueryBenchmark}, the single table whose size is changed via selection
+queries in Wisconsin \cite{Wisconsin}, and the realistic approach set up in
+\cite{TPC-H}. The size of each tuple can be designed so that a relation's size
+is known. And perhaps most importantly, selectivity factors and CPU usage can be
+changed by definition or combination of attributes.
+
+\paragraph{Scalability} A key criticism for founding DBMS benchmark systems is a
+lack of scalability, as can be seen in the update to the Wisconsin benchmark
+\cite{Wisconsin2}. Technology is advancing often as well as vastly different
+needs in different domains, and so a `one size fits all' approach is not viable
+for such benchmarks. A general strategy employed to overcome any of these
+limitations is to partition a percentage of the database or have the largest $n$
+attributes scale to the size of the relation. It is also worth noting that
+scalability to parallel execution is also desirable \cite{BenchmarkHandbook}.
+
+\paragraph{Readability} The Wisconsin benchmark \cite{Wisconsin} was one of the
+first to emphasise the importance of making the relation easy for the reader to
+understand. A good benchmark should be able to be read and understood easily
+with any new, perhaps more relevant, queries added easily. Similarly, Jim Gray
+talks about the value of simplicity for the user, linking its understandability
+to its credibility \cite{BenchmarkHandbook}.
+
+\paragraph{Relevance} Jim Gray believes that relevance is important when
+designing a system and specifies metrics to be reported in order to fulfil such
+a requirement, namely ``peak performance and price/performance of systems when
+performing typical operations within that problem domain''. For this project
+these specific recommendations should be taken with a grain of salt as they are
+not completely indicative of the desired outcome however the idea of relevance
+is key. Furthermore, some benchmarks such as TPC-H \cite{TPC-H} have also taken
+relevance in the structure of their database which may be more attractive for
+those working in the same or adjacent domains.
+
+\paragraph{Portability} Jim Gray also emphasises the need to implement the
+benchmark on different systems and architectures \cite{BenchmarkHandbook}. You
+can see varying approaches to this, in early Wisconsin benchmark and the time it
+was created, the architectures were closely linked to the DBMS systems
+\cite{Wisconsin} and so there was a more closed minded scope. However, reading
+the literature you can see the portability of benchmarks evolve as the
+technology does, notably defining queries in the very portable language SQL
+\cite{Wisconsin2, SetQueryBenchmark}.

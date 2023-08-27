@@ -1,0 +1,106 @@
+\section{Benchmarking database}
+As part of the project a benchmark will be run on the database system outlined
+in \fref{chap:database}. As the paper \relalg{} had a focus on their join algorithm, so will the benchmark focus
+on the performance of join queries in particular representing the class of query
+optimisations most prominent in the paper. This section will describe some design
+decisions taken into account when constructing the relations used in the
+benchmark and finally describe the \relation{JOINBENCH} relation which will be
+used to perform most benchmarks.
+
+\subsection{Initial design decisions}
+As explained in \fref{sec:background:dbbenchmarking} there are a number of styles that can be adapted to
+conduct benchmarks for database management system implementations. Often the
+style is greatly dependent on the context the system works in and the purposes
+of the information gathering. It was my decision that a decision support system
+had many important parallels to the domain of interest and so to design the
+benchmark with a stronger focus on the work that has been conducted in that
+area. Following are some characteristics of decision support
+systems~\cite{IntroToDatabaseSystems}
+that make their structure and benchmarks particularly relevant to this
+project.
+
+\subparagraph{Join complexity} Queries in decision support systems typically
+have more complicated design this is caused by the need to access many
+kinds of facts in order to answer complex queries. Although the
+paper \relalg{}~\cite{RelationalAlgebraByWayOfAdjunctions}
+does not recommend any advice for dealing with multiple joins on a practical
+industrial scale (as the book An introduction to database
+systems~\cite{IntroToDatabaseSystems} describes with industry
+standard \emph{prejoin}s), its work is central on the efficiency of joins as a
+guiding example.
+
+\subparagraph{Ad hoc queries} Decision support frameworks usually rely on ad hoc
+queries more than other applications and as such their benchmarks test its
+ability to deal with these queries more than other applications~\cite{SetQueryBenchmark, PractitionersIntroduction}. This is a similar
+query type that is of interest for this benchmark.
+
+\subparagraph{Integrity unimportant} The paper \relalg{} does not provide any way of
+updating the table, only query methods. This is similar to the aspect of
+decision support systems who assume that the data is correct and
+does not deal with many updates. Therefore little or no emphasis is placed on
+testing the integrity of the system. This helps construct a benchmark that more
+accurately reflects the algorithmic core of the paper where the focus was on
+query optimisation.
+
+\subsection{The \relation{JOINBENCH} relation}\label{sec:benchmark:joinbench}
+The \relation{JOINBENCH} relation is an easily synthesised relation designed in
+order to help test the performance of join based queries. Its standard set of
+attributes allows it to be versatile in testing queries and their specified selectivity.
+The relation is entirely comprised of integer attributes in an
+attempt to specialise the relation for queries on join optimisations. When
+testing joins and selections the key areas of interest are algorithm
+optimisations in different situations. The variables we can control when
+designing queries are the specificity of the selections or joins and the cardinality
+of the two relations in the operation. Therefore a relation with attributes in
+the integer domain and readable names makes should make it easier to calculate
+query selectivity as well as expected cardinality of operands.
+
+The attributes of the \relation{JOINBENCH} relation can be found in
+\fref{tab:joinbenchattributes}. As can be seen, besides the
+\relationAttribute{unique} attribute all other attributes are percentage based.
+
+\subparagraph{Percentage based attributes} Percentage based attributes are
+important for specifying the selectivity of joins especially. On a high level,
+the percentage in the attribute name expresses the expected proportion of the
+tuple to be selected by an equality containing only one value in the domain. For
+instance a selection using the predicate `$\relationAttribute{twentyPercent} =
+0$' is expected to select twenty percent of the relation. Precisely, given a
+percentage based attribute of percent $n$, say, the domain of such an integer
+would be the numbers $\left\{0, 1, \ldots, \frac{100}{n} - 1\right\}$ (where we
+assume that $\frac{100}{n}$ is an integer). An alternative way of thinking about
+this is that an $n$-percent attribute partitions the relation such that each
+partition has $n$ percent of the tuples.
+
+\subparagraph{The \relationAttribute{unique} attribute} The purpose of the
+\relationAttribute{unique} attribute is partly classical and partly pragmatic. In a classical
+perspective, primary keys are paramount to relations and so I thought it
+imperative to include an attribute that could fill this role. Furthermore,
+despite the implementation of relations as bags allowing duplicates (for use in
+aggregations) theoretically databases should not allow duplicate tuples and so
+giving each tuple a unique identifier is a way to ensure this. More importantly,
+the \relationAttribute{unique} attribute allows us to specify selectivity not
+based on proportion but rather given numbers. Say we want to select $n$ tuples
+(where $n$ is less than the cardinality of the relation), we can simply perform
+a selection on unique that takes the first $n$ tuples using the predicate
+`$\relationAttribute{unique} < n$'; it is clear the result is a relation with
+only $n$ tuples.
+
+\begin{table}[b]
+    \centering
+    \begin{tabular}{ll}
+        \toprule
+        Attribute & Domain \\
+        \midrule
+        \relation{unique} & Int \\
+        \relation{onePercent} & Word16 \\
+        \relation{twentyPercent} & Word16 \\
+        \relation{twentyFivePercent} & Word16 \\
+        \relation{fiftyPercent} & Word16 \\
+        \relation{evenOnePercent} & Word16 \\
+        \relation{oddOnePercent} & Word16 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Attributes and domains (specified as Haskell types) of the
+    attributes of the \relation{JOINBENCH} relation.}
+    \label{tab:joinbenchattributes}
+\end{table}

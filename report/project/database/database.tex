@@ -1,5 +1,127 @@
 \chapter{Database implementation}\label{chap:database}
-This chapter will outline the results of and corresponding design decisions
-of an implementation of the algorithms outlined in
-\cite{RelationalAlgebraByWayOfAdjunctions}.
-\input{project/database/implementation}
+This chapter will describe the implementation of the database system outlined in
+\relalg{}. The aims of the chapter are to highlight key implementations of the
+algorithms of the paper. The purpose of implementing the structures in the paper
+are to benchmark and so a high level pragmatic approach is taken in order to
+create a working system that can easily be benchmarked. 
+
+The structure of the database management system implemented in this
+project is a library based off of the code in
+\relalg{}~\cite{RelationalAlgebraByWayOfAdjunctions} especially the appendix.
+This chapter describes the code needed to create a fully functioning
+system as well as highlights my contributions. It is worth noting that
+a lot of effort went into the integration of the suggested algorithms and code
+into a fully functional system that is difficult to present in a paper, this
+section will focus on key parts of the system (despite often overlapping
+\relalg{}) in order to describe what is being benchmarked in subsequent
+chapters.
+
+\paragraph{Bags} In order to construct the database system an
+implementation of a $Bag$ (also known as multiset) data structure is
+required. Fleshing out the $Bag$ type is one of the main challenges and
+contributions of this project in the area of implementing the database. We
+base the $Bag$ type off a list as the list allows multiple elements and
+define an equality function.
+
+\input{code/bagDefAndEquality.tex}
+
+\noindent
+It is worth noting that the equality must be defined in such a way that does not
+pay attention to the order of elements in the $Bag$. We first create a helper
+function $eq'$ that checks equality on lists $xs$ and $ys$ up to permutation.
+Given that $xs$ is not empty we check whether $ys$ is non-empty as otherwise
+equality would not be possible. If $ys$ has an element, we split the list into
+two parts where the head of $xs$ is the first element of the second half of
+$ys$. We can then `remove' that element from $ys$, reconstruct the list and
+recursively check equality.
+
+As well as defining equality it is also important create instances of $Monad$,
+$Functor$ and $CMonoid$ type classes for the $Bag$ type. A $Bag$'s status as a
+$Functor$ allows $fmap$s
+(the parallel to a projection as seen in \fref{sec:background:dbrep}) to be performed on
+them and $Monad$ type is important to allow monad comprehensions which was a key
+motivating factor for the paper \relalg{}. Details of the implementations for these instances are
+left out of this paper as they simply follow the structure of using the instances on
+the underlying list and translating the results back to a bag. A $CMonoid$ is a new type class
+defined to distinguish commutative monoids from regular monoids; commutativity
+is important as for a bulk type to allow for aggregation (which we expect from a
+bag type) it must form a commutative monoid which it does under the union
+operation. To allow for extended functionality and testing other interesting
+types were given instances of $CMonoid$s such as $Sum\;k$ and $Product\;k$.
+Moreover, $filter$
+and $union$ functions for $Bag$s must be defined to cover the full extent of
+relational algebra but their implementations are omitted as they are either
+elementary or have been detailed in \relalg{}.
+
+\paragraph{Pointed set} In order to create an indexed structure we must first
+implement structures for a pointed set. The pointed set gives us a `null'
+element to use for keys where there are no value present and therefore is vital
+to a future indexed structure. The type class for a pointed set suggested in
+\relalg{} is given below.
+
+\input{code/pointedSetDef.tex}
+
+\noindent
+It is important that our $Bag$ type is a pointed set so that we can index our
+database by key, thereby assigning bags to each key value in the relation. An
+original modified instance of the $PointedSet$ type class for $Bag$ is given
+below. Additionally, an instance for $Maybe$ is given as it is an extremely
+useful way to promote any type to a $PointedSet$ and was implemented to help
+with testing.
+
+\input{code/commonPointedSetImplementations.tex}
+
+\noindent
+The advantage of pattern matching instead of comparing when defining a
+$PointedSet$ for $Bag$ is that it does not force $Eq$ on the type in the $Bag$.
+This is unlikely to be a problem in the very controlled environment of the
+benchmark but I appreciated the more general approach so modified the instance
+to allow for this behaviour. To restate the power of letting $Maybe;a$ be an
+instance of $PointedSet$, it allows us to promote any type to a $PointedSet$ and
+therefore be the value to a map. This means that when we want a `null' value for
+any type we can accept $Nothing$ but in return any non-null value must be of the
+form $Just a$ where $a$ has the promoted type.
+
+\paragraph{Finite map} Finally we define a finite map. As the map is the most
+complicated structure to implement and explain we will only present one
+implementation also found in \relalg{}. A few others also from the paper were
+defined in the project for testing however they are not presented here. Only a
+handful of examples were implemented as much of the implementation was out of
+the scope of an early implementation of this database system with the intention
+of benchmarking. As will be discussed in \fref{sec:benchmark:joinbench} only
+integer keys will be used for indexing and so it suffices to implement a map
+whose key is $Word16$, representing a map with constant space (all of which can
+be indexed by a 16 bit unsigned integer). The implementation of the map as
+similar to that given by the paper is below.
+
+\input{code/word16Key}
+
+\noindent
+The implementation of the map is simply a constant space array. A brief
+explanation of some of the function will be given to give an intuition as to how
+the indexed structure works. The $accumArray$ function is often used in the
+implementation to create new arrays. The first argument is an accumulation
+function that is used only when multiple values are assigned to the same key on
+initialisation. Of course this is not necessary for creating an $empty$ map but
+it is always set to replace the old value with the new value. Next we assign any
+keys with no values to the $null$ element of the $PointedSet$, indicating no
+value in this case. We specify the bounds, which is exactly the number of values
+a 16 bit word can refer to $2^16 - 1$ and specify any initial key value pairs.
+To recap what was said above, for a value to be empty it must have the $null$
+value of the $PointedSet$; this helps us also prescribe a domain ($dom$)
+function for keys whose value is not $null$ and a codomain ($cod$) function for
+values that are not $null$. Merging two $Map$s, a very important operation,
+is simply also translated to an underlying array operation where an array is
+just created with values in order of the list given (where any empty values are
+$null$ and so takes up the whole span of the array). The $index$ function had to
+be modified from the original implementation in the paper. In order to allow for
+the accumulation function to form a union of bags (as was suggested by the
+lambda function in the paper) the value must be prescribed to be of type
+$Bag\;a$ in order to avoid a type error and so before the key value pairs can be indexed, all values are
+transformed into a singleton $Bag$. I find this to be a reasonable solution as the
+preservation of multiplicity is paramount to database systems and that is the
+context in which this implementation is being used and so over specifying or
+limiting the type does not disrupt the purpose even if it destroys generality; it
+was my intention to preserve the sentiment of the lambda in the paper in such a
+way that allowed the code to compile and is useful in the context of
+benchmarking databases.

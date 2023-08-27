@@ -1,0 +1,280 @@
+\section{Results}\label{sec:benchmark:results}
+The results clearly show the expected pattern. In most cases indexed equijoin
+shows a clear time advantage over both other methods completely independent to
+the query asked. The justification for this is clearly the localised Cartesian
+products. Methods that consider all possible pairs must select through $n^2$
+pairs whereas in order to index only $2n$ searches are required and the
+Cartesian product is localised to strictly only the required pairs. This is a
+large advantage for any reasonable number of tuples. This can be seen for tuple
+counts of 1000, 5000 and 10000 where indexed join performs significantly better.
+Considering the query `join onePercent and onePercent' when using indexed
+equijoin over product equijoin the mean time to complete each query is over 70\% faster
+with both 5000 and 10000 tuples recording a mean time above 90\% faster. This
+is very significant and the table of results can be found in
+\fref{tab:percentage-change-of-means-join-onePercent-and-onePercent}. Similarly, compared to the comprehension
+equijoin the mean time to complete is above 40\% faster for 1000 tuples which is
+admittedly smaller than expected but for 5000 and 10000 tuples there are
+improvements of well over 80\%. A visual representation of the results can be
+found in \fref{fig:benchmark:onePercent-1000},
+\fref{fig:benchmark:onePercent-5000},
+\fref{fig:benchmark:onePercent-10000} for 1000, 5000 and 10000 tuples
+respectively when considering the standard queries that join attributes to
+\relationAttribute{onePercent}.
+
+\begin{table}[b]
+    \centering
+    \input{tables/percentage-change-of-means-join-onePercent-and-onePercent.tex}
+    \caption{Percentage change of mean time to complete query `join onePercent
+        and onePercent' when using indexed equijoin compared to other
+    functions.}
+    \label{tab:percentage-change-of-means-join-onePercent-and-onePercent}
+\end{table}
+
+\begin{figure}[p]
+    \input{figures/onePercent-joins-with-1000-tuples.pgf}
+    \caption{Mean times to complete standard joins of
+    \relationAttribute{onePercent} attribute with relations of 1000 tuples. This
+shows the smallest relative improvement of indexed equijoin over the other
+functions but still a non-trivial advantage.}
+    \label{fig:benchmark:onePercent-1000}
+\end{figure}
+
+\begin{figure}[p]
+    \input{figures/onePercent-joins-with-5000-tuples.pgf}
+    \caption{Mean times to complete standard joins of 
+    \relationAttribute{onePercent} attribute with relations of 5000 tuples. This
+graph demonstrates sizeable improvements of indexed equijoin over the
+alternatives but not a terrible showing of the comprehension equijoin either.}
+    \label{fig:benchmark:onePercent-5000}
+\end{figure}
+
+\begin{figure}[p]
+    \input{figures/onePercent-joins-with-10000-tuples.pgf}
+    \caption{Mean times to complete standard joins of
+    \relationAttribute{onePercent} attribute with relations of 10000 tuples.
+This graph also shows significant improvements of indexed equijoin over
+alternative methods in much larger relations where the scale of the time axis is
+much larger and improvements more meaningful.}
+    \label{fig:benchmark:onePercent-10000}
+\end{figure}
+
+The results for the join queries `join twentyPercent and onePercent' and `join
+evenOnePercent and oddOnePercent' are very similar to the above
+where indexed equijoin far outperforms the alternatives; tables comparing
+results with 1000, 5000 and 10000 tuples can be found in
+\fref{tab:percentage-change-of-means-join-evenOnePercent-and-oddOnePercent} and
+\fref{tab:percentage-change-of-means-join-twentyPercent-and-onePercent}. Interestingly,
+the gains for 'join evenOnePercent and oddOnePercent' are significantly larger
+than the other queries and grow to be more extreme as tuple count increases; it
+is in these queries that we also find such an extreme improvement over
+comprehension equijoin. As the query is an edge case I feel it clearly
+demonstrates the strength of the indexed equijoin method not participating in as
+much unnecessary work. Although indexed equijoin must still search all tuples in
+order to index them, no Cartesian products are performed at all. It is clear why
+this is such an advantage over the product equijoin, however comprehensions do
+not perform Cartesian products either. I believe that the advantage could come
+from poor optimisation of such an unlikely edge case by GHC or an idea of
+balancedness between both relations, an idea that will be explored later.
+Visualisations of the results can be found in
+\fref{fig:non-standard-1000}, \fref{fig:non-standard-5000} and
+\fref{fig:non-standard-10000} for 1000, 5000 and 10000 tuples respectively.
+
+\begin{table}[b]
+    \centering
+    \input{tables/percentage-change-of-means-join-evenOnePercent-and-oddOnePercent.tex}
+    \caption{Percentage change of mean time to complete query `join evenOnePercent and oddOnePercent' when using indexed equijoin compared to other functions.}
+    \label{tab:percentage-change-of-means-join-evenOnePercent-and-oddOnePercent}
+\end{table}
+
+\begin{table}[b]
+    \centering
+    \input{tables/percentage-change-of-means-join-twentyPercent-and-onePercent.tex}
+    \caption{Percentage change of mean time to complete query `join twentyPercent and onePercent' when using indexed equijoin compared to other functions.}
+    \label{tab:percentage-change-of-means-join-twentyPercent-and-onePercent}
+\end{table}
+
+\begin{figure}[p]
+    \input{figures/non-standard-query-with-1000-tuples.pgf}
+    \caption{Mean times to complete miscellaneous joins queries with relations
+    of 1000 tuples. This shows moderate improvements of the indexed equijoin
+over product equijoin and slight improvements over comprehension equijoin.}
+    \label{fig:non-standard-1000}
+\end{figure}
+
+\begin{figure}[p]
+    \input{figures/non-standard-query-with-5000-tuples.pgf}
+    \caption{Mean times to complete miscellaneous joins queries with relations
+    of 10000 tuples. This shows more substantial improvements of the indexed
+equijoin over other functions.}
+    \label{fig:non-standard-5000}
+\end{figure}
+
+\begin{figure}[p]
+    \input{figures/non-standard-query-with-10000-tuples.pgf}
+    \caption{Mean times to complete miscellaneous joins queries with relations
+    of 10000 tuples. This shows large improvements of indexed equijoin over
+other functions similar to the case with 5000 tuples. It is worth noting the
+larger scale in question, however, and therefore the larger time save for
+similar percentage improvement.}
+    \label{fig:non-standard-10000}
+\end{figure}
+
+The results for the queries `join onePercent and twentyPercent' and `join
+twentyPercent and onePercent' when compared together are surprising. A visual
+representation of each function's performance in mean time to complete these
+queries when applied to relations with 5000 tuples can be found in 
+\fref{fig:benchmark:onePercent-twentyPercent-flipped-5000}. As mentioned before,
+I thought that the lack of symmetry in the computation of the function would
+play a larger effect than can be observed. It is clear from the graph that this
+was not the case to a significant proportion. Most surprisingly I thought that,
+despite not being too drastic, the difference would be most notable in the
+comprehension equijoin function; though from further inspection there does not
+seem to be any particular difference between all functions. It is clear that the
+product equijoin would have the largest indifference to the order of operations
+as it was designed to be modular and not take circumstance into much
+consideration, in fact the statistics support this and in the case with 5000
+tuples the mean time to complete `join twentyPercent and onePercent' was only
+2\% faster than the time to compute the contrary. Surprisingly however, the
+indexed equijoin function had the largest relative decrease in order of operands
+with a 9\% decrease, closely followed by the expected victor comprehension
+equijoin with 8\%. This seems to be an act of chance, as varying the tuple count
+(and tables generated with each tuple count) has a drastic effect on the
+percentage change experienced by the indexed equijoin. The indexed equijoin
+actually has an increase in mean time for tuple counts of 6000, 7000, 8000 and
+9000 whereas the comprehension equijoin has a similar order of decrease at all
+counts (as does the product equijoin). This suggests that the pattern of
+optimisation in the comprehension equijoin may be there but in my opinion the
+results are not significant and more research will need to be done in this area
+as well as a more thorough analysis on the lower levels of the Haskell compiler.
+
+\begin{figure}[p]
+    \input{figures/join-onePercent-and-twentyPercent-flipped-5000-tuples.pgf}
+    \caption{A comparison of the mean time to complete the queries `join
+    onePercent and twentyPercent' and `join twentyPercent and onePercent'. The
+results are surprising in that the order of operands does not have as
+significant of an effect as expected, especially in the case of the
+comprehension equijoin.}
+    \label{fig:benchmark:onePercent-twentyPercent-flipped-5000}
+\end{figure}
+
+As is typical with many solutions that rely on indexing the solution is not
+always optimal, especially in the case of a low tuple count. Generating the
+indexed structure takes a significant initial overhead and therefore is not
+optimal for `small' tasks. In fact, for almost all queries it took 500 tuples
+for there to be any benefit over the worst performing function, product
+equijoin. Moreover, it took a tuple count of between 750 and 1000 to become
+beneficial over comprehension equijoin. The `slow startup' time of the indexed
+equijoin in comparison to the other functions can be observed in
+\fref{fig:benchmark:onePercent-fiftyPercent-tuples}, 
+\fref{fig:benchmark:onePercent-twentyPercent-tuples},
+\fref{fig:benchmark:twentyPercent-onePercent-tuples},
+\fref{fig:benchmark:onePercent-onePercent-tuples}
+and \fref{fig:benchmark:evenOnePercent-oddOnePercent-tuples}.
+
+However, beyond the initial overhead the
+function's average mean time grows at a comparatively very slow rate independent
+of the type of query tested against. As can be clearly seen in
+\fref{fig:benchmark:onePercent-twentyPercent-tuples} the growth of the mean time
+for the indexed equijoin is much slower. It is clear that this is due to the
+local Cartesian products that are performed. Both other solutions consider $n^2$
+pairs when conducting the equijoin and therefore the time taken to complete the
+equijoin clearly grows at a quadratic rate with respect to the number of tuples
+in the relation. On the other hand, the indexed equijoin indexes the relation in
+$\mathrm{O}(n)$ time and then conducts local Cartesian products with the smaller
+groups. For further evidence of the significance that the local Cartesian
+products have we will conduct a short analysis on the growth of the mean time on
+all queries. It is clear that the growth of the indexed equijoin for the query
+`join twentyPercent and onePercent' (found in
+\fref{fig:benchmark:twentyPercent-onePercent-tuples}) is remarkably similar to the growth
+in the query `join onePercent and twentyPercent' (found in
+\fref{fig:benchmark:onePercent-twentyPercent-tuples}). I believe this is not
+just down to the lack of strong significance in order of operands as shown
+above, but rather the size of the local Cartesian products. The attribute
+\relationAttribute{twentyPercent} has 5 different values that partitions the
+space into roughly 5 groups with 20\%. This equates to 5 medium sized Cartesian
+products (the operation that contains the largest algorithmic complexity). If
+you compare the graphs for the query `join onePercent and fiftyPercent' (in
+\fref{fig:benchmark:onePercent-fiftyPercent-tuples}) you will see that the slope
+of the line for comprehension equijoin is comparatively steep. As a reminder,
+the query `join onePercent and fiftyPercent' only has two local Cartesian
+products, each holding 50\% of the second relation. This is a clear suggestion
+as to why it grows more unfavourably than the other queries: the local Cartesian
+product, the main contributor to computational complexity, is fed much larger
+tuples. Expectedly, the query `join onePercent and onePercent` (as seen in
+\fref{fig:benchmark:onePercent-onePercent-tuples}) has a much more shallow slope
+than `join onePercent and twentyPercent` due to having 100 local Cartesian
+products all with only 1\% of the second relation; the additive effect of
+having so many products is negligible compared to the multiplicative effect of
+few large products. Taking this to an extreme we can see that the query `join
+evenOnePercent and oddOnePercent' (in
+\fref{fig:benchmark:evenOnePercent-oddOnePercent-tuples}) has no slope at all.
+The domains of the attributes in question are mutually exclusive and therefore
+the result is an empty relation. The result of this are no local Cartesian
+products which when noted next to the almost non-existent gradient of mean time
+gives me confidence that the local Cartesian products are the main contributor
+to growth in mean time over tuple count. An graph comparing the slopes of the
+indexed equijoin function for the queries discussed can be found in
+\fref{fig:benchmark:indexed-equijoin-query-comparison}. It is worth noting that the other
+functions seem to grow in the same way irrespective of the query selectivity;
+this is due to the algorithmic need to compare all $n^2$ possible pairs. If
+programmed in a pragmatic way for a viable query engine it is likely these
+algorithms would be supplemented with a query optimiser that would conduct a
+selection before the join to ensure that products are kept from being
+unnecessarily large or detect the empty intersection in the domains of
+\relationAttribute{evenOnePercent} and \relationAttribute{oddOnePercent}.
+
+\begin{figure}[p]
+    \input{figures/join-onePercent-and-fiftyPercent-by-tuple-with-inset.pgf}
+    \caption{A graph showing the mean time to complete the query `join
+    onePercent and fiftyPercent' depending on tuple count of the relation. Take
+note especially of the relatively steep slope of the indexed equijoin function
+compared to other graphs. The graph also shows the disadvantage of using indexed
+equijoin for relations with a small cardinality.}
+    \label{fig:benchmark:onePercent-fiftyPercent-tuples}
+\end{figure}
+
+\begin{figure}[p]
+    \input{figures/join-onePercent-and-twentyPercent-by-tuple-with-inset.pgf}
+    \caption{A graph showing the mean time to complete the query `join
+    onePercent and twentyPercent` depending on the tuple count of the relation.
+This graph shows the disadvantage of using indexed equijoin for relations with a
+small cardinality.}
+    \label{fig:benchmark:onePercent-twentyPercent-tuples}
+\end{figure}
+
+\begin{figure}[p]
+    \input{figures/join-twentyPercent-and-onePercent-by-tuple-with-inset.pgf}
+    \caption{A graph showing the mean time to complete the query `join
+    twentyPercent and onePercent' depending on the tuple count of the relation.
+The slope of the indexed equijoin function is very similar to that of the query
+`join onePercent and twentyPercent' and it is hypothesised that this is due to
+the relative similarity in order of local Cartesian products.}
+    \label{fig:benchmark:twentyPercent-onePercent-tuples}
+\end{figure}
+
+\begin{figure}[p]
+    \input{figures/join-onePercent-and-onePercent-by-tuple-with-inset.pgf}
+    \caption{A graph showing the mean time to complete the query `join
+    onePercent and onePercent' depending on the tuple count of the relation. The
+slope of the indexed equijoin function is very shallow and demonstrates the
+improvements seen when conducting small local Cartesian products.}
+    \label{fig:benchmark:onePercent-onePercent-tuples}
+\end{figure}
+
+\begin{figure}[p]
+    \input{figures/join-evenOnePercent-and-oddOnePercent-by-tuple-with-inset.pgf}
+    \caption{A graph showing the mean time to complete the query `join
+    evenOnePercent and oddOnePercent' depending on the tuple count of the
+relation. The indexed equijoin function shows almost a constant value due to the
+lack of Cartesian products necessary.}
+    \label{fig:benchmark:evenOnePercent-oddOnePercent-tuples}
+\end{figure}
+
+\begin{figure}[p]
+    \input{figures/indexed-equijoin-query-comparison.pgf}
+    \caption{An comparison of the slopes of the mean time to complete queries by
+    the indexed equijoin function depending on the tuple count of the relation.
+It is clear that the order of the Cartesian products directly contributes to the
+slopes seen.}
+    \label{fig:benchmark:indexed-equijoin-query-comparison}
+\end{figure}
