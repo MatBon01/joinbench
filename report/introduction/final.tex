@@ -61,16 +61,33 @@ Continuing from the example above, how might we more efficiently join the
 two relations? We could start by indexing both by the key we are looking for and
 merging the results.
 
-% TODO: Write code here
+\begin{center}
+\input{code/indexSchoolAndGrade}
+\end{center}
 
+\noindent
 After this we simply can perform a Cartesian product on all values matching keys
 and reduce the answer back to a bag.
 
-% TODO: Write code here
+\begin{center}
+\input{code/reduceMergedSchoolAndGrade}
+\end{center}
 
-Note the types of the functions used
+\noindent
+Note the types of the functions used. They will be modified from their general
+form in order to help the reader see how they apply in this restricted context.
 
-% TODO: Write code here
+\input{code/introFunctionTypes.tex}
+
+\noindent
+As you can see, the need for a global Cartesian product is removed by localising
+the operation on to values that definitely require it. This is accompolished by
+indexing both relations entirely, to an intermediate $Map$ form. The merging of
+these maps is responsible for matching the keys, the values requested in the
+equijoin, and then a Cartesian product is conducted on each of these pairings
+individually through the $fmap$. In order to be a valid relatinal operation,
+however, the result must be reduced back to the database implementation and
+therefore the $Map$ is transformed back to a $Bag$.
 
 Theoretically, this indexing should help us reduce the asymptotic complexity of
 the algorithm. Practically, however, what are the results of such a method? Are

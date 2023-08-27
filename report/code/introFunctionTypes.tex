@@ -1,0 +1,23 @@
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{10}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{10E}{@{}l@{}}%
+\column{14}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\Varid{indexBy}{}\<[10]%
+\>[10]{}\mathbin{::}{}\<[10E]%
+\>[14]{}(\Conid{Key}\;\Varid{k})\Rightarrow \Conid{Bag}\;\Varid{a}\to (\Varid{a}\to \Varid{k})\to \Conid{Map}\;\Varid{k}\;(\Conid{Bag}\;\Varid{a}){}\<[E]%
+\\
+\>[B]{}\Varid{cp}{}\<[10]%
+\>[10]{}\mathbin{::}{}\<[10E]%
+\>[14]{}(\Conid{Bag}\;\Varid{v1},\Conid{Bag}\;\Varid{v2})\to \Conid{Bag}\;(\Varid{v1},\Varid{v2}){}\<[E]%
+\\
+\>[B]{}\Varid{merge}{}\<[10]%
+\>[10]{}\mathbin{::}{}\<[10E]%
+\>[14]{}(\Conid{Map}\;\Varid{k}\;(\Conid{Bag}\;\Varid{v1}),\Conid{Map}\;\Varid{k}\;(\Conid{Bag}\;\Varid{v2}))\to \Conid{Map}\;\Varid{k}\;(\Conid{Bag}\;\Varid{v1},\Conid{Bag}\;\Varid{v2}){}\<[E]%
+\\
+\>[B]{}\Varid{reduce}{}\<[10]%
+\>[10]{}\mathbin{::}{}\<[10E]%
+\>[14]{}\Conid{Map}\;\Varid{k}\;(\Conid{Bag}\;\Varid{v1},\Conid{Bag}\;\Varid{v2})\to \Conid{Bag}\;(\Varid{v1},\Varid{v2}){}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
