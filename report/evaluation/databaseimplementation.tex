@@ -20,3 +20,18 @@ hand, adding in an extra error-prone step. To conclude, I am confident in the
 results due to extensive unit testing but I strongly believe that in future an
 effort should be made to include both integration tests for functions used in
 benchmarking and system tests by comparing results with an existing DBMS.
+
+\paragraph{Readability and efficiency} It is clear that much of the code
+presented in \fref{chap:database} could be made more efficient and
+readable. The effects of this have varying degrees of severity. To begin with a
+more high severity approach the efficiency of some parts of the code present
+could reasonably become hot spots that bias results of the benchmarking.
+Luckily, in the preliminary profiling undertaken of the code it did not seem to
+be an issue, the algorithm for equality of bags could easily bias results to
+functions that compare more often and frame potentially viable solutions as much
+worse than they are. Of course the asymptotic complexity of the algorithm is
+important to consider, the project also had a focus on trends and needlessly
+slow algorithms may alter intersection points. In addition, readability is useful for further extending the
+database system to approach a more real world use case. Code that
+is written more nicely, especially important in the context of academic work,
+makes it easier to understand and express the theory behind.
