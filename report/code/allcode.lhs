@@ -99,3 +99,23 @@ instance Key Word16 where -- constant type (array indexed by 16 bit word)
         vals              =  (elements . fmap (Bifunctor.second Bag.single)) kvps
     unindex (A a)         =  Bag [(k, v) | (k, vs) <- assocs a, v <- elements vs]
 \end{code}
+
+\begin{code}
+data Students  =  S {uid :: Int, name :: String, age :: Int}
+data Grades    =  G {sid :: Int, subject :: String, grade :: Char}
+\end{code}
+
+\begin{code}
+merge (students `indexBy` uid, grades `indexBy` sid)
+\end{code}
+
+\begin{code}
+(reduce . fmap cp) mergedStudentsAndGrades
+\end{code}
+
+\begin{code}
+indexBy  ::  (Key k) => Bag a -> (a -> k) -> Map k (Bag a)
+cp       ::  (Bag v1, Bag v2) -> Bag (v1, v2)
+merge    ::  (Map k (Bag v1), Map k (Bag v2)) -> Map k (Bag v1, Bag v2)
+reduce   ::  Map k (Bag v1, Bag v2) -> Bag (v1, v2)
+\end{code}

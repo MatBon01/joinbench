@@ -2,3 +2,136 @@
 \begin{comment}
 The introduction should summarise the subject area, the specific problem you are addressing, including key ideas for their solution, together with a summary of the project's main contributions. When detailing the contributions it is helpful to provide forward references to the section(s) of the report that provide the relevant technical details. The introduction should be aimed at an informed, but otherwise non-expert, reader. A good tip is to assume that all your assessors will read the abstract and introduction, whereas the more detailed technical sections may only be read by your first and second markers - it's therefore really important to get it right.
 \end{comment}
+
+This project is follows the consequences of new techniques to optimise
+relational queries of joins followed by selections in Haskell. Say you have the
+following records in Haskell.
+
+\input{code/introRecordExample.tex}
+
+\noindent
+How might you join two bags of these records together by id? One way would be to
+write the following.
+
+\[\lbag\:(s, g)\:|\:s \leftarrow students,\:g \leftarrow grades,\:uid\;s == sid\;g
+\:\rbag\]
+
+What are the disadvantages of this approach? Clearly, every possible pair of
+elements are considered regardless of whether they have matching ids or not.
+This clearly has an asymptotic complexity of $O(nm)$ where $n$ and $m$ are the
+cardinality of the $students$ and $grades$ bags respectively.
+
+Databases are vital to modern day society for their ability to structure, sort
+and query vast amounts of data from any domain. Of course no one theoretical
+model of data has surfaced since its conception, with different approaches
+describing how exactly to hold the data. Examples of such data models include
+the semi-structured model~\cite{DatabaseSystems} and, more relevant to this
+project, the relational model~\cite{RelationalModel} as introduced in
+\fref{sec:relationalmodel}. However, all implementations face trade-offs and
+development challenges.
+
+This project explores one such solution to the optimisation of queries
+consisting of products followed by selections in the relational model. Such
+behaviour can be modelled by equijoins, the type of join seen in the example
+above, where you wish to keep only two records who share a common attribute.
+This project will implement a functioning database system in Haskell according
+to the solution outlined in the paper
+\relalg{}~\cite{RelationalAlgebraByWayOfAdjunctions}. It then describes original
+tools and workflows created to help the benchmarking and testing of the system
+in order to evaluate its performance.
+
+Going back to the example, say you could instead index both tables by their
+$uid$ and $sid$ respectively. You would not need to consider all possible pair
+of elements to find the matching attributes any more as you would already know which
+tuples share the same indexed element. This will allow you to greatly reduce the
+order at which you are taking products and, in effect, `making more work for
+yourself'. How might this be achieved? The authors of the paper \relalg{},
+seemingly enchanted by the elegance of a comprehension notation, have outlined a
+category theoretical framework to interpret relational algebra. They found that
+many bulk types, such as the bags above, could be made by the adjunction of two
+functors and therefore granted them the properties of monads. Moreover, monad
+comprehensions have been known about for a substantial amount of
+time~\cite{MonadComprehensions} and are generalisation of the expressive list
+comprehensions. Therefore, in conjunction with the SQL-like syntax extensions
+available to list comprehensions~\cite{ComprehensiveComprehensions} it is hoped
+that the defined framework defined in the paper for efficient equijoin can be
+expressed in the same concise and powerful manner as the example above.
+
+Continuing from the example above, how might we more efficiently join the
+two relations? We could start by indexing both by the key we are looking for and
+merging the results.
+
+\begin{center}
+\input{code/indexSchoolAndGrade}
+\end{center}
+
+\noindent
+After this we simply can perform a Cartesian product on all values matching keys
+and reduce the answer back to a bag.
+
+\begin{center}
+\input{code/reduceMergedSchoolAndGrade}
+\end{center}
+
+\noindent
+Note the types of the functions used. They will be modified from their general
+form in order to help the reader see how they apply in this restricted context.
+
+\input{code/introFunctionTypes.tex}
+
+\noindent
+As you can see, the need for a global Cartesian product is removed by localising
+the operation on to values that definitely require it. This is accomplished by
+indexing both relations entirely, to an intermediate $Map$ form. The merging of
+these maps is responsible for matching the keys, the values requested in the
+equijoin, and then a Cartesian product is conducted on each of these pairings
+individually through the $fmap$. In order to be a valid relational operation,
+however, the result must be reduced back to the database implementation and
+therefore the $Map$ is transformed back to a $Bag$.
+
+Theoretically, this indexing should help us reduce the asymptotic complexity of
+the algorithm. Practically, however, what are the results of such a method? Are
+there any limitations? Does it give the gains promised  in real life? This
+project is about exploring exactly that idea.
+
+After describing a working implementation of the database system mentioned here,
+this report is going to describe the bespoke and original tools created in order
+to benchmark the database. We introduce the \relation{JOINBENCH} relation, a
+specialised version of past academic benchmarking database schemas made with
+testing equijoins in mind. After this, the report will describe the design of
+an extensible tool created in order to generate synthetic databases to run the
+benchmarks on. This tool can be very easily customised and is made with enforcing
+mathematical properties of data in mind so that interesting patterns can emerge
+from the \relation{JOINBENCH} relation. Next, an overview of the benchmarking
+workflow and experiment designs is given to be open and encourage readers to try
+and reproduce results. Finally, a discussion of the results is given and the
+efficacy of replacing such a solution is discussed.
+
+Synthetic data generation is key to creating a readable and reproducible
+benchmark. Generating synthetic data allows us to specify the properties of
+attributes and thereby conduct specific experiments determining the pitfalls and
+strengths of functions depending on the shape of the data. Of course there is
+the argument to be made that the results are not `life-like' as they do not take
+the form of real world data, however I believe that this way of doing it is not
+only more archetypal and therefore gives us an insight to the underlying trends
+and lesson to be learned about the query optimisation but it counter-intuitively
+is more readable. In order to synthesise such data, a low level synthetic
+database generating library was created within the scope of the project. This is
+a framework that allows users to specify trends between attributes and control
+the generation of cells within their domain. Furthermore, a \relation{JOINBENCH}
+relation was inspired from similar work in the past to include attributes that I
+believe most suitable tested and described join based benchmarking queries.
+
+To summarise, the main contributions of this project are:
+\begin{itemize}
+    \item a working implementation of the database system outlined in the paper
+        \relalg{},
+    \item the definition of the \relation{JOINBENCH} relation specialised from
+        old benchmarking databases to provide all the tools needed to test
+        equijoin,
+    \item a completely new tool to generate any number of general synthetic data
+        sets,
+    \item an analysis of the results of the benchmarks on the database
+        management system described above to evaluate its performance and
+        success.
+\end{itemize}
