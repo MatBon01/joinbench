@@ -1,0 +1,70 @@
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{7}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{9}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{27}{@{}>{\hspre}c<{\hspost}@{}}%
+\column{27E}{@{}l@{}}%
+\column{30}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}\mathbf{instance}\;\Conid{Key}\;\Conid{Word16}\;\mathbf{where}\;\mbox{\onelinecomment  constant type (array indexed by 16 bit word)}{}\<[E]%
+\\
+\>[B]{}\hsindent{5}{}\<[5]%
+\>[5]{}\mathbf{newtype}\;\Conid{Map}\;\Conid{Word16}\;\Varid{v}{}\<[27]%
+\>[27]{}\mathrel{=}{}\<[27E]%
+\>[30]{}\Conid{A}\;(\Conid{Array}\;\Conid{Word16}\;\Varid{v})\;\mathbf{deriving}\;(\Conid{Eq},\Conid{Show}){}\<[E]%
+\\
+\>[B]{}\hsindent{5}{}\<[5]%
+\>[5]{}\Varid{empty}{}\<[27]%
+\>[27]{}\mathrel{=}{}\<[27E]%
+\>[30]{}\Conid{A}\;(\Varid{accumArray}\;(\mathbin{\char92 \char95 }\Varid{x}\to \Varid{x})\;\Varid{\Conid{PointedSet}.null}\;(\mathrm{0},\mathrm{2}\mathbin{\uparrow}\mathrm{16}\mathbin{-}\mathrm{1})\;[\mskip1.5mu \mskip1.5mu]){}\<[E]%
+\\
+\>[B]{}\hsindent{5}{}\<[5]%
+\>[5]{}\Varid{isEmpty}\;(\Conid{A}\;\Varid{a}){}\<[27]%
+\>[27]{}\mathrel{=}{}\<[27E]%
+\>[30]{}\Varid{all}\;\Varid{isNull}\;(\Varid{elems}\;\Varid{a}){}\<[E]%
+\\
+\>[B]{}\hsindent{5}{}\<[5]%
+\>[5]{}\Varid{single}\;(\Varid{k},\Varid{v}){}\<[27]%
+\>[27]{}\mathrel{=}{}\<[27E]%
+\>[30]{}\Conid{A}\;(\Varid{accumArray}\;(\mathbin{\char92 \char95 }\Varid{x}\to \Varid{x})\;\Varid{\Conid{PointedSet}.null}\;(\mathrm{0},\mathrm{2}\mathbin{\uparrow}\mathrm{16}\mathbin{-}\mathrm{1})\;[\mskip1.5mu (\Varid{k},\Varid{v})\mskip1.5mu]){}\<[E]%
+\\
+\>[B]{}\hsindent{5}{}\<[5]%
+\>[5]{}\Varid{merge}\;(\Conid{A}\;\Varid{a1},\Conid{A}\;\Varid{a2}){}\<[27]%
+\>[27]{}\mathrel{=}{}\<[27E]%
+\>[30]{}\Conid{A}\;(\Varid{listArray}\;(\mathrm{0},\mathrm{2}\mathbin{\uparrow}\mathrm{16}\mathbin{-}\mathrm{1})\;(\Varid{zip}\;(\Varid{elems}\;\Varid{a1})\;(\Varid{elems}\;\Varid{a2}))){}\<[E]%
+\\
+\>[B]{}\hsindent{5}{}\<[5]%
+\>[5]{}\Varid{dom}\;(\Conid{A}\;\Varid{a}){}\<[27]%
+\>[27]{}\mathrel{=}{}\<[27E]%
+\>[30]{}\Conid{Bag}\;[\mskip1.5mu \Varid{k}\mid (\Varid{k},\Varid{v})\leftarrow \Varid{assocs}\;\Varid{a},\neg \;(\Varid{isNull}\;\Varid{v})\mskip1.5mu]{}\<[E]%
+\\
+\>[B]{}\hsindent{5}{}\<[5]%
+\>[5]{}\Varid{cod}\;(\Conid{A}\;\Varid{a}){}\<[27]%
+\>[27]{}\mathrel{=}{}\<[27E]%
+\>[30]{}\Conid{Bag}\;[\mskip1.5mu \Varid{v}\mid (\Varid{k},\Varid{v})\leftarrow \Varid{assocs}\;\Varid{a},\neg \;(\Varid{isNull}\;\Varid{v})\mskip1.5mu]{}\<[E]%
+\\
+\>[B]{}\hsindent{5}{}\<[5]%
+\>[5]{}\Varid{lookup}\;(\Conid{A}\;\Varid{a}){}\<[27]%
+\>[27]{}\mathrel{=}{}\<[27E]%
+\>[30]{}(\mathbin{!})\;\Varid{a}{}\<[E]%
+\\
+\>[B]{}\hsindent{5}{}\<[5]%
+\>[5]{}\Varid{index}\;\Varid{kvps}{}\<[27]%
+\>[27]{}\mathrel{=}{}\<[27E]%
+\>[30]{}\Conid{A}\;(\Varid{accumArray}\;(\Varid{curry}\;\Varid{\Conid{Bag}.union})\;\Varid{\Conid{Bag}.empty}\;(\mathrm{0},\mathrm{2}\mathbin{\uparrow}\mathrm{16}\mathbin{-}\mathrm{1})\;\Varid{vals}){}\<[E]%
+\\
+\>[5]{}\hsindent{2}{}\<[7]%
+\>[7]{}\mathbf{where}{}\<[E]%
+\\
+\>[7]{}\hsindent{2}{}\<[9]%
+\>[9]{}\Varid{vals}{}\<[27]%
+\>[27]{}\mathrel{=}{}\<[27E]%
+\>[30]{}(\Varid{elements}\mathbin{\circ}\Varid{fmap}\;(\Varid{\Conid{Bifunctor}.second}\;\Varid{\Conid{Bag}.single}))\;\Varid{kvps}{}\<[E]%
+\\
+\>[B]{}\hsindent{5}{}\<[5]%
+\>[5]{}\Varid{unindex}\;(\Conid{A}\;\Varid{a}){}\<[27]%
+\>[27]{}\mathrel{=}{}\<[27E]%
+\>[30]{}\Conid{Bag}\;[\mskip1.5mu (\Varid{k},\Varid{v})\mid (\Varid{k},\Varid{vs})\leftarrow \Varid{assocs}\;\Varid{a},\Varid{v}\leftarrow \Varid{elements}\;\Varid{vs}\mskip1.5mu]{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
