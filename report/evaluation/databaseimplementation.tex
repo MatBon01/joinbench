@@ -1,1 +1,22 @@
 \section{Database implementation} % Haskell database implementation
+\paragraph{Correctness} The most important quality for the database system to
+have is correctness as if queries are not producing expected results, it does
+not matter how long it takes. My strategy for ensuring correctness is rigorous
+unit tests. By automatically checking that different modules of the system reach
+the same result I do by hand helps ensure that it is working as expected. I
+acknowledge that this is not complete however and integration tests are vital;
+at times I print the result of large computations and check that they are close
+to what I would expect but I doubt I have full integration coverage with
+heuristics like this. Given more time it would be very beneficial to use a
+preexisting DBMS to run the same queries and compare outputs. This could not be
+done now due to the extra tooling that would be required for the automatic
+parsing and comparisons needed to take place. Some of the suggestions in
+\fref{sec:evaluation:syntheticdatabase} may be useful to help automatically
+program parsers and interface code to allow this to happen more easily, but as
+mentioned in the section it would require the programs to have a larger idea of
+the context of its actions. This is especially true when thinkingi about
+queries, it is likely that the queries would need to be transcribed to SQL by
+hand, adding in an extra error-prone step. To conclude, I am confident in the
+results due to extensive unit testing but I strongly believe that in future an
+effort should be made to include both integration tests for functions used in
+benchmarking and system tests by comparing results with an existing DBMS.
