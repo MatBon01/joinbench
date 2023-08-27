@@ -2,3 +2,21 @@
 \begin{comment}
 The introduction should summarise the subject area, the specific problem you are addressing, including key ideas for their solution, together with a summary of the project's main contributions. When detailing the contributions it is helpful to provide forward references to the section(s) of the report that provide the relevant technical details. The introduction should be aimed at an informed, but otherwise non-expert, reader. A good tip is to assume that all your assessors will read the abstract and introduction, whereas the more detailed technical sections may only be read by your first and second markers - it's therefore really important to get it right.
 \end{comment}
+
+This project is follows the consequences of new techniques to optimise
+relational queries of joins followed by selections in Haskell. Say you have the
+following records in Haskell.
+
+\input{code/introRecordExample.tex}
+
+\noindent
+How might you join two bags of these records together by id? One way would be to
+write the following.
+
+\[\lbag\:(s, g)\:|\:s \leftarrow students,\:g \leftarrow grades,\:uid\;s == cid\;g
+\:\rbag\]
+
+What are the disadvantages of this approach? Clearly, every possible pair of
+elements are considered regardless of whether they have matching ids or not.
+This clearly has an asymptotic complexity of $O(nm)$ where $n$ and $m$ are the
+cardinality of the $students$ and $grades$ bags respectively.

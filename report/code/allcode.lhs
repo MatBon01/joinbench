@@ -99,3 +99,8 @@ instance Key Word16 where -- constant type (array indexed by 16 bit word)
         vals              =  (elements . fmap (Bifunctor.second Bag.single)) kvps
     unindex (A a)         =  Bag [(k, v) | (k, vs) <- assocs a, v <- elements vs]
 \end{code}
+
+\begin{code}
+data Students  =  S {uid :: Int, name :: String, age :: Int}
+data Grades    =  G {cid :: Int, subject :: String, grade :: Char}
+\end{code}
