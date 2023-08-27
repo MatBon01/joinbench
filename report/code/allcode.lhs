@@ -66,3 +66,20 @@ instance (Eq a) => Eq (Bag a) where
         eq' [] []        =  True
         eq' _ _          =  False
 \end{code}
+
+\begin{code}
+class PointedSet a where
+    null    ::  a
+    isNull  ::  a -> Bool
+\end{code}
+
+\begin{code}
+instance PointedSet (Bag a) where
+    null             =  Bag.empty
+    isNull (Bag [])  =  True
+    isNull _         =  False
+
+instance PointedSet (Maybe a) where
+    null    =  Nothing
+    isNull  =  isNothing
+\end{code}

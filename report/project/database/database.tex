@@ -45,3 +45,28 @@ types were given instances of $CMonoid$s such as $Sum\;k$ and $Product\;k$. More
 and union functions for bags must be defined to cover the full extent of
 relational algebra but their implementations are omitted as they are either
 elementary or have been detailed in \relalg{}.
+
+\paragraph{Pointed set} In order to create an indexed structure we must first
+implement structures for a pointed set. The pointed set gives us a `null'
+element to use for keys where there are no value present and therefore is vital
+to a future indexed structure. The type class for a pointed set suggested in
+\relalg{} is given below.
+
+\input{code/pointedSetDef.tex}
+
+\noindent
+It is important that our $Bag$ type is a pointed set so that we can index our
+database by key, thereby assigning bags to each key value in the relation. An
+original modified instance of the $PointedSet$ type class for $Bag$ is given
+below. Additionally, an instance for $Maybe$ is given as it is an extremely
+useful way to promote any type to a $PointedSet$ and was implemented to help
+with testing.
+
+\input{code/commonPointedSetImplementations.tex}
+
+\noindent
+The advantage of pattern matching instead of comparing when defining a
+$PointedSet$ for $Bag$ is that it does not force $Eq$ on the type in the $Bag$.
+This is unlikely to be a problem in the very controlled environment of the
+benchmark but I appreciated the more general approach so modified the instance
+to allow for this behaviour.
