@@ -3,13 +3,18 @@ This chapter will describe the implementation of the database system outlined in
 \relalg{}. The aims of the chapter are to highlight key implementations of the
 algorithms of the paper. The purpose of implementing the structures in the paper
 are to benchmark and so a high level pragmatic approach is taken in order to
-create a working system that can easily be benchmarked.
+create a working system that can easily be benchmarked. 
 
 The structure of the database management system implemented in this
 project is a library based off of the code in
 \relalg{}~\cite{RelationalAlgebraByWayOfAdjunctions} especially the appendix.
 This chapter describes the code needed to create a fully functioning
-system as well as highlights my contributions.
+system as well as highlights my contributions. It is worth noting that
+a lot of effort went into the integration of the suggested algorithms and code
+into a fully functional system that is difficult to present in a paper, this
+section will focus on key parts of the system (despite often overlapping
+\relalg{}) in order to describe what is being benchmarked in subsequent
+chapters.
 
 \paragraph{Bags} In order to construct the database system an
 implementation of a $Bag$ (also known as multiset) data structure is
