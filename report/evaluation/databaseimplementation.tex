@@ -8,13 +8,13 @@ acknowledge that this is not complete however and integration tests are vital;
 at times I print the result of large computations and check that they are close
 to what I would expect but I doubt I have full integration coverage with
 heuristics like this. Given more time it would be very beneficial to use a
-preexisting DBMS to run the same queries and compare outputs. This could not be
+pre-existing DBMS to run the same queries and compare outputs. This could not be
 done now due to the extra tooling that would be required for the automatic
 parsing and comparisons needed to take place. Some of the suggestions in
 \fref{sec:evaluation:syntheticdatabase} may be useful to help automatically
 program parsers and interface code to allow this to happen more easily, but as
 mentioned in the section it would require the programs to have a larger idea of
-the context of its actions. This is especially true when thinkingi about
+the context of its actions. This is especially true when thinking about
 queries, it is likely that the queries would need to be transcribed to SQL by
 hand, adding in an extra error-prone step. To conclude, I am confident in the
 results due to extensive unit testing but I strongly believe that in future an
@@ -31,9 +31,9 @@ bags using indexed strategies. This is a large limitation of the project as it
 would have been nice to see the spirit of the original paper in the results.
 Furthermore, we already saw major benefits to using `comprehension equijoin'
 over `product equijoin' and it would be interesting to see if there is a similar
-comparison of efficiency between `indexed equijoin' and whatever inhomogenerous
+comparison of efficiency between `indexed equijoin' and whatever inhomogeneous
 monad comprehension would allow that to happen. However, I feel that the results
-in the paper show more than enough about the superioiry and limitations of the
+in the paper show more than enough about the superiority and limitations of the
 `indexed equijoin' and if any comprehension would be syntactic sugar for such a
 method (perhaps with some compiler optimisations) similar patterns should be
 expected.
