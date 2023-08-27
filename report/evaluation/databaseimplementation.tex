@@ -21,6 +21,23 @@ results due to extensive unit testing but I strongly believe that in future an
 effort should be made to include both integration tests for functions used in
 benchmarking and system tests by comparing results with an existing DBMS.
 
+\paragraph{Comprehension notation} Much of the paper \relalg{} emphasised the
+usefulness of comprehension notation for programmers and indicated this as a
+motivating factor to develop the theory of joins in such a way. Although in the
+paper comprehension notation was suggested, in the project a mixture of scope
+and limitations I believe to be with GHC prevented me from being able to use
+monad comprehensions combined with SQL transformation notation to combine two
+bags using indexed strategies. This is a large limitation of the project as it
+would have been nice to see the spirit of the original paper in the results.
+Furthermore, we already saw major benefits to using `comprehension equijoin'
+over `product equijoin' and it would be interesting to see if there is a similar
+comparison of efficiency between `indexed equijoin' and whatever inhomogenerous
+monad comprehension would allow that to happen. However, I feel that the results
+in the paper show more than enough about the superioiry and limitations of the
+`indexed equijoin' and if any comprehension would be syntactic sugar for such a
+method (perhaps with some compiler optimisations) similar patterns should be
+expected.
+
 \paragraph{Readability and efficiency} It is clear that much of the code
 presented in \fref{chap:database} could be made more efficient and
 readable. The effects of this have varying degrees of severity. To begin with a
