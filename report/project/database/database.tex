@@ -12,17 +12,17 @@ This chapter describes the code needed to create a fully functioning
 system as well as highlights my contributions.
 
 \paragraph{Bags} In order to construct the database system an
-implementation of a bag (also known as multiset) data structure is
+implementation of a $Bag$ (also known as multiset) data structure is
 required. Fleshing out the $Bag$ type is one of the main challenges and
 contributions of this project in the area of implementing the database. We
-base the bag type off a list as the list allows multiple elements and
+base the $Bag$ type off a list as the list allows multiple elements and
 define an equality function.
 
 \input{code/bagDefAndEquality.tex}
 
 \noindent
 It is worth noting that the equality must be defined in such a way that does not
-pay attention to the order of elements in the bag. We first create a helper
+pay attention to the order of elements in the $Bag$. We first create a helper
 function $eq'$ that checks equality on lists $xs$ and $ys$ up to permutation.
 Given that $xs$ is not empty we check whether $ys$ is non-empty as otherwise
 equality would not be possible. If $ys$ has an element, we split the list into
@@ -31,18 +31,20 @@ $ys$. We can then `remove' that element from $ys$, reconstruct the list and
 recursively check equality.
 
 As well as defining equality it is also important create instances of $Monad$,
-$Functor$ and $CMonoid$ type classes for the bag type. A bag's status as a functor allows $fmap$s
+$Functor$ and $CMonoid$ type classes for the $Bag$ type. A $Bag$'s status as a
+$Functor$ allows $fmap$s
 (the parallel to a projection as seen in \fref{sec:background:dbrep}) to be performed on
-them and monad type is important to allow monad comprehensions which was a key
+them and $Monad$ type is important to allow monad comprehensions which was a key
 motivating factor for the paper \relalg{}. Details of the implementations for these instances are
-left out of this paper as they simplyfollow the structure of using the instances on
+left out of this paper as they simply follow the structure of using the instances on
 the underlying list and translating the results back to a bag. A $CMonoid$ is a new type class
 defined to distinguish commutative monoids from regular monoids; commutativity
 is important as for a bulk type to allow for aggregation (which we expect from a
 bag type) it must form a commutative monoid which it does under the union
 operation. To allow for extended functionality and testing other interesting
-types were given instances of $CMonoid$s such as $Sum\;k$ and $Product\;k$. Moreover, filter
-and union functions for bags must be defined to cover the full extent of
+types were given instances of $CMonoid$s such as $Sum\;k$ and $Product\;k$.
+Moreover, $filter$
+and $union$ functions for $Bag$s must be defined to cover the full extent of
 relational algebra but their implementations are omitted as they are either
 elementary or have been detailed in \relalg{}.
 
