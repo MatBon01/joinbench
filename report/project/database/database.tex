@@ -76,3 +76,47 @@ instance of $PointedSet$, it allows us to promote any type to a $PointedSet$ and
 therefore be the value to a map. This means that when we want a `null' value for
 any type we can accept $Nothing$ but in return any non-null value must be of the
 form $Just a$ where $a$ has the promoted type.
+
+\paragraph{Finite map} Finally we define a finite map. As the map is the most
+complicated structure to implement and explain we will only present one
+implementation also found in \relalg{}. A few others also from the paper were
+defined in the project for testing however they are not presented here. Only a
+handful of examples were implemented as much of the implementation was out of
+the scope of an early implementation of this database system with the intention
+of benchmarking. As will be discussed in \fref{sec:benchmark:joinbench} only
+integer keys will be used for indexing and so it suffices to implement a map
+whose key is $Word16$, representing a map with constant space (all of which can
+be indexed by a 16 bit unsigned integer). The implementation of the map as
+similar to that given by the paper is below.
+
+\input{code/word16Key}
+
+\noindent
+The implementation of the map is simply a constant space array. A brief
+explanation of some of the function will be given to give an intuition as to how
+the indexed structure works. The $accumArray$ function is often used in the
+implementation to create new arrays. The first argument is an accumulation
+function that is used only when multiple values are assigned to the same key on
+initialisation. Of course this is not necessary for creating an $empty$ map but
+it is always set to replace the old value with the new value. Next we assign any
+keys with no values to the $null$ element of the $PointedSet$, indicating no
+value in this case. We specify the bounds, which is exactly the number of values
+a 16 bit word can refer to $2^16 - 1$ and specify any initial key value pairs.
+To recap what was said above, for a value to be empty it must have the $null$
+value of the $PointedSet$; this helps us also prescribe a domain ($dom$)
+function for keys whose value is not $null$ and a codomain ($cod$) function for
+values that are not $null$. Merging two $Map$s, a very important operation,
+is simply also translated to an underlying array operation where an array is
+just created with values in order of the list given (where any empty values are
+$null$ and so takes up the whole span of the array). The $index$ function had to
+be modified from the original implementation in the paper. In order to allow for
+the accumulation function to form a union of bags (as was suggested by the
+lambda function in the paper) the value must be prescribed to be of type
+$Bag\;a$ in order to avoid a type error and so before the key value pairs can be indexed, all values are
+transformed into a singleton $Bag$. I find this to be a reasonable solution as the
+preservation of multiplicity is paramount to database systems and that is the
+context in which this implementation is being used and so over specifying or
+limiting the type does not disrupt the purpose even if it destroys generality; it
+was my intention to preserve the sentiment of the lambda in the paper in such a
+way that allowed the code to compile and is useful in the context of
+benchmarking databases.

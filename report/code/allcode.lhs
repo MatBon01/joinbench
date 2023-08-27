@@ -83,3 +83,19 @@ instance PointedSet (Maybe a) where
     null    =  Nothing
     isNull  =  isNothing
 \end{code}
+
+\begin{code} 
+instance Key Word16 where -- constant type (array indexed by 16 bit word)
+    newtype Map Word16 v  =  A (Array Word16 v) deriving (Eq, Show)
+    empty                 =  A (accumArray (\_ x -> x) PointedSet.null (0, 2 ^ 16 - 1) [])
+    isEmpty (A a)         =  all isNull (elems a)
+    single (k, v)         =  A (accumArray (\_ x -> x) PointedSet.null (0, 2 ^ 16 - 1) [(k, v)])
+    merge (A a1, A a2)    =  A (listArray (0, 2 ^ 16 - 1) (zip (elems a1) (elems a2)))
+    dom (A a)             =  Bag [k | (k, v) <- assocs a, not (isNull v)]
+    cod (A a)             =  Bag [v | (k, v) <- assocs a, not (isNull v)]
+    lookup (A a)          =  (!) a
+    index kvps            =  A (accumArray (curry Bag.union) Bag.empty (0, 2 ^ 16 - 1) vals)
+      where
+        vals              =  (elements . fmap (Bifunctor.second Bag.single)) kvps
+    unindex (A a)         =  Bag [(k, v) | (k, vs) <- assocs a, v <- elements vs]
+\end{code}
