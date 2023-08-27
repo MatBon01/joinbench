@@ -75,7 +75,9 @@ The functions above tell us some extremely important information on creating
 empty maps and calculating their unions. As you can see $empty$ returns a
 function that maps any key to the neutral element $()$. This is to be expected
 as there are no values in an empty map. More interestingly, we see the merge
-of two maps as a function that returns a pair of key lookups in each table.
+of two maps as a function that returns a function that maps a key to a pair of
+values, each of which holds the result of the key lookup in the respective
+table.
 
 We now have the correct machinery to define an indexed table.
 
