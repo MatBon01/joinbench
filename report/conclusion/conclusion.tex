@@ -18,7 +18,8 @@ The beginning of the project was successful with a crude implementation of the
 database system described in the paper. The implementation was functional with
 unit tests strengthening belief in correctness tests and ease of use during
 benchmarks. Slight alterations had to be made to the implementation described by
-\relalg{}, a handful of original contributions such as the definition of equalit
+\relalg{}, a handful of original contributions such as the definition of
+equality
 of bags were made and much effort was put into the integration of the system to form the
 library defined in the code of this project. The library could further be
 expanded through the definition of more keys and much real world modification
@@ -28,31 +29,31 @@ purposes of benchmarking and a good starting point for further expansion with
 much room for many more query optimisations.
 
 The \relation{JOINBENCH} relation is a carefully thought out combination of
-benchmarking databases designe by other academics. I
+benchmarking databases designed by other academics. I
 believe that it exceeds at benchmarking equijoin and has a lot more depth than
 the scope of this paper. It has attributes designed to investigate the effect of
 different orders of products on the performance of equijoins and can be scaled
 through select queries on the \relationAttribute{unique} attribute. There is no
 doubt as to whether it has achieved its purpose in the scope of this paper.
 After spotting trends it may be extended with a few more attributes or
-supporting queries to investigate edge cases more thorougly.
+supporting queries to investigate edge cases more thoroughly.
 
 The synthetic database generator gives users a low-level tool to generate very
 customisable databases. The framework is very flexible yet prescriptive of
 structure. For the benchmarking of this project, a wide array of different cell
 types were defined and used to create the \relation{JOINBENCH} relation and
 previous iterations of benchmarking databases. It has a capacity for both
-qualitative and quantative data, however I have found it extremely useful on the
-quantative side. Patterns and trends between cell values can be moderated
+qualitative and quantitative data, however I have found it extremely useful on the
+quantitative side. Patterns and trends between cell values can be moderated
 through cell composition or passing shared objects into constructors and is very
 powerful for customisation of the result. In future this framework could be
-exteneded to allow for a more user-friendly interaction, though care must be
+extended to allow for a more user-friendly interaction, though care must be
 taken as to not lose the flexibility that comes from the low-levelled nature of
 the design. Furthermore, work may be made to make the framework more context
 aware so that it may be used to generate more useful tools such as SQL commands
 to create the database and Haskell parsers to read its output; similarly, care
 must be taken not to lose the simplicity of the current solution and force users
-to give irrelevant information to their usecase. This framework is a large
+to give irrelevant information to their use case. This framework is a large
 original contribution of this project.
 
 Finally, although there is much room for more rigour in the statistical analysis
