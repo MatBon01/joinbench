@@ -102,5 +102,5 @@ instance Key Word16 where -- constant type (array indexed by 16 bit word)
 
 \begin{code}
 data Students  =  S {uid :: Int, name :: String, age :: Int}
-data Grades    =  G {cid :: Int, subject :: String, grade :: Char}
+data Grades    =  G {sid :: Int, subject :: String, grade :: Char}
 \end{code}

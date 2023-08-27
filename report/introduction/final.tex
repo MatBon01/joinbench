@@ -13,7 +13,7 @@ following records in Haskell.
 How might you join two bags of these records together by id? One way would be to
 write the following.
 
-\[\lbag\:(s, g)\:|\:s \leftarrow students,\:g \leftarrow grades,\:uid\;s == cid\;g
+\[\lbag\:(s, g)\:|\:s \leftarrow students,\:g \leftarrow grades,\:uid\;s == sid\;g
 \:\rbag\]
 
 What are the disadvantages of this approach? Clearly, every possible pair of
@@ -41,7 +41,7 @@ tools and workflows created to help the benchmarking and testing of the system
 in order to evaluate its performance.
 
 Going back to the example, say you could instead index both tables by their
-$uid$ and $cid$ respectively. You would not need to consider all possible pair
+$uid$ and $sid$ respectively. You would not need to consider all possible pair
 of elements to find the matching pairs anymore as you would already know which
 tuples share the same indexed element. This will allow you to greatly reduce the
 order at which you are taking products and, in effect, `making more work for
@@ -56,3 +56,36 @@ comprehensions. Therefore, in conjunction with the SQL-like syntax extensions
 available to list comprehensions~\cite{ComprehensiveComprehensions} it is hoped
 that the defined framework defined in the paper for efficient equijoin can be
 expressed in the same concise and powerful manner as the example above.
+
+Continuing from the example above, how might we more efficiently join the
+two relations? We could start by indexing both by the key we are looking for and
+merging the results.
+
+% TODO: Write code here
+
+After this we simply can perform a Cartesian product on all values matching keys
+and reduce the answer back to a bag.
+
+% TODO: Write code here
+
+Note the types of the functions used
+
+% TODO: Write code here
+
+Theoretically, this indexing should help us reduce the asymptotic complexity of
+the algorithm. Practically, however, what are the results of such a method? Are
+there any limitations? Does it give the gains promised  in real life? This
+project is about exploring exactly that idea.
+
+After describing a working implementation of the database system mentioned here,
+this report is going to describe the bespoke and original tools created in order
+to benchmark the database. We introduce the \relation{JOINBENCH} relation, a
+specialised version of past academic benchmarking database schemas made with
+testing equijoins in mind. After this, the report will describe the design of
+an extensible tool created in order to generate synthetic databases to run the
+bechmarks on. This tool can be very easily customised and is made with enforcing
+mathematical properties of data in mind so that interesting patterns can emerge
+from the \relation{JOINBENCH} relation. Next, an overview of the benchmarking
+workflow and experiment designs is given to be open and encourage readers to try
+and reproduce results. Finally, a discussion of the results is given and the
+efficacy of replacing such a solution is discussed.
