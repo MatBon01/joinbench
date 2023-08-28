@@ -4,7 +4,12 @@ defining the relational model. It is useful to help understand the structure in
 \fref{chap:database}.
 
 \subsection{Bags}
-\paragraph{Characteristics of a database} We expect our database approximation to not be ordered and admit multiplicities and a finite bag of values is one of the simplest constructions that does so. Like a finite set, a bag contains a collection of unordered values. However, unlike a set, bags can contain duplicate elements.  This multiplicity is key for processing non-idempotent aggregations. For instance, if summing up the ages of a database of people, without admitting multiplicity we would only sum each unique age once.
+\paragraph{Characteristics of a database} We expect our database approximation
+to not be ordered and admit multiplicities and a finite bag of values is one of
+the simplest constructions that does so. Like a finite set, a bag contains a
+collection of unordered values. However, unlike a set, bags can contain
+duplicate elements.  This multiplicity is key for processing non-idempotent
+aggregations. For instance, summing the ages of a database of people, without admitting multiplicity would only sum each unique age once.
 
 \subparagraph{Generalisation} Furthermore, going forward we generalise to bags
 of any types instead of the classical ``bags of records''. This also allows us
@@ -12,7 +17,7 @@ to deal with intermediate tables that contain non-record values which, again,
 may be useful for describing intermediate states of aggergations or projections.
 
 In \fref{tab:BagRelAlgOps} we summarise the implementation of relational algebra operators with bags
-as their bulk type \cite{RelationalAlgebraByWayOfAdjunctions}.
+as their bulk type~\cite{RelationalAlgebraByWayOfAdjunctions}.
 \begin{table}[h]
     \centering
     \begin{tabular}{r|l}
@@ -48,7 +53,7 @@ We commonly refer to the distinguished element of a set $A$ as $null_A$ or, when
 
 We now have the mathematical tools required to define a map. In its finite form a map is widely known in computer science by many other names such as a dictionary, association lists or key-value maps.
 
-Let $\keyset$ be a set and $\valset$ a pointed set. To those already familiar with maps, it may help to think of $\keyset$ as keys and $\valset$ as values.
+Let $\keyset$ be a set and $\valset$ a pointed set. For those already familiar with maps, it may help to think of $\keyset$ as keys and $\valset$ as values.
 \begin{mapdef}
   A map of type $\map{\keyset}{\valset}$ is a total function from K to V.
 \end{mapdef}
@@ -71,11 +76,11 @@ type and pointed.
 \end{split}
 \end{equation*}
 
-The functions above tell us some extremely important information on creating
-empty maps and calculating their unions. As you can see $empty$ returns a
+The functions above tell us some extremely important information about creating
+empty maps and calculating the unions of maps with the same key type. As you can see $empty$ returns a
 function that maps any key to the neutral element $()$. This is to be expected
 as there are no values in an empty map. More interestingly, we see the merge
-of two maps as a function that returns a function that maps a key to a pair of
+of two maps is function that maps a key to a pair of
 values, each of which holds the result of the key lookup in the respective
 table.
 
