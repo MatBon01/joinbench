@@ -27,12 +27,12 @@ rule to generate the tables.
 \begin{lstlisting}[language=make]
 joinbench%: $(tables_path)/joinbenchtable%.csv
 	cabal run joinbench-benchmark -- \
-    $(tables_path)/joinbenchtable$*.csv \ 
-    --template json --output data/joinbench$*.json
+        $(tables_path)/joinbenchtable$*.csv \ 
+        --template json --output data/joinbench$*.json
 
 $(tables_path)/joinbenchtable%.csv:
 	python3 $(database_gen_path)/generate_JOINBENCH_database.py \
-    $* ${tables_path}/joinbenchtable$*.csv
+        $* ${tables_path}/joinbenchtable$*.csv
 \end{lstlisting}
 
 The target of the first rule is a phony target set to run a benchmark with a
