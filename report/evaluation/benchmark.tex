@@ -1,18 +1,18 @@
 \section{Benchmark methodology and results}
 \subsection{\relation{JOINBENCH} relation and queries}
 The \relation{JOINBENCH} relation is a fundamental step in the design of
-the benchmark as it single-handedly determines the possible complexity of the
-possible queries. In this regard I think the \relation{JOINBENCH} was mostly
+the benchmark as it single-handedly determines the limits of the possible
+complexity queries can have. In this regard, I think the \relation{JOINBENCH} was mostly
 sufficient, it was largely based on previously designed benchmarks with slight
 modifications to make it more specialised for the type of interesting
-selection and join based queries that would be interesting in this project. One
+selection and join-based queries that would be interesting in this project. One
 attribute and family of queries that I found to be missing during my analysis,
 however, revolved around the idea of letting the local Cartesian products grow
 to be the same size as a normal product on the relations. This could be solved
 by adding an attribute \relationAttribute{oneHundredPercent} whose domain only
 contained one value (thus containing 100\% of the relation). I believe that this
 would more interestingly highlight the disadvantages of the indexed approach as
-it is likely to be reduced to a normal product. Admittedly I speculate that the lack of a need
+it is likely to be reduced to a normal product. Admittedly, I speculate that the lack of a need
 for a filter on $n^2$ elements would still make the indexed equijoin dominant
 over the product equijoin; however, I believe it would be much closer to the
 comprehension equijoin. Alternatively, this could be done by conducting a
@@ -23,13 +23,13 @@ attributes in the relation could be created by various selections on the
 \relationAttribute{onePercent} but this not only makes standardising relation
 cardinality more difficult, it destroys the readability synthetic data sets are
 meant to express. It may be interesting to include attributes in future that
-cannot be derived from \relationAttribute{onePercent}, for instance other
-multiples such as \relationAttribute{oneThird}, but I am not sure how much more
+cannot be derived from \relationAttribute{onePercent}, for instance, other
+proportions such as \relationAttribute{oneThird}, but I am not sure how much more
 information this would provide in this case. These suggestion may be taken
 forward as future work on designing the \relation{JOINBENCH} relation.
 
 On the topic of readability of attributes, I feel that the naming scheme has
-mixed success. The attributes were names after similar attributes in the updated
+mixed success. The attributes were named after similar attributes in the updated
 Wisconsin relation but were kept due to the importance of the cardinality of
 partitions to this domain. However, I do find that the attributes names struggle
 to easily convey the values in their domains somewhat limiting the expression of
@@ -38,10 +38,10 @@ the domain it would conversely be more difficult to figure out the partition
 sizes. Similarly, all queries are based on uniform sizing and partitions. It
 would be a very interesting piece of future work to see how dynamic sized local
 joins impact indexing; we could ask questions such as whether a joins with one
-partition with a larger cardinality and few other small ones may be faster than
+partition with a larger cardinality and a few other small ones may be faster than
 a join with relations with larger tuple counts but many small local partitions.
-Having non uniform sizes in the queries would make the benchmark more realistic
-to real world scenarios but I also struggle to see a scientific question that
+Having non-uniform sizes in the queries would make the benchmark more like
+real-world scenarios, but I also struggle to see a scientific question that
 may be asked. Furthermore, I feel the theoretical explanations of the results
 obtained in this experiment as described in \fref{sec:benchmark:results}
 already gives enough understanding to extrapolate and model into the
@@ -51,11 +51,11 @@ non-standard cases.
 This subsection will evaluate the results presented in
 \fref{sec:benchmark:results} and the processes that obtained them.
 At first glance the results of the benchmark seem to be very reasonable and
-trends are smooth, expected and clear. A more thorough analysis can be completed
+trends are smooth, expected, and clear. A more thorough analysis can be completed
 by checking the standard deviations associated with the results. Tables with the
 mean and standard deviation for a select number of queries can be found in
 \fref{tab:evaluation:std-dev-comparison-onePercent-onePercent},
-\fref{tab:evaluation:std-dev-comparison-onePercent-fiftyPercent} and
+\fref{tab:evaluation:std-dev-comparison-onePercent-fiftyPercent}, and
 \fref{tab:evaluation:std-dev-comparison-evenOnePercent-oddOnePercent}. I have
 chosen these queries as I believe they most accurately sample the space of
 queries and edge cases. I have included the means in this result to give a
@@ -64,12 +64,12 @@ standard deviation in most cases are 3 orders of magnitude smaller than the
 mean, potentially indicating that the `quiet' computational environment
 (described in \fref{sec:benchmark:experiment}) the
 results were gathered in was successful in producing reproducible data. It is
-worth noting that the function indexed equijoin continuously seems to have an
+worth noting that the function indexed equijoin often seems to have an
 order of magnitude higher standard deviation, suggesting a larger spread of
 data. This could be due to the fact that the function is more computationally
-complex and therefore more sensitive the runtime environment. Most importantly,
-due to the nature of such a small spread, it is unlikely that results wrong
-relative to each other (no lines overlap) and therefore the conclusions drawn
+complex and therefore more sensitive to the runtime environment. Most importantly,
+due to the nature of such a small spread, it is unlikely that results are wrong
+relative to each other and therefore the conclusions drawn
 may be more confidently accepted despite any statistical noise and uncertainty.
 
 \begin{table}[h]
@@ -103,27 +103,27 @@ is an important next step. Secondly, much of the section was based on comments
 of trends and despite the data clearly being consistent within repeats of the
 same query no statistical analysis has been conducted on the trends. Because of
 the clear visualisations of the data I am confident that the trends in question
-are existent however it would be vital to conduct an analysis to model the
+are existent, however it would be vital to conduct an analysis to model the
 relationships between tuple counts, different queries and functions. This is
-clearly where the results fall short and future work would need to be done in
+clearly where the results fall short, and future work would need to be done in
 order to add rigour to the already clear patterns the data shows.
 
 Finally, another shortcoming of the results is the potential improvements that
-could have been made to statistics considered and ways in which the tools in
+could have been made to the statistics considered and the ways in which the tools in
 question were understood and used. The mean average can easily be swayed by
 outliers and, although the spread suggests the data was quite tight and
-outliers not too extreme, this could have been a heavy issue. Computer
+outliers were not too extreme, this could have been a heavy issue. Computer
 benchmarking can be prone to outliers for a variety of factors from noise on the
-system resources to caching effects and therefore more care should have been
+system resources to caching effects and, therefore, more care should have been
 taken to mitigate these risks. However a quick heuristic analysis of the median
-and means shows that in this case they are not far apart. Moreover, the
+and means shows that, in this case, they are not far apart. Moreover, the
 \verb|Criterion| library itself gives a number of more reliable statistics that
 I did not use in this project because of time and scope constraints. These may
 have led to more reliable results. More time could have been spent on modifying
-default options for the library to ensure that sampling rates and other useful
+default the options for the library to ensure that sampling rates and other useful
 variables were consistent and the benchmarks done in a much fairer way. Luckily,
 I believe these did not have a serious impact on the results as the data
-gathered seems to be consistent and patterns significantly distinct and clear. I
+gathered seems to be consistent, and patterns significantly distinct and clear. I
 believe it would also be important to report the usage of other computer
 resources, especially CPU utilisation and memory, as these are important
 considerations when choosing a query function and standard practice in the academic
@@ -131,10 +131,10 @@ database benchmarking community as discussed in
 \fref{sec:background:benchmarkbestpractices}.
 
 \section{Haskell considerations}
-As Haskell is a lazy language many considerations, especially when benchmarking,
+As Haskell is a lazy language, many considerations, especially when benchmarking,
 must be made to ensure that answers are evaluated at the correct time. In the
 context of benchmarking, we want to ensure that all results are fully evaluated
-in the duration of the benchmark. In order to ensure the full evaluation of the
+in the duration of the experiment. In order to ensure the full evaluation of the
 function we define a normal form for all the new data structures introduced by
 this database implementation (detailed in \fref{chap:database}). During the
 benchmarking we can then use the $nf$ function, along with a function missing an
@@ -149,7 +149,7 @@ type contained within the bag also has a normal form. To fully evaluate the bag
 you simply fully evaluate its underlying list. Similarly, a record type can be
 fully evaluated by evaluating a tuple of all its fields. The notion of a weak
 head normal form also exists which does not require these extra definitions,
-however I do not believe that it is strong enough for the purposes of this
+however, I do not believe that it is strong enough for the purposes of this
 benchmark. Although more than enough for some queries, the weak head normal form
 does not typically come close to fully evaluating the expressions and this can
 be seen in the mean times reported by the benchmark, this can be seen in
@@ -196,9 +196,9 @@ the nf evaluation strategy.}
 On the other hand, the implementation has not been thoroughly checked for space
 leaks. The problem with space leaks in this domain is that when benchmarking
 higher tuple counts this could lead to much time being wasted in the garbage
-collector and therefore artificially increasing the time reported depending on
+collector, and therefore, artificially increasing the time reported depending on
 the memory used by a function (including expressions that have not been fully
-evaluated, otherwise known as thonks). This is clearly a downfall of the
+evaluated, otherwise known as thonks). This is clearly a weakness of the
 experiment and despite preliminary checks for space leaks, more effort should be
 put into it to ensure that not only larger tuple counts can be considered but
 the results are more reliable and not impacted by garbage collection.
