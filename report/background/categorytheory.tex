@@ -1,5 +1,5 @@
 \section{Category theory}
-Category theory will be the main tool in describing the structure and operations
+Category theory will be the main tool for describing the structure and operations
 of our database system. Category theory is a very powerful tool in mathematics
 and can be seen as an ``abstraction of abstractions''. The category theory that
 will appear in this paper is very limited and does not do justice to the full
@@ -18,7 +18,8 @@ these structures.
 \begin{categorydef}
   A \emph{category} \cat{C} is a set\footnote{In more rigorous definitions one must be careful of defining the collections of objects as a set lest Russell's paradox comes into play} of \emph{objects} \objs{C}, such as \obj{a}, \obj{b}, \obj{c}, and \emph{morphisms} (or \emph{arrows}) \morphs{C} between them, such as \morph{f}, \morph{g}. We require that:
   \begin{itemize}
-    \item There are two operations; \emph{domain} which associates with every arrow \morph{f} an object $\obj{a} = \domain{f}$ and \emph{codomain} which associates with every arrow \morph{f} an object $\obj{b} = \codomain{f}$. We can now express this information as \explicitmorph{f}{a}{b}.\footnote{Though we emphasise the distinction between a function and a morphism.}
+    \item There are two operations; \emph{domain}, which associates with every
+        arrow \morph{f} an object $\obj{a} = \domain{f}$ and \emph{codomain}, which associates with every arrow \morph{f} an object $\obj{b} = \codomain{f}$. We can now express this information as \explicitmorph{f}{a}{b}.\footnote{Though we emphasise the distinction between a function and a morphism.}
     \item There is a composition rule between morphisms such that given \explicitmorph{f}{a}{b} and \explicitmorph{g}{b}{c}, there is another arrow \explicitmorph{\morph{g} \circ \morph{f}}{a}{c} in \morphs{C}.
     \item Composition of arrows is associative. That is, for an additional object \obj{d} and arrow \explicitmorph{h}{c}{d} the resulting morphisms $\morph{h} \circ \left(\morph{g} \circ \morph{f}\right)$ and $\left(\morph{h} \circ \morph{g}\right) \circ \morph{f}$ coincide in \morphs{C}.
     \item Every object \obj{a} is assigned an arrow $\id{a}: \obj{a} \to \obj{a}$ in \morphs{C}, called the \emph{identity morphism}.
@@ -53,7 +54,9 @@ Intuitively, it should be obvious that categories and functors themselves form a
 
 \subsection{Natural transformations}
 \theoremstyle{definition}\newtheorem*{nattransdef}{Natural Transformation}
-We now can explore an intuitive way of relating two functors, called an \emph{natural transformation}. A natural transformation can be seen as a projection of one functor space to another and is in essence a family of arrows that describes this translation.
+We now can explore an intuitive way of relating two functors, called a
+\emph{natural transformation}. A natural transformation can be seen as a
+projection from one functor space to another and is in essence a family of arrows that describes this translation.
 \begin{nattransdef}
 Given two functors $\functor{F}, \functor{G} : \cat{C} \to \cat{D}$ a
 \emph{natural transformation} $\explicitnattrans{\tau}{F}{G}$ associates to each element $\obj{a} \in \objs{C}$ an arrow $\nattransapply{\tau}{a} \in \morphs{D}$ such that $\nattransapply{\tau}{a}: \functorobj{F}{a} \to \functorobj{G}{a}$. Additionally, for $\obj{b} \in \cat{C}$ and \explicitmorph{f}{a}{b} a morphism in \cat{C}, we also require that $\nattransapply{\tau}{b} \circ \functormorph{F}{f} = \functormorph{G}{f} \circ \nattransapply{\tau}{a}$.
@@ -66,7 +69,8 @@ Given two functors $\functor{F}, \functor{G} : \cat{C} \to \cat{D}$ a
     Given two natural transformations
     \explicitnattrans{\tau}{E}{F} and
     \explicitnattrans{\nu}{F}{G} where $\functor{E, F, G}: \cat{C} \to
-    \cat{D}$ are functors. The vertical composition \cite{RelationalAlgebraByWayOfAdjunctions}
+    \cat{D}$ are functors. The vertical
+    composition~\cite{RelationalAlgebraByWayOfAdjunctions}
     $\explicitnattrans{\verticalcomposition{\tau}{\nu}}{E}{G}$
     is defined by the composition of the underlying arrows for every
     object $\obj{a} \in \cat{C}$. Explicitly, the components
@@ -77,7 +81,8 @@ Given two functors $\functor{F}, \functor{G} : \cat{C} \to \cat{D}$ a
 
 
 \subsection{Adjunctions}
-An adjunction expresses an intersection of arrows of two different functions. For instance Say you have the category \commoncatname{Set} of sets \cite{RelationalAlgebraByWayOfAdjunctions} and two functions $\morph{f}, \morph{g}$ with signatures \explicitmorph{f}{X}{A} and \explicitmorph{g}{X}{B} with $\obj{X}, \obj{A}, \obj{B} \in \commoncatname{Set}$.
+An adjunction expresses an intersection of arrows of two different functions.
+For instance Say you have the category \commoncatname{Set} of sets~\cite{RelationalAlgebraByWayOfAdjunctions} and two functions $\morph{f}, \morph{g}$ with signatures \explicitmorph{f}{X}{A} and \explicitmorph{g}{X}{B} with $\obj{X}, \obj{A}, \obj{B} \in \commoncatname{Set}$.
 in \commoncatname{Set} with a common domain $\domain{f} = \domain{g} = \obj{A}
 \in \commoncatname{Set}$, how might we interpret the application of both
 functions on one element. We could create a new function \explicitmorph{h}{X}{A
@@ -96,7 +101,7 @@ to $(\obj{X}, \obj{Y})$ and links back to the situation in $\commoncatname{Set}$
 become clear. We introduce the diagonal functor $\functor{\Delta}:
 \commoncatname{Set} \to \commoncatname{Set}^2$, s.t. $\functorobj{\Delta}{A} =
 (\obj{A}, \obj{A})$ and $\functormorph{\Delta}{f} = (\morph{f}, \morph{f})$.
-Furthermore, the Cartesian product can also be seen view the lens of a functor $\functor{\times}: \commoncatname{Set}^2 \to \commoncatname{Set}$ that takes the pair of elements $(\obj{A}, \obj{B})$ and maps it to the set $\obj{A} \times \obj{B}$ and a pair of functions $(\morph{i}, \morph{j})$ to a function $k: \left(\domain{i} \times \domain{j}\right) \to \left(\codomain{i} \times \codomain{j}\right)$.
+Furthermore, the Cartesian product can also be seen through the lens of a functor $\functor{\times}: \commoncatname{Set}^2 \to \commoncatname{Set}$ that takes the pair of elements $(\obj{A}, \obj{B})$ and maps it to the set $\obj{A} \times \obj{B}$ and a pair of functions $(\morph{i}, \morph{j})$ to a function $k: \left(\domain{i} \times \domain{j}\right) \to \left(\codomain{i} \times \codomain{j}\right)$.
 Considering the above problem again, we can see very clear links between the two
 functors. We can work our problem in \commoncatname{Set} in the domain of
 $\commoncatname{Set}^2$ by considering $\functorobj{\Delta}{A} = (\obj{A},
@@ -110,7 +115,7 @@ Motivated by this example, we give a formal definition of an adjunction.
     Given two functors $\functor{L}: \cat{D} \to \cat{C}$ and $\functor{R}:
     \cat{C} \to \cat{D}$, we define an adjunction $\adunction{L}{R}$
     such that there is a natural isomorphism between the
-    hom-sets as follows \cite{RelationalAlgebraByWayOfAdjunctions}:
+    hom-sets as follows~\cite{RelationalAlgebraByWayOfAdjunctions}:
     \[
         \lfloor - \rfloor: \homset{C}{\functorobj{L}{A}}{B} \cong
         \homset{D}{A}{\functorobj{R}{B}} :\lceil - \rceil
@@ -123,7 +128,8 @@ Motivated by this example, we give a formal definition of an adjunction.
     \emph{counit}:
     $\explicitnattrans{\epsilon}{L \circ R}{\mathrm{Id}}$ such that
     $\nattransapply{\epsilon}{B} = \lceil \id{\functorobj{R}{A}} \rceil$. We
-    require that the unit and counit obey the `triangle identities' \cite{RelationalAlgebraByWayOfAdjunctions}:
+    require that the unit and counit obey the `triangle
+    identities'~\cite{RelationalAlgebraByWayOfAdjunctions}:
       $
       \verticalcomposition
           {\nattransapply{\eta}{\functor{R}}}
@@ -148,4 +154,4 @@ definition of vertical composition in \fref{sec:verticalcomposition}, namely
 that
 $\nattransapply{\left(\verticalcomposition{\eta}{\epsilon}\right)}{\obj{A}} =
 \morphcomp{\nattransapply{\eta}{\obj{A}}}{\nattransapply{\epsilon}{\obj{A}}}$
-where the right hand side is simple the composition of arrows.
+where the right-hand side is simple the composition of arrows.

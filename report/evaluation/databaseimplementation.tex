@@ -4,10 +4,10 @@ have is correctness as if queries are not producing expected results, it does
 not matter how long it takes. My strategy for ensuring correctness is rigorous
 unit tests. By automatically checking that different modules of the system reach
 the same result I do by hand helps ensure that it is working as expected. I
-acknowledge that this is not complete however and integration tests are vital;
-at times I print the result of large computations and check that they are close
+acknowledge that this is not a complete solution, however, and integration tests are vital;
+at times, I print the result of large computations and check that they are close
 to what I would expect but I doubt I have full integration coverage with
-heuristics like this. Given more time it would be very beneficial to use a
+heuristics like this. Given more time, it would be very beneficial to use a
 pre-existing DBMS to run the same queries and compare outputs. This could not be
 done now due to the extra tooling that would be required for the automatic
 parsing and comparisons needed to take place. Some of the suggestions in
@@ -17,7 +17,7 @@ mentioned in the section it would require the programs to have a larger idea of
 the context of its actions. This is especially true when thinking about
 queries, it is likely that the queries would need to be transcribed to SQL by
 hand, adding in an extra error-prone step. To conclude, I am confident in the
-results due to extensive unit testing but I strongly believe that in future an
+results due to extensive unit testing but I strongly believe that in the future an
 effort should be made to include both integration tests for functions used in
 benchmarking and system tests by comparing results with an existing DBMS.
 
@@ -41,14 +41,15 @@ expected.
 \paragraph{Readability and efficiency} It is clear that much of the code
 presented in \fref{chap:database} could be made more efficient and
 readable. The effects of this have varying degrees of severity. To begin with a
-more high severity approach the efficiency of some parts of the code present
+more high-severity approach, the efficiency of some parts of the code present
 could reasonably become hot spots that bias results of the benchmarking.
 Luckily, in the preliminary profiling undertaken of the code it did not seem to
-be an issue, the algorithm for equality of bags could easily bias results to
+be an issue, the algorithm for equality of bags could easily bias results
+towards
 functions that compare more often and frame potentially viable solutions as much
 worse than they are. Of course the asymptotic complexity of the algorithm is
 important to consider, the project also had a focus on trends and needlessly
 slow algorithms may alter intersection points. In addition, readability is useful for further extending the
-database system to approach a more real world use case. Code that
+database system to approach a more real-world use case. Code that
 is written more nicely, especially important in the context of academic work,
 makes it easier to understand and express the theory behind.

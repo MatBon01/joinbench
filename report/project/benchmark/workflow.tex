@@ -4,12 +4,13 @@ management system a workflow system was created to automate many of the tasks
 involved. This section will briefly describe the workflow and its creation.
 
 There are multiple steps involved in the benchmarking of the database management
-systems. The first step is to create synthetic version of the
+systems. The first step is to create a synthetic version of the
 \relation{JOINBENCH} relation up to the specifications of the benchmark.
 Alternatively, one relation at least as large as the highest cardinality
-interested in benchmarking can be made and then selections the
-\relationAttribute{unique} attributes can be used to alter the cardinality;
-however, this involved extra computation on the side of the system to benchmark
+interested in benchmarking can be made and then selections on the
+\relationAttribute{unique} attributes can be used to alter the cardinality for
+different benchmarks;
+however, this involves extra computation on the side of the system doing the benchmark
 and therefore I decided to create a synthetic relation for each tuple count.
 After the relations are created, they must be parsed into the Haskell program
 and loaded into the database. All the queries can then be run and benchmarked.
@@ -17,21 +18,21 @@ Finally, the data is processed and the relevant statistics and figures are
 extracted and created. An overview of the workflow can be found in
 \fref{fig:benchmark:workflow}.
 
-The workflow is largely managed through use of a Makefile. The advantage of this
+The workflow is largely managed through the use of a Makefile. The advantage of this
 approach is making sure that a table is always generated for the benchmark to
-run and that unnecessary computation is kept at a minimum. Below is an example
+run and that unnecessary computation is kept to a minimum. Below is an example
 of the most important rules in the Makefile; a rule to run the benchmark and a
 rule to generate the tables.
 
 \begin{lstlisting}[language=make]
 joinbench%: $(tables_path)/joinbenchtable%.csv
 	cabal run joinbench-benchmark -- \
-    $(tables_path)/joinbenchtable$*.csv \ 
-    --template json --output data/joinbench$*.json
+        $(tables_path)/joinbenchtable$*.csv \ 
+        --template json --output data/joinbench$*.json
 
 $(tables_path)/joinbenchtable%.csv:
 	python3 $(database_gen_path)/generate_JOINBENCH_database.py \
-    $* ${tables_path}/joinbenchtable$*.csv
+        $* ${tables_path}/joinbenchtable$*.csv
 \end{lstlisting}
 
 The target of the first rule is a phony target set to run a benchmark with a
@@ -48,7 +49,7 @@ my implementation of the Haskell program. The parser is written in Haskell and
 separates lines as elements of the bag and ``cells'' (values separated by
 commas) to be either integers or $Word16$s. As I will not join on the
 \relationAttribute{unique} attribute, it is specified as an integer and all
-others $Word16$s for limitations discussed in \fref{chap:implementation}. For
+others $Word16$s for limitations discussed in \fref{chap:database}. For
 readability of benchmarks during development the final type the
 \relation{JOINBENCH} relation takes is a bag of records as specified in
 \fref{sec:benchmark:database}.
@@ -58,14 +59,15 @@ After the database has been parsed the necessary benchmarks are run by the
 in the Makefile). This file is stored in a designated \verb|data| directory and
 can be automatically loaded in by my statistical analysis python module. This
 module describes some useful abstractions to reference parts of the data used
-most often and utility functions for automatically loading, grouping and finding
+most often and utility functions for automatically loading, grouping, and finding
 data. Furthermore, there are some graphing classes that have been created to
 automatically generate graphs in this paper and other that help understand the
-data before writing. In order to run this code I used an non-automated approach
-by creating a Jupyter notebook. Originally the notebook was meant to be used for
+data before writing. In order to run this code I used a non-automated approach
+by creating a Jupyter notebook. Originally, the notebook was meant to be used for
 preliminary data analysis and I planned to easily write a script to automate the
-generation of figures in my CI/CD pipeline made easier by virtue of the fact that 
-all of the difficult code was written in a dedicated python module so would not
+generation of figures in my CI/CD pipeline; this would have been made easier by virtue of the fact that 
+all of the difficult code for this was written in a dedicated python module so
+it would not
 need to be duplicated. However, I found the ability to check the quality of the
 graphs in an interactive environment before producing an output to be very
 useful and so kept the notebook as a quality assurance mechanism.

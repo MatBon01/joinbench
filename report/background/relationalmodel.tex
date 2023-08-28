@@ -1,10 +1,10 @@
 \section{The relational model of a database}\label{sec:relationalmodel}
-We briefly describe the relational model of a database so that we can introduce
-the key operators we seek to describe using category theory.
 \subsection{Introduction to the relational model}
-There are several different data models to choose from when designing a database that specify important aspects of the design such as the structure, operations and constraints on the data \cite{DatabaseSystems}. For this project we concern ourselves with the relational model and its associated algebra.
+There are several different data models to choose from when designing a database
+that specifies important aspects of the design such as the structure, operations
+and constraints on the data \cite{DatabaseSystems}. For this project, we concern ourselves with the relational model and its associated algebra.
 
-The relational model represents data through two dimensional tables, called
+The relational model represents data through two-dimensional tables, called
 \emph{relations}. The columns of the ``table'' are called its \emph{attributes}
 and the name of the relation with the set of its attributes is its
 \emph{schema} \cite{DatabaseSystems}. We denote the schema of a relation
@@ -66,12 +66,12 @@ We can now represent the \relation{People} relation containing the tuple in
   \label{tab:peopleRelationWithTuple}
 \end{table}
 
-In the relational model the constraint that each each component of a tuple must
-be an of an atomic type; meaning the component should reasonably not be a
-compound data type such as records, lists or sets. Furthermore, each attribute
+The relational model has a constraint that each component of a tuple must
+be of an atomic type; this means the component should reasonably not be a
+compound data type such as a record, list or set. Furthermore, each attribute
 has its own associated \emph{domain}, specifying an elementary type that all
 components belonging to that column must take. The domain can be specified in
-the the schema using a colon as shown in \fref{fig:peopleSchemaWithDomains}.
+the schema using a colon as shown in \fref{fig:peopleSchemaWithDomains}.
 \begin{figure}[h]
     \centering
     \schema{\relation{People}}{\relationAttribute{firstName}: string,\
@@ -91,11 +91,15 @@ Finally, we call a set of tuples for a relation an \emph{instance} of that relat
 \paragraph{A note on ordering} The distinction between lists and sets here is very important and has consequences. Firstly, note that a schema consists of a \textbf{set} of attributes, though in this case we do assign a ``standard'' ordering to them, typically following the ordering in the schema. Also note that when giving a tuple of a relation we do not also give the headings and thus some indication to which schema it belongs is necessary. Secondly, we introduced a relation as a \textbf{set} of tuples, in this case there is no standard ordering and thus invites many equivalent representations of the same relation \cite{DatabaseSystems}. In generality, the order of columns and rows do not matter, so long as they are consistent.
 
 \subsection{Relational Algebra}
-Equipped with the information above we can now introduce the domain of the project, relational algebra. Relational algebra views queries as the creation of a relation by operating on other relations \cite{RelationalCalculus}.
+Equipped with the information above, we can now introduce the domain of the project, relational algebra. Relational algebra views queries as the creation of a relation by operating on other relations~\cite{RelationalCalculus}.
 
-The sections below describe some of the more interesting, specialised operations on this algebra but it is definitely worth noting that as relations are sets of tuples, given matching schemas between relations, set operations are also valid operations and produce relations \cite{RelationalModel}. More specifically, you can find the union, intersection and differences of two relations just as you would with sets \cite{DatabaseSystems}.
+The sections below describe some of the more interesting and specialised
+operations on this algebra, but it is definitely worth noting that as relations
+are sets of tuples, given matching schemas between relations, set operations are
+also valid operations and produce relations~\cite{RelationalModel}. More
+specifically, you can find the union, intersection, and differences of two relations just as you would with sets~\cite{DatabaseSystems}.
 
-For ease of demonstration we use a more populated instance of the \relation{People} relation as in \fref{tab:peopleRelationPopulated}.
+For ease of demonstration, we use a more populated instance of the \relation{People} relation as in \fref{tab:peopleRelationPopulated}.
 
 \begin{table}[h]
   \centering
@@ -151,7 +155,13 @@ As an example, we show the resulting relation of the selection \select{\relation
 \subsubsection{Products}\label{sec:products}
 The product of two relations \relation{R} and \relation{S} is simply the Cartesian product of the set of tuples of each relation, where instead of a binary tuple of tuples, the result is a single longer tuple. Typically, the result of $\relation{R} \times \relation{S}$ has the elements of tuples in $R$ before those in $S$ \cite{DatabaseSystems}.
 
-Clearly, the schema of the resulting relation $\relation{R} \times \relation{S}$ is altered. It takes the form of the union of the schemas of \relation{R} and \relation{S}. Of course in some instances there may be common attributes among \relation{R} and \relation{S}, say \relationAttribute{a}, but in this case the headings associated with the attributes are set to \relationAttribute{\relation{R}.a} and \relationAttribute{\relation{S}.a} respectively \cite{DatabaseSystems}.
+Clearly, the schema of the resulting relation $\relation{R} \times \relation{S}$
+is altered. It takes the form of the union of the schemas of \relation{R} and
+\relation{S}. Of course, in some instances, there may be common attributes among
+\relation{R} and \relation{S}, say \relationAttribute{a}, but in this case the
+headings associated with the attributes are set to
+\relationAttribute{\relation{R}.a} and \relationAttribute{\relation{S}.a}
+respectively~\cite{DatabaseSystems}.
 
 For instance, given the relations \relation{R} and \relation{S} as in \fref{tab:productRelationR} and \fref{tab:productRelationS}, we can calculate the product $\relation{R} \times \relation{S}$ is as in \fref{tab:productResult}.
 
@@ -195,6 +205,7 @@ For instance, given the relations \relation{R} and \relation{S} as in \fref{tab:
   \label{tab:productResult}
 \end{table}
 
+\noindent
 We note that a tuple in the product relation $\relation{R} \times \relation{S}$ is of the form
 \begin{verbatim}
   (1, 2, 3, 10, 11)
@@ -230,8 +241,15 @@ A join is a way of creating a new relation by combining relations with common at
   \caption{Relation \relation{S} as example for joins.}
   \label{tab:joinRelationS}
 \end{table}
-\paragraph{Natural join}\label{sec:natjoin} The natural join is the first way to combine relations. Given that relations \relation{R} and \relation{S} have common attributes \relationAttribute{a_1}, \ldots, \relationAttribute{a_k}, tuples in \relation{R} and \relation{S} are combined if the component of all attributes are equal. This join is expressed as \natjoin{R}{S} \cite{DatabaseSystems}.
-\subparagraph*{Example of the natural join} Given the relations \relation{R} and \relation{S} in \fref{tab:joinRelationR} and \fref{tab:joinRelationS} respectively, the natural join $\natjoin{R}{S}$ is as in \fref{tab:naturalJoinResult} \cite{RelationalModel}.
+\paragraph{Natural join}\label{sec:natjoin} The natural join is the first way to
+combine relations. Given that relations \relation{R} and \relation{S} have
+common attributes \relationAttribute{a_1}, \ldots, \relationAttribute{a_k},
+tuples in \relation{R} and \relation{S} are combined if the component of all
+attributes are equal. This join is expressed as \natjoin{R}{S}~\cite{DatabaseSystems}.
+\subparagraph*{Example of the natural join} Given the relations \relation{R} and
+\relation{S} in \fref{tab:joinRelationR} and \fref{tab:joinRelationS}
+respectively, the natural join $\natjoin{R}{S}$ is as in
+\fref{tab:naturalJoinResult}~\cite{RelationalModel}.
 In this example we call the tuple \verb|(1, 2, 4)| a \emph{dangling tuple} as it failed to pair with any other tuple in relation \relation{S} \cite{DatabaseSystems}.
 \begin{table}[h]
   \centering
@@ -245,9 +263,20 @@ In this example we call the tuple \verb|(1, 2, 4)| a \emph{dangling tuple} as it
   \label{tab:naturalJoinResult}
 \end{table}
 
-\paragraph{Theta-Join} The \emph{theta-join} is a generalisation of a join, where whether a record is kept is determined by some condition $\theta$. Given such a $\theta$, a theta-join between relations \relation{R} and \relation{S} is written as \thetajoin{\theta}{R}{S}. To determine the tuples of the new relation \thetajoin{\theta}{R}{S} we first must take the product $\relation{R} \times \relation{S}$ (as seen in \fref{sec:products}), then we filter out rows that return false in respect to the predicate $\theta$ \cite{DatabaseSystems}.
+\paragraph{Theta-Join} The \emph{theta-join} is a generalisation of a join,
+where whether a record is kept is determined by some condition $\theta$. Given
+such a $\theta$, a theta-join between relations \relation{R} and \relation{S} is
+written as \thetajoin{\theta}{R}{S}. To determine the tuples of the new relation
+\thetajoin{\theta}{R}{S} we first must take the product $\relation{R} \times
+\relation{S}$ (as seen in \fref{sec:products}), then we filter out rows that
+return false with respect to the predicate $\theta$ \cite{DatabaseSystems}.
 
-\paragraph{Equijoin} The most important class of joins concerning this project, a specialisation of the theta-join. Equijoin is used when the operator of predicate $\theta$ between two attributes is an equality\footnote{So common that joins using operators other than $=$, such as $<$, are sometimes called \emph{nonequijoins}\cite{JoinProcessing}.} \cite{JoinProcessing}. An equijoin between relations \relation{R} and \relation{S} where we want to join the values of attributes \relationAttribute{a} and \relationAttribute{b} respectively is denoted \equijoin{R}{a}{S}{b}.
+\paragraph{Equijoin} The most important class of joins concerning this project
+is a specialisation of the theta-join. Equijoin is used when the operator of predicate $\theta$ between two attributes is an equality\footnote{So common that joins using operators other than $=$, such as $<$, are sometimes called \emph{nonequijoins}\cite{JoinProcessing}.} \cite{JoinProcessing}. An equijoin between relations \relation{R} and \relation{S} where we want to join the values of attributes \relationAttribute{a} and \relationAttribute{b} respectively is denoted \equijoin{R}{a}{S}{b}.
 
 \subsubsection{Note on permutations}
-Permutations is another specialist operation in relational algebra, though not important to the scope of the project. For completion, despite the fact that relations are domain--unordered, their internal representation in computers is not and so permutation may be done for performance benefits despite no logical difference storing a relation and its permutations \cite{RelationalModel}. Furthermore, permutation can be used (and is usually implied) to ensure that tuples with identical schemas differing only in ordering can have the normal set operations applied to them \cite{DatabaseSystems}.
+Permutations is another specialist operation in relational algebra, though not
+important to the scope of the project. For completion, despite the fact that
+relations are domain-unordered, their internal representation in computers is
+not and so permutation may be done for performance benefits despite no logical
+difference between storing a relation and its permutations~\cite{RelationalModel}. Furthermore, permutation can be used (and is usually implied) to ensure that tuples with identical schemas differing only in ordering can have the normal set operations applied to them \cite{DatabaseSystems}.

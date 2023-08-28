@@ -30,8 +30,8 @@ class BenchmarkGroupTableGenerator:
             p_percent_change = (i_mean - p_mean) / p_mean * 100
             c_percent_change = (i_mean - c_mean) / c_mean * 100
             percentage_change_of_means[f"{benchmark.get_tuple_count()} tuples"] = [
-                p_percent_change,
-                c_percent_change,
+                f"{p_percent_change:.3g}\%",
+                f"{c_percent_change:.3g}\%",
             ]
 
         return percentage_change_of_means
