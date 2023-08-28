@@ -157,3 +157,16 @@ issue also highlights the strength my solution has in extensibility as the
 question is not whether the framework allows such structures, but whether we
 should and users of this system can make their own decisions and implement such
 cells for themselves and their use cases.
+
+\subparagraph{TableGenerator} The table generator is the component that
+organises the efficient generation of the entire table, no matter the size. In
+order to accomplish this it creates an iterator that generates the given number
+of records. This iterator has an interesting trade-off in its design as it both allows
+for the efficient generation of arbitrarily large tables but also restricts the
+users ability to view the table as a whole. There are definitely cases
+where the shuffling of records is useful (for instance, to get around the problem
+of generating unique dense integers) and so with these restrictions the
+``shuffling'' would be left as the responsibility of another program. I believe
+that this counts as generation and so should be able to be handled by the
+framework in the perfect case. However, it is a niche requirement and the efficiency of the current
+implementation far outweighs this need.
