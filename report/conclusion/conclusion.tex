@@ -16,16 +16,16 @@ project has. The contributions of the project are as follows:
 
 The beginning of the project was successful with a crude implementation of the
 database system described in the paper. The implementation was functional with
-unit tests strengthening belief in correctness tests and ease of use during
-benchmarks. Slight alterations had to be made to the implementation described by
-\relalg{}, a handful of original contributions such as the definition of
-equality
-of bags were made and much effort was put into the integration of the system to form the
-library defined in the code of this project. The library could further be
-expanded through the definition of more keys and much real world modification
-must be done to the design to make it useful in real world (for instance the
+unit tests strengthening the belief in correctness, and ease of use during
+benchmarks. Alterations had to be made to the implementation described by
+\relalg{} and supplementary functions and design decisions had to be invented to
+integrate the code and transform it into a usable library. These contributions
+are not limited to the definition of equality
+of bags and much effort into the integration of the system. The library could further be
+expanded through the definition of more keys, and much real-world modification
+must be done to the design to make it viable for day-to-day use (for instance, the
 caching of indexed tables). The library defined is usable and functional for the
-purposes of benchmarking and a good starting point for further expansion with
+purposes of benchmarking and is a good starting point for further expansion with
 much room for many more query optimisations.
 
 The \relation{JOINBENCH} relation is a carefully thought out combination of
@@ -35,7 +35,7 @@ the scope of this paper. It has attributes designed to investigate the effect of
 different orders of products on the performance of equijoins and can be scaled
 through select queries on the \relationAttribute{unique} attribute. There is no
 doubt as to whether it has achieved its purpose in the scope of this paper.
-After spotting trends it may be extended with a few more attributes or
+After considering unfinished trends in the data, it may be extended with a few more attributes or
 supporting queries to investigate edge cases more thoroughly.
 
 The synthetic database generator gives users a low-level tool to generate very
@@ -43,30 +43,29 @@ customisable databases. The framework is very flexible yet prescriptive of
 structure. For the benchmarking of this project, a wide array of different cell
 types were defined and used to create the \relation{JOINBENCH} relation and
 previous iterations of benchmarking databases. It has a capacity for both
-qualitative and quantitative data, however I have found it extremely useful on the
+qualitative and quantitative data, however, I have found it extremely useful on the
 quantitative side. Patterns and trends between cell values can be moderated
 through cell composition or passing shared objects into constructors and is very
-powerful for customisation of the result. In future this framework could be
+powerful for customisation of the result. In future, this framework could be
 extended to allow for a more user-friendly interaction, though care must be
 taken as to not lose the flexibility that comes from the low-levelled nature of
-the design. Furthermore, work may be made to make the framework more context
-aware so that it may be used to generate more useful tools such as SQL commands
+the design. Furthermore, work may be made to make the framework more context-aware so that it may be used to generate more useful tools such as SQL commands
 to create the database and Haskell parsers to read its output; similarly, care
 must be taken not to lose the simplicity of the current solution and force users
 to give irrelevant information to their use case. This framework is a large
 original contribution of this project.
 
 Finally, although there is much room for more rigour in the statistical analysis
-of results, benchmarking with the implementation above and this methodology has
+of results, benchmarking with the implementation above combined with this methodology has
 produced extremely strong trends. It is clear that, as expected, indexed
 equijoin needs to have a substantial number of tuples in order to become
-effective over methods with a worse asymptotic complexity but reduced overhead.
-Furthermore, comprehension equijoin does much better than expected and although
+effective over methods with worse asymptotic complexity but reduced overhead.
+Furthermore, comprehension equijoin does much better than expected, and although
 scales similar to product equijoin, does so with a significantly lower slope.
 The trends behind indexed equijoin are more complicated, however, and rely
-heavily on the number of and order of local products needed by the query. This
-means that the performance increase of indexed equijoin heavily relies on the
-query in question, though most real world situations would benefit from its
+heavily on the order of local products needed by the query. This
+means that the performance increase of indexed equijoin strongly depends on the
+query in question, though most real-world situations would benefit from its
 implementation as they are unlikely to fall into the same category as edge
 cases. On the other hand, there are many query optimisations (such as a
 preceding join) that are not considered in this project and future work may be
@@ -80,4 +79,4 @@ produced results with relatively low standard deviations within their own
 samples and clearly strong trends that are unlikely to be variable. Although
 more work can be done to investigate the effect different contexts have on the
 results I am confident that the findings of this paper will inform a strong
-theoretical background and help inform any conjectures.
+theoretical background and aid any conjectures in future work.
