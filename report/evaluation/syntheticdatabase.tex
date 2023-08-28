@@ -1,6 +1,6 @@
 \section{Synthetic database creation}\label{sec:evaluation:syntheticdatabase}
 This section evaluates the design decisions and outcomes in creating a synthetic
-database generator as outlined in \fref{sec:benchmark:syntheticdatabase}. This
+database generator as outlined in \fref{sec:benchmark:database}. This
 project introduced a framework to generate database to fit a custom schema. The
 benefits of synthetic data are vast and include the ability to define schemas
 that are specialised in benchmarking and readability while controlling frequency
@@ -134,7 +134,7 @@ must improve is a systematic problem prescribed by the type of solution that may
 efficient, solutions if taken seriously in further development. The
 generality described here is found in the inability to apply different
 algorithms when different properties are given in the domain. Going back to the
-example in \fref{sec:benchmark:syntheticdatabase} for cell composition,
+example in \fref{sec:benchmark:database} for cell composition,
 \lstinline{unique_nums}. The algorithm used in \lstinline{unique_nums}, which
 to remind you is simply a \lstinline{RandomModularIntegerCell} in a
 \lstinline{UniqueCell} is quite inefficient and generates new values until an unseen

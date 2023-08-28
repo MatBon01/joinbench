@@ -136,7 +136,7 @@ must be made to ensure that answers are evaluated at the correct time. In the
 context of benchmarking, we want to ensure that all results are fully evaluated
 in the duration of the benchmark. In order to ensure the full evaluation of the
 function we define a normal form for all the new data structures introduced by
-this database implementation (detailed in \fref{chap:implementation}). During the
+this database implementation (detailed in \fref{chap:database}). During the
 benchmarking we can then use the $nf$ function, along with a function missing an
 argument, to let \verb|Criterion| ensure that the results are fully evaluated.
 An example of a definition of a normal form can be found below.
