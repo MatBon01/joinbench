@@ -1,5 +1,5 @@
 \section{Functions to benchmark}\label{sec:benchmark:functions}
-In this section we present an overview of the three functions we will
+In this section, we present an overview of the three functions we will
 be comparing in this benchmark. The paper \relalg{} presents a solution for
 equijoin (and arbitrary selections followed by joins) query optimisation using
 structures in Haskell, the algorithms compared will comprise of two alternative
@@ -57,12 +57,12 @@ this.
 As is to be expected, the previous code takes the form of a monad comprehension.
 This is possible using the GHC extension \verb|MonadComprehensions| and allowed by
 the fact that $Bag$ is a monad. We see many similar
-features to the $productEquijoin$ function. A major difference is that there is
+features to the $productEquijoin$ function. A major difference is that there are
 no explicit product operations but the pair is created explicitly when matching
 results are found (however, all possible pairs are still considered). The equality, though
 not explicitly named as a helper function, also includes the transformation described above.
 
-\paragraph{Indexed equijoin} The final function is the only of the three to use
+\paragraph{Indexed equijoin} The final function is the only one of the three to use
 indexing. The indexing tested in this benchmark is basic however and further
 optimisations are not considered. To this extent this function can also be seen as
 modular; where a query engine or
@@ -70,8 +70,8 @@ custom written query could easily tune and combine steps, this function follows 
 order putting together whole steps in a deterministic and segregated way.
 This algorithm is by far
 the most complex and is a version of what is proposed in the paper \relalg{}. In
-simple terms, we index the bags and merge the result. After modification it to form
-another valid indexed
+simple terms, we index the bags and merge the result. After modification, it
+forms another valid indexed
 structure we reduce this higher level construct back to a bag. The code for
 these operations is as follows.
 
@@ -79,19 +79,19 @@ these operations is as follows.
 
 \noindent
 In order to understand the code it may be useful to explain some naming
-conventions. Preceding $i$s are used to denote indexed or indexing structures,
-for instance $if1$ is an `indexing function'. Furthermore, the letter $t$
-refers to tables. As with previous functions it operates on two bags and
+conventions. Preceding $i$s are used to denote indexed or indexing structures;
+for instance, $if1$ is an `indexing function'. Furthermore, the letter $t$
+refers to tables. As with previous functions, it operates on two bags and
 so the indices in variables refer to which bag the function is referring to.
 
 As discussed above, the first step is to index the bags. This is achieved using
 an inline form of the $indexBy$ function whose type
 signature can be seen below. The $indexBy$ function
-takes a table and a function that can transform the table to a key and indexes
+takes a table and a function that can transform the table into a key and indexes
 the table by the key. The result of indexing a bag is simply a structure that
 associates to each key a bag of the values that share that key. Now, with a pair of indexed tables
 $merge$, whose type signature can be seen below,
-combines the two indexed tables to one such that for each key a pair of bags is
+combines the two indexed tables into one such that for each key a pair of bags is
 associated to it. In order to complete reach a usable structure we must perform
 a local Cartesian product (hence the $fmap cp$) on
 each pair of bags to finally reach a single bag per key. Now we have a simple

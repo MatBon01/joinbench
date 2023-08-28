@@ -1,15 +1,15 @@
 \section{Queries}
 This section will present the queries explored during the benchmarking of the
-database system. Along with each query an analysis of its purpose will also be
+database system. Along with each query, an analysis of its purpose will also be
 presented. The benchmark will run each query a number of times against each of
 the functions presented in \fref{sec:benchmark:functions} and the mean results
 will be analysed and compared during the rest of this chapter. As the method for
-describing the queries becomes increasingly clear, the explanations will become
+describing the queries become increasingly clear, the explanations will become
 more concise in this section.
 
 The queries presented all have a similar structure in how they are presented and
 form. They are all equijoins, as equijoins are the focus of this project and a
-good way to judge the optimisation of a join followed by a selection. At times
+good way to judge the optimisation of a join followed by a selection. At times,
 queries also measure the potential of a preceding selection but the functions
 are not designed to take this optimisation into consideration. Each join
 will be given a name of the form ``join \relationAttribute{x} and
@@ -27,8 +27,8 @@ attributes of the \relation{JOINBENCH} relation. This paragraph will explore
 what this means and its significance to the project and benchmark. As described
 in \fref{sec:benchmark:joinbench}, the attribute \relationAttribute{onePercent}
 has 100 different values all in the range of 0 to 99. Similarly, twentyPercent
-has 5 attributes each in the range of 0 to 4. This in effect means that any
-tuples whose \relationAttribute{onePercent} value is above 4 is discarded and as
+has 5 attributes each in the range of 0 to 4. This, in effect, means that any
+tuple whose \relationAttribute{onePercent} value is above 4 is discarded. As
 \relationAttribute{onePercent} partitions the relation into 100 groups with a
 size of 1\% of the relation, we lost 95\% of the tuples in the first table. Of
 the remaining 5\% of tuples in the first table, they will each pair with 20\% of
@@ -37,7 +37,7 @@ the second table into 5 groups of 20\% of the relation). For each group, a
 Cartesian product is performed with one percent of the total number of tuples
 and twenty percent of the total number of tuples. Given $n$ tuples, each group
 then has $\frac{n}{100} \cdot \frac{n}{5} = \frac{n^2}{500}$ tuples and as we
-worked out above there are 5 groups. Therefore we expect the result to have
+worked out above there are 5 groups. Therefore, we expect the result to have
 $\frac{n^2}{100}$ tuples. As both tables have $n$ tuples, a Cartesian product
 performed on them will have $n^2$ tuples, thus we expect a selectivity
 proportion of one percent on all possible pairs. We expect 5 local Cartesian
@@ -45,14 +45,14 @@ products when done optimally, all with 0.2\% of the result. To summarise, this
 is the equivalent of running a selection with selectivity factor of 1\% on the
 first table then a product of 5 equally sized groups.
 
-\paragraph{`join onePercent and onePercent'} This query is symmetric and an
+\paragraph{`join onePercent and onePercent'} This query is symmetric and is an
 example that cannot be optimised by an initial selection as the domains of both
 attributes are the same. This query joins two partitions of 1\% of the table
 together 100 times. Therefore we expect the total tuple count to be $100 \cdot
 \frac{n}{100} \cdot \frac{n}{100} = \frac{n^2}{100}$, where $n$ is the number of
 tuples in each relation. You will notice that it produces the same number of
-tuples as above but the distinction is in the number and size of local products.
-We expect 100 local products all which create 1\% of the result and 0.01\% of
+tuples as above, but the distinction is in the number and size of local products.
+We expect 100 local products all of which create 1\% of the result and 0.01\% of
 the total number of possible pairs of tuples.
 
 \paragraph{`join onePercent and fiftyPercent'} This query follows a similar
