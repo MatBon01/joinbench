@@ -46,6 +46,31 @@ Wu\hspace{4mm}Second Marker: Dr. Steffen van Bakel}}
 \begin{frame}
 \frametitle{Pointed sets, finite maps and indexed tables}
 \begin{block}{Pointed set}
+\end{block}
+\begin{block}{Finite map}
+\end{block}
+\begin{block}{Indexed table}
+\end{block}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{r|l}
+        \keyset{}-indexed table of \valset{} values & \indexedTable{\keyset}{\valset} \\
+        empty table & $empty$ \\
+        singleton table $(k, v)$ & $k \mapsto \lbag v \rbag$ \\
+        union of tables & $\finitemap{\keyset}{(\uplus)}\ \cdot\ merge$ \\
+        projection $\projsymb{f}$ & $\finitemap{\keyset}{(\finitebag{f})}$ \\
+        selection $\selectsymb{p}$ & $\finitemap{\keyset}{(filter\ p)}$ \\
+        aggregation in monoid $\monoid{M}$ & $\finitemap{\keyset}{(reduce\
+        \monoid{M})}$\\
+            natural join & \finitemap{\keyset}{(\times)}\ $\cdot\ merge$ \\
+    \end{tabular}
+\end{table}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Indexed table implementation}
+    \input{code/word16Key.tex}
 \end{frame}
 
 \section{\relation{JOINBENCH} table}
