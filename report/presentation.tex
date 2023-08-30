@@ -30,11 +30,10 @@ Wu\hspace{4mm}Second Marker: Dr. Steffen van Bakel}}
 
 \section{Database Implementation}
 \begin{frame}
-\frametitle{Bags -- Definition and Equality}
-\input{code/bagDefAndEquality.tex}
-\end{frame}
-\begin{frame}
-\frametitle{Bags -- Relational Algebra Operations}
+
+\frametitle{Bags}
+\only<2>{\input{code/bagDefAndEquality.tex}}
+\only<3>{
 \begin{table}[h]
     \centering
     \begin{tabular}{r|l}
@@ -49,6 +48,7 @@ Wu\hspace{4mm}Second Marker: Dr. Steffen van Bakel}}
         aggregation in monoid $\monoid{M}$ & $reduce\ \monoid{M}$\\
     \end{tabular}
 \end{table}
+}
 \end{frame}
 
 \begin{frame}
