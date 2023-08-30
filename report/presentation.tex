@@ -3,6 +3,9 @@
 \setbeamertemplate{navigation symbols}{}
 
 \usepackage{booktabs}
+\usepackage{pgf-umlcd}
+\usepackage{pgf}
+\usepackage{tikz}
 \input{background/utils.sty}
 \input{code/lhs2tex.tex}
 
@@ -102,14 +105,67 @@ Wu\hspace{4mm}Second Marker: Dr. Steffen van Bakel}}
 \section{Synthetic Database Generation}
 \begin{frame}
 \frametitle{Overview}
+\begin{figure}
+\begin{tikzpicture}
+    \begin{package}{databasegen}
+        \begin{abstractclass}{Cell}{-4,0}
+            \operation[0]{+ generate() : str}
+        \end{abstractclass}
+
+        \begin{class}{RecordGenerator}{4, 0}
+            \attribute{+ cells : List[Cell]}
+            \operation{+ generate() : List[str]}
+        \end{class}
+
+        \begin{class}[text width=9cm]{TableGenerator}{0, -3}
+            \attribute{+ record\_generator : RecordGenerator}
+            \operation{+ generate(num\_records : int = 1) : Iterable[List[str]]}
+        \end{class}
+
+        \begin{class}[text width=6cm]{CSVTableGenerator}{0, -6}
+            \attribute{+ path : str}
+            \attribute{+ dialect : str}
+            \attribute{+ table\_generator : TableGenerator}
+            \operation{+ generate(num\_records : int) : null}
+        \end{class}
+
+        \composition{RecordGenerator}{}{}{Cell}
+        \composition{TableGenerator}{}{}{RecordGenerator}
+        \composition{CSVTableGenerator}{}{}{TableGenerator}
+    \end{package}
+\end{tikzpicture}
+\end{figure}
 \end{frame}
 
 \begin{frame}
 \frametitle{Cells}
-\end{frame}
+\begin{itemize}
+    \item Introduction
+    \item Cell comprehension
+    \item Integer cells
+\begin{figure}[t]
+    \begin{tikzpicture}
+        \begin{class}{RandomIntegerRangeCell}{0, -3}
+        \end{class}
+        \begin{class}[text width=7cm]{RandomModifiedIntegerRangeCell}{0, -0}
+        \end{class}
+        \begin{class}{RandomModularIntegerCell}{8, -3}
+        \end{class}
+        \begin{class}[text width=7cm]{RandomModifiedModularIntegerCell}{8, -0}
+        \end{class}
+        \begin{class}{EvenIntegerCell}{0, 3}
+        \end{class}
+        \begin{class}{OddIntegerCell}{8, 3}
+        \end{class}
 
-\begin{frame}
-\frametitle{Integer cells}
+        \unidirectionalAssociation{EvenIntegerCell}{}{}{RandomModifiedModularIntegerCell}
+        \unidirectionalAssociation{OddIntegerCell}{}{}{RandomModifiedModularIntegerCell}
+        \unidirectionalAssociation{RandomIntegerRangeCell}{}{}{RandomModifiedIntegerRangeCell}
+        \unidirectionalAssociation{RandomModifiedModularIntegerCell}{}{}{RandomModifiedIntegerRangeCell}
+        \unidirectionalAssociation{RandomModularIntegerCell}{}{}{RandomModifiedModularIntegerCell}
+    \end{tikzpicture}
+\end{figure}
+\end{itemize}
 \end{frame}
 
 \section{Benchmarking}
