@@ -54,11 +54,15 @@ Wu\hspace{4mm}Second Marker: Dr. Steffen van Bakel}}
 \begin{frame}
 \frametitle{Pointed sets, finite maps and indexed tables}
 \begin{block}{Pointed set}
-\end{block}
-\begin{block}{Finite map}
-\end{block}
-\begin{block}{Indexed table}
-\end{block}
+    \vspace{-4mm}
+    \pause
+    \input{code/pointedSetDef.tex}
+    \vspace{-7mm}
+\end{block}\pause
+\begin{itemize}
+    \item Finite map\pause
+    \item Indexed table
+\end{itemize}
 
 \begin{table}[h]
     \centering
@@ -74,11 +78,8 @@ Wu\hspace{4mm}Second Marker: Dr. Steffen van Bakel}}
             natural join & \finitemap{\keyset}{(\times)}\ $\cdot\ merge$ \\
     \end{tabular}
 \end{table}
-\end{frame}
 
-\begin{frame}
-    \frametitle{Indexed table implementation}
-    {\tiny \input{code/word16Key.tex}}
+% Talk about merging briefly
 \end{frame}
 
 \section{\relation{JOINBENCH} table}
