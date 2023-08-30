@@ -3,6 +3,7 @@
 \setbeamertemplate{navigation symbols}{}
 
 \input{background/utils.sty}
+\input{code/lhs2tex.tex}
 
 \title[JOINBENCH]{JOINBENCH: Designing Tools for the Evaluation of Efficient Equijoins in Haskell}
 \author{Matteo Bongiovanni}
@@ -20,7 +21,25 @@
 
 \section{Database Implementation}
 \begin{frame}
-\frametitle{Bags}
+\frametitle{Bags -- Definition and Equality}
+\input{code/bagDefAndEquality.tex}
+\end{frame}
+\begin{frame}
+\frametitle{Bags -- Relational Algebra Operations}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{r|l}
+        table of $V$ values & \bag{V} \\
+        empty table & \emptybag \\
+        singleton table & \singletonbag \\
+        union of tables & $\bagunion{}{}$ \\
+        Cartesian product of tables & $\times$ \\
+        neutral element & $\lbag () \rbag$ \\
+        projection $\projsymb{f}$ & $\bag{f}$ \\
+        selection $\selectsymb{p}$ & $filter\ p$ \\
+        aggregation in monoid $\monoid{M}$ & $reduce\ \monoid{M}$\\
+    \end{tabular}
+\end{table}
 \end{frame}
 
 \begin{frame}
