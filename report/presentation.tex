@@ -212,18 +212,30 @@ Wu\hspace{4mm}Second Marker: Dr. Steffen van Bakel}}
 
 \begin{frame}
 \frametitle{General results}
+\input{figures/pres-join-onePercent-1000-tuples.pgf}
+\begin{table}[p]
+    \centering
+    \input{tables/percentage-change-of-means-join-onePercent-and-onePercent.tex}
+    \caption{Percentage change of mean time to complete query `join onePercent
+        and onePercent' when using indexed equijoin compared to other
+    functions.}
+    \label{tab:percentage-change-of-means-join-onePercent-and-onePercent}
+\end{table}
 \end{frame}
 
 \begin{frame}
-\frametitle{Low tuples count}
+\frametitle{Low tuple count}
+\input{figures/pres-join-onePercent-and-onePercent.pgf}
 \end{frame}
 
 \begin{frame}
 \frametitle{General trends}
+\input{figures/pres-Indexed-equijoin.pgf}
 \end{frame}
 
 \begin{frame}
 \frametitle{Evaluation}
+{\footnotesize\input{tables/std-dev-comparison-join-onePercent-and-fiftyPercent.tex}}
 \end{frame}
 
 \section{Conclusion}
