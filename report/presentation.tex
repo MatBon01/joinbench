@@ -93,7 +93,7 @@ Wu\hspace{4mm}Second Marker: Dr. Steffen van Bakel}}
 \end{columns}
 \end{frame}
 
-\subsection{Synthetic Database Generation}
+\subsection{Synthetic database generation}
 \begin{frame}
 \frametitle{Overview}
 \begin{figure}
@@ -126,37 +126,6 @@ Wu\hspace{4mm}Second Marker: Dr. Steffen van Bakel}}
     \end{package}
 \end{tikzpicture}
 \end{figure}
-\end{frame}
-
-\begin{frame}
-\frametitle{Cells}
-\begin{itemize}
-    \item Introduction\pause
-    \item Cell comprehensions\pause
-    \item Integer cells
-\begin{figure}[t]
-    \begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
-        \begin{class}{RandomIntegerRangeCell}{0, -3}
-        \end{class}
-        \begin{class}[text width=7cm]{RandomModifiedIntegerRangeCell}{0, -0}
-        \end{class}
-        \begin{class}{RandomModularIntegerCell}{8, -3}
-        \end{class}
-        \begin{class}[text width=7cm]{RandomModifiedModularIntegerCell}{8, -0}
-        \end{class}
-        \begin{class}{EvenIntegerCell}{0, 3}
-        \end{class}
-        \begin{class}{OddIntegerCell}{8, 3}
-        \end{class}
-
-        \unidirectionalAssociation{EvenIntegerCell}{}{}{RandomModifiedModularIntegerCell}
-        \unidirectionalAssociation{OddIntegerCell}{}{}{RandomModifiedModularIntegerCell}
-        \unidirectionalAssociation{RandomIntegerRangeCell}{}{}{RandomModifiedIntegerRangeCell}
-        \unidirectionalAssociation{RandomModifiedModularIntegerCell}{}{}{RandomModifiedIntegerRangeCell}
-        \unidirectionalAssociation{RandomModularIntegerCell}{}{}{RandomModifiedModularIntegerCell}
-    \end{tikzpicture}
-\end{figure}
-\end{itemize}
 \end{frame}
 
 \subsection{Results}
