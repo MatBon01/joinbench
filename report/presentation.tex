@@ -52,23 +52,45 @@ Wu\hspace{4mm}Second Marker: Dr. Steffen van Bakel}}
 \section{Benchmarking}
 \subsection{\relation{JOINBENCH} relation and benchmarking queries}
 \begin{frame}
-\frametitle{The \relation{JOINBENCH} relation}
+\frametitle{\relation{JOINBENCH} relation and benchmarking queries}
+\begin{columns}
+\column{0.5\textwidth}
 \begin{table}
     \centering
     \begin{tabular}{ll}
         \toprule
         Attribute & Domain \\
         \midrule
-        \relation{unique} & Int \\
-        \relation{onePercent} & Word16 \\
-        \relation{twentyPercent} & Word16 \\
-        \relation{twentyFivePercent} & Word16 \\
-        \relation{fiftyPercent} & Word16 \\
-        \relation{evenOnePercent} & Word16 \\
-        \relation{oddOnePercent} & Word16 \\
+        \alert<3>{\relation{unique}} & Int \\
+        \alert<2>{\relation{onePercent}} & Word16 \\
+        \alert<2>{\relation{twentyPercent}} & Word16 \\
+        \alert<2>{\relation{twentyFivePercent}} & Word16 \\
+        \alert<2>{\relation{fiftyPercent}} & Word16 \\
+        \alert<2>{\relation{evenOnePercent}} & Word16 \\
+        \alert<2>{\relation{oddOnePercent}} & Word16 \\
         \bottomrule
     \end{tabular}
 \end{table}
+\column{0.5\textwidth}
+\onslide<4->{
+\begin{itemize}
+    \item {\large join \relationAttribute{onePercent} and
+        \relationAttribute{onePercent}}
+        \vspace{1.5mm}
+    \item {\large join \relationAttribute{onePercent} and
+        \relationAttribute{twentyPercent}}
+        \vspace{1.5mm}
+    \item {\large join \relationAttribute{twentyPercent} and
+        \relationAttribute{onePercent}}
+        \vspace{1.5mm}
+    \item {\large join \relationAttribute{onePercent} and
+        \relationAttribute{fiftyPercent}}
+        \vspace{1.5mm}
+    \item {\large join \relationAttribute{evenOnePercent} and
+        \relationAttribute{oddOnePercent}}
+\end{itemize}
+}
+\end{columns}
 \end{frame}
 
 \subsection{Synthetic Database Generation}
@@ -157,25 +179,6 @@ Wu\hspace{4mm}Second Marker: Dr. Steffen van Bakel}}
 \end{block}
 \end{frame}
 \begin{frame}
-\setbeamercovered{transparent}
-\frametitle{Queries}
-\begin{itemize}
-    \item {\large join \relationAttribute{onePercent} and
-        \relationAttribute{onePercent}}
-        \vspace{1.5mm}\pause
-    \item {\large join \relationAttribute{onePercent} and
-        \relationAttribute{twentyPercent}}
-        \vspace{1.5mm}\pause
-    \item {\large join \relationAttribute{twentyPercent} and
-        \relationAttribute{onePercent}}
-        \vspace{1.5mm}\pause
-    \item {\large join \relationAttribute{onePercent} and
-        \relationAttribute{fiftyPercent}}
-        \vspace{1.5mm}\pause
-    \item {\large join \relationAttribute{evenOnePercent} and
-        \relationAttribute{oddOnePercent}}
-\end{itemize}
-\setbeamercovered{transparent}
 \end{frame}
 
 \begin{frame}
