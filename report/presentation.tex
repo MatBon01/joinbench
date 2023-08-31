@@ -9,6 +9,22 @@
 \input{background/utils.sty}
 \input{code/lhs2tex.tex}
 
+\AtBeginSection[]
+{
+  \begin{frame}
+    \frametitle{Table of Contents}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\AtBeginSubsection[]
+{
+  \begin{frame}
+    \frametitle{Table of Contents}
+    \tableofcontents[currentsubsection]
+  \end{frame}
+}
+
 \title[JOINBENCH]{JOINBENCH: Designing Tools for the Evaluation of Efficient Equijoins in Haskell}
 \author[Matteo Bongiovanni]{Matteo Bongiovanni\\\vspace{4mm}{\scriptsize Supervisor: Dr. Nicolas
 Wu\hspace{4mm}Second Marker: Dr. Steffen van Bakel}}
@@ -146,9 +162,9 @@ Wu\hspace{4mm}Second Marker: Dr. Steffen van Bakel}}
 \end{figure}
 \end{frame}
 
-\subsection{Results}
+\subsection{Functions to benchmark}
 \begin{frame}
-\frametitle{Functions}
+\frametitle{Functions to benchmark}
 \begin{block}{Product equijoin}
     \vspace{-4mm}
     {\scriptsize\input{code/productEquijoin.tex}}
@@ -166,6 +182,7 @@ Wu\hspace{4mm}Second Marker: Dr. Steffen van Bakel}}
 \end{block}
 \end{frame}
 
+\subsection{Results}
 \begin{frame}
 \frametitle{General results}
 \input{figures/pres-join-onePercent-1000-tuples.pgf}
