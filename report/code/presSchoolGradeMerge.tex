@@ -1,0 +1,17 @@
+\begin{hscode}\SaveRestoreHook
+\column{B}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{5}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{9}{@{}>{\hspre}l<{\hspost}@{}}%
+\column{E}{@{}>{\hspre}l<{\hspost}@{}}%
+\>[B]{}(\Varid{reduce}\mathbin{\circ}\Varid{fmap}\;\Varid{cp}\mathbin{\circ}\Varid{merge})\;(\Varid{istudents},\Varid{igrades}){}\<[E]%
+\\
+\>[B]{}\hsindent{5}{}\<[5]%
+\>[5]{}\mathbf{where}{}\<[E]%
+\\
+\>[5]{}\hsindent{4}{}\<[9]%
+\>[9]{}\Varid{istudents}\mathrel{=}\Varid{students}\mathbin{`\Varid{indexBy}`}\Varid{uid}{}\<[E]%
+\\
+\>[5]{}\hsindent{4}{}\<[9]%
+\>[9]{}\Varid{igrades}\mathrel{=}\Varid{grades}\mathbin{`\Varid{indexBy}`}\Varid{sid}{}\<[E]%
+\ColumnHook
+\end{hscode}\resethooks
