@@ -119,3 +119,7 @@ cp       ::  (Bag v1, Bag v2) -> Bag (v1, v2)
 merge    ::  (Map k (Bag v1), Map k (Bag v2)) -> Map k (Bag v1, Bag v2)
 reduce   ::  Map k (Bag v1, Bag v2) -> Bag (v1, v2)
 \end{code}
+
+\begin{code}
+newtype Bag a = Bag {elements :: [a]}
+\end{code}

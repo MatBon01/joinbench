@@ -32,56 +32,20 @@ Wu\hspace{4mm}Second Marker: Dr. Steffen van Bakel}}
 
 \section{Database Implementation}
 \begin{frame}
-
-\frametitle{Bags}
-\only<2>{\input{code/bagDefAndEquality.tex}}
-\only<3>{
-\begin{table}[h]
-    \centering
-    \begin{tabular}{r|l}
-        table of $V$ values & \bag{V} \\
-        empty table & \emptybag \\
-        singleton table & \singletonbag \\
-        union of tables & $\bagunion{}{}$ \\
-        Cartesian product of tables & $\times$ \\
-        neutral element & $\lbag () \rbag$ \\
-        projection $\projsymb{f}$ & $\bag{f}$ \\
-        selection $\selectsymb{p}$ & $filter\ p$ \\
-        aggregation in monoid $\monoid{M}$ & $reduce\ \monoid{M}$\\
-    \end{tabular}
-\end{table}
-}
-\end{frame}
-
-\begin{frame}
-\frametitle{Pointed sets, finite maps and indexed tables}
-\begin{block}{Pointed set}
-    \vspace{-4mm}
-    \pause
-    \input{code/pointedSetDef.tex}
-    \vspace{-7mm}
-\end{block}\pause
+\frametitle{Database Implementation}
+\begin{block}{Bag}
+    \input{code/bagDef.tex}
+\end{block}
+    \begin{block}{Pointed set}
+        \vspace{-4mm}
+        \pause
+        \input{code/pointedSetDef.tex}
+        \vspace{-7mm}
+    \end{block}
 \begin{itemize}
-    \item Finite map\pause
-    \item Indexed table
+\item Finite maps
+\item Indexed tables
 \end{itemize}
-
-\begin{table}[h]
-    \centering
-    \begin{tabular}{r|l}
-        \keyset{}-indexed table of \valset{} values & \indexedTable{\keyset}{\valset} \\
-        empty table & $empty$ \\
-        singleton table $(k, v)$ & $k \mapsto \lbag v \rbag$ \\
-        union of tables & $\finitemap{\keyset}{(\uplus)}\ \cdot\ merge$ \\
-        projection $\projsymb{f}$ & $\finitemap{\keyset}{(\finitebag{f})}$ \\
-        selection $\selectsymb{p}$ & $\finitemap{\keyset}{(filter\ p)}$ \\
-        aggregation in monoid $\monoid{M}$ & $\finitemap{\keyset}{(reduce\
-        \monoid{M})}$\\
-            natural join & \finitemap{\keyset}{(\times)}\ $\cdot\ merge$ \\
-    \end{tabular}
-\end{table}
-
-% Talk about merging briefly
 \end{frame}
 
 \section{\relation{JOINBENCH} relation}
