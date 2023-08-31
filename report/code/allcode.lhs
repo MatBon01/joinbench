@@ -119,3 +119,14 @@ cp       ::  (Bag v1, Bag v2) -> Bag (v1, v2)
 merge    ::  (Map k (Bag v1), Map k (Bag v2)) -> Map k (Bag v1, Bag v2)
 reduce   ::  Map k (Bag v1, Bag v2) -> Bag (v1, v2)
 \end{code}
+
+\begin{code}
+newtype Bag a = Bag {elements :: [a]}
+\end{code}
+
+\begin{code}
+(reduce . fmap cp . merge) (istudents, igrades)
+    where
+        istudents = students `indexBy` uid
+        igrades = grades `indexBy` sid
+\end{code}

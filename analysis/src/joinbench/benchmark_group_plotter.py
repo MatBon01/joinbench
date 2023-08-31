@@ -50,6 +50,37 @@ class BenchmarkGroupPlotter:
 
         ax.indicate_inset_zoom(axins, edgecolor="black")
 
+    def plot_mean_time_of_group_by_tuple_count_with_inset_axes_pres(
+        self,
+        ax,
+        query: str,
+        num_counts_in_inset: int,
+        inset_dimensions: List[float],
+        inset_scale_multiplier: int,
+    ) -> None:
+        self.plot_mean_time_of_group_by_tuple_count(ax, query)
+
+        inset_counts: List[int] = sorted(self.benchmarks.get_tuple_counts())[
+            :num_counts_in_inset
+        ]
+        inset_benchmarks: BenchmarkGroup = self.benchmarks.make_subgroup_with_counts(
+            inset_counts
+        )
+        inset_plotter: BenchmarkGroupPlotter = BenchmarkGroupPlotter(inset_benchmarks)
+
+        axins = ax.inset_axes(inset_dimensions)
+        inset_plotter.bare_plot_mean_time_of_group_by_tuple_count(axins, query)
+
+        axins.set_xlim(0, inset_counts[-1] * inset_scale_multiplier)
+        axins.set_ylim(
+            0,
+            inset_benchmarks.get_largest_mean_from_experiment_group(query)
+            * inset_scale_multiplier,
+        )
+
+        ax.indicate_inset_zoom(axins, edgecolor="black")
+        ax.set_title(f"Mean time to complete `{query}'\n query according to tuple count")
+
     def plot_mean_time_by_tuples_for_function(self, ax, function: str):
         xs: List[int] = self.benchmarks.get_tuple_counts()
         queries: List[str] = self.benchmarks.get_query_list()

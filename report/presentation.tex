@@ -1,0 +1,231 @@
+\documentclass{beamer}
+\usetheme{Boadilla}
+\setbeamertemplate{navigation symbols}{}
+
+\usepackage{booktabs}
+\usepackage{pgf-umlcd}
+\usepackage{pgf}
+\usepackage{tikz}
+\input{background/utils.sty}
+\input{code/lhs2tex.tex}
+
+\AtBeginSection[]
+{
+  \begin{frame}
+    \frametitle{Table of Contents}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\AtBeginSubsection[]
+{
+  \begin{frame}
+    \frametitle{Table of Contents}
+    \tableofcontents[currentsubsection]
+  \end{frame}
+}
+
+\title[JOINBENCH]{JOINBENCH: Designing Tools for the Evaluation of Efficient Equijoins in Haskell}
+\author[Matteo Bongiovanni]{Matteo Bongiovanni\\\vspace{4mm}{\scriptsize Supervisor: Dr. Nicolas
+Wu\hspace{4mm}Second Marker: Dr. Steffen van Bakel}}
+\date[]{MEng Individual Project, 31 August 2023}
+\institute[JMC]{Joint Mathematics and Computing \\ Department of Computing}
+\titlegraphic{\includegraphics[height=1cm]{title/logo.eps}}
+
+\begin{document}
+\frame{\titlepage}
+
+\section{Introduction}
+\begin{frame}
+\frametitle{Introduction}
+\pause
+\begin{block}{}
+\vspace{-4mm}
+\input{code/introRecordExample.tex}
+\vspace{-7mm}
+\end{block}
+\pause
+
+\[\lbag\:(s, g)\:|\:s \leftarrow students,\:g \leftarrow grades,\:uid\;s == sid\;g
+\:\rbag\]
+
+\pause
+\begin{block}{}
+\vspace{-4mm}
+\input{code/presSchoolGradeMerge.tex}
+\vspace{-7mm}
+\end{block}
+
+% Give motivating example for the project
+% Introduce what an equijoin is
+\end{frame}
+
+\begin{frame}
+\frametitle{Presentation Outline}
+\tableofcontents
+\end{frame}
+
+\section{Database Implementation}
+\begin{frame}
+\frametitle{Database Implementation}
+\begin{block}{Bag}\pause
+    \vspace{-4mm}
+    \input{code/bagDef.tex}\pause
+    \vspace{-7mm}
+\end{block}
+    \begin{block}{Pointed set}
+        \vspace{-4mm}
+        \pause
+        \input{code/pointedSetDef.tex}
+        \vspace{-7mm}
+    \end{block}\pause
+\begin{itemize}
+\item Finite maps\pause
+\item Indexed tables
+\end{itemize}
+\end{frame}
+
+\section{Benchmarking}
+\subsection{\relation{JOINBENCH} relation and benchmarking queries}
+\begin{frame}
+\frametitle{\relation{JOINBENCH} relation and benchmarking queries}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{table}
+    \centering
+    \begin{tabular}{ll}
+        \toprule
+        Attribute & Domain \\
+        \midrule
+        \alert<3>{\relation{unique}} & Int \\
+        \alert<2>{\relation{onePercent}} & Word16 \\
+        \alert<2>{\relation{twentyPercent}} & Word16 \\
+        \alert<2>{\relation{twentyFivePercent}} & Word16 \\
+        \alert<2>{\relation{fiftyPercent}} & Word16 \\
+        \alert<2>{\relation{evenOnePercent}} & Word16 \\
+        \alert<2>{\relation{oddOnePercent}} & Word16 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+\column{0.5\textwidth}
+\onslide<4->{
+\begin{itemize}
+    \item {\large join \relationAttribute{onePercent} and
+        \relationAttribute{onePercent}}
+        \vspace{1.5mm}
+    \item \alert<5>{{\large join \relationAttribute{onePercent} and
+        \relationAttribute{twentyPercent}}}
+        \vspace{1.5mm}
+    \item {\large join \relationAttribute{twentyPercent} and
+        \relationAttribute{onePercent}}
+        \vspace{1.5mm}
+    \item {\large join \relationAttribute{onePercent} and
+        \relationAttribute{fiftyPercent}}
+        \vspace{1.5mm}
+    \item \alert<6>{{\large join \relationAttribute{evenOnePercent} and
+        \relationAttribute{oddOnePercent}}}
+\end{itemize}
+}
+\end{columns}
+\end{frame}
+
+\subsection{Synthetic database generation}
+\begin{frame}
+\frametitle{Overview}
+\begin{figure}
+\begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
+    \begin{package}{databasegen}
+        \begin{abstractclass}{Cell}{-4,0}
+            \operation[0]{+ generate() : str}
+        \end{abstractclass}
+
+        \begin{class}{RecordGenerator}{4, 0}
+            \attribute{+ cells : List[Cell]}
+            \operation{+ generate() : List[str]}
+        \end{class}
+
+        \begin{class}[text width=9cm]{TableGenerator}{0, -3}
+            \attribute{+ record\_generator : RecordGenerator}
+            \operation{+ generate(num\_records : int = 1) : Iterable[List[str]]}
+        \end{class}
+
+        \begin{class}[text width=6cm]{CSVTableGenerator}{0, -6}
+            \attribute{+ path : str}
+            \attribute{+ dialect : str}
+            \attribute{+ table\_generator : TableGenerator}
+            \operation{+ generate(num\_records : int) : null}
+        \end{class}
+
+        \composition{RecordGenerator}{}{}{Cell}
+        \composition{TableGenerator}{}{}{RecordGenerator}
+        \composition{CSVTableGenerator}{}{}{TableGenerator}
+    \end{package}
+\end{tikzpicture}
+\end{figure}
+\end{frame}
+
+\subsection{Functions to benchmark}
+\begin{frame}
+\frametitle{Functions to benchmark}
+\begin{block}{Product equijoin}
+    \vspace{-4mm}
+    {\scriptsize\input{code/productEquijoin.tex}}
+    \vspace{-7mm}
+\end{block}\pause
+\begin{block}{Comprehension equijoin}
+    \vspace{-4mm}
+    {\scriptsize\input{code/comprehensionEquijoin.tex}}
+    \vspace{-7mm}
+\end{block}\pause
+\begin{block}{Indexed equijoin}
+    \vspace{-4mm}
+    {\scriptsize\input{code/indexedEquijoin.tex}}
+    \vspace{-7mm}
+\end{block}
+\end{frame}
+
+\subsection{Results}
+\begin{frame}
+\frametitle{General results}
+\input{figures/pres-join-onePercent-1000-tuples.pgf}
+\begin{table}[p]
+    \centering
+    \input{tables/percentage-change-of-means-join-onePercent-and-onePercent.tex}
+    \caption{Percentage change of mean time to complete query `join onePercent
+        and onePercent' when using indexed equijoin compared to other
+    functions.}
+    \label{tab:percentage-change-of-means-join-onePercent-and-onePercent}
+\end{table}
+\end{frame}
+
+\begin{frame}
+\frametitle{Low tuple count}
+\input{figures/pres-join-onePercent-and-onePercent.pgf}
+\end{frame}
+
+\begin{frame}
+\frametitle{General trends}
+\input{figures/pres-Indexed-equijoin.pgf}
+\end{frame}
+
+\begin{frame}
+\frametitle{Evaluation of the results}
+\begin{table}
+{\footnotesize\input{tables/std-dev-comparison-join-onePercent-and-fiftyPercent.tex}}
+\caption{A table showing the mean time (s) and standard deviation (s) to
+complete the query `join onePercent and fiftyPercent' for each function.}
+\end{table}
+\end{frame}
+
+\section{Conclusion}
+\begin{frame}
+\frametitle{Conclusion}
+\begin{enumerate}
+    \item Database implementation
+    \item JOINBENCH relation
+    \item Synthetic database generator
+    \item Benchmarking experiment
+    \item Results
+\end{enumerate}
+\end{frame}
+\end{document}
