@@ -1,4 +1,4 @@
-documents = interim.pdf final.pdf
+documents = interim.pdf final.pdf presentation.pdf
 
 .PHONY: all clean cleanaux spell
 
