@@ -140,7 +140,7 @@ jobs:
   
   create-release:
     name: Create release
-    needs: [compile-interim-report, compile-final-report]
+    needs: [compile-interim-report, compile-final-report, compile-presentation]
     runs-on: ubuntu-latest
     steps:
       - name: Download interim report artifact
