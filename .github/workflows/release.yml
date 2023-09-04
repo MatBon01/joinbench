@@ -135,7 +135,7 @@ jobs:
       - name: Upload report as artifact
         uses: actions/upload-artifact@v3
         with:
-          name: final
+          name: presentation
           path: report/presentation.pdf
   
   create-release:
